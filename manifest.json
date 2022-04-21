@@ -1,0 +1,182 @@
+{
+    "name" : "商城",
+    "appid" : "__UNI__9521F96",
+    "description" : "",
+    "versionName" : "1.0.0",
+    "versionCode" : 10000,
+    "transformPx" : false,
+    /* 5+App特有相关 */
+    "app-plus" : {
+        "privacy" : {
+            "prompt" : "template", //可取值template、custom、none  
+            "template" : {
+                "title" : "个人信息保护指引",
+                "message" : "欢迎您使用APP!为了加强对您个人信息的保护，依据相关法律要求，我们更新了<a href='http://h5.wode24h.com/#/pages/user/rules?type=2'>《隐私政策》</a>、<a href='http://h5.wode24h.com/#/pages/user/rules?type=1'>《用户协议》</a>。在您继续使用我们的服务之前，请您仔细阅读各项条款。我们将严格按照经您同意的各项条款使用您的个人信息，以便为您提供更好的服务。点击[同意]，即代表您已阅读、理解并接受《用户协议》、《隐私政策》的全部内容。",
+                "buttonAccept" : "同意",
+                "buttonRefuse" : "暂不同意",
+                "second" : {
+                    "title" : "温馨提示",
+                    "message" : "进入应用前，你需先同意<a href='http://h5.wode24h.com/#/pages/passport/rules?type=2'>《隐私政策》</a>与<a href='http://h5.wode24h.com/#/pages/user/rules?type=1'>《用户协议》</a>，否则将退出应用。",
+                    "buttonAccept" : "同意并继续",
+                    "buttonRefuse" : "退出应用"
+                }
+            }
+        },
+        "compatible" : {
+            "ignoreVersion" : true //true表示忽略版本检查提示框，HBuilderX1.9.0及以上版本支持  
+        },
+        "safearea" : {
+            "bottom" : "none"
+        },
+        "usingComponents" : true,
+        "nvueStyleCompiler" : "uni-app",
+        "compilerVersion" : 3,
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : true,
+            "autoclose" : true,
+            "delay" : 0
+        },
+        /* 模块配置 */
+        "modules" : {
+            "Geolocation" : {},
+            "Maps" : {},
+            "Payment" : {}
+        },
+        /* 应用发布信息 */
+        "distribute" : {
+            /* android打包配置 */
+            "android" : {
+                "permissionExternalStorage" : {
+                    "request" : "none",
+                    "prompt" : "应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。"
+                },
+                "permissions" : [
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+                    "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"android.permission.INTERNET\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                ],
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ]
+            },
+            /* ios打包配置 */
+            "ios" : {
+                "idfa" : false
+            },
+            /* SDK配置 */
+            "sdkConfigs" : {
+                "geolocation" : {
+                    "amap" : {
+                        "__platform__" : [ "ios", "android" ],
+                        "appkey_ios" : "a6fad1cb425335f24dfd34d7bba893c0",
+                        "appkey_android" : "f094b19d37b097f773b6b945a6edad80"
+                    }
+                },
+                "ad" : {},
+                "maps" : {
+                    "amap" : {
+                        "appkey_ios" : "a6fad1cb425335f24dfd34d7bba893c0",
+                        "appkey_android" : "f094b19d37b097f773b6b945a6edad80"
+                    }
+                },
+                "payment" : {
+                    "alipay" : {
+                        "__platform__" : [ "ios", "android" ]
+                    },
+                    "weixin" : {
+                        "__platform__" : [ "ios", "android" ],
+                        "appid" : "wx54e9f639fe47bd2d",
+                        "UniversalLinks" : "https://h5.wode24h.com/app/"
+                    }
+                }
+            },
+            "icons" : {
+                "android" : {
+                    "hdpi" : "unpackage/res/icons/72x72.png",
+                    "xhdpi" : "unpackage/res/icons/96x96.png",
+                    "xxhdpi" : "unpackage/res/icons/144x144.png",
+                    "xxxhdpi" : "unpackage/res/icons/192x192.png"
+                },
+                "ios" : {
+                    "appstore" : "unpackage/res/icons/1024x1024.png",
+                    "ipad" : {
+                        "app" : "unpackage/res/icons/76x76.png",
+                        "app@2x" : "unpackage/res/icons/152x152.png",
+                        "notification" : "unpackage/res/icons/20x20.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png",
+                        "proapp@2x" : "unpackage/res/icons/167x167.png",
+                        "settings" : "unpackage/res/icons/29x29.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "spotlight" : "unpackage/res/icons/40x40.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png"
+                    },
+                    "iphone" : {
+                        "app@2x" : "unpackage/res/icons/120x120.png",
+                        "app@3x" : "unpackage/res/icons/180x180.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png",
+                        "notification@3x" : "unpackage/res/icons/60x60.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "settings@3x" : "unpackage/res/icons/87x87.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png",
+                        "spotlight@3x" : "unpackage/res/icons/120x120.png"
+                    }
+                }
+            }
+        }
+    },
+    /* 快应用特有相关 */
+    "quickapp" : {},
+    /* 小程序特有相关 */
+    "mp-weixin" : {
+        "appid" : "wx579ac5c74bade858",
+        "setting" : {
+            "urlCheck" : false,
+            "minified" : true,
+            "postcss" : true,
+            "es6" : true
+        },
+        "usingComponents" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "根据定位获取附近信息"
+            }
+        }
+    },
+    "mp-alipay" : {
+        "usingComponents" : true
+    },
+    "mp-baidu" : {
+        "usingComponents" : true
+    },
+    "mp-toutiao" : {
+        "usingComponents" : true
+    },
+    "uniStatistics" : {
+        "enable" : false
+    },
+    "h5" : {
+        "sdkConfigs" : {
+            "maps" : {
+                "qqmap" : {
+                    "key" : "AKJBZ-VDSYF-PTIJF-NW4C6-BWUWV-T2BMO"
+                }
+            }
+        }
+    }
+}

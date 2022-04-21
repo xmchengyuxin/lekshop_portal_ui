@@ -1,0 +1,75 @@
+.navs-on {
+	position: relative;
+}
+.navs-on::after {
+	content: '';
+	height: 2px;
+	    width: 15px;
+	    border-radius: 3px;
+	    background-color: #fff;
+		position: absolute;
+		bottom: 2px;
+		left: 0;
+		right: 0;
+		margin: auto;
+}
+.wrap-swiper {
+	height: 100vh;
+}
+.pintuan-item {
+	width: calc((100% - 25px) / 3);
+	margin-bottom: 12px;
+}
+.wrap-pintuan,.wrap-tuijian {
+	background: url('https://qiniu.chengyuwb.com/shops_grueps_top_bg.png') top no-repeat;
+	background-size: 100% auto;
+}
+.wrap-tuijian {
+	background-image: url('https://qiniu.chengyuwb.com/shops_tuijian_top_bg.png');
+}
+.tuijain-item {
+	position: relative;
+	width: 50%;
+}
+.tuijian-img {
+	width: calc((100% - 12px) / 2);
+	height: 65px;
+}
+
+.tuijain-item::after {
+	position: absolute;
+	    top: 0;
+	    left: 0;
+	    box-sizing: border-box;
+	    width: 200%;
+	    height: 200%;
+	    border-right: 1px solid rgba(0,0,0,.1);
+	    border-radius: inherit;
+	    content: " ";
+	    -webkit-transform: scale(.5);
+	    transform: scale(.5);
+	    -webkit-transform-origin: 0 0;
+	    transform-origin: 0 0;
+	    pointer-events: none;
+}
+.wrap-tuijian .tuijain-item:nth-child(2n+2)::after {
+	display: none;
+}
+.swiper-item {
+	background: url() top no-repeat;
+	background-size: 100% auto;
+}
+.wrap-banner {
+	transform: translateY(0);overflow: hidden;
+}
+uni-swiper.wrap-banner .wx-swiper-dot, uni-swiper.wrap-banner .a-swiper-dot,uni-swiper.wrap-banner .uni-swiper-dot {
+	    background-color: #fff!important;
+	    opacity: .4;
+	    width: 5px;
+	    height: 5px;
+	    border-radius: 10px;
+	    margin: 0 4px!important;
+}
+uni-swiper .uni-swiper-dot {
+	  background-color: #fff!important;
+}

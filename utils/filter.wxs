@@ -1,0 +1,201 @@
+/* 
+	时间搓转化时间
+ */
+
+var time = function(source) {
+	if(!source){
+		return;
+	}
+	var checkTime = function(time) {
+		if (time < 10) {
+			time = "0" + time;
+		};
+		return time;
+	};
+	source = getDate(source);
+	return source.getFullYear() + '-' +
+		checkTime(source.getMonth() + 1) +
+		'-' +
+		checkTime(source.getDate()) +
+		' ' +
+		checkTime(source.getHours()) +
+		':' +
+		checkTime(source.getMinutes());
+};
+
+var time1 = function(source) {
+	if(!source){
+		return;
+	}
+	var checkTime = function(time) {
+		if (time < 10) {
+			time = "0" + time;
+		};
+		return time;
+	};
+	source = getDate(source);
+	return source.getFullYear() + '.' +
+		checkTime(source.getMonth() + 1) +
+		'.' +
+		checkTime(source.getDate());
+};
+var time2 = function(source) {
+	if(!source){
+		return;
+	}
+	var checkTime = function(time) {
+		if (time < 10) {
+			time = time;
+		};
+		return time;
+	};
+	source = getDate(source);
+	return checkTime(source.getMonth() + 1) +
+		'.' +
+		checkTime(source.getDate());
+};
+/* 
+	替换中间文字*
+ */
+var hideCenterText = function(name) {
+	if(!name){
+		return;
+	}
+	var realName = "";
+	name.toString();
+
+	var length = name.length;
+
+	var list = name.split("");
+	if (length == 1) {
+		realName = name;
+	} else if (length == 2) {
+		realName = list[0] + "*";
+	} else {
+		list.forEach(function(element, index) {
+			if (index <= 3 || index >= length - 3) {
+				realName += element;
+			} else {
+				realName += "*";
+			}
+		});
+	}
+	return realName;
+};
+var price = function(num) {
+
+	return Number(num).toFixed(2);
+};
+var time3 = function(source) {
+	if(!source){
+		return;
+	}
+	var checkTime = function(time) {
+		if (time < 10) {
+			time = "0" + time;
+		};
+		return time;
+	};
+	source = getDate(source);
+	var nowMonth = checkTime((getDate()).getMonth() + 1);
+	var nowday = checkTime((getDate()).getDate());
+	var time;
+	time = checkTime(source.getHours()) +
+		':' +
+		checkTime(source.getMinutes());
+	return time
+};
+var timeCount = function (now, end) {
+	var checkTime = function(time) {
+		if (time < 10) {
+			time = "0" + time;
+		};
+		return time;
+	};
+	now = (getDate()).getTime();
+	var cha = parseInt((end - now)/1000);
+	var hour = checkTime(parseInt(cha/3600));
+	var fen  = checkTime(parseInt(cha%3600/60));
+	var miao  = checkTime(parseInt(cha%3600%60));
+	var text =  '';
+	if(parseInt(cha/3600) > 0 && now <= end) {
+		text = hour+':'+fen+':'+miao;
+	}
+	if(parseInt(cha/3600) <= 0 && now <= end) {
+		text = fen+':'+miao;
+	}
+	return text
+	
+};
+var hours = function(time) {
+	var hour = (getDate(time)).getHours();
+	var fen = (getDate(time)).getMinutes();
+	var hour1 = parseInt(hour) <= 9 ? '0' + hour : hour;
+	var fen1 = parseInt(fen) <= 9 ? '0' + fen : fen;
+	return hour1 + ':' + fen1
+};
+var km = function(km) {
+	km = Number(km);
+	if (km >= 1000) {
+		km = (km / 1000).toFixed(2) + 'km'
+	} else {
+		km = km.toFixed(2) + 'm'
+	}
+	return km
+};
+var img = function(url, width) {
+	if (!url) {
+		return
+	}
+	if (url.indexOf('.mp4') >= 0) {
+		return url;
+	}
+
+	if (url.indexOf('?') >= 0) {
+		url = url.slice(0, url.indexOf('?'))
+	}
+	if (width) {
+		url = url + '?imageView2/2/w/' + width;
+	} else {
+		url = url + '?imageView2/2/w/700';
+	}
+	return url
+};
+var bgimg = function(url, width) {
+	if (!url) {
+		return
+	}
+	if (url.indexOf('.mp4') >= 0) {
+		return 'background-image:url(' + url + ')';
+	}
+	if (url.indexOf('?') >= 0) {
+		url = url.slice(0, url.indexOf('?'))
+	}
+	if (width) {
+		url = url + '?imageView2/2/w/' + width;
+	} else {
+		url = url + '?imageView2/2/w/700';
+	}
+	return 'background-image:url(' + url + ')';
+};
+var html = function(dom) {
+	if(!dom){return;}
+	dom = dom.replace(getRegExp('<img','gi'), '<img style="width:100%;height:auto;display:block" ');
+	dom = dom.replace(getRegExp('<section','g'), '<div');
+	dom = dom.replace(getRegExp('/section>','g'), '\div>');
+	return dom;
+};
+module.exports = {
+	time: time,
+	hideCenterText: hideCenterText,
+	time1: time1,
+	time2: time2,
+	time3: time3,
+	hours: hours,
+	price: price,
+	km: km,
+	img: img,
+	bgimg: bgimg,
+	html: html,
+	timeCount: timeCount
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"FillStylePattern.js","sourceRoot":"","sources":["../../../../../packages/plugins/gcanvas/gcanvas/context-2d/FillStylePattern.js"],"names":[],"mappings":"AAAA,MAAM,gBAAgB;IAClB,YAAY,GAAG,EAAE,OAAO;QACpB,IAAI,CAAC,MAAM,GAAG,OAAO,CAAC;QACtB,IAAI,CAAC,IAAI,GAAG,GAAG,CAAC;IACpB,CAAC;CACJ;AAED,eAAe,gBAAgB,CAAC"}

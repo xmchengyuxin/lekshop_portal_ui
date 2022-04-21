@@ -1,0 +1,39 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
+		
+		{
+			"path": "pages/wxAuth/bindphone",
+			"style": {
+				"navigationBarTitleText": "绑定手机"
+			}
+		},
+		{
+			"path": "pages/wxAuth/index",
+			"style": {
+				"navigationBarTitleText": "授权允许"
+			}
+		}
+	],
+	"subPackages": [],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "商城",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#F0EFF5"
+	},
+	"tabBar": {
+		"custom": true,
+		"color": "#383838",
+		"selectedColor": "#DA2A1C",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"fontSize": "13px",
+		"list": []
+	}
+}
