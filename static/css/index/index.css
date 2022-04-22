@@ -62,14 +62,25 @@
 .wrap-banner {
 	transform: translateY(0);overflow: hidden;
 }
-uni-swiper.wrap-banner .wx-swiper-dot, uni-swiper.wrap-banner .a-swiper-dot,uni-swiper.wrap-banner .uni-swiper-dot {
-	    background-color: #fff!important;
-	    opacity: .4;
-	    width: 5px;
-	    height: 5px;
-	    border-radius: 10px;
-	    margin: 0 4px!important;
+
+/deep/ .wrap-banner .uni-swiper-dot,.wrap-banner .uni-swiper-dot {
+	  background-color: #fff;
+	  opacity: .4;
+	  width: 15px;
+	  height: 5px;
+	  border-radius: 10px;
+	  margin: 0 2px!important;
 }
-uni-swiper .uni-swiper-dot {
-	  background-color: #fff!important;
+/deep/ .wrap-banner  .uni-swiper-dot-active,.wrap-banner  .uni-swiper-dot-active {
+	opacity: 1;
+}
+
+.wrap-sub-cate {
+	padding: 4px 8px 12px;
+}
+.sub-item {
+	width: 20%;
+}
+.sub-item .bg-img {
+	background-size: contain!important;
 }

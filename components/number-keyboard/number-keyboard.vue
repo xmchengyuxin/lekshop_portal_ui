@@ -20,10 +20,10 @@
 </template>
 
 <script>
-  import uniPopup from "@/components/uni-popup/uni-popup"
+  // import uniPopup from "@/components/uni-popup/uni-popup"
   export default {
     components: {
-      uniPopup
+      // uniPopup
     },
     props: {
       //限制输入框的长度 空值不限制

@@ -6,7 +6,18 @@
 				"navigationStyle": "custom"
 			} 
 		},
-		
+		{
+			"path": "pages/index/cate",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
+		{
+			"path": "pages/search/list",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
 		{
 			"path": "pages/wxAuth/bindphone",
 			"style": {

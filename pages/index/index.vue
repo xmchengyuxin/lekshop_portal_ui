@@ -20,11 +20,11 @@
 			<view style="padding: 2px;"></view>
 		</view>
 		<swiper class="wrap-swiper" :current="active" @change="changeSwiper" :indicator-dots="false" :autoplay="false" :interval="1000" :duration="500">
-			<swiper-item v-for="item in navs">
+			<swiper-item v-for="(item,parent) in navs">
 				<scroll-view @scrolltolower="loadList" scroll-y="true" style="height: 100%;">
-					<view class="swiper-item padding-12" :style="'https://stc.wanlshop.com/assets/addons/wanlshop/img/show/main_bg3x.png' | bgimg(700)">
+					<view class="swiper-item padding-12" :style="'https://stc.wanlshop.com/assets/addons/wanlshop/img/show/main_bg3x.png' | bgimg(700)+''">
 						<view  :style="{ 'padding-top': top +74+ 'px' }"></view>
-						<swiper  class="wrap-banner h-120 b-radius-5" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
+						<swiper v-if="parent == 0"  class="wrap-banner h-120 b-radius-5" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
 							<swiper-item >
 								<view class="bg-color h100 b-radius-5"></view>
 							</swiper-item>
@@ -32,7 +32,13 @@
 								<view class="bg-color-linear-y h100 b-radius-5"></view>
 							</swiper-item>
 						</swiper>
-						<view class="flex f-w b-radius-10 bg-color-w wrap-tuijian margin-t12">
+						<view v-if="parent != 0" class="bg-color-w b-radius-10 flex f-w margin-t12 wrap-sub-cate">
+							<view v-for="(item,index) in 10" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t8">
+								<view class="flex w-50 h-50 bg-img bg-color b-radius-5"></view>
+								<view class="f12-size t-color-6 margin-t4">新品尝鲜</view>
+							</view>
+						</view>
+						<view  v-if="parent == 0"  class="flex f-w b-radius-10 bg-color-w wrap-tuijian margin-t12">
 							<view v-for="(item,index) in 6" class="flex f-s-0 tuijain-item f-c padding-12">
 								<view class="flex f-a-c">
 									<text class="f15-size f-w-500 t-color-y margin-r4">连衣裙</text>
@@ -71,7 +77,10 @@
 								</view>
 							</view>
 						</view>
-						
+						<view class="flex f-a-c f-j-c f-w-b t-color-8 padding-tb6 wrap-tuijian-title margin-t12">
+							<image class="w-20 margin-r8" src="../../static/images/zan-on.png" mode="widthFix"></image>
+							<text>好物推荐</text>
+						</view>
 						<goodslist class="margin-t12" :list="list" ></goodslist>
 						<view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view>
 					</view>

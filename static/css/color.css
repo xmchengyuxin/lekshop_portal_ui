@@ -87,6 +87,15 @@
 .bg-color-f1 {
 	background-color: #F1F5F8!important;
 }
+.bg-color-f7 {
+	background-color: #f7f7f7!important;
+}
+.bg-color-f9 {
+	background-color: #f9f9f9!important;
+}
+.bg-color-fb {
+	background-color: #fbfbfb!important;
+}
 
 .b-color-9 {
 	border-color: #999!important;
@@ -198,6 +207,9 @@
 }
 .h-30 {
 	height: 30px!important;
+}
+.h-32 {
+	height: 32px!important;
 }
 .h-34 {
 	height: 34px!important;
@@ -459,4 +471,7 @@
 }
 .top-0 {
 	top: 0!important;
+}
+.over-h {
+	overflow: hidden;
 }

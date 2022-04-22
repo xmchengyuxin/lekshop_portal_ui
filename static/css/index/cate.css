@@ -1,0 +1,26 @@
+.contain {
+	height: 100vh;
+}
+.wrap-sub-cate {
+	margin-bottom: 10px;
+}
+.sub-item {
+	width: 33.3%;
+}
+.sub-item .bg-img {
+	background-size: contain!important;
+}
+.cate-on {
+	position: relative;
+	background-color: #fff;
+	    color: #000;
+	    font-size: 15px!important;
+	    font-weight: 600;
+}
+.cate-on::before {
+	    content: "";
+	    position: absolute;
+	    border-left: 3px solid #fe6600;
+	    height: 16px;
+	    left: 0;
+}

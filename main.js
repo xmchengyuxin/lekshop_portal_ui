@@ -7,6 +7,8 @@ import nodata from './pages/common/nodata.vue';
 import update from './pages/common/update.vue';
 import goodslist from './pages/common/goodslist.vue';
 Vue.config.productionTip = false
+import i18n from './static/language/index.js' 
+Vue.prototype._i18n = i18n;
 Vue.mixin(share1)
 App.mpType = 'app'
 import global from './utils/global.js';
@@ -31,6 +33,7 @@ Object.keys(filters).forEach(key => {
 	Vue.filter(key, filters[key])
 })
 const app = new Vue({
+	i18n,
 	...App
 })
 app.$mount()

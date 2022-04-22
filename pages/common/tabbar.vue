@@ -41,7 +41,7 @@
 						"text": "首页"
 					},
 					{
-						"pagePath": "/pages/index/index",
+						"pagePath": "/pages/index/cate",
 						"iconPath": "../../static/images/tab_cate.png",
 						"selectedIconPath": "../../static/images/tab_cate_on.png",
 						"text": "分类"
@@ -74,9 +74,7 @@
 		},
 		methods: {
 			goTab(url) {
-				uni.switchTab({
-					url: url
-				})
+				$.go(url);
 			},
 			init() {},
 

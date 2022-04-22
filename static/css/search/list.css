@@ -1,0 +1,8 @@
+.price-up,.price-down {
+	border: 5px solid transparent;
+	border-bottom-color: #ccc;
+} 
+.price-down {
+	border-bottom-color: transparent;
+	border-top-color: #ccc;
+}
