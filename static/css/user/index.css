@@ -1,0 +1,25 @@
+.wrap-header {
+	position: relative;
+	background: url('https://qiniu.chengyuwb.com/shops_user_bg.png') center no-repeat;
+	background-size: 100%;
+	background-color: rgb(255, 236, 204);
+}
+.wrap-coupon-btn {
+	position: absolute;
+	left: 12px;
+	right: 12px;
+	bottom: -26px;
+}
+.wrap-coupon-btn-left {
+	border-right: 0.5px solid rgba(0,0,0,.15);
+}
+.nav-last-item {
+	border-left: 0.5px solid rgba(0,0,0,.15);
+}
+.wrap-nav {
+	padding: 10px 8px 10px 0;
+}
+.btn-item {
+	width: 20%;
+	margin-bottom: 14px;
+}

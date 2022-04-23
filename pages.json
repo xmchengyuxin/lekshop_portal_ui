@@ -19,6 +19,18 @@
 			} 
 		},
 		{
+			"path": "pages/shops/detail",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
+		{
 			"path": "pages/wxAuth/bindphone",
 			"style": {
 				"navigationBarTitleText": "绑定手机"

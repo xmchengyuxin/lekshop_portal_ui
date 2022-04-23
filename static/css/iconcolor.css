@@ -1,0 +1,60 @@
+@font-face {
+  font-family: "shops-icon"; /* Project id 3352422 */
+  /* Color fonts */
+  src: 
+       url('//at.alicdn.com/t/font_3352422_lzaqmn5u15c.woff2?t=1650697124037') format('woff2'),
+       url('//at.alicdn.com/t/font_3352422_lzaqmn5u15c.woff?t=1650697124037') format('woff'),
+       url('//at.alicdn.com/t/font_3352422_lzaqmn5u15c.ttf?t=1650697124037') format('truetype');
+}
+
+.shops-icon {
+  font-family: "shops-icon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.shops-icon-faxian:before {
+  content: "\ff77";
+}
+
+.shops-icon-qianbao:before {
+  content: "\e67e";
+}
+
+.shops-icon-gerenjubaodengji:before {
+  content: "\e608";
+}
+
+.shops-icon-location1:before {
+  content: "\e64d";
+}
+
+.shops-icon-qiandao:before {
+  content: "\e60b";
+}
+
+.shops-icon-kefu:before {
+  content: "\e603";
+}
+
+.shops-icon-pintuan:before {
+  content: "\e601";
+}
+
+.shops-icon-shezhi:before {
+  content: "\e658";
+}
+
+.shops-icon-yijianfankui:before {
+  content: "\f95d";
+}
+
+.shops-icon-pinglun-08:before {
+  content: "\fc1d";
+}
+
+.shops-icon-bangzhu:before {
+  content: "\fda9";
+}
