@@ -1,0 +1,12 @@
+.add-btn, .add-reduce {
+	width: 24px;
+	height: 24px;
+}
+.add-num {
+	height: 24px;
+}
+.wrap-btn {
+	top: auto;
+	bottom: 50px;
+	z-index: 1;
+}

@@ -123,7 +123,7 @@
 					</view>
 					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['评论']}}</view>
 				</view>
-				<view class="flex f-s-0 f-c btn-item">
+				<view @click="go('/pages/user/address')" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-location1 f26-size"></text>
 					</view>
@@ -141,13 +141,13 @@
 					</view>
 					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['我的举报']}}</view>
 				</view>
-				<view class="flex f-s-0 f-c btn-item">
+				<view @click="go('/pages/user/advice')" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-yijianfankui f28-size"></text>
 					</view>
 					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['反馈']}}</view>
 				</view>
-				<view class="flex f-s-0 f-c btn-item">
+				<view @click="go('/pages/user/help')" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-bangzhu f26-size"></text>
 					</view>

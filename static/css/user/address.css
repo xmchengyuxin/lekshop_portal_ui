@@ -1,0 +1,21 @@
+input {
+	width: 100%;
+	height: 100%;
+	text-align: right;
+}
+/deep/ .uni-switch-input,.uni-switch-input {
+	width: 50px!important;
+	height: 28px!important;
+	border: none!important;
+}
+/deep/ uni-switch .uni-switch-input:after, /deep/ uni-switch .uni-switch-input:before,uni-switch .uni-switch-input:after,uni-switch .uni-switch-input:before {
+	top: 2px!important;
+	left: 2px!important;
+	width: 24px!important;
+	height: 24px!important;
+	background-color: #fff!important;
+	box-shadow: unset!important;
+}
+/deep/ uni-switch .uni-switch-input.uni-switch-input-checked:after,uni-switch .uni-switch-input.uni-switch-input-checked:after {
+	transform: translateX(22px)!important;
+}

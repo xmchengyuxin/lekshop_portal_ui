@@ -252,20 +252,13 @@ const hideCenterText = function(name) {
 		if(!time){return;}
 		return time.slice(0,time.lastIndexOf(':'))
 	}
-	var renzheng = function(item) {
-		if(!time){return;}
-		var list = [];
-		if(item.realnameStatus == 1) {
-			list.push('实名认证')
-		}
-		if(item.healthStatus == 1) {
-			list.push('健康认证')
-		}
-		if(item.qualificationStatus == 1) {
-			list.push('资质认证')
-		}
-		
-		return list.join('、')
+	
+	var i18n = function(text,num) {
+		if(!text){return;}
+		let first = text.indexOf('/');
+		let last = text.lastIndexOf('/');
+		text = text.slice(0,first)+num+text.slice(last+1,text.length-1);
+		return text;
 	}
 export default {
 	time,
@@ -286,5 +279,5 @@ export default {
 	week,
 	km,
 	filterMiao,
-	renzheng
+	i18n
 };

@@ -1,0 +1,9 @@
+page {
+		background-color: #fff;
+	}
+	/* #ifdef APP-PLUS */
+	.contain {
+		min-height: 100vh;
+		background-color: #fff;
+	}
+	/* #endif */

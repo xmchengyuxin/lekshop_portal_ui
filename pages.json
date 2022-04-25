@@ -13,6 +13,12 @@
 			} 
 		},
 		{
+			"path": "pages/cart/index",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
+		{
 			"path": "pages/search/list",
 			"style": {
 				"navigationStyle": "custom"
@@ -28,6 +34,37 @@
 			"path": "pages/user/index",
 			"style": {
 				"navigationStyle": "custom"
+			} 
+		},
+		{
+			"path": "pages/user/address",
+			"style": {
+				"navigationBarTitleText": "收获地址"
+			} 
+		},
+		{
+			"path": "pages/user/advice",
+			"style": {
+				"navigationBarTitleText": "意见反馈"
+			} 
+		},
+		{
+			"path": "pages/user/help",
+			"style": {
+				"navigationBarTitleText": "问题帮助",
+				"backgroundColor": "#FFFFFF"
+			} 
+		},
+		{
+			"path": "pages/user/helpdetail",
+			"style": {
+				"navigationBarTitleText": "问题帮助"
+			} 
+		},
+		{
+			"path": "pages/user/addaddress",
+			"style": {
+				"navigationBarTitleText": "添加地址"
 			} 
 		},
 		{

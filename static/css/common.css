@@ -371,3 +371,27 @@ uni-toast {
 	width: 100%;
 	height: 100%;
 }
+.add-btn,.add-num,.add-reduce {
+	width: 28px;
+	height: 28px;
+	border-radius: 2px;
+	background-color: #F2F2F2;
+}
+.add-num {
+	width: 38px;
+	padding: 0 2px;
+	margin: 0 2px;
+	font-size: 13px;
+	font-weight: bold;
+}
+.add-btn::after {
+	content: "\e735";
+	font-family: "van-icon" !important;
+}
+.add-reduce::after {
+	content: "\e71f";
+	font-family: "van-icon" !important;
+}
+.add-reduce.dis::after,.add-btn.dis::after {
+	color: #b8b8b8;
+}

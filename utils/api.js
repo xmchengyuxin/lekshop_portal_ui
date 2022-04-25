@@ -783,9 +783,9 @@ function setCopy() {
 	    // #endif
 	  })
 }
-function setTitle() {
+function setTitle(name) {
 	uni.setNavigationBarTitle({
-		title: getApp().globalData.name
+		title: name ? name : getApp().globalData.name
 	})
 }
 function showModal (options) {

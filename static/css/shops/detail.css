@@ -16,3 +16,14 @@
 	bottom: 0;
 	z-index: 11;
 }
+.wrap-shops-pj {
+	transform: scale(0.8);
+	transform-origin: center right; 
+}
+.pintuan-item {
+	width: calc((100% - 20px) / 3);
+	margin: 12px 10px 0 0;
+}
+.pintuan-item:nth-child(3n+3) {
+	margin-right: 0;
+}

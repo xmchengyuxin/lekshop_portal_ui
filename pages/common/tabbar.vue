@@ -53,13 +53,13 @@
 						"text": "发现"
 					},
 					{
-						"pagePath": "/pages/index/index",
+						"pagePath": "/pages/cart/index",
 						"iconPath": "../../static/images/tab_cart.png",
 						"selectedIconPath": "../../static/images/tab_cart_on.png",
 						"text": "购物车"
 					},
 					{
-						"pagePath": "/pages/index/index",
+						"pagePath": "/pages/user/index",
 						"iconPath": "../../static/images/tab_user.png",
 						"selectedIconPath": "../../static/images/tab_user_on.png",
 						"text": "我的"

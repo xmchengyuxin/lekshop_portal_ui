@@ -185,6 +185,11 @@ var html = function(dom) {
 	dom = dom.replace(getRegExp('/section>','g'), '\div>');
 	return dom;
 };
+var i18n = function(text,num) {
+	if(!text){return;}
+	console.log(text)
+	return text;
+}
 module.exports = {
 	time: time,
 	hideCenterText: hideCenterText,
@@ -197,5 +202,6 @@ module.exports = {
 	img: img,
 	bgimg: bgimg,
 	html: html,
-	timeCount: timeCount
+	timeCount: timeCount,
+	i18n: i18n
 }
