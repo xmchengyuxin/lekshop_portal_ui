@@ -1,7 +1,7 @@
 <template>
 	<view class="contain">
 		<view class="fixed-top bg-color padding-lr12" :style="{ 'padding-top': top + 'px' }">
-			<view class="flex f-a-c h-44">
+			<view @click="go('/pages/search/index')" class="flex f-a-c h-44">
 				<view class="flex f-a-c f-j-c van-icon van-icon-scan t-color-w f22-size margin-r10"></view>
 				<view class="flex flex-1 f-a-c bg-color-w b-radius-30 h-34 padding-lr12 margin-r10" >
 					<view class="flex f-a-c van-icon van-icon-search t-color-9 f20-size margin-r8"></view>

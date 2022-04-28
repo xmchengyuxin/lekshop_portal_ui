@@ -1,8 +1,8 @@
 @font-face {
   font-family: "van-icon"; /* Project id 3349930 */
-  src: url('//at.alicdn.com/t/font_3349930_a8h0o67b9ug.woff2?t=1650878182144') format('woff2'),
-       url('//at.alicdn.com/t/font_3349930_a8h0o67b9ug.woff?t=1650878182144') format('woff'),
-       url('//at.alicdn.com/t/font_3349930_a8h0o67b9ug.ttf?t=1650878182144') format('truetype');
+  src: url('//at.alicdn.com/t/font_3349930_nqnatfw2u8h.woff2?t=1651130040146') format('woff2'),
+       url('//at.alicdn.com/t/font_3349930_nqnatfw2u8h.woff?t=1651130040146') format('woff'),
+       url('//at.alicdn.com/t/font_3349930_nqnatfw2u8h.ttf?t=1651130040146') format('truetype');
 }
 
 .van-icon {
@@ -11,6 +11,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.van-icon-delete-o:before {
+  content: "\e66e";
+}
+
+.van-icon-shop-o:before {
+  content: "\e671";
 }
 
 .van-icon-editor:before {
@@ -107,10 +115,6 @@
 
 .van-icon-sign:before {
   content: "\e756";
-}
-
-.van-icon-shop-o:before {
-  content: "\e757";
 }
 
 .van-icon-smile-o:before {
@@ -587,10 +591,6 @@
 
 .van-icon-coupon:before {
   content: "\e6de";
-}
-
-.van-icon-delete-o:before {
-  content: "\e6df";
 }
 
 .van-icon-down:before {

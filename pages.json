@@ -25,6 +25,12 @@
 			} 
 		},
 		{
+			"path": "pages/search/index",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
+		{
 			"path": "pages/shops/detail",
 			"style": {
 				"navigationStyle": "custom"
@@ -68,6 +74,34 @@
 			} 
 		},
 		{
+			"path": "pages/user/like",
+			"style": {
+				"navigationBarTitleText": "我的收藏",
+				"navigationBarBackgroundColor":"#F7F7F7"
+			} 
+		},
+		{
+			"path": "pages/user/likeshops",
+			"style": {
+				"navigationBarTitleText": "我的订阅",
+				"navigationBarBackgroundColor":"#F7F7F7"
+			} 
+		},
+		{
+			"path": "pages/user/history",
+			"style": {
+				"navigationBarTitleText": "我的足迹",
+				"navigationBarBackgroundColor":"#F7F7F7"
+			} 
+		},
+		{
+			"path": "pages/coupon/getlist",
+			"style": {
+				"navigationBarTitleText": "红包卡券",
+				"navigationBarBackgroundColor":"#F7F7F7"
+			} 
+		},
+		{
 			"path": "pages/wxAuth/bindphone",
 			"style": {
 				"navigationBarTitleText": "绑定手机"
@@ -84,7 +118,7 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "商城",
-		"navigationBarBackgroundColor": "#FFFFFF",
+		"navigationBarBackgroundColor": "#F7F7F7",
 		"backgroundColor": "#F0EFF5"
 	},
 	"tabBar": {

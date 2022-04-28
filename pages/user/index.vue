@@ -16,15 +16,15 @@
 				</view>
 			</view>
 			<view class="flex margin-t15">
-				<view class="flex flex-1 f-c f-a-c f-j-c">
+				<view @click="go('/pages/user/like')" class="flex flex-1 f-c f-a-c f-j-c">
 					<text class="f16-size f-w-b">0</text>
 					<text class="f12-size">{{i18n['收藏夹']}}</text>
 				</view>
-				<view class="flex flex-1 f-c f-a-c f-j-c">
+				<view @click="go('/pages/user/likeshops')" class="flex flex-1 f-c f-a-c f-j-c">
 					<text class="f16-size f-w-b">0</text>
 					<text class="f12-size">{{i18n['关注店铺']}}</text>
 				</view>
-				<view class="flex flex-1 f-c f-a-c f-j-c">
+				<view @click="go('/pages/user/history')" class="flex flex-1 f-c f-a-c f-j-c">
 					<text class="f16-size f-w-b">0</text>
 					<text class="f12-size">{{i18n['足迹']}}</text>
 				</view>
@@ -35,7 +35,7 @@
 			</view>
 			<view class="padding-20"></view>
 			<view class="wrap-coupon-btn flex b-radius-5 bg-color-w padding-10">
-				<view class="flex flex-1 f-a-c f-j-s padding-lr2 wrap-coupon-btn-left margin-r10">
+				<view @click="go('/pages/coupon/getlist')" class="flex flex-1 f-a-c f-j-s padding-lr2 wrap-coupon-btn-left margin-r10">
 					<view class="flex f-c">
 						<text class="f12-size f-w-b">{{i18n['红包卡券']}}</text>
 						<view class="flex f-a-c">

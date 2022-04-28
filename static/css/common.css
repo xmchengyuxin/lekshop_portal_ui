@@ -170,6 +170,7 @@ image {
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 3;
 	overflow: hidden;
+	word-break: break-all;
 }
 
 .line2 {
@@ -177,6 +178,7 @@ image {
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
 	overflow: hidden;
+	word-break: break-all;
 }
 
 .line1 {
@@ -184,6 +186,7 @@ image {
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 1;
 	overflow: hidden;
+	word-break: break-all;
 }
 
 .no-more {
@@ -239,6 +242,9 @@ textarea {
 
 /deep/uni-view {
 	line-height: none;
+}
+view {
+	word-break: break-all;
 }
 
 .uni-popup {

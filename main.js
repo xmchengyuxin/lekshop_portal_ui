@@ -6,6 +6,7 @@ import tabbar from './pages/common/tabbar.vue';
 import nodata from './pages/common/nodata.vue';
 import update from './pages/common/update.vue';
 import goodslist from './pages/common/goodslist.vue';
+import xcxheader from './pages/common/xcxheader.vue';
 Vue.config.productionTip = false
 import i18n from './static/language/index.js' 
 Vue.prototype._i18n = i18n;
@@ -28,6 +29,7 @@ Vue.component('tabBar',tabbar);
 Vue.component('noData',nodata);
 Vue.component('upDate',update);
 Vue.component('goodslist',goodslist);
+Vue.component('xcxHeader',xcxheader);
 //过滤器统一处理加载
 Object.keys(filters).forEach(key => {
 	Vue.filter(key, filters[key])

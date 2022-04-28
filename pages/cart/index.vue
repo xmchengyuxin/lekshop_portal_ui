@@ -4,9 +4,7 @@
 			<view class="flex f-s-0 padding-lr10 f-a-c f-j-c van-icon van-icon-arrow-left f20-size"></view>
 			<view class="flex flex-1 f-a-c f-j-c f16-size">{{i18n['购物车']}}</view>
 			<view @click="showDel=!showDel" class="flex f-s-0 f-a-c padding-lr10" :class="showDel ? 't-color-y' : ''">{{showDel ? i18n['完成'] : i18n['管理']}}</view>
-			<!-- #ifdef MP-WEIXIN -->
-			<view class="flex f-s-0" style="width: 180upx;"></view>
-			<!-- #endif -->
+			<xcx-header></xcx-header>
 		</view>
 		<view :style="{'padding-top': top+44+'px'}"></view>
 		<view class="padding-10">

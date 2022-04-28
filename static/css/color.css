@@ -211,6 +211,9 @@
 .h-18 {
 	height: 18px!important;
 }
+.h-20 {
+	height: 20px!important;
+}
 .h-24 {
 	height: 24px!important;
 }
@@ -313,6 +316,9 @@
 .w-100 {
 	width: 100px!important;
 }
+.w-110 {
+	width: 110px!important;
+}
 .w-120 {
 	width: 120px!important;
 }
@@ -366,6 +372,9 @@
 }
 .margin-t30 {
 	margin-top: 30px!important;
+}
+.margin-b12 {
+	margin-bottom: 12px!important;
 }
 .margin-b16 {
 	margin-bottom: 16px!important;
