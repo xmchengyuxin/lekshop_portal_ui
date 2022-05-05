@@ -49,7 +49,7 @@
 			<!-- #endif -->
 		</waterfallsFlow>
 		<view v-if="sortType == 2" v-for="(item, index) of list" :key="index" class="b-radius-5 bg-color-w flex margin-t10">
-			<view class="flex  f-s-0 w-120 h-120 bg-color b-radius-5"></view>
+			<view class="flex  f-s-0 w-120 h-120 bg-img b-radius-5" :style="item[imageSrcKey] | bgimg(400)"></view>
 			<view class="flex flex-1 f-c f-j-s padding-10">
 				<view class="flex flex-1 f-c">
 					<view class="line2">

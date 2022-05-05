@@ -103,9 +103,7 @@
 	background-color: #fbfbfb!important;
 }
 
-.b-color-9 {
-	border-color: #999!important;
-}
+
 .b-color-b {
 	border: 1px solid #AD3EEA!important;
 }
@@ -123,6 +121,9 @@
 }
 .b-color {
 	border-color: #2EB37E!important;
+}
+.b-color-9 {
+	border-color: #999!important;
 }
 .t-color-p {
 	color: #FB5129!important;
@@ -183,6 +184,9 @@
 }
 .f28-size {
 	font-size:56upx!important;
+}
+.f32-size {
+	font-size:64upx!important;
 }
 .f44-size {
 	font-size: 88upx!important;
@@ -510,4 +514,7 @@
 }
 .del-line {
 	text-decoration: line-through;
+}
+.box-c {
+	box-sizing: content-box;
 }

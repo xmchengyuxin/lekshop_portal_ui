@@ -125,7 +125,7 @@
 				</view>
 				<view @click="go('/pages/user/address')" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
-						<text class="flex f-a-c f-j-c shops-icon shops-icon-location1 f26-size"></text>
+						<text class="flex f-a-c f-j-c shops-icon shops-icon-address f26-size"></text>
 					</view>
 					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['收货地址']}}</view>
 				</view>

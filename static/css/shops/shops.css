@@ -1,0 +1,21 @@
+.wrap-swiper {
+	height: 100vh;
+}
+.wrap-list-nav {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 11;
+}
+.wrap-list-nav-info {
+	border-radius: 15px 15px 0 0;
+}
+.price-up,.price-down {
+	border: 5px solid transparent;
+	border-bottom-color: #ccc;
+} 
+.price-down {
+	border-bottom-color: transparent;
+	border-top-color: #ccc;
+}

@@ -2,9 +2,9 @@
   font-family: "shops-icon"; /* Project id 3352422 */
   /* Color fonts */
   src: 
-       url('//at.alicdn.com/t/font_3352422_lzaqmn5u15c.woff2?t=1650697124037') format('woff2'),
-       url('//at.alicdn.com/t/font_3352422_lzaqmn5u15c.woff?t=1650697124037') format('woff'),
-       url('//at.alicdn.com/t/font_3352422_lzaqmn5u15c.ttf?t=1650697124037') format('truetype');
+       url('//at.alicdn.com/t/font_3352422_t0xhqg2gli9.woff2?t=1651736212369') format('woff2'),
+       url('//at.alicdn.com/t/font_3352422_t0xhqg2gli9.woff?t=1651736212369') format('woff'),
+       url('//at.alicdn.com/t/font_3352422_t0xhqg2gli9.ttf?t=1651736212369') format('truetype');
 }
 
 .shops-icon {
@@ -13,6 +13,18 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.shops-icon-success:before {
+  content: "\e602";
+}
+
+.shops-icon-wxpay:before {
+  content: "\e689";
+}
+
+.shops-icon-zfbpay:before {
+  content: "\e68a";
 }
 
 .shops-icon-faxian:before {
@@ -27,7 +39,7 @@
   content: "\e608";
 }
 
-.shops-icon-location1:before {
+.shops-icon-address:before {
   content: "\e64d";
 }
 

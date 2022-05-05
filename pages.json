@@ -37,6 +37,32 @@
 			} 
 		},
 		{
+			"path": "pages/shops/shops",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
+		{
+			"path": "pages/order/sure",
+			"style": {
+				"navigationBarTitleText": "确认订单"
+			} 
+		},
+		{
+			"path": "pages/order/suc",
+			"style": {
+				"navigationBarTitleText": "支付成功"
+			} 
+		},
+		{
+			"path": "pages/order/pay",
+			"style": {
+				"navigationBarTitleText": "收银台",
+				"navigationBarBackgroundColor": "#FFFFFF"
+				
+			} 
+		},
+		{
 			"path": "pages/user/index",
 			"style": {
 				"navigationStyle": "custom"

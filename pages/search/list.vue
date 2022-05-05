@@ -2,7 +2,7 @@
 	<view class="contain">
 		<view class="fixed-top">
 			<view class=" flex h-44 flex bg-color-f7">
-				<view class="flex padding-lr10 f-a-c van-icon van-icon-arrow-left f20-size"></view>
+				<view @click="back(1)" class="flex padding-lr10 f-a-c van-icon van-icon-arrow-left f20-size"></view>
 				<view class="flex f-a-c flex-1">
 					<view class="flex flex-1 b-radius-30 h-30 bg-color-w padding-lr10">
 						<view class="flex f-a-c van-icon van-icon-search f16-size margin-r8"></view>

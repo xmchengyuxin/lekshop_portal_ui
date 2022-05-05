@@ -257,7 +257,7 @@ const hideCenterText = function(name) {
 		if(!text){return;}
 		let first = text.indexOf('/');
 		let last = text.lastIndexOf('/');
-		text = text.slice(0,first)+num+text.slice(last+1,text.length-1);
+		text = text.slice(0,first)+num+text.slice(last+1,text.length);
 		return text;
 	}
 export default {
