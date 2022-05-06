@@ -4,7 +4,7 @@
 			<view class="flex f-j-e h-44 padding-lr5">
 				<view class="flex f-a-c f-j-c van-icon van-icon-qr f20-size t-color-3 padding-lr5"><text
 						class="f12-size">{{i18n['会员码']}}</text></view>
-				<view class="flex f-a-c f-j-c van-icon van-icon-setting-o f20-size padding-lr5"></view>
+				<view @click="go('/pages/setting/index')" class="flex f-a-c f-j-c van-icon van-icon-setting-o f20-size padding-lr5"></view>
 				<view class="flex f-a-c f-j-c van-icon van-icon-chat-o f20-size padding-lr5"></view>
 			</view>
 			<view class="padding-lr15 flex">
@@ -28,7 +28,7 @@
 					<text class="f16-size f-w-b">0</text>
 					<text class="f12-size">{{i18n['足迹']}}</text>
 				</view>
-				<view class="flex flex-1 f-c f-a-c f-j-c">
+				<view @click="go('/pages/order/order')" class="flex flex-1 f-c f-a-c f-j-c">
 					<text class="f16-size f-w-b">0</text>
 					<text class="f12-size">{{i18n['全部订单']}}</text>
 				</view>
@@ -61,19 +61,19 @@
 		<view class="padding-12"></view>
 		<view class="padding-lr12">
 			<view class="bg-color-w b-radius-5  flex margin-t12 wrap-nav">
-				<view class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
+				<view @click="go('/pages/order/order?type=1')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
 					<text class="flex f-a-c van-icon van-icon-pending-payment f24-size"></text>
 					<text class="f12-size margin-t2">{{i18n['待支付']}}</text>
 				</view>
-				<view class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
+				<view @click="go('/pages/order/order?type=2')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
 					<text class="flex f-a-c van-icon van-icon-send-gift-o f24-size"></text>
 					<text class="f12-size margin-t2">{{i18n['待发货']}}</text>
 				</view>
-				<view class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
+				<view @click="go('/pages/order/order?type=3')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
 					<text class="flex f-a-c van-icon van-icon-logistics f24-size"></text>
 					<text class="f12-size margin-t2">{{i18n['待收货']}}</text>
 				</view>
-				<view class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
+				<view @click="go('/pages/order/order?type=4')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
 					<text class="flex f-a-c van-icon van-icon-comment-o f24-size"></text>
 					<text class="f12-size margin-t2">{{i18n['待评价']}}</text>
 				</view>
@@ -165,7 +165,7 @@
 					</view>
 					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['创作中心']}}</view>
 				</view>
-				<view class="flex f-s-0 f-c btn-item">
+				<view @click="go('/pages/setting/index')" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-shezhi f24-size"></text>
 					</view>

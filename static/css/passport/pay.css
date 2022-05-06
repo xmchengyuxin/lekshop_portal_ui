@@ -1,0 +1,34 @@
+.input {
+	width: 100%;
+	text-align: right;
+}
+.b-bottom {
+	border-bottom: 1px solid #E3ECEE;
+}
+.title::before {
+	content: '';
+	width: 3px;
+	height: 16px;
+	
+	background:linear-gradient(180deg,#DA2A1C 0%,#EF543C 100%)!important;
+	margin-right: 8px;
+}
+.textarea {
+	font-size: 14px;
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #E3ECEE; 
+border-radius: 2px;
+margin-top: 10px;
+}
+.add-img {
+	position: relative;
+	width: 80px;
+	height: 80px;
+	border: 1px dashed #BCBCBC;
+}
+.add-img .van-icon-close {
+	position: absolute;
+	right: -8px;
+	top: -12px;
+}

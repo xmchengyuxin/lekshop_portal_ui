@@ -43,9 +43,47 @@
 			} 
 		},
 		{
+			"path": "pages/setting/index",
+			"style": {
+				"navigationBarTitleText": "设置"
+			} 
+		},
+		{
+			"path": "pages/setting/edit",
+			"style": {
+				"navigationBarTitleText": "编辑",
+				"navigationBarBackgroundColor": "#FFFFFF"
+			} 
+		},
+		{
+			"path": "pages/setting/safe",
+			"style": {
+				"navigationBarTitleText": "账户与安全"
+			} 
+		},
+		{
+			"path": "pages/setting/about",
+			"style": {
+				"navigationBarTitleText": "关于我们",
+				"navigationBarBackgroundColor": "#FFFFFF"
+			} 
+		},
+		{
 			"path": "pages/order/sure",
 			"style": {
 				"navigationBarTitleText": "确认订单"
+			} 
+		},
+		{
+			"path": "pages/order/order",
+			"style": {
+				"navigationBarTitleText": "我的订单"
+			} 
+		},
+		{
+			"path": "pages/order/detail",
+			"style": {
+				"navigationBarTitleText": "订单详情"
 			} 
 		},
 		{
@@ -126,6 +164,32 @@
 				"navigationBarTitleText": "红包卡券",
 				"navigationBarBackgroundColor":"#F7F7F7"
 			} 
+		},
+		{
+			"path": "pages/passport/login",
+			"style": { 
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/passport/password",
+			"style": {
+				"navigationBarTitleText": "修改登陆密码",
+				"navigationBarBackgroundColor": "#FFFFFF"
+			} 
+		},
+		{
+			"path": "pages/passport/pay",
+			"style": {
+				"navigationBarTitleText": "支付密码",
+				"navigationBarBackgroundColor":"#Fff"
+			}
+		},
+		{
+			"path": "pages/passport/register",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		},
 		{
 			"path": "pages/wxAuth/bindphone",

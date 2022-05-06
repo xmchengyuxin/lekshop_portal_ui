@@ -1,9 +1,9 @@
 export default {
 	'daxiang': {
-		name: '梵指到家',
+		name: '商城',
 		api: 'https://portalapi.wode24h.com/',
 		hot: 'https://h5.wode24h.com/hotpush_user.wgt',
-		version: '40001'
+		version: '10000'
 	},
 	'daxiangsales': {
 		name: '梵指到家推广员',

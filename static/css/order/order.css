@@ -1,0 +1,18 @@
+.navs-on {
+	position: relative;
+}
+.navs-on::after {
+	content: '';
+	height: 1px;
+	    width: 28px;
+	    border-radius: 3px;
+	    background-color: #ff4f00;
+		position: absolute;
+		bottom: 0px;
+		left: 0;
+		right: 0;
+		margin: auto;
+}
+.wrap-swiper {
+	height: calc(100% - 30px);
+}

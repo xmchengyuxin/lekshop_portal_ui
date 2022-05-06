@@ -113,8 +113,8 @@
 .b-color-r {
 	border: 1px solid #ff2b00!important;
 }
-.b-color-85 {
-	border: 1px solid #856D43!important;
+.b-color-3 {
+	border: 1px solid #333!important;
 }
 .b-color-e {
 	border: 1px solid #f4f4f4!important;
@@ -382,6 +382,9 @@
 }
 .margin-b16 {
 	margin-bottom: 16px!important;
+}
+.margin-l12 {
+	margin-left: 12px!important;
 }
 .margin-r2 {
 	margin-right: 2px!important;
