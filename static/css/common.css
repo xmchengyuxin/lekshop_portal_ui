@@ -69,7 +69,24 @@ uni-image,
 image {
 	height: auto;
 }
-
+.grid {
+	display: grid;
+}
+.grid-c-2 {
+	grid-template-columns: 1fr 1fr;
+}
+.grid-c-3 {
+	grid-template-columns: 1fr 1fr 1fr;
+}
+.grid-c-4 {
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.grid-g2 {
+	gap: 2px;
+}
+.grid-g10 {
+	gap: 10px;
+}
 .flex {
 	display: box;
 	display: -webkit-box;
