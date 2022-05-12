@@ -1,0 +1,89 @@
+
+.nav-on {
+	position: relative;
+	z-index: 1;
+}
+.nav-on text {
+	position: relative;
+	z-index: 1;
+}
+.nav-on::before {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	width: 35px;
+	height: 4px;
+	background-color: #CDE676;
+	border-radius: 4px;
+	opacity: 0.8;
+}
+.line-bg {
+	position: relative;
+	top: -8px;
+	width: 28px;
+	height: 4px;
+	background: #EDEBEB;
+	border-radius: 2px;
+}
+.wrap-header-page1 {
+	position: relative;
+	z-index: 112;
+	background: rgba(0, 0, 0, 0.53);
+}
+.wrap-total {
+	height: 60px;
+	background: rgba(0, 0, 0, 0.5);
+	border-radius: 15px 15px 0px 0px;
+	box-sizing: content-box;
+	padding-bottom: 15px;
+}
+.user-img {
+	position: relative;
+	border: 4px solid  rgba(255, 255, 255, 0.4);
+}
+.wrap-like {
+	position: absolute;
+	right: -15px;
+	top: 10px;
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 100px 0px 0px 100px;
+	padding: 0 10px;
+}
+.per-img {
+	position: relative;
+	padding: 16%;
+	margin-right: 2%;
+	overflow: hidden;
+}
+.per-img:nth-child(3n+3) {
+	margin-right: 0;
+}
+.wrap-photos {
+	background: #F7F7F7;
+	position: relative;
+	z-index: 112;
+	 top: -15px;
+	  border-radius: 15px 15px 0px 0px;
+}
+.header-user-img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-position: top center;
+}
+.header-user-img::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.53);
+	filter: blur(1px);
+	z-index: 1;
+}

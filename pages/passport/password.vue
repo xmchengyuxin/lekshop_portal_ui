@@ -42,7 +42,7 @@
 						<input v-model="sms" type="tel" placeholder="请输入验证码">
 					</view>
 					<view class="padding-6">
-						<view @click="getCode" class="flex f-a-c f-j-c bg-color-w t-color-y f12-size b-radius-30 w-80 h100">{{smsTxt}}</view>
+						<phone-code :phone="phone" :sendType="3"  ></phone-code>
 					</view>
 				</view>
 				<view @click="changePay" class="flex f-a-c f-j-c b-radius-30 h-44 bg-color-linear-g t-color-w f-w-500 margin-t20">登录</view>
@@ -57,63 +57,23 @@
 	</view>
 </template>
 <script>
+	import phoneCode from '../common/phonecode.vue';
 	const $ = require('../../utils/api.js');
 	const api = require('../../utils/validate.js');
-	let codeTimeOut;
 	export default {
 		data() {
 			return {
 				phone: '',
 				password: '',
 				comfirmPassword: '',
-				codeText: '',
-				code: '',
-				smsTxt: '获取验证码',
-				sms: '',
 				isAgree: false,
+				sms: ''
 			};
 		},
 		onLoad: function() {
 			this.init();
 		},
 		methods: {
-			getCode() {
-				const self = this;
-				if (this.phone == '' || this.phone.length != 11) {
-					this.$toast('请正确手机号');
-					return;
-				}
-				if (this.smsTxt != '获取验证码') {
-					return;
-				}
-				clearInterval(codeTimeOut);
-				let postData = {
-					phone: this.phone,
-					sendType: 3
-				};
-				let time = 60;
-				codeTimeOut = setInterval(function() {
-					time--;
-					self.smsTxt = time + 's';
-					if (time <= 0) {
-						clearInterval(codeTimeOut);
-						self.smsTxt = '获取验证码';
-					}
-				}, 1000);
-				$.ajax({
-					url: 'common/sendCode',
-					data: postData,
-					success(res) {},
-					complete(res) {
-						if(res.code != 200) {
-							self.$toast(res.message);
-							clearInterval(codeTimeOut);
-							self.smsTxt = '获取验证码';
-						}else{
-						}
-					}
-				});
-			},
 			changePay() {
 				const self = this;
 				if(!self.isAgree) {
@@ -181,7 +141,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {},
+		components: {phoneCode},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

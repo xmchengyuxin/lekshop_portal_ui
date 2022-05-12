@@ -13,6 +13,18 @@
 			} 
 		},
 		{
+			"path": "pages/find/index",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
+		{
+			"path": "pages/find/user",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
+		{
 			"path": "pages/cart/index",
 			"style": {
 				"navigationStyle": "custom"

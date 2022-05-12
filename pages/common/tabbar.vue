@@ -47,7 +47,7 @@
 						"text": "分类"
 					},
 					{
-						"pagePath": "/pages/index/index",
+						"pagePath": "/pages/find/index",
 						"iconPath": "../../static/images/tab_find.png",
 						"selectedIconPath": "../../static/images/tab_find_on.png",
 						"text": "发现"

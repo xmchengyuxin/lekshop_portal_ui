@@ -159,7 +159,7 @@
 					</view>
 					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['智能小蜜']}}</view>
 				</view>
-				<view class="flex f-s-0 f-c btn-item">
+				<view @click="go('/pages/find/user')" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-faxian f28-size"></text>
 					</view>
