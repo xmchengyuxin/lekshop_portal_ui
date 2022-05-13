@@ -81,6 +81,9 @@ image {
 .grid-c-4 {
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+.grid-c-5 {
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
 .grid-g2 {
 	gap: 2px;
 }

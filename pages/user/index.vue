@@ -87,7 +87,7 @@
 					<text class="f16-size f-w-b">0</text>
 					<text class="f12-size margin-t6">{{i18n['我的卡券']}}</text>
 				</view>
-				<view class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
+				<view @click="go('/pages/money/index')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
 					<text class="f16-size f-w-b">0</text>
 					<text class="f12-size margin-t6">{{i18n['余额']}}</text>
 				</view>

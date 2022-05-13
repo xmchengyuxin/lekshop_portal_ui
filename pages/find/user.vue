@@ -26,8 +26,8 @@
 					<text class="van-icon van-icon-arrow-left t-color-w f20-size"></text>
 				</view>
 				<view class="flex flex-1"></view>
-				<view @click="go('/pages/work/posteruser')" class="flex f-a-c f-j-c f18-size van-icon van-icon-share-o t-color-w padding-lr10"></view>
-				<view @click="go('/pages/work/posteruser')" class="flex f-a-c f-j-c f18-size van-icon van-icon-weapp-nav t-color-w padding-lr10"></view>
+				<view @click="$refs.poster.open()" class="flex f-a-c f-j-c f18-size van-icon van-icon-share-o t-color-w padding-lr10"></view>
+				<view @click="$refs.shareinfo.open()" class="flex f-a-c f-j-c f18-size van-icon van-icon-weapp-nav t-color-w padding-lr10"></view>
 				<xcx-header></xcx-header>
 			</view>
 			<view class="padding-tb6"></view>
@@ -81,15 +81,19 @@
 				<view @click="scrollGo('goods')" :class="scrollTo == 'goods' ? 'nav-on' :'f13-size f-w-b'" class="flex f-a-c "><text class="f13-size f-w-b ">作品</text></view>
 				<view class="padding-lr20"></view>
 				<view @click="scrollGo('order-tip')" :class="scrollTo == 'order-tip' ? 'nav-on' :'f13-size f-w-b'"  class="flex f-a-c "><text class="f13-size f-w-b ">喜欢</text></view>
-			</view>
+			</view>	
 		</view>
+		<menu-btn ref="shareinfo"></menu-btn>
+		<poster ref="poster"></poster>
 	</view>
 </template>
 <style scoped>
 @import url('../../static/css/find/user.css');
+
 </style>
 <script>
 	const $ = require('../../utils/api.js');
+	let self;
 	export default {
 		data() {
 			return {
@@ -109,6 +113,7 @@
 			};
 		},
 		onLoad: function(options) {
+			self = this;
 			let height = getApp().globalData.height;
 			height = height - 44 - this.top -50-40;
 			this.height = height;

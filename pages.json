@@ -55,6 +55,19 @@
 			} 
 		},
 		{
+			"path": "pages/money/index",
+			"style": {
+				"navigationBarTitleText": "余额"
+			} 
+		},
+		{
+			"path": "pages/money/recharge",
+			"style": {
+				"navigationBarTitleText": "充值",
+				"navigationBarBackgroundColor": "#FFFFFF"
+			} 
+		},
+		{
 			"path": "pages/setting/index",
 			"style": {
 				"navigationBarTitleText": "设置"
