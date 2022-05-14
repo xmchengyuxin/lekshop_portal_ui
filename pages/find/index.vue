@@ -1,7 +1,7 @@
 <template>
 	<view class="contain ">
 		<view class="fixed-top h-46 flex bg-color-r box-c">
-			<view @click="back(1)" class="flex f-a-c f-s-0 padding-lr10 van-icon van-icon-photograph t-color-w f20-size"></view>
+			<view @click="$refs.showIssue.open()" class="flex f-a-c f-s-0 padding-lr10 van-icon van-icon-photograph t-color-w f20-size"></view>
 			<view class="flex flex-1 t-color-w">
 					<view :class="active == 0 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">发现</view>
 					<view :class="active == 1 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">视频</view>
@@ -67,12 +67,14 @@
 			</view>
 		</view>
 		<tab-bar :active="2"></tab-bar>
+		<issue-btn ref="showIssue"></issue-btn>
 	</view>
 </template>
 <style scoped>
 	@import url('../../static/css/index/index.css');
 </style>
 <script>
+	import issueBtn from './components/issuebtn.vue';
 	const $ = require('../../utils/api.js');
 	let self;
 	export default {
@@ -93,7 +95,7 @@
 		created() {},
 		mounted() {},
 		destroyed() {},
-		components: {},
+		components: {issueBtn},
 		onPullDownRefresh() {},
 		onReachBottom() {}
 	}

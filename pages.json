@@ -13,6 +13,12 @@
 			} 
 		},
 		{
+			"path": "pages/find/issue",
+			"style": {
+				"navigationBarTitleText": "发布"
+			} 
+		},
+		{
 			"path": "pages/find/index",
 			"style": {
 				"navigationStyle": "custom"

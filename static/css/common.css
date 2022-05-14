@@ -91,7 +91,6 @@ image {
 	gap: 10px;
 }
 .flex {
-	display: box;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -moz-box;

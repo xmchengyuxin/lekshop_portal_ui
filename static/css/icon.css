@@ -1,8 +1,8 @@
 @font-face {
   font-family: "van-icon"; /* Project id 3349930 */
-  src: url('//at.alicdn.com/t/font_3349930_nqnatfw2u8h.woff2?t=1651130040146') format('woff2'),
-       url('//at.alicdn.com/t/font_3349930_nqnatfw2u8h.woff?t=1651130040146') format('woff'),
-       url('//at.alicdn.com/t/font_3349930_nqnatfw2u8h.ttf?t=1651130040146') format('truetype');
+  src: url('//at.alicdn.com/t/font_3349930_n2n18vbk8f.woff2?t=1652495151302') format('woff2'),
+       url('//at.alicdn.com/t/font_3349930_n2n18vbk8f.woff?t=1652495151302') format('woff'),
+       url('//at.alicdn.com/t/font_3349930_n2n18vbk8f.ttf?t=1652495151302') format('truetype');
 }
 
 .van-icon {
@@ -11,6 +11,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.van-icon-fabu:before {
+  content: "\e63d";
 }
 
 .van-icon-delete-o:before {
