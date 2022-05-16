@@ -74,6 +74,7 @@
 				this.close();
 			},
 			close() {
+				self = this;
 				self.$refs.share.close();
 			},
 			open() {

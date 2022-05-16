@@ -27,3 +27,6 @@
 .pintuan-item:nth-child(3n+3) {
 	margin-right: 0;
 }
+.wrap-popup-radius {
+	border-radius: 15px 15px 0 0;
+}

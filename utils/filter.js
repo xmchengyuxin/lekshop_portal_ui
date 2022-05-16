@@ -203,10 +203,7 @@ const hideCenterText = function(name) {
 		return url
 	};
 	const bgimg = function(url,width) {
-		if(!url){url = '';}
-		if(url.indexOf('chengyuwb') >= 0) {
-			url = url.replace(/https:/g, 'http:');
-		}
+		if(!url){return ''};
 		if(url.indexOf('?') >= 0){
 			url = url.slice(0,url.indexOf('?'))
 		}

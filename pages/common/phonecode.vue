@@ -17,7 +17,7 @@
 				required: true,
 				type: String,
 			},
-			sendType: {
+			sendType: {//1注册 2绑定 3忘记密码 4通用
 				type: Number,
 				default: 4
 			},
@@ -32,7 +32,9 @@
 			codeClass: {
 				type: String,
 				default: 'flex f-a-c f-j-c  f12-size b-radius-30 w-80 h100'
-			}
+			},
+			code: '',
+			codeImg: '',
 		},	
 		data() {
 			return {
@@ -41,14 +43,17 @@
 			};
 		},
 		onLoad: function() {
-			self = this;
 			this.init();
 		},
 		methods: {
 			getCode() {
 				const self = this;
+				if(this.code == '') {
+					this.$toast('请输入图形验证码');
+					return;
+				}
 				if (this.phone == '' || this.phone.length != 11) {
-					this.$toast('请正确手机号');
+					this.$toast('请输入正确手机号');
 					return;
 				}
 				if (this.smsTxt != '获取验证码') {
@@ -57,7 +62,9 @@
 				clearInterval(codeTimeOut);
 				let postData = {
 					phone: this.phone,
-					sendType: this.sendType
+					sendType: this.sendType,
+					cToken: this.codeImg.cToken,
+					captcha: this.code,
 				};
 				let time = 60;
 				codeTimeOut = setInterval(function() {

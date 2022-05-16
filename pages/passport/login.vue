@@ -27,6 +27,17 @@
 						<input v-model="password" type="password" placeholder="请输入">
 					</view>
 				</view>
+				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8 over-h">
+					<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">
+						<image class="w-20" src="../../static/images/login_code.png" mode="widthFix"></image>
+					</view>
+					<view class="flex flex-1 padding-lr12">
+						<input v-model="code" type="number" placeholder="请输入">
+					</view>
+					<view class="flex f-a-c f-s-0">
+						<img-code ref="imgCode" class="flex  h-30"></img-code>
+					</view>
+				</view>
 				<view @click="login" class="flex f-a-c f-j-c b-radius-30 h-44 bg-color-linear-y t-color-w f-w-500 margin-t20">登录</view>
 				<view class="flex f-j-s ">
 					<view @click="go('/pages/passport/register')" class="f12-size  padding-tb20">注册</view>
@@ -40,6 +51,7 @@
 	</view>
 </template>
 <script>
+	import imgCode from '../common/imgcode.vue';
 	const $ = require('../../utils/api.js');
 	export default {
 		data() {
@@ -47,6 +59,7 @@
 				phone: '',
 				password: '',
 				isAgree: false,
+				code: '',
 			};
 		},
 		onLoad: function() {
@@ -66,12 +79,19 @@
 					this.$toast('请输入正确密码');
 					return;
 				}
+				if (this.code == '') {
+					this.$toast('请输入图形验证码');
+					return;
+				}
 				$.ajax({
 					url: 'common/login',
 					data: {
 						username: this.phone,
 						password: this.password,
+						type: 1,
 						registrationId: '',//	极光注册ID
+						cToken: self.$refs.imgCode.code.cToken,
+						captcha: self.code,
 					},
 					
 					success (res) {
@@ -90,7 +110,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {},
+		components: {imgCode},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

@@ -1,9 +1,41 @@
 import Vue from 'vue';
+const API = require('./api/user.js').default;
 const $ = require('./api.js');
 const QQMapWX = require('./qqmap-wx-jssdk.min.js');
 let qqmapsdk;
 // import store from '../store/index.js'; //引入store
 export default {
+	previewImg(url,urls) {
+		if(!urls){
+			urls = [url];
+		}
+		uni.previewImage({
+			current: url,
+			urls: urls
+		})
+	},
+	getUser(options) {
+		let user = uni.getStorageSync('userInfo') ? uni.getStorageSync('userInfo') : '';
+		if(options.isAjax || user == '') {
+			$.ajax({
+				url: API.getUserApi,
+				data: {},
+				method: 'GET',
+				success(res) {
+					if(options.success) {
+						user = res.data ? res.data : '';
+						uni.setStorageSync('userInfo',user);
+						options.success(user);
+					}
+				}
+			})
+		}else{
+			if(options.success) {
+				options.success(user);
+			}
+		}
+		
+	},
 	clickBanner(item){
 		if(item.url.indexOf('pages') >= 0) {
 			$.go(item.url);

@@ -27,6 +27,8 @@ Vue.prototype.callPhone = global.callPhone;
 Vue.prototype.addReverse = global.addReverse;
 Vue.prototype.h5Reload = global.h5Reload;
 Vue.prototype.clickBanner = global.clickBanner;
+Vue.prototype.getUser = global.getUser;
+Vue.prototype.previewImg = global.previewImg;
 Vue.component('tabBar',tabbar);
 Vue.component('noData',nodata);
 Vue.component('upDate',update);

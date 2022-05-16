@@ -2,10 +2,10 @@
 	<view class="contain">
 		<view class="bg-color-w padding-lr12 ">
 			<view @click="go('/pages/setting/edit')" class="bg-color-w padding-tb12 flex f-j-s f-a-c b-bottom">
-				<view class="flex f-s-0 w-50 h-50 b-radius bg-color margin-r12"></view>
+				<view class="flex f-s-0 w-50 h-50 b-radius bg-img margin-r12" :style="user.headImg | bgimg(300)+''"></view>
 				<view class="flex flex-1 f-c">
-					<view class="f16-size">198****2511</view>
-					<view class="margin-t2">用户名：19859222511</view>
+					<view class="f16-size">{{user.phone | hideCenterText}}</view>
+					<view class="margin-t2">用户名：{{user.code}}</view>
 				</view>
 				<view class="flex f-s-0">
 					<text class="flex f-a-c f-j-c van-icon van-icon-edit t-color-9 f16-size margin-r4"></text>
@@ -50,14 +50,25 @@
 	let self;
 	export default {
 		data() {
-			return {};
+			return {
+				user: '',
+			};
 		},
 		onLoad: function() {
 			self = this;
 			this.init();
 		},
 		methods: {
-			init() {},
+			getUserInfo() {
+				self.getUser({
+					success(res) {
+						self.user = res;
+					}
+				})
+			},
+			init() {
+				this.getUserInfo();
+			},
 		},
 		created() {
 		},

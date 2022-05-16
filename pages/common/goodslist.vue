@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<waterfallsFlow v-if="sortType == 1" :list="list" :offset="offset" :idKey="idKey" :imageSrcKey="imageSrcKey"
+		<waterfallsFlow @wapper-lick="clickGood" v-if="sortType == 1" :list="list" :offset="offset" :idKey="idKey" :imageSrcKey="imageSrcKey"
 			:cols="cols" :imageStyle="imageStyle" :single="single">
 			<!--  #ifdef  MP-WEIXIN -->
 			<!-- 微信小程序自定义内容 -->
@@ -8,7 +8,7 @@
 				<view class="padding-12">
 					<view class="">
 						<text class="f10-size bg-color-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">自营</text>
-						<text>{{item.text}}</text>
+						<text>{{item.title}}</text>
 					</view>
 					<view class="flex  f-w margin-t4">
 						<view class="flex f-a-c f10-size padding-lr5 h-16 b-color-r t-color-r b-radius-2 margin-r8">
@@ -31,7 +31,7 @@
 				<view class="padding-12">
 					<view class="">
 						<text class="f10-size bg-color-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">自营</text>
-						<text>{{item.text}}</text>
+						<text>{{item.title}}</text>
 					</view>
 					<view class="flex  f-w margin-t4">
 						<view class="flex f-a-c f10-size padding-lr5 h-16 b-color-r t-color-r b-radius-2 margin-r8">
@@ -48,13 +48,13 @@
 			</template>
 			<!-- #endif -->
 		</waterfallsFlow>
-		<view v-if="sortType == 2" v-for="(item, index) of list" :key="index" class="b-radius-5 bg-color-w flex margin-t10">
+		<view @click="clickGood(item)" v-if="sortType == 2" v-for="(item, index) of list" :key="index" class="b-radius-5 bg-color-w flex margin-t10">
 			<view class="flex  f-s-0 w-120 h-120 bg-img b-radius-5" :style="item[imageSrcKey] | bgimg(400)"></view>
 			<view class="flex flex-1 f-c f-j-s padding-10">
 				<view class="flex flex-1 f-c">
 					<view class="line2">
 						<text class="f10-size bg-color-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">自营</text>
-						<text class="">{{item.text}}</text>
+						<text class="">{{item.title}}</text>
 					</view>
 					<view class="flex  f-w margin-t4">
 						<view class="flex f-a-c f10-size padding-lr5 h-16 b-color-r t-color-r b-radius-2 margin-r8">官方放心购
@@ -100,7 +100,7 @@
 			// 图片 src 的键名
 			imageSrcKey: {
 				type: String,
-				default: "image_url"
+				default: "mainImg"
 			},
 			// 列数
 			cols: {
@@ -131,7 +131,9 @@
 			this.init();
 		},
 		methods: {
-
+			clickGood(data) {
+				$.go('/pages/shops/detail?id='+data.id);
+			},
 			init() {},
 
 

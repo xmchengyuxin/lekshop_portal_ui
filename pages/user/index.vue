@@ -8,9 +8,10 @@
 				<view class="flex f-a-c f-j-c van-icon van-icon-chat-o f20-size padding-lr5"></view>
 			</view>
 			<view class="padding-lr15 flex">
-				<view class="w-60 h-60 b-radius bg-color bg-img margin-r12"></view>
+				<view @click="updateImg" class="w-60 h-60 b-radius  bg-img margin-r12" :style="user.headImg | bgimg(300)+''"></view>
 				<view class="flex f-c f-a-s">
-					<view class="f22-size">{{i18n['登录']}} / {{i18n['注册']}}</view>
+					<view v-if="user == ''" @click="go('/pages/passport/login')" class="f22-size">{{i18n['登录']}} / {{i18n['注册']}}</view>
+					<view v-if="user != ''"  class="f22-size">{{user.phone | hideCenterText}}</view>
 					<view class="f10-size padding-lr6 b-radius-2 h-16 t-color-w bg-color-linear-r margin-t6">
 						{{i18n['Hi，欢迎登录']}}</view>
 				</view>
@@ -88,7 +89,7 @@
 					<text class="f12-size margin-t6">{{i18n['我的卡券']}}</text>
 				</view>
 				<view @click="go('/pages/money/index')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
-					<text class="f16-size f-w-b">0</text>
+					<text class="f16-size f-w-b">{{account != '' ? account.amount : 0}}</text>
 					<text class="f12-size margin-t6">{{i18n['余额']}}</text>
 				</view>
 				<view class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
@@ -96,7 +97,7 @@
 					<text class="f12-size margin-t6">{{i18n['银行卡']}}</text>
 				</view>
 				<view class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
-					<text class="f16-size f-w-b">0</text>
+					<text class="f16-size f-w-b">{{account != '' ? account.point : 0}}</text>
 					<text class="f12-size margin-t6">{{i18n['积分']}}</text>
 				</view>
 				<view class="flex flex-1 f-s-0 f-c f-a-c f-j-c nav-last-item">
@@ -185,6 +186,7 @@
 	@import url('../../static/css/iconcolor.css');
 </style>
 <script>
+	const API = require('../../utils/api/user.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
 	export default {
@@ -196,6 +198,8 @@
 					title: "恐龙",
 					text: "恐龙来啦",
 				}, ],
+				user: '',
+				account: '',
 			};
 		},
 		onLoad: function() {
@@ -203,7 +207,37 @@
 			this.init();
 		},
 		methods: {
-			init() {},
+			updateImg() {
+				$.uploadimg({
+					url: API.updateHeadImgApi,
+					success(res) {
+						self.user.headImg = res;
+						uni.setStorageSync('userInfo',self.user);
+					}
+				})
+			},
+			getAccount() {
+				$.ajax({
+					url: API.getAccountApi,
+					data: {},
+					method: 'GET',
+					success(res) {
+						self.account = res.data ? res.data : '';
+					}
+				})
+			},
+			getUserInfo() {
+				self.getUser({
+					success(res) {
+						self.user = res;
+						uni.setStorageSync('userInfo',self.user);
+					}
+				})
+			},
+			init() {
+				this.getUserInfo();
+				this.getAccount();
+			},
 		},
 		created() {},
 		computed: {

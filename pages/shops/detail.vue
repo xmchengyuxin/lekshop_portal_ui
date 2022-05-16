@@ -8,41 +8,36 @@
 					<text class="t-color-9">{{i18n['搜索商品']}}</text>
 				</view>
 			</view>
-			<view class="flex f-a-c f-j-c padding-lr5 van-icon van-icon-share-o f20-size"></view>
-			<view class="flex f-a-c f-j-c padding-lr5 van-icon van-icon-bars f20-size"></view>
+			<view @click="$refs.menuBtn.openShare();" class="flex f-a-c f-j-c padding-lr5 van-icon van-icon-share-o f20-size"></view>
+			<view @click="$refs.menuBtn.open()" class="flex f-a-c f-j-c padding-lr5 van-icon van-icon-bars f20-size"></view>
 			<view class="flex f-a-c f-j-c padding-lr5 van-icon van-icon-shopping-cart-o f20-size "></view>
 			<view class="padding-lr2"></view>
-			<!-- #ifdef MP-WEIXIN -->
-			<view class="flex f-s-0" style="width: 180upx;"></view>
-			<!-- #endif -->
+			<xcx-header></xcx-header>
 		</view>
 		<view :style="{'padding-top': top+44+'px'}"></view>
 		<view class="wrap-banner" >
-			<swiper class="wrap-banner" :indicator-dots="false" :autoplay="true" :interval="3000" :duration="1000">
-				<swiper-item >
-					<view class="bg-color h100 "></view>
-				</swiper-item>
-				<swiper-item>
-					<view class="bg-color-linear-y h100 "></view>
+			<swiper class="wrap-banner" :indicator-dots="false" :loop="true" :autoplay="true" :interval="3000" :duration="1000">
+				<swiper-item @click="previewImg(item)" v-for="item in banner">
+					<view class=" h100 bg-img" :style="item | bgimg(700)+''"></view>
 				</swiper-item>
 			</swiper>
-			<view class="flex f-a-c f-j-c wrap-dot  b-radius-30 t-color-w f10-size">5/6</view>
+			<view class="flex f-a-c f-j-c wrap-dot  b-radius-30 t-color-w f10-size">5/{{banner.length}}</view>
 		</view>
 		
 		<view class="padding-12">
 			<view class="bg-color-w b-radius-10 padding-12">
 				<view class="flex ">
-					<view class="text-price f18-size f-w-b t-color-p margin-r8">18</view>
+					<view class="text-price f18-size f-w-b t-color-p margin-r8">{{goods.price}}</view>
 					<view class="flex f-a-c f10-size t-color-9">
 						<text class="margin-r4">{{i18n['价格']}}</text>
-						<text class="text-price del-line">155</text>
+						<text class="text-price del-line">{{goods.price}}</text>
 					</view>
 				</view>
 				<view class="flex f-a-c f-j-s margin-t6">
 					<view class="flex f-a-c f-j-c h-16 b-radius-30 t-color-w bg-color-r f10-size padding-lr6">{{i18n['自营']}}</view>
-					<view class="f10-size t-color-9">{{i18n['月销']}} 5</view>
+					<view class="f10-size t-color-9">{{i18n['月销']}} {{goods.sellNum}}</view>
 				</view>
-				<view class="f12-size f-w-b margin-t6">针织衫春秋季新款女装毛衣2020春温柔风黑色长袖短款上衣开衫外套</view>
+				<view class="f12-size f-w-b margin-t6">{{goods.title}}</view>
 			</view>
 			<view class="bg-color-w b-radius-10 padding-12 margin-t12">
 				<view @click="$refs.sku.open()" class="flex padding-tb8">
@@ -59,9 +54,11 @@
 					</view>
 					<view class="flex f-a-c f-s-0 van-icon f12-size van-icon-arrow t-color-9"></view>
 				</view>
-				<view class="flex padding-tb8">
+				<view @click="$refs.goodsParams.open()" class="flex padding-tb8">
 					<view class="flex f-s-0 f12-size t-color-9 margin-r10">{{i18n['参数']}}</view>
-					<view class="flex f12-size flex-1 padding-lr10">颜色分类</view>
+					<view class="flex f12-size flex-1 padding-lr10">
+						<text class="f12-size margin-r2" v-if="index <= 2" v-for="(item,index) in goodsParams">{{item.name}}</text>
+					</view>
 					<view class="flex f-a-c f-s-0 van-icon f12-size van-icon-arrow t-color-9"></view>
 				</view>
 			</view>
@@ -88,7 +85,7 @@
 				<view class="flex">
 					<view class="flex w-50 h-50 b-radius bg-color margin-r12"></view>
 					<view class="flex f-c f-j-c flex-1">
-						<text class="f15-size f-w-b">前海万联旗舰店</text>
+						<text class="f15-size f-w-b">{{goods.shopName}}</text>
 						<text class="f12-size t-color-9 margin-t4">{{i18n['1人关注店铺'] | i18n(2)}}</text>
 					</view>
 					<view class="flex f-s-0 f-c wrap-shops-pj f-j-c">
@@ -112,7 +109,7 @@
 				<view class="flex f-w ">
 					<view v-for="item in 5" class="flex  f-s-0  f-c pintuan-item">
 						<view class="h-100 bg-img bg-color b-radius-8"></view>
-						<view class="f10-size line1 margin-t4">反季羽绒棉服2020新款棉衣韩版宽松面包服女冬装外套短款棉袄清仓</view>
+						<view class="f10-size line1 margin-t4">{{goods.title}}</view>
 						<view class="flex f-a-c f-j-s margin-t4">
 							<view class="text-price f16-size t-color-y">189.00</view>
 						</view>
@@ -124,6 +121,7 @@
 		</view>
 		<view class="flex f-a-c f-j-c no-more t-color-9 f12-size margin-t2">{{i18n['宝贝详情']}}</view>
 		<view class="padding-tb6"></view>
+		<rich-text :nodes="goods.detail | html"></rich-text>
 		<view  :style="{'padding-bottom': isIphonex ? '84px' : '50px'}"></view>
 		<view class="fixed-top bottom-btn bg-color-w flex padding-lr12 h-50" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
 			<view class="flex flex-1 f-j-s margin-r20">
@@ -148,24 +146,48 @@
 			</view>
 		</view>
 		
-		<uni-popup ref="sku" type="bottom" backgroundColor="#fff">
-			<view class="padding-10">
+		<!-- 产品参数 -->
+		<uni-popup ref="goodsParams" type="bottom" >
+			<view class="padding-12 wrap-popup-radius bg-color-w">
+				<view class="flex f-a-c f-j-c f16-size margin-b10">{{i18n['产品参数']}}</view>
+				<view class="b-bottom padding-tb10 flex" v-for="item in goodsParams">
+					<text class="flex f-s-0 w-80 f12-size t-color-9">{{item.name}}</text>
+					<view class="flex flex-1  f12-size t-color-0">{{item.value}}</view>
+				</view>
+			</view>
+		</uni-popup>
+		
+		<!-- 规格弹窗 -->
+		<uni-popup ref="sku" type="bottom" >
+			<view class="padding-10 wrap-popup-radius bg-color-w">
 				<view class="flex">
-					<view class="flex f-s-0 w-60 h-60 b-radius-2 bg-color margin-r12"></view>
-					<view class="flex flex-1 f-c">
-						<view class="t-color-y f18-size f-w-b text-price">29.9</view>
-						<view class="flex f11-size t-color-9">{{i18n['库存']}} 99</view>
-					</view>
-					<view class="flex f-a-s">
+					<block v-if="sku == ''">
+						<view @click="previewImg(goods.mainImg)" class="flex f-s-0 w-80 h-80 b-radius-5 bg-img margin-r12" :style="goods.mainImg | bgimg(300)+''"></view>
+						<view class="flex flex-1 f-c">
+							<view class="t-color-y f18-size f-w-b text-price">{{goods.price}}</view>
+							<view class="flex f11-size t-color-9">{{i18n['库存']}} 99</view>
+						</view>
+					</block>
+					<block v-if="sku != ''">
+						<view @click="previewImg(sku.img)" class="flex f-s-0 w-80 h-80 b-radius-5 bg-img margin-r12" :style="sku.img | bgimg(300)+''"></view>
+						<view class="flex flex-1 f-c f-j-c">
+							<view class="flex f-a-c ">
+								<view class="t-color-y f18-size f-w-b text-price">{{sku.price}}</view>
+							</view>
+							<view class="flex f11-size t-color-9">{{i18n['库存']}} {{sku.stock}}</view>
+						</view>
+					</block>
+					
+					<view @click="$refs.sku.close()" class="flex f-a-s">
 						<text class="flex f-a-c van-icon van-icon-close t-color-3"></text>
 					</view>
 				</view>
 				<view class="padding-tb6 b-bottom"></view>
 				<scroll-view scroll-y="true" style="height: 60vh;">
-					<view class="padding-tb10 b-bottom">
-						<view>尺码</view>
+					<view v-for="(item,index) in skuInfoList" class="padding-tb10 b-bottom">
+						<view>{{item.attrKey}}</view>
 						<view class="flex f-w">
-							<view v-for="(item,index) in 6" class="flex f-a-c f-j-c f-s-0 b-radius-2 bg-color-f7 margin-r12 margin-t12 h-30 f12-size padding-lr10">155/80A/S</view>
+							<view @click="chooseSku(index,child)" v-for="(child,idx) in item.valList" :class="chooseSkuList[index] && chooseSkuList[index].id == child.id ? 't-color-y b-color-y' : ''" class="flex f-a-c f-j-c f-s-0 b-radius-2 bg-color-f7 margin-r12 margin-t12 h-30 f12-size padding-lr10">{{child.value}}</view>
 						</view>
 					</view> 
 					<view class="padding-tb10 flex f-j-s">
@@ -178,19 +200,20 @@
 					</view> 
 				</scroll-view>
 				<view class="flex b-radius-30 h-34 over-h margin-t12">
-					<view class="flex f-a-c flex-1 f-j-c bg-color-linear-y t-color-w f12-size w-100">{{i18n['加入购物车']}}</view>
+					<view @click="addCar" class="flex f-a-c flex-1 f-j-c bg-color-linear-y t-color-w f12-size w-100">{{i18n['加入购物车']}}</view>
 					<view class="flex f-a-c flex-1 f-j-c bg-color-p t-color-w f12-size w-100">{{i18n['立即购买']}}</view>
 				</view>
 				<view  :style="{'padding-bottom': isIphonex ? '24px' : ''}"></view>
 			</view>
 		</uni-popup>
-		
+		<menu-btn ref="menuBtn"></menu-btn>
 	</view>
 </template>
 <style scoped>
 @import url('../../static/css/shops/detail.css');
 </style>
 <script>
+	const API = require('../../utils/api/shops.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
 	export default {
@@ -198,14 +221,84 @@
 			return {
 				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
 				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
+				goods: '',
+				id: '',
+				banner: [],
+				goodsParams: [],
+				skuInfoList: [],//规格属性
+				skuList: [],//规格价格表
+				chooseSkuList: [],
+				sku: '',//选中规格后的商品信息
+				attrSymbolPath: '',
+				num: 1,
 			};
 		},
-		onLoad: function() {
+		onLoad: function(options) {
 			self = this;
+			this.id = options.id ? options.id : 6;
 			this.init();
 		},
 		methods: {
-			init() {},
+			addCar() {
+				let postData = {
+					goodsId: self.id,
+					attrSymbolPath: self.attrSymbolPath,
+					num: self.num,
+				}
+				$.ajax({
+					url: API.addCarApi,
+					data: postData,
+					method: 'POST',
+					success(res) {
+					}
+				})
+			},
+			chooseSku(index,data) {
+				this.$set(this.chooseSkuList,index,data);
+				this.getSkuInfo();
+			},
+			getSkuInfo() {
+				if(this.skuList.length > 0) {
+					let attrSymbolPathArr = [];
+					let attrSymbolPath = '';
+					let isAll = true;//默认规格全部以选择
+					this.chooseSkuList.forEach((ele,index) => {
+						if(ele.id) {
+							attrSymbolPathArr.push(ele.id);
+						}else{
+							isAll = false;
+						}
+					})
+					if(!isAll){return;}//未全部选中不执行下一步
+					attrSymbolPath = attrSymbolPathArr.join('/');
+					this.skuList.forEach((ele,index) => {
+						if(ele.attrSymbolPath == attrSymbolPath) {
+							self.sku = ele;
+							self.attrSymbolPath = attrSymbolPath;
+						}
+					})
+				}
+			},
+			getDetail() {
+				$.ajax({
+					url: API.goodsDetailApi,
+					data: {goodsId:self.id},
+					method: 'GET',
+					success(res) {
+						let info = res.data ? res.data : '';
+						if(info == ''){return};
+						self.goods =  info.goods;
+						self.banner = self.goods.goodsImg.split('|');
+						self.goodsParams = info.goodsParams ? info.goodsParams : [];
+						self.skuList = info.goodsSku.skuList ? info.goodsSku.skuList : [];
+						self.skuInfoList = info.goodsSku.attrKeyResultList ? info.goodsSku.attrKeyResultList : [];
+						self.chooseSkuList = new Array(self.skuInfoList.length);
+					}
+				})
+			},
+			init() {
+				this.getDetail();
+			},
 		},
 		created() {
 		},

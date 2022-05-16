@@ -2,7 +2,7 @@
 	<view class="contain">
 <view class="padding-15">
 	<view class="padding-20"></view>
-			<view class="padding-30"></view>
+			<view class="padding-6"></view>
 			<view class="padding-lr12">
 				<view class="f20-size f-w-b">手机号注册</view>
 				<view @click="isAgree = !isAgree" class="flex f-a-c margin-t8">
@@ -14,9 +14,28 @@
 				</view>
 				<view class="padding-tb6"></view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
+					<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">
+						<image class="w-20" src="../../static/images/tab_user.png" mode="widthFix"></image>
+					</view>
+					<view class="flex flex-1 padding-lr12">
+						<input v-model="name" type="text" placeholder="请输入">
+					</view>
+				</view>
+				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
 					<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">+86</view>
 					<view class="flex flex-1 padding-lr12">
 						<input v-model="phone" type="tel" placeholder="请输入">
+					</view>
+				</view>
+				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8 over-h">
+					<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">
+						<image class="w-20" src="../../static/images/login_code.png" mode="widthFix"></image>
+					</view>
+					<view class="flex flex-1 padding-lr12">
+						<input v-model="code" type="number" placeholder="请输入">
+					</view>
+					<view class="flex f-a-c f-s-0">
+						<img-code ref="imgCode" @imgSuc="getImgCode" class="flex  h-30"></img-code>
 					</view>
 				</view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
@@ -27,7 +46,7 @@
 						<input v-model="sms" type="tel" placeholder="请输入验证码">
 					</view>
 					<view class="padding-6">
-						<phone-code :phone="phone" :sendType="1"  ></phone-code>
+						<phone-code ref="phonecode" :codeImg="codeImg" :code="code" :phone="phone"  :sendType="1"  ></phone-code>
 					</view>
 				</view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
@@ -36,6 +55,14 @@
 					</view>
 					<view class="flex flex-1 padding-lr12">
 						<input v-model="password" type="password" placeholder="设置输入新密码">
+					</view>
+				</view>
+				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
+					<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">
+						<image class="w-20" src="../../static/images/login_passport.png" mode="widthFix"></image>
+					</view>
+					<view class="flex flex-1 padding-lr12">
+						<input v-model="confirmPassword" type="password" placeholder="确认新密码">
 					</view>
 				</view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
@@ -59,15 +86,20 @@
 	</view>
 </template>
 <script>
+	import imgCode from '../common/imgcode.vue';
 	import phoneCode from '../common/phonecode.vue';
 	const $ = require('../../utils/api.js');
 	const api = require('../../utils/validate.js');
 	export default {
 		data() {
 			return {
+				name: '',
 				phone: '',
 				sms: '',
+				code: '',
+				codeImg: '',
 				password: '',
+				confirmPassword: '',
 				invite: '',
 				isAgree: false,
 			};
@@ -77,12 +109,20 @@
 			this.init();
 		},
 		methods: {
+			getImgCode(res) {
+				this.codeImg = res;
+			},
 			register() {
 				const self = this;
 				if(!self.isAgree) {
 					$.$toast('请阅读并同意用户协议');return;
 				}
 				let check = api.validate([
+					{
+						value: this.name,
+						text:'请输入用户名',
+						rules: ''
+					},
 					{
 						value: this.phone,
 						text:'请输入正确手机号码',
@@ -91,6 +131,11 @@
 					{
 						value: this.password,
 						text:'请输入登录密码',
+						rules: ''
+					},
+					{
+						value: this.confirmPassword,
+						text:'请输入确认密码',
 						rules: ''
 					},
 					{
@@ -103,22 +148,20 @@
 				$.ajax({
 					url: 'common/register',
 					data: {
-						username: self.phone,
+						username: self.name,
+						phone: self.phone,
 						password: this.password,
 						code: this.sms,
-						inviteCode: this.invite
+						inviteCode: this.invite,
+						confirmPassword: this.confirmPassword,
+						type: 1,
+						
 					},
 					success(res) {
 						self.$toast('注册成功');
 						uni.setStorageSync('token',res.data.tokenHead + ' ' + res.data.token);
 						uni.setStorageSync('userInfo',res.data.member);
-						// #ifdef H5
-						self.go('/pages/passport/down',3,2000);
-						// #endif
-						// #ifndef H5
 						self.go('/pages/index/index',3,2000);
-						// #endif
-					
 					}
 				});
 			},
@@ -142,7 +185,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {phoneCode},
+		components: {phoneCode,imgCode},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

@@ -27,28 +27,23 @@ export default {
 	onLaunch: function(options) {
 		const self = this;
 		this.globalData.tuijianren = options.query.invite ? options.query.invite : '';
-		uni.removeStorageSync('isSalesman');
-		if(this.globalData.appRole == 'daxiang') {
-			// #ifdef H5
-				if (window.location.href.indexOf('pages/passport/down') >= 0) {
-					return;//通过下载链接进来的无需进行授权
+		// #ifdef H5
+			if (window.location.href.indexOf('pages/passport/down') >= 0) {
+				return;//通过下载链接进来的无需进行授权
+			}
+			if(this.isWeiXin()) {
+				wx.ready(function(){
+					// TODO  
+				});
+				if(!uni.getStorageSync('token')){
+					$.wxAuthH5(options.query.invite ? options.query.invite : '');
 				}
-				if(this.isWeiXin()) {
-					wx.ready(function(){
-						// TODO  
-					});
-					if(!uni.getStorageSync('token')){
-						$.wxAuthH5(options.query.invite ? options.query.invite : '');
-					}
-					if (window.location.href.indexOf('from') >= 0) {
-						this.h5Reload();
-					}
-					
+				if (window.location.href.indexOf('from') >= 0) {
+					this.h5Reload();
 				}
-			// #endif
-		}else{
-			uni.setStorageSync('isSalesman', true);
-		}
+				
+			}
+		// #endif
 		 
 		// var vConsole = new VConsole();
 		console.log('App Launch');
@@ -93,10 +88,7 @@ export default {
 				uni.setStorageSync('model', res.model);
 			}
 		});
-		if(this.globalData.appRole == 'daxiang') {
-			this.getLocation();
-			this.getUser();
-		}
+	
 		
 	},
 
@@ -184,7 +176,9 @@ export default {
 				success(res) {
 					uni.setStorageSync('config', res.data);
 					// #ifdef H5
-					self.getWxConfig();
+					if(self.globalData.isWeiXin){
+						self.getWxConfig();
+					}
 					// #endif
 				}
 			});

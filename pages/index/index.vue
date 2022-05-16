@@ -32,10 +32,10 @@
 								<view class="bg-color-linear-y h100 b-radius-5"></view>
 							</swiper-item>
 						</swiper>
-						<view v-if="parent != 0" class="bg-color-w b-radius-10 flex f-w margin-t12 wrap-sub-cate">
-							<view v-for="(item,index) in 10" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t8">
-								<view class="flex w-50 h-50 bg-img bg-color b-radius-5"></view>
-								<view class="f12-size t-color-6 margin-t4">新品尝鲜</view>
+						<view v-if="item.children && item.children.length > 0" class="bg-color-w b-radius-10 flex f-w margin-t12 wrap-sub-cate">
+							<view v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t8">
+								<view class="flex w-50 h-50 bg-img  b-radius-5" :style="child.img | bgimg(300)+''"></view>
+								<view class="f12-size t-color-6 margin-t4">{{child.name}}{{child.img}}</view>
 							</view>
 						</view>
 						<view  v-if="parent == 0"  class="flex f-w b-radius-10 bg-color-w wrap-tuijian margin-t12">
@@ -81,7 +81,7 @@
 							<image class="w-20 margin-r8" src="../../static/images/zan-on.png" mode="widthFix"></image>
 							<text>好物推荐</text>
 						</view>
-						<goodslist class="margin-t12" :list="list" ></goodslist>
+						<goodslist v-if="item.list" class="margin-t12" :list="item.list" ></goodslist>
 						<view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view>
 					</view>
 				</scroll-view>
@@ -104,47 +104,8 @@
 				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
 				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
 				active: 0,
-				 list: [
-					 {
-					   id: 6,
-					   image_url:
-					     "https://stc.wanlshop.com/1a42d31bbb0f1d8d9aa66f804b47c7a3.jpg?x-oss-process=image/auto-orient,1/interlace,1/format,jpg/quality,q_90/sharpen,50/resize,m_mfit,w_516",
-					   title: "恐龙",
-					   text: "恐龙来啦",
-					 },
-				        {
-				          id: 1,
-				          image_url:
-				            "https://stc.wanlshop.com/9b777f933945c6d515ce8313ee3c38cd.jpg?x-oss-process=image/auto-orient,1/interlace,1/format,jpg/quality,q_90/sharpen,50/resize,m_mfit,w_516",
-				          title: "可爱的小猫咪呀",
-				          text:
-				            "小小的猫咪，甚是呆萌，呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌",
-				        },
-				        {
-				          id: 2,
-				          image_url:
-				            "https://stc.wanlshop.com/1a42d31bbb0f1d8d9aa66f804b47c7a3.jpg?x-oss-process=image/auto-orient,1/interlace,1/format,jpg/quality,q_90/sharpen,50/resize,m_mfit,w_516",
-				          title: "迪士尼动画",
-				          text: "迪士尼动画之……",
-				        },
-				        {
-				          id: 3,
-				          image_url:
-				            "https://stc.wanlshop.com/9b777f933945c6d515ce8313ee3c38cd.jpg?x-oss-process=image/auto-orient,1/interlace,1/format,jpg/quality,q_90/sharpen,50/resize,m_mfit,w_516",
-				          title: "火箭",
-				          text: "火箭升空瞬间，宏伟壮观啊",
-				        },
-				        {
-				          id: 5,
-				          image_url:
-				            "https://stc.wanlshop.com/9b777f933945c6d515ce8313ee3c38cd.jpg?x-oss-process=image/auto-orient,1/interlace,1/format,jpg/quality,q_90/sharpen,50/resize,m_mfit,w_516",
-				          title: "华佗",
-				          text: "华佗人物画像 中国画 线条画 毛笔画 彩色画",
-				        },
-				       
-				        
-				      ],
-					  navs: [{name:'推荐'},{name:'女装'},{name:'母婴'},{name:'手机数码'},{name:'男装'},{name:'母婴'},{name:'手机数码'},{name:'男装'}]
+					  navs: [],
+					  pageSize: 20,
 			};
 		},
 		onLoad: function() {
@@ -152,23 +113,61 @@
 			this.init();
 		},
 		methods: {
+			getGoodsList() {
+				let cate = self.navs[self.active];
+				if(cate.list && cate.list.length > 0) {
+					return
+				}
+				cate.page = cate.page ? cate.page : 1;
+				cate.totalPage = cate.totalPage ? cate.totalPage : 1;
+				$.ajax({
+					url: 'common/goods/search',
+					data: {
+						catePid: cate.id,
+						page: cate.page,
+						pageSize: self.pageSize,
+					},
+					method: 'GET',
+					success(res) {
+						let list = cate.list  ? cate.list : [];
+						if (cate.page != 1) {
+							cate.list  = list.concat(res.data.list);
+						} else {
+							cate.list  = res.data.list ? res.data.list : [];
+						}
+						self.$set(self.navs,self.active,cate);
+					}
+				})
+			},
+			getCate() {
+				$.ajax({
+					url: 'common/goodsCate/getList',
+					data: {},
+					method: 'GET',
+					success(res) {
+						res.data.unshift({
+							id: '0',
+							name: '推荐'
+						})
+						self.navs = res.data;
+					}
+				})
+			},
 			changeSwiper(e) {
 				console.log(e);
 				self.active = e.detail.current;
+				self.getGoodsList();
 			},
 			loadList(e) {
-				console.log(self.active);
-				let list1 = [
-						 {
-						   id: 6,
-						   image_url:
-						     "https://stc.wanlshop.com/1a42d31bbb0f1d8d9aa66f804b47c7a3.jpg?x-oss-process=image/auto-orient,1/interlace,1/format,jpg/quality,q_90/sharpen,50/resize,m_mfit,w_516",
-						   title: "恐龙",
-						   text: "恐龙来啦",
-						 },];
-				self.list = self.list.concat(list1)
+				let cate = self.navs[self.active];
+				if(cate.page < cate.totalPage) {
+					cate.page +=1;
+					self.getGoodsList();
+				}
 			},
-			init() {},
+			init() {
+				this.getCate();
+			},
 		},
 		created() {
 		},

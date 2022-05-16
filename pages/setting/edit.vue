@@ -3,7 +3,7 @@
 		<view class="contain-page top-0">
 			<view class="padding-15 flex f-a-c f-j-s b-bottom">
 				<view class="f-w-b">头像</view>
-				<view @click="chooseImg1" class="w-60 h-60 b-radius bg-img" :style="headImg | bgimg(300)+''"></view>
+				<view @click="updateImg" class="w-60 h-60 b-radius bg-img" :style="headImg | bgimg(300)+''"></view>
 			</view>
 			<view class="padding-15 flex f-j-s b-bottom">
 				<view class="f-w-b">手机号</view>
@@ -17,13 +17,6 @@
 					<input v-model="name" maxlength="4" type="text" class="w100 h100 f-w-500 right" value="" placeholder="请输入" />
 				</view>
 			</view>
-			<view class="padding-15 flex f-j-s b-bottom">
-				<view class="f-w-b">年龄</view>
-				<view class="flex flex-1">
-					<input v-model="age" type="number" class="w100 h100 f-w-500 right" value="" placeholder="请输入" />
-				</view>
-			</view>
-			
 			<view class="padding-15 flex f-j-s b-bottom">
 				<view class="f-w-b">性别</view>
 				<view class="flex flex-1 f-j-e">
@@ -62,53 +55,31 @@ input.right {
 }
 </style>
 <script>
+	const API = require('../../utils/api/user.js').default;
 	const $ = require('../../utils/api.js');
 	export default {
 		data() {
 			return {
 				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
 				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
-				height: 0,
-				target: '',
-				photos: [],
-				targets: [],
 				sign: '',
 				sex: '',
 				headImg: '',
-				age: '',
 				name: '',
 				phone: ''
 			};
 		},
 		onLoad: function() {
-			let height = getApp().globalData.height;
-			height = height-44-this.top-15;
-			this.height = height;
 			this.init();
 		},
 		methods: {
-			delPhotos(index) {
-				this.photos.splice(index,1);
-			},
-			delTarget(index) {
-				this.targets.splice(index,1);
-			},
-			addTarget() {
-				if(this.target == '') {
-					$.$toast('请输入标签内容');return;
-				}
-				this.targets.push(this.target);
-				this.target = '';
-			},
 			submit() {
 				const self = this;
 				$.ajax({
-					url: 'member/updateInfo',
+					url: API.updateInfo,
 					data: {
 						personSign: self.sign,
 						gender: self.sex,
-						photos: self.photos.length > 0 ? self.photos.join('|') : '',
-						targets: self.targets.length > 0 ? self.targets.join(',') : '',
 						nickname: self.name,
 						age: self.age,
 					},
@@ -116,48 +87,38 @@ input.right {
 					success(res) {
 						$.$toast('编辑成功');
 						$.back(1,2000);
+						self.getUser({isAjax: true});//编辑后更新缓存
 					}
 				})
 			},
-			chooseImg() {
+			updateImg() {
 				const self = this;
 				$.uploadimg({
+					url: API.updateHeadImgApi,
 					success(res) {
-						self.photos.push(res.imgUrl);
+						self.headImg = res.imgUrl;
+						let user = uni.getStorageSync('userInfo') ? uni.getStorageSync('userInfo') : '';
+						user.headImg = res.imgUrl;
+						uni.setStorageSync('userInfo',user);
 					}
 				})
 			},
-			chooseImg1() {
+			getUserInfo() {
 				const self = this;
-				$.uploadimg({
-					url: 'member/updateHeadImg',
+				self.getUser({
 					success(res) {
-						self.headImg = res;
-					}
-				})
-			},
-			getUser() {
-				const self = this;
-				$.ajax({
-					url: 'member/getUser',
-					data: {},
-					method: 'GET',
-					success(res) {
-						let info = res.data ? res.data : '';
+						let info = res;
 						self.user = info;
 						self.name = info.nickname ? info.nickname : '';
 						self.headImg = info.headImg ? info.headImg : '';
-						self.photos = info.photos ? info.photos.split('|') : [];
-						self.targets = info.targets ? info.targets.split(',') : [];
 						self.sex = info.gender ? info.gender : '';
-						self.age = info.age ? info.age : '';
 						self.sign = info.personSign ? info.personSign : '';
 						self.phone = info.phone? info.phone : '';
 					}
 				})
 			},
 			init() {
-				this.getUser();
+				this.getUserInfo();
 			},
 
 
