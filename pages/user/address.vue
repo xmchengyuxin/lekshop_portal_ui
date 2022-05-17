@@ -9,10 +9,10 @@
 					<view class="flex flex-1 f-c">
 						<view class="flex f-a-c">
 							<text v-if="item.status == 1" class="f10-size padding-lr2 b-radius-2  t-color-w margin-r4" style="background-color: #CDE676;">默认</text>
-							<text class="f-w-b">{{item.address}} {{item.addressDetail}}</text>
+							<text class="f-w-b">{{item.realname}}  {{item.phone}}</text>
 						</view>
 						<view class="flex f-a-c margin-t2">
-							<text class="f12-size t-color-9">{{item.realname}}  {{item.phone}}</text>
+							<text class="f12-size t-color-9">{{item.province}}{{item.city}}{{item.area}} {{item.address}}</text>
 						</view>
 					</view>
 					<view @click.stop="edit(item)" class="flex f-a-c padding-lr12">
@@ -35,6 +35,7 @@
 @import url('../../static/css/user/address.css');
 </style>
 <script>
+	const API = require('../../utils/api/order.js').default;
 	const $ = require('../../utils/api.js');
 	export default {
 		data() {
@@ -56,7 +57,23 @@
 		},
 		methods: {
 			choose(item) {
+				const self = this;
 				if(this.type != '') {
+					if(this.type == 'change') {//订单修改地址
+						$.ajax({
+							url: API.changeAddressApi,
+							data: {
+								orderId: self.id,
+								addressId: item.id,
+							},
+							method: 'POST',
+							success(res) {
+								$.$toast('操作成功');
+								self.back(1,2000)
+							}
+						})
+						return;
+					}
 					let pages = getCurrentPages(); // 当前页面
 					let beforePage = pages[pages.length - 2]; // 前一个页面
 					let len = 1;

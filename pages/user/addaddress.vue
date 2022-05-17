@@ -13,10 +13,10 @@
 						<input v-model="phone" type="number" class="f12-size" value="" placeholder="请填写手机号" />
 					</view>
 				</view>
-				<view @click="go('/pages/user/map')" class="flex h-50 b-bottom">
+				<view @click="show=true" class="flex h-50 b-bottom">
 					<view class="f-w-b flex f-a-c">所在地址</view>
 					<view class="flex flex-1 f-j-e">
-						<input v-model="address" disabled="true" type="text" class="f12-size margin-r6" value="" placeholder="请选择服务地址" />
+						<input v-model="address" disabled="true" type="text" class="f12-size margin-r6" value="" placeholder="请选择地址" />
 						<view class="flex f-a-c">
 							<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f13-size"></text>
 						</view>
@@ -40,6 +40,10 @@
 					<view v-if="id != ''" @click="del" class="flex f-a-c f-j-c b-color-y t-color-y margin-t12 f-w-500 b-radius-30 h-40">删除</view>
 				</view>
 			</view>
+			<uni-popup ref="region" type="bottom">
+				<w-picker mode="region" :value="address"></w-picker>
+			</uni-popup>
+			<w-picker :visible.sync="show" mode="region" :value="address" default-type="value" :hide-area="false" @confirm="onConfirm($event, 'region')" ref="region"></w-picker>
 	</view>
 </template>
 <style scoped>
@@ -66,6 +70,7 @@
 				areaCode: '',
 				lat: '',
 				lng: '',
+				show: false
 			};
 		},
 		onLoad: function(options) {
@@ -76,6 +81,16 @@
 			this.init();
 		},
 		methods: {
+			onConfirm(e) {
+				let info = e.obj;
+				this.province = info.province.label;
+				this.city = info.city.label;
+				this.area = info.area.label;
+				this.provinceCode = info.province.value;
+				this.cityCode = info.city.value;
+				this.areaCode = info.area.value;
+				this.address = e.result;
+			},
 			del() {
 				const self = this;
 				
@@ -117,7 +132,7 @@
 					this.province = info.province;
 					this.city = info.city;
 					this.area = info.area;
-					this.address = info.address;
+					this.address = info.province+info.city+info.area;
 					this.addressDetail = info.addressDetail;
 					this.target = info.target;
 					this.isDefault = info.status == 1 ? true : false;
@@ -139,12 +154,12 @@
 					},
 					{
 						value: this.address,
-						text: '请选择服务地址',
+						text: '请选择地址',
 						rules: ''
 					},
 					{
 						value: this.addressDetail,
-						text: '请输入具体服务地址',
+						text: '请输入具体地址',
 						rules: ''
 					},
 							
@@ -166,10 +181,8 @@
 					province: self.province,
 					city: self.city,
 					area: self.area,
-					address: self.address,
-					addressDetail: self.addressDetail,
+					address: self.addressDetail,
 					status: self.isDefault ? '1' : '0',
-					coordinate: self.lng + ',' + self.lat,
 					
 				} 
 				$.ajax({

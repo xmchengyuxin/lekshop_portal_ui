@@ -6,7 +6,7 @@
 				<text class="f-w-500 f16-size">{{i18n['余额支付']}}</text>
 				<view class="flex f-a-c margin-t4 t-color-9">
 					<text class="f11-size margin-r4">{{i18n['可用余额']}}</text>
-					<text class="f11-size text-price">9102</text>
+					<text class="f11-size text-price">{{account != '' ? account.amount : 0}}</text>
 				</view>
 			</view>
 			<view v-if="type != 'balance'"  class="flex f-s-0 f-a-c f-j-c van-icon van-icon-circle f24-size t-color-9"></view>
@@ -34,11 +34,11 @@
 @import url('../../static/css/iconcolor.css');
 </style>
 <script>
+	const API = require('../../utils/api/user.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
 	export default {
 		props: {
-			
 			bgColor: {
 				default: 'bg-color-w'
 			},
@@ -50,7 +50,8 @@
 		},
 		data() {
 			return {
-				type: 'wxPay'
+				type: 'wxPay',
+				account: '',
 			};
 		},
 		onLoad: function() {
@@ -58,9 +59,21 @@
 			this.init();
 		},
 		methods: {
+			getAccount() {
+				self = this;
+				$.ajax({
+					url: API.getAccountApi,
+					data: {},
+					method: 'GET',
+					success(res) {
+						self.account = res.data ? res.data : '';
+					}
+				})
+			},
 			init() {},
 		},
 		created() {
+			this.getAccount();
 		},
 		computed: {
 			i18n() {

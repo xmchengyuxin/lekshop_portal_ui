@@ -165,7 +165,8 @@
 		{
 			"path": "pages/user/addaddress",
 			"style": {
-				"navigationBarTitleText": "添加地址"
+				"navigationBarTitleText": "添加地址",
+				"navigationBarBackgroundColor":"#FFFFFF"
 			} 
 		},
 		{

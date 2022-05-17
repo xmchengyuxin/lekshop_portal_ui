@@ -154,7 +154,6 @@
 				})
 			},
 			changeSwiper(e) {
-				console.log(e);
 				self.active = e.detail.current;
 				self.getGoodsList();
 			},

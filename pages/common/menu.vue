@@ -20,7 +20,7 @@
 						<text class="flex f-a-c f-j-c van-icon van-icon-contact t-color-w f26-size"></text>
 						<text class="f11-size t-color-w margin-t10">我的</text>
 					</view>
-					<view @click="go('/pages/cart/index')" class="flex f-c f-a-c f-j-c b-radius-10 padding-tb15 menu-item">
+					<view @click="go('/pages/cart/index?type=goods')" class="flex f-c f-a-c f-j-c b-radius-10 padding-tb15 menu-item">
 						<text class="flex f-a-c f-j-c van-icon van-icon-cart-o t-color-w f26-size"></text>
 						<text class="f11-size t-color-w margin-t10">购物车</text>
 					</view>

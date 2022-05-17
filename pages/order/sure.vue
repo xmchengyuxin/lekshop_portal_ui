@@ -2,42 +2,46 @@
 	<view class="contain">
 		<view class="padding-12">
 			
-			<view class="flex bg-color-w b-radius-5">
+			<view @click="go('/pages/user/address?type=order')" class="flex bg-color-w b-radius-5">
 				<view class="flex flex-1">
 					<view class="flex f-a-c f-j-c f-s-0 shops-icon shops-icon-address f44-size padding-10"></view>
-					<view class="flex f-c flex-1 f-j-c">
+					<view v-if="address != ''" class="flex f-c flex-1 f-j-c">
 						<view class="flex f-a-c">
-							<text class="flex f-a-c f-w-b f15-size margin-r12">saa</text>
-							<text class="flex f-a-c f12-size t-color-9">19829382912</text>
+							<text class="flex f-a-c f-w-b f15-size margin-r12">{{address.realname}}</text>
+							<text class="flex f-a-c f12-size t-color-9">{{address.phone}}</text>
 						</view>
-						<view class="line1 margin-t4 f12-size">天津市 天津市 和平区 万通上游国际尚都家园11号1门2103室</view>
+						<view class="line1 margin-t4 f12-size">{{address.privince}}{{address.city}}{{address.area}}{{address.address}}</view>
+					</view>
+					<view v-if="address == ''" class="flex f-c flex-1 f-j-c">
+						<text class="t-color-9">{{i18n['选择收货地址']}}</text>
 					</view>
 				</view>
 				<view class="flex f-s-0 f-a-c f-j-c padding-lr6 van-icon van-icon-arrow t-color-9"></view>
 			</view>
 			
-			<view class="bg-color-w b-radius-5 padding-12 margin-t12">
+			<view v-for="(item,index) in list" class="bg-color-w b-radius-5 padding-12 margin-t12">
 				<view class="flex f-a-c margin-b10">
 					<text class="flex f-a-c van-icon van-icon-shop-o t-color-y margin-r6"></text>
-					<text class="f-w-500 t-color-3">万通上游国际</text>
+					<text class="f-w-500 t-color-3">{{item.shopName}}</text>
 				</view>
-				<view class="flex margin-b10">
-					<view class="flex f-s-0 w-70 h-70 b-radius-5 bg-img bg-color margin-r10"></view>
+				<view v-for="(goods,idx) in item.goodsList" class="flex margin-b10">
+					<view class="flex f-s-0 w-70 h-70 b-radius-5 bg-img  margin-r10" :style="goods.goodsSku.img | bgimg(400)+''"></view>
 					<view class="flex flex-1 f-c margin-r8">
-						<view class="line2 f12-size">Theory 新品女装 缎面V领吊带连衣裙 K026604R</view>
+						<view class="line2 f12-size">{{goods.goods.title}}</view>
 						<view class="flex f-a-c margin-t6">
-							<view class="flex f-a-c f-j-c padding-lr6 bg-color-f7 f12-size t-color-9 b-radius-2 h-20">-燕麦色</view>
+							<view class="flex f-a-c f-j-c padding-lr6 bg-color-f7 f12-size t-color-9 b-radius-2 h-20">{{goods.goodsSku.attrSymbolName}}</view>
 						</view>
 					</view>
 					<view class="flex f-s-0 f-c">
-						<view class="text-price f12-size">2700</view>
-						<view class="flex f-j-e margin-t6 t-color-9 f11-size">x3</view>
+						<view class="text-price f12-size">{{goods.goodsSku.price}}</view>
+						<view class="flex f-j-e margin-t6 t-color-9 f11-size">x{{goods.buyNum}}</view>
 					</view>
 				</view>
 				
 				<view class="flex f-a-c f-j-s h-36">
 					<text class="f12-size t-color-9 margin-r10">{{i18n['快递运费']}}</text>
-					<text class=" ">{{i18n['包邮']}}</text>
+					<text v-if="item.freightFee <= 0" class=" ">{{i18n['包邮']}}</text>
+					<text v-if="item.freightFee > 0" class="text-price">{{item.freightFee}}</text>
 				</view>
 				<view class="flex f-a-c f-j-s h-36">
 					<text class="f12-size t-color-9 margin-r10">{{i18n['优惠折扣']}}</text>
@@ -49,7 +53,7 @@
 				<view class="flex  f-j-s padding-tb10">
 					<text class="flex f-s-0 f12-size t-color-9 margin-r10">{{i18n['订单备注']}}</text>
 					<view class="flex flex-1">
-						<textarea class="f12-size input h-30" value="" placeholder="订单备注可选" />
+						<textarea v-model="item.remark" class="f12-size input h-30" value="" placeholder="订单备注可选" />
 					</view>
 				</view>
 				<view class="flex f-a-c f-j-e">
@@ -65,7 +69,7 @@
 			<text class=" t-color-9">{{i18n['共1件'] | i18n(2)}}，</text>
 			<text class=" ">{{i18n['小计']}}：</text>
 			<text class="text-price t-color-y margin-r12">2700</text>
-			<view class="flex f-a-c f-j-c b b-radius-30 w-100 h-36 bg-color-linear-y t-color-w">{{i18n['提交订单']}}</view>
+			<view @click="pay" class="flex f-a-c f-j-c b b-radius-30 w-100 h-36 bg-color-linear-y t-color-w">{{i18n['提交订单']}}</view>
 		</view>
 	</view>
 </template>
@@ -77,13 +81,17 @@
 }
 </style>
 <script>
+	const API = require('../../utils/api/order.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
+	let isflag = true;
 	export default {
 		data() {
 			return {
 				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
 				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
+				list: [],
+				address: '',
 			};
 		},
 		onLoad: function() {
@@ -92,7 +100,85 @@
 			$.setTitle(self.i18n['确认订单']);
 		},
 		methods: {
-			init() {},
+			pay() {
+				let carIds = uni.getStorageSync('orderCarIds') ? uni.getStorageSync('orderCarIds') : '';
+				let addFormJson = [];//	[goodsDetail:[skuId:商品skuId,num:购买数量],carIds:购物车ID集合,couponId:优惠券ID,remark:备注,groupId:拼团购买方式>>-1单独购买>>0普通拼团>>其他为阶梯拼团ID]
+				this.list.forEach((ele,index) => {
+					let obj = {
+						goodsDetail: [],
+						carIds: carIds != '' && carIds[ele.shopId] ? carIds[ele.shopId] : '',
+						couponId: ele.couponId ? ele.couponId : '',
+						remark: ele.remark ? ele.remark : '',
+						groupId: '',
+					}
+					ele.goodsList.forEach((ele1,idx) => {
+						let obj1 = {
+							skuId: ele1.goodsSku.id,
+							num: ele1.buyNum
+						}
+						obj.goodsDetail.push(obj1);
+					})
+					addFormJson.push(obj);
+				})
+				let postData = {
+					addFormJson: JSON.stringify(addFormJson),
+				}
+				this.address.addTime = '';
+				postData =Object.assign(postData,this.address);
+				if(!isflag){return}
+				isflag = false;
+				$.ajax({
+					url: API.addOrderApi,
+					data: postData,
+					method: 'POST',
+					loading: true,
+					loadingText: self.i18n['提交订单']+['…'],
+					success(res) {
+						let info = res.data;
+						self.go('/pages/order/pay?orderNo='+info.payOrderNo+'&amount='+info.amount);
+					},
+					complete() {
+						isflag = true;
+					}
+				})
+			},
+			getAddress() {
+				$.ajax({
+					url: API.getAddressApi,
+					data: {},
+					method: 'GET',
+					success(res) {
+						self.address = res.data ? res.data : '';
+						self.getInfo();
+					}
+				})
+			},
+			setAddress(item) {
+				this.address = item;
+				self.getInfo();
+			},
+			getInfo() {
+				let orderData = uni.getStorageSync('orderData') ? uni.getStorageSync('orderData') : '';
+				let postData = {
+					goodsParams: JSON.stringify(orderData),//[shopId,店铺ID,skuId:商品skuId,num:购买数量]
+					groupId: '',//拼团购买方式>>-1单独购买>>0普通拼团>>其他为阶梯拼团ID
+				}
+				if(this.address != '') {
+					self.address.addTime = '';
+					postData = Object.assign(this.address,postData)
+				}
+				$.ajax({
+					url: API.getOrderInfoApi,
+					data: postData,
+					method: 'POST',
+					success(res) {
+						self.list = res.data ? res.data : [];
+					}
+				})
+			},
+			init() {
+				this.getAddress();
+			},
 		},
 		computed: {
 			i18n() {
@@ -100,6 +186,9 @@
 			},
 		},
 		created() {
+		},
+		onHide() {
+			// uni.removeStorageSync('orderData');
 		},
 		mounted() {},
 		destroyed() {},
