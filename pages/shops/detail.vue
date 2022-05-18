@@ -34,8 +34,8 @@
 							<text class="text-price del-line">{{goods.price}}</text>
 						</view>
 					</view>
-					<view class="w-50 wrap-coupon-btn flex f-a-c f-j-c h-20 bg-color-linear-r t-color-w">
-						<text class="f10-size ">领券</text>
+					<view @click="$refs.couponList.open()" v-if="couponList.length > 0" class="w-50 wrap-coupon-btn flex f-a-c f-j-c h-20 bg-color-linear-r t-color-w">
+						<text class="f10-size ">{{i18n['领券']}}</text>
 						<text class="flex f-a-c van-icon van-icon-arrow f10-size"></text>
 					</view>
 				</view>
@@ -116,7 +116,7 @@
 				</view>
 				<view class="padding-tb6"></view>
 				<view class="flex f-a-c f-j-s">
-					<text class="f12-size f-w-b">{{i18n['店铺推荐']}}</text>
+					<text @click="go('/pages/shops/shops?id='+shop.id)" class="f12-size f-w-b">{{i18n['店铺推荐']}}</text>
 					<view class="flex f-a-c">
 						<text class="f10-size t-color-y">{{i18n['查看全部']}}</text>
 						<text class="flex f-a-c van-icon van-icon-arrow t-color-y f12-size"></text>
@@ -141,7 +141,7 @@
 		<view  :style="{'padding-bottom': isIphonex ? '84px' : '50px'}"></view>
 		<view class="fixed-top bottom-btn bg-color-w flex padding-lr12 h-50" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
 			<view class="flex flex-1 f-j-s margin-r20">
-				<view class="flex f-c f-a-c f-j-c">
+				<view @click="go('/pages/shops/shops?id='+shop.id)" class="flex f-c f-a-c f-j-c">
 					<text class="flex f-a-c van-icon van-icon-shop-o f18-size t-color-y"></text>
 					<text class="f10-size t-color-9 margin-t2">{{i18n['店铺']}}</text>
 				</view>
@@ -157,10 +157,22 @@
 			<view class="flex f-a-c">
 				<view class="flex b-radius-30 h-34 over-h">
 					<view @click="$refs.sku.open()" class="flex f-a-c f-j-c bg-color-linear-y t-color-w f12-size w-100">{{i18n['加入购物车']}}</view>
-					<view class="flex f-a-c f-j-c bg-color-p t-color-w f12-size w-100">{{i18n['立即购买']}}</view>
+					<view @click="$refs.sku.open()" class="flex f-a-c f-j-c bg-color-p t-color-w f12-size w-100">{{i18n['立即购买']}}</view>
 				</view>
 			</view>
 		</view>
+		
+		<uni-popup ref="couponList" type="bottom">
+			<view class="safe-area wrap-popup-radius bg-color-f7">
+				<view class="flex f-j-s f-a-c padding-12">
+					<view class="flex f-s-0 w-30"></view>
+					<view class="f16-size">{{i18n['优惠券']}}</view>
+					<view @click="$refs.couponList.close()" class="flex f-s-0 f-a-c f-j-c van-icon van-icon-cross w-30"></view>
+				</view>
+				<coupon-list :list="couponList"></coupon-list>
+				<view class="padding-10"></view>
+			</view>
+		</uni-popup>
 		
 		<!-- 产品参数 -->
 		<uni-popup ref="goodsParams" type="bottom" >
@@ -209,15 +221,15 @@
 					<view class="padding-tb10 flex f-j-s">
 						<view class="flex f-a-c">{{i18n['购买数量']}}</view>
 						<view class="flex">
-							<view class="flex f-a-c f-j-c add-reduce dis"></view>
+							<view @click="addNum('-')" :class="num <= 1 ? 'dis' : ''" class="flex f-a-c f-j-c add-reduce "></view>
 							<view class="flex f-a-c f-j-c add-num">{{num}}</view>
-							<view class="flex f-a-c f-j-c add-btn"></view>
+							<view @click="addNum('+')" class="flex f-a-c f-j-c add-btn"></view>
 						</view>
 					</view> 
 				</scroll-view>
 				<view class="flex b-radius-30 h-34 over-h margin-t12">
 					<view @click="addCar" class="flex f-a-c flex-1 f-j-c bg-color-linear-y t-color-w f12-size w-100">{{i18n['加入购物车']}}</view>
-					<view class="flex f-a-c flex-1 f-j-c bg-color-p t-color-w f12-size w-100">{{i18n['立即购买']}}</view>
+					<view @click="buy()" class="flex f-a-c flex-1 f-j-c bg-color-p t-color-w f12-size w-100">{{i18n['立即购买']}}</view>
 				</view>
 				<view  :style="{'padding-bottom': isIphonex ? '24px' : ''}"></view>
 			</view>
@@ -229,6 +241,7 @@
 @import url('../../static/css/shops/detail.css');
 </style>
 <script>
+	import couponList from '../common/couponlist.vue';
 	const API = require('../../utils/api/shops.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
@@ -251,6 +264,8 @@
 				shop: '',
 				isLike: false,
 				fahuo: '',
+				couponList: [],
+				commentList: [],
 			};
 		},
 		onLoad: function(options) {
@@ -259,6 +274,50 @@
 			this.init();
 		},
 		methods: {
+			getCommonList() {
+				$.ajax({
+					url: API.commentListApi,
+					data: {
+						page: 1,
+						pageSize: 10,
+						goodsId: self.id,
+						goodsComment: '',//1好评>>2中评>>3差评>>4有图
+					},
+					method: 'GET',
+					success(res) {
+						self.commentList = res.data.list ? res.data.list : [];
+					}
+				})
+			},
+			addNum(type) {
+				if(this.attrSymbolPath == '') {
+					$.$toast(self.i18n['请选择正确的规格']);return;
+				}
+				if(type == '-') {
+					if(self.num > 1) {
+						self.num -= 1;
+					}
+				}else{
+					if(self.sku.stock > self.num) {
+						self.num += 1;
+					}
+				}
+			},
+			buy() {
+				if(this.attrSymbolPath != '') {//有数据时既选好规格
+					let postData = [
+						{
+							shopId: self.shop.id,
+							skuId: self.sku.id,
+							num: self.num,
+						}
+					];
+					uni.setStorageSync('orderData',postData);
+					this.go('/pages/order/sure');
+				}else{
+					$.$toast(self.i18n['请选择正确的规格']);
+				}
+			},
 			changeSwiper(e) {
 				self.bannerIndex = e.detail.current;
 			},
@@ -276,6 +335,9 @@
 				})
 			},
 			addCar() {
+				if(this.attrSymbolPath == '') {
+					$.$toast(self.i18n['请选择正确的规格']);return
+				}
 				let postData = {
 					goodsId: self.id,
 					attrSymbolPath: self.attrSymbolPath,
@@ -365,11 +427,13 @@
 						self.shop = info.shop;
 						self.isLike = info.isCollectGoods;
 						self.fahuo = info.freight ? info.freight : '';
+						self.couponList = info.couponList ? info.couponList : [];
 					}
 				})
 			},
 			init() {
 				this.getDetail();
+				this.getCommonList();
 			},
 		},
 		created() {
@@ -381,7 +445,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {},
+		components: {couponList},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

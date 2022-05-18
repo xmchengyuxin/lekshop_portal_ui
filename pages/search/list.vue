@@ -32,6 +32,7 @@
 		<view class="padding-lr10">
 			<goodslist class="margin-t12" :sortType="sortType" :list="list"></goodslist>
 		</view>
+		<no-data v-if="list.length <= 0"></no-data>
 		
 		<uni-popup ref="popup" type="right" background-color="#fff">  
 			<view class="h100 bg-color-w" style="width: 70vw;">
@@ -52,6 +53,7 @@
 	@import url('../../static/css/search/list.css');
 </style>
 <script>
+	const API = require('../../utils/api/shops.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
 	export default {
@@ -61,22 +63,19 @@
 				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
 				sortType: 1,
 				height: 0,
-				list: [{
-						id: 6,
-						image_url: "https://stc.wanlshop.com/1a42d31bbb0f1d8d9aa66f804b47c7a3.jpg?x-oss-process=image/auto-orient,1/interlace,1/format,jpg/quality,q_90/sharpen,50/resize,m_mfit,w_516",
-						title: "恐龙",
-						text: "恐龙来啦",
-					},
-					{
-						id: 1,
-						image_url: "https://stc.wanlshop.com/9b777f933945c6d515ce8313ee3c38cd.jpg?x-oss-process=image/auto-orient,1/interlace,1/format,jpg/quality,q_90/sharpen,50/resize,m_mfit,w_516",
-						title: "可爱的小猫咪呀",
-						text: "小小的猫咪，甚是呆萌，呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌",
-					},
-				],
+				list: [],
+				page: 1,
+				pageSize: 20,
+				totalPage: 1,
+				title: '',
+				shopId: '',
+				catePid: '',
+				cateTid: '',
+				cateId: '',
+				shopCateId: '',
 			};
 		},
-		onLoad: function() {
+		onLoad: function(options) {
 			self = this;
 			let height = getApp().globalData.height;
 			height = height-60;
@@ -84,10 +83,47 @@
 				height-=34;
 			}
 			this.height = height;
+			this.title = options.title ? options.title : '';
+			this.catePid = options.catePid ? options.catePid : '';
+			this.cateTid = options.cateTid ? options.cateTid : '';
+			this.cateId = options.cateId ? options.cateId : '';
+			this.shopCateId = options.shopCateId ? options.shopCateId : '';
+			this.shopId = options.shopId ? options.shopId : '';
 			this.init();
 		},
 		methods: {
-			init() {},
+			getList() {
+				$.ajax({
+					url: API.searchGoodsApi,
+					data: {
+						shopId: self.shopId,
+						catePid: self.catePid,
+						cateTid: self.cateTid,
+						cateId: self.cateId,
+						shopCateId: self.shopCateId,
+						title: self.title,
+						type: '',
+						sort: '',
+						status: '',
+						page: self.page,
+						pageSize: self.pageSize,
+					},
+					method: 'GET',
+					success(res) {
+						let list = [];
+						if (self.page != 1) {
+							list = self.list.concat(res.data.list);
+						} else {
+							list = res.data.list ? res.data.list : [];
+						}
+						self.totalPage = res.data.totalPage;
+						self.list  = list;
+					}
+				})
+			},
+			init() {
+				this.getList();
+			},
 		},
 		created() {},
 		computed: {
@@ -99,6 +135,11 @@
 		destroyed() {},
 		components: {},
 		onPullDownRefresh() {},
-		onReachBottom() {}
+		onReachBottom() {
+			if(this.page < this.totalPage) {
+				this.page += 1;
+				this.getList();
+			}
+		}
 	}
 </script>

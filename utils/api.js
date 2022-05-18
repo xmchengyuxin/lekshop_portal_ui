@@ -788,12 +788,14 @@ function setTitle(name) {
 		title: name ? name : getApp().globalData.name
 	})
 }
-function showModal (options) {
+function showModal (options,self) {
+	let i18n = self.$t('likelist');
 	uni.showModal({
 		title: options.title ? options.title : '',
-		content: options.content ? options.content : '',
+		content: options.content ? i18n[options.content] : '',
 		showCancel: options.showCancel ? options.showCancel : true,
-		cancelText:  options.cancelText ? options.cancelText : '取消',
+		cancelText:  options.cancelText ? options.cancelText : i18n['取消'],
+		confirmText: options.confirmText ? options.confirmText  : i18n['确认'],
 		cancelColor:  options.cancelColor ? options.cancelColor : '#383838',
 		confirmColor: options.cancelColor ? options.cancelColor : '#78CA73',
 		success:function(res){

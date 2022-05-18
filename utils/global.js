@@ -1,5 +1,6 @@
 import Vue from 'vue';
 const API = require('./api/user.js').default;
+const ApiConmon = require('./api/common.js').default;
 const $ = require('./api.js');
 const QQMapWX = require('./qqmap-wx-jssdk.min.js');
 let qqmapsdk;
@@ -12,6 +13,18 @@ export default {
 		uni.previewImage({
 			current: url,
 			urls: urls
+		})
+	},
+	getBanner(options) {
+		$.ajax({
+			url: ApiConmon.bannerApi,
+			data: {location: options.type ? options.type: 1},
+			method: 'GET',
+			success(res) {
+				if(options.success) {
+					options.success(res);
+				}
+			}
 		})
 	},
 	getUser(options) {

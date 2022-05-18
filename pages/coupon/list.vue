@@ -6,7 +6,7 @@
 		<swiper class="wrap-swiper" :style="{'height': height+'px'}" :current="active" @change="changeSwiper" :indicator-dots="false" :autoplay="false" :interval="1000" :duration="500">
 			<swiper-item v-for="(item,parent) in navs">
 				<scroll-view @scrolltolower="loadList" scroll-y="true"  :style="{'height': height+'px'}">
-					<coupon-list :list="item.list" :type="'draw'"></coupon-list>
+					<coupon-list :type="'user'" :list="item.list"></coupon-list>
 				</scroll-view>
 			</swiper-item>
 		</swiper>			
@@ -15,7 +15,6 @@
 </template>
 <style scoped>
 @import url('../../static/css/coupon/common.css');
-
 </style>
 <script>
 	import couponList from '../common/couponlist.vue';
@@ -40,18 +39,19 @@
 			// #endif
 			this.height = height;
 			this.init();
-			$.setTitle(self.i18n['红包卡券']);
+			$.setTitle(self.i18n['我的卡券']);
 		},
 		methods: {
 			getList() {
 				let info = self.navs[self.active];
 				$.ajax({
-					url: API.shopCouponList,
+					url: API.couponList,
 					data: {
 						page: self.navs[self.active]['page'],
 						pageSize: self.pageSize,
-						type: Number(self.active)+1,//1满减券>>2折扣券
+						type: '',//1满减券>>2折扣券
 						shopId: '',
+						status: self.active,//0:未使用 1:已使用 2:已过期
 					},
 					method: 'GET',
 					success(res) {
@@ -79,8 +79,9 @@
 			},
 			init() {
 				this.navs = [
-					{name: this.i18n['满减券'],list: [],page: 1,totalPage: 1,},
-					{name: this.i18n['折扣券'],list: [],page: 1,totalPage: 1,},
+					{name: this.i18n['未使用'],list: [],page: 1,totalPage: 1,},
+					{name: this.i18n['已使用'],list: [],page: 1,totalPage: 1,},
+					{name: this.i18n['已失效'],list: [],page: 1,totalPage: 1,},
 				];
 				this.getList();
 			},

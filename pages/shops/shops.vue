@@ -17,7 +17,7 @@
 			</view>
 			<view class="flex f-s-0">
 				<text v-if="tabStatus == 0" class="flex f-s-0 f-a-c padding-lr6 van-icon van-icon-search f20-size"></text>
-				<text class="flex f-s-0 f-a-c padding-lr10 van-icon van-icon-weapp-nav f20-size"></text>
+				<text @click="$refs.menuBtn.open()" class="flex f-s-0 f-a-c padding-lr10 van-icon van-icon-weapp-nav f20-size"></text>
 			</view>
 			<xcx-header></xcx-header>
 		</view>
@@ -30,17 +30,19 @@
 						<view class="bg-color-f7 flex padding-10 b-radius-5">
 							<view class="flex flex-1 f-c f-j-c margin-r10">
 								<view class="flex f-a-c">
-									<text class="f10-size bg-color-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">自营</text>
-									<text class="f-w-b">前海万联旗舰店</text>
+									<text v-if="shop.selfStatus == 1" class="f10-size bg-color-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18nShop['自营']}}</text>
+									<text class="f-w-b">{{shop.name}}</text>
 								</view>
 								<view class="margin-t4 t-color-6 f11-size flex f-a-c">
-									<text class="margin-r6">店铺粉丝</text>
-									<text>1111</text>
+									<text class="margin-r6">{{i18nShop['店铺粉丝']}}</text>
+									<text>{{shop.likeNum}}</text>
 								</view>
 							</view>
 							<view class="flex f-a-c f-j-c f-s-0">
-								<image class="w-30" src="../../static/images/like-on.png" mode="widthFix"></image>
-								<!-- <image class="w-36" src="../../static/images/like.png" mode="widthFix"></image> -->
+								<view @click="like" :class="isLike ? 't-color-y' : ''" class="flex f-a-c f-j-c b-radius-5 bg-color-w padding-lr10 h-30">
+									<text :class="isLike ? 'van-icon-success':'van-icon-cross'" class="flex f-a-c f-j-c van-icon  margin-r4 f13-size"></text>
+									<text class="f12-size">{{!isLike ? i18nShop['关注'] : i18nShop['已关注']}}</text>
+								</view>
 							</view>
 						</view>
 					</view>
@@ -190,19 +192,19 @@
 		<!-- 店铺分类 -->
 		<view class="flex bg-color-f7" v-if="tabStatus == 3" style="position: relative;height: 100vh;" :style="{ 'padding-top': top +46+ 'px' }">
 			<scroll-view :scroll-into-view="'cate'+cateActive" scroll-y="true" class="flex f-c f-s-0 w-100 bg-color-fb "  :style="{'height': height+'px'}">
-				<view @click="cateActive=index" v-for="(item,index) in cateList" :class="index === cateActive ? 'cate-on' : ''" :id="'cate'+index" class="flex f-s-0 h-50 f-a-c f-j-c f12-size t-color-5 ">{{item}}</view>
+				<view @click="cateActive=index" v-for="(item,index) in cateList" :class="index === cateActive ? 'cate-on' : ''" :id="'cate'+index" class="flex f-s-0 h-50 f-a-c f-j-c f12-size t-color-5 ">{{item.name}}</view>
 				<view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view>
 			</scroll-view>
 			<scroll-view scroll-y="true" class="flex f-c f-s-0 flex-1 padding-10  "  :style="{'height': height+'px'}">
-				<view  class="bg-color-w b-radius-10  wrap-sub-cate padding-10">
+				<view v-for="item in cateList[cateActive]['children']" class="bg-color-w b-radius-10  wrap-sub-cate padding-10">
 					<view class="flex f-a-c f-j-s">
-						<text class="t-color-5 f12-size">女裤</text>
+						<text class="t-color-5 f12-size">{{item.name}}</text>
 						<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>
 					</view>
 					<view class="flex f-w">
-						<view v-for="(item,index) in 10" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t20">
-							<view class="flex w-60 h-60 bg-img bg-color b-radius-5"></view>
-							<view class="f12-size t-color-6 margin-t4">新品尝鲜</view>
+						<view v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t20">
+							<view class="flex w-60 h-60 bg-img  b-radius-5" :style="child.img | bgimg(300)+''"></view>
+							<view class="f12-size t-color-6 margin-t4">{{child.name}}</view>
 						</view>
 					</view>
 				</view>
@@ -213,7 +215,10 @@
 				
 				
 		<view class="flex bg-color-w warp-tabbar h-50" :style="isIphonex ? 'padding-bottom:34px' : 'padding-bottom:0px'">
-			<view class="flex flex-1  f-j-c f-c f-s-0 " @click="changeTab(0)" :class="tabStatus == 0 ? 't-color-y' : 't-color-5'">
+			<view v-if="tabStatus == 0" class="flex flex-1 f-a-c f-j-c f-c f-s-0 ">
+				<view class="flex w-36 h-36 b-radius bg-img" :style="shop.logo | bgimg(300)+''"></view>
+			</view>
+			<view v-if="tabStatus != 0" class="flex flex-1  f-j-c f-c f-s-0 " @click="changeTab(0)" :class="tabStatus == 0 ? 't-color-y' : 't-color-5'">
 				<view class="flex f-a-c f-j-c h-24 van-icon van-icon-shop-o f22-size"></view>
 				<view class="flex f-a-c f-j-c  f11-size margin-t2">首页</view>
 			</view>
@@ -234,7 +239,7 @@
 				<view class="flex f-a-c f-j-c  f11-size margin-t2">客服</view>
 			</view>
 		</view>		
-		
+		<menu-btn ref="menuBtn"></menu-btn>
 	</view>
 </template>
 <style scoped>
@@ -242,6 +247,7 @@
 @import url('../../static/css/shops/shops.css');
 </style>
 <script>
+	const API = require('../../utils/api/shops.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
 	export default {
@@ -249,7 +255,7 @@
 			return {
 				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
 				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
-				active: 1,
+				active: 0,
 				sortType: 1,
 				list: [{
 						id: 6,
@@ -264,33 +270,83 @@
 						text: "小小的猫咪，甚是呆萌，呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌",
 					},
 				],
-				tabStatus: 2,
-				cateList: ['推荐','男装','推荐','男装','推荐','男装','推荐','男装','推荐','男装','推荐','男装','推荐','男装','推荐','男装'],
+				tabStatus: 0,
+				cateList: [],
 				cateActive: 0,
 				height: 0,
+				shop: '',
+				id: '',
+				isLike: false,
 			};
 		},
-		onLoad: function() {
+		onLoad: function(options) {
 			self = this;
 			let height = getApp().globalData.height;
 			height = height-46-this.top;
 			this.height = height;
+			this.id = options.id ? options.id : '';
 			this.init();
 		},
 		methods: {
+			getCateList() {
+				$.ajax({
+					url: API.shopCateApi,
+					data: {shopId: self.id},
+					method: 'GET',
+					success(res) {
+						self.cateList = res.data ? res.data : [];
+					}
+				})
+			},
+			like() {
+				$.ajax({
+					url: API.likeShopApi,
+					data: {
+						shopId: self.id
+					},
+					method: 'POST',
+					success(res) {
+						self.isLike = !self.isLike;
+						if(self.isLike) {
+							self.shop.likeNum += 1;
+						}else{
+							self.shop.likeNum -= 1;
+						}
+					}
+				})
+			},
 			changeTab(status) {
 				self.tabStatus = status;
+				if(status == 3 && this.cateList.length <= 0) {
+					this.getCateList();
+				}
 			},
 			changeSwiper(e) {
 				self.active = e.detail.current;
 			},
-			init() {},
+			getDetail() {
+				$.ajax({
+					url: API.shopDetailApi,
+					data: {shopId:self.id},
+					method: 'GET',
+					success(res) {
+						self.shop = res.data ? res.data : '';
+						self.isLike = self.shop != '' ? self.shop.isCollectShop : false;
+					}
+				})
+			},
+			init() {
+				this.getDetail();
+			},
 		},
 		created() {
 		},
 		computed: {
 			i18n() {
 				return this.$t('search')
+			},
+			i18nShop() {
+				return this.$t('shop')
 			},
 		},
 		mounted() {},

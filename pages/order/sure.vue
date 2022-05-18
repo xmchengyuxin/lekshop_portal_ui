@@ -50,17 +50,17 @@
 						<text class="flex f-a-c van-icon van-icon-arrow t-color-9 "></text>
 					</view>
 				</view>
-				<view class="flex  f-j-s padding-tb10">
-					<text class="flex f-s-0 f12-size t-color-9 margin-r10">{{i18n['订单备注']}}</text>
+				<view class="flex  f-j-s " style="padding-top: 10px;">
+					<text class="flex f-s-0  f12-size t-color-9 margin-r10">{{i18n['订单备注']}}</text>
 					<view class="flex flex-1">
 						<textarea v-model="item.remark" class="f12-size input h-30" value="" placeholder="订单备注可选" />
 					</view>
 				</view>
-				<view class="flex f-a-c f-j-e">
+				<!-- <view class="flex f-a-c f-j-e">
 					<text class="f12-size t-color-9">{{i18n['共1件'] | i18n(2)}}，</text>
 					<text class="f12-size ">{{i18n['小计']}}：</text>
 					<text class="f12-size text-price t-color-y">2700</text>
-				</view>
+				</view> -->
 			</view>
 			
 		</view>
@@ -78,6 +78,9 @@
 .fixed-top {
 	top: auto;
 	bottom: 0;
+}
+.input {
+	text-align: right;
 }
 </style>
 <script>

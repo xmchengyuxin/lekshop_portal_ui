@@ -250,10 +250,16 @@ const hideCenterText = function(name) {
 		return time.slice(0,time.lastIndexOf(':'))
 	}
 	
-	var i18n = function(text,num) {
+	var i18n = function(text,num,fc) {
 		if(!text){return;}
 		let first = text.indexOf('/');
 		let last = text.lastIndexOf('/');
+		if(fc && fc == 'time2') {
+			num = time2(num);
+		}
+		if(fc && fc == 'time1') {
+			num = time1(num);
+		}
 		text = text.slice(0,first)+num+text.slice(last+1,text.length);
 		return text;
 	}

@@ -193,8 +193,13 @@
 		{
 			"path": "pages/coupon/getlist",
 			"style": {
-				"navigationBarTitleText": "红包卡券",
-				"navigationBarBackgroundColor":"#F7F7F7"
+				"navigationBarTitleText": "红包卡券"
+			} 
+		},
+		{
+			"path": "pages/coupon/list",
+			"style": {
+				"navigationBarTitleText": "我的卡券"
 			} 
 		},
 		{

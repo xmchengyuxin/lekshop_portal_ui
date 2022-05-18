@@ -14,6 +14,12 @@
 		right: 0;
 		margin: auto;
 }
+.wrap-couponed view,.wrap-couponed text {
+	color: #999!important;
+}
+.wrap-couponed .coupon-role {
+	background: #EDEBEB!important;
+}
 .wrap-coupon {
 	position: relative;
 }

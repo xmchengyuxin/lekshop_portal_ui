@@ -7,7 +7,7 @@
 					<view class="flex f-a-c van-icon van-icon-search t-color-9 f20-size margin-r8"></view>
 					<view class="flex f-a-c t-color-6">搜索 商品、类目</view>
 				</view>
-				<view class="flex f-a-c f-j-c van-icon van-icon-coupon-o t-color-w f22-size margin-r10"></view>
+				<view @click="go('/pages/coupon/getlist')" class="flex f-a-c f-j-c van-icon van-icon-coupon-o t-color-w f22-size margin-r10"></view>
 				<view class="flex f-a-c f-j-c van-icon van-icon-chat-o t-color-w f22-size"></view>
 			</view>
 			<view class="h-30">
@@ -25,11 +25,8 @@
 					<view class="swiper-item padding-12" :style="'https://stc.wanlshop.com/assets/addons/wanlshop/img/show/main_bg3x.png' | bgimg(700)+''">
 						<view  :style="{ 'padding-top': top +74+ 'px' }"></view>
 						<swiper v-if="parent == 0"  class="wrap-banner h-120 b-radius-5" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
-							<swiper-item >
-								<view class="bg-color h100 b-radius-5"></view>
-							</swiper-item>
-							<swiper-item>
-								<view class="bg-color-linear-y h100 b-radius-5"></view>
+							<swiper-item v-for="img in banner">
+								<view class="bg-img h100 b-radius-5 " :style="img.img | bgimg(700)+''"></view>
 							</swiper-item>
 						</swiper>
 						<view v-if="item.children && item.children.length > 0" class="bg-color-w b-radius-10 flex f-w margin-t12 wrap-sub-cate">
@@ -104,8 +101,9 @@
 				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
 				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
 				active: 0,
-					  navs: [],
-					  pageSize: 20,
+				navs: [],
+				pageSize: 20,
+				banner: [],
 			};
 		},
 		onLoad: function() {
@@ -166,6 +164,11 @@
 			},
 			init() {
 				this.getCate();
+				this.getBanner({
+					success(res) {
+						self.banner = res.data ? res.data : [];
+					}
+				})
 			},
 		},
 		created() {

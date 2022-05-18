@@ -9,7 +9,7 @@
 						<input @confirm="search" v-model="value" type="text" value="" class="input f12-size" :placeholder="i18n['搜索商品']" />
 					</view>
 					<view class="flex f-a-c h100">
-						<view class="flex f-a-c f-j-c f-s-0 w-50 b-radius-30 h-26 bg-color-linear-y t-color-w f12-size">{{i18n['搜索']}}</view>
+						<view @click="search()" class="flex f-a-c f-j-c f-s-0 w-50 b-radius-30 h-26 bg-color-linear-y t-color-w f12-size">{{i18n['搜索']}}</view>
 					</view>
 				</view>
 			</view>
@@ -60,7 +60,8 @@
 		methods: {
 			search() {
 				if(self.value == ''){
-					$.$toast(self.i18n['请输入搜索内容']);
+					self.go('/pages/search/list',2);
+					// $.$toast(self.i18n['请输入搜索内容']);
 					return;
 				}
 				if(self.list.length <= 0) {
@@ -77,7 +78,7 @@
 					}
 				}
 				uni.setStorageSync('history',self.list);
-				self.go('/pages/search/list?value='+self.value);
+				self.go('/pages/search/list?title='+self.value,2);
 			},
 			init() {
 			},
