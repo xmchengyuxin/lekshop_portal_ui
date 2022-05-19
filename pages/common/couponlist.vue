@@ -12,7 +12,7 @@
 				</view>
 				<view class="padding-10 flex flex-1 f-c f-j-s">
 					<view class="flex f-c">
-						<view  v-if="type != 'goods'" class="flex f-a-c f-j-s margin-b4">
+						<view  v-if="type != 'goods' && type != 'use'" class="flex f-a-c f-j-s margin-b4">
 							<view class="flex f-a-c">
 								<text class="flex f-a-c f-j-c van-icon van-icon-shop-o t-color-9 margin-r4"></text>
 								<text>{{item.shopName}}</text>
@@ -27,20 +27,34 @@
 						
 					</view>
 					<view class="flex">
-						<view v-if="item.validityType" class="flex flex-1 f-c f-j-e">
-							<view v-if="item.validityType == 1" class="coupon-dot flex f-a-c margin-t4 f12-size t-color-9">{{i18n['未使用前永久有效']}}</view>
-							<view v-if="item.validityType == 2" class="coupon-dot flex f-a-c margin-t4 f12-size t-color-9">{{i18n['领取后1天内有效'] | i18n(item.validityDays)}}</view>
-							<view v-if="item.validityType == 3" class="coupon-dot flex f-a-c margin-t4 f12-size t-color-9">{{i18n['1内有效'] | i18n(item.fixedEndDate,'time1')}}</view>
-						</view>
-						<!-- 领取后 -->
-						<view v-else class="flex flex-1 f-c f-j-e">
-							<view v-if="item.validityEndTime" class="coupon-dot flex f-a-c margin-t4 f12-size t-color-9">{{i18n['1内有效'] | i18n(item.validityEndTime,'time1')}}</view>
-							<view v-else class="coupon-dot flex f-a-c margin-t4 f12-size t-color-9">{{i18n['未使用前永久有效']}}</view>
-						</view>
-						<view v-if="item.validityType" @click="getCoupon(item.id)" class="flex f-s-0 f-a-c f-j-c h-30 b-radius-30 f12-size t-color-w bg-color-linear-y w-70">{{i18n['立即领取']}}</view>
+						<!-- 订单页面使用 -->
+						<block v-if="type == 'use'">
+							<view v-if="item.reason" class="flex flex-1 f-c f-j-e">
+								<view  class=" flex f-a-c margin-t4 f12-size t-color-9">{{item.reason}}</view>
+							</view>
+							<view v-else class="flex flex-1 f-c f-j-e">
+								<view v-if="item.validityEndTime" class="coupon-dot flex f-a-c margin-t4 f12-size t-color-9">{{i18n['1内有效'] | i18n(item.validityEndTime,'time1')}}</view>
+								<view v-else class="coupon-dot flex f-a-c margin-t4 f12-size t-color-9">{{i18n['未使用前永久有效']}}</view>
+							</view>
+							<view  @click="use(item)"  class="flex f-s-0 f-a-c f-j-c h-30 b-radius-30 f12-size t-color-w bg-color-linear-y w-70">{{i18n['确定']}}</view>
+						</block>
 						<block v-else>
-							<view v-if="item.status == 0" @click="getCoupon(item.id)"  class="flex f-s-0 f-a-c f-j-c h-30 b-radius-30 f12-size t-color-w bg-color-linear-y w-70">{{i18n['去使用']}}</view>
-							<view v-else class="flex f-s-0 f-a-c f-j-c h-30 b-radius-30 f12-size t-color-9 bg-color-e w-70">{{i18n['去使用']}}</view>
+							<view v-if="item.validityType" class="flex flex-1 f-c f-j-e">
+								<view v-if="item.validityType == 1" class="coupon-dot flex f-a-c margin-t4 f12-size t-color-9">{{i18n['未使用前永久有效']}}</view>
+								<view v-if="item.validityType == 2" class="coupon-dot flex f-a-c margin-t4 f12-size t-color-9">{{i18n['领取后1天内有效'] | i18n(item.validityDays)}}</view>
+								<view v-if="item.validityType == 3" class="coupon-dot flex f-a-c margin-t4 f12-size t-color-9">{{i18n['1内有效'] | i18n(item.fixedEndDate,'time1')}}</view>
+							</view>
+							<!-- 领取后 -->
+							<view v-else class="flex flex-1 f-c f-j-e">
+								<view v-if="item.validityEndTime" class="coupon-dot flex f-a-c margin-t4 f12-size t-color-9">{{i18n['1内有效'] | i18n(item.validityEndTime,'time1')}}</view>
+								<view v-else class="coupon-dot flex f-a-c margin-t4 f12-size t-color-9">{{i18n['未使用前永久有效']}}</view>
+							</view>
+							
+							<view v-if="item.validityType" @click="getCoupon(item.id)" class="flex f-s-0 f-a-c f-j-c h-30 b-radius-30 f12-size t-color-w bg-color-linear-y w-70">{{i18n['立即领取']}}</view>
+							<block v-else>
+								<view v-if="item.status == 0" @click="getCoupon(item.id)"  class="flex f-s-0 f-a-c f-j-c h-30 b-radius-30 f12-size t-color-w bg-color-linear-y w-70">{{i18n['去使用']}}</view>
+								<view v-else class="flex f-s-0 f-a-c f-j-c h-30 b-radius-30 f12-size t-color-9 bg-color-e w-70">{{i18n['去使用']}}</view>
+							</block>
 						</block>
 					</view>
 				</view>
@@ -67,6 +81,7 @@
 				default: 'goods'
 			}
 		},
+		emits: ['choose'],
 		data() {
 			return {};
 		},
@@ -75,6 +90,9 @@
 			this.init();
 		},
 		methods: {
+			use(item) {
+				this.$emit('choose',item);
+			},
 			getCoupon(id) {
 				const self = this;
 				$.ajax({

@@ -282,5 +282,5 @@ export default {
 	week,
 	km,
 	filterMiao,
-	i18n
+	i18n,
 };

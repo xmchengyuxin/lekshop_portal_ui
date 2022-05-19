@@ -13,6 +13,18 @@
 			} 
 		},
 		{
+			"path": "pages/user/commentlist",
+			"style": {
+				"navigationBarTitleText": "我的评价"
+			} 
+		},
+		{
+			"path": "pages/user/comment",
+			"style": {
+				"navigationBarTitleText": "发表评价"
+			} 
+		},
+		{
 			"path": "pages/find/issue",
 			"style": {
 				"navigationBarTitleText": "发布"

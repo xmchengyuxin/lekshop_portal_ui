@@ -429,3 +429,6 @@ uni-toast {
 .add-reduce.dis::after,.add-btn.dis::after {
 	color: #b8b8b8;
 }
+.wrap-popup-radius {
+	border-radius: 15px 15px 0 0;
+}

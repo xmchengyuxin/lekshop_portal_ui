@@ -24,6 +24,44 @@
 			<view class="flex f-a-c f-j-c wrap-dot  b-radius-30 t-color-w f10-size">{{bannerIndex+1}}/{{banner.length}}</view>
 		</view>
 		
+		<!-- 秒杀 -->
+		<view class="wrap-miaosha t-color-w flex f-a-c f-j-s" v-if="isMS()">
+			<view class="flex f-a-c">
+				<image mode="widthFix"  style="width: 36px;margin-right: 10px;" src="http://qiniu.syh32.com/syh/xcx/detail-miaosha.png" alt=""></image>
+				<view class="flex f-c">
+					<text class="text-price f20-size f-w-b">{{goods.price | price}}</text>
+				</view>
+			</view>
+			<view class="flex f-c">
+				<block v-if="getMStype('start')">
+					<text  class="flex f-j-c f10-size">{{i18n['距开始还剩']}}</text>
+					<uni-countdown class="wrap-timedown" :day="day" :hour="hour" :minute="minute" :second="second" :font-size="10" splitorColor="#fff"  color="#CC015E" background-color="#FFFFFF" />
+				</block>
+				<block v-else-if="getMStype('in')">
+					<text class="flex f-j-c f10-size">{{i18n['距结束还剩']}}</text>
+					<uni-countdown class="wrap-timedown" :day="day" :hour="hour" :minute="minute" :second="second" :font-size="13" splitorColor="#fff"  color="#CC015E" background-color="#FFFFFF" />
+				</block>
+				<text v-else="getMStype('end')" class="flex f-j-c f10-size">{{i18n['活动已结束']}}</text>
+			</view>
+		</view>
+		
+		<!-- 团购 -->
+		<view v-if="isPT()" class="wrap-miaosha flex f-a-c f-j-s wrap-tuangou-bg">
+			<view class="flex f-a-c">
+				<view class="flex f-c">
+					<view class="flex f-a-c">
+						<text class="text-price t-color-w ">{{info.price | price}}</text>
+					</view>
+					<!-- <span class="miaosha-price-yuanjia flex"><i class="f-12">¥</i>{{data.price | price}}</span> -->
+				</view>
+			</view>
+			<view class="flex f-c f-a-e">
+				<view class="wrap-tuan-num flex f-a-c"><span class="flex f-a-c f-j-c">1</span>人团</view>
+				<span class="flex f-j-e tuangou-done-num">已团11件</span>
+			</view>
+		</view>
+		
+		
 		<view class="padding-12">
 			<view class="bg-color-w b-radius-10 padding-12">
 				<view class="flex f-j-s">
@@ -78,6 +116,26 @@
 					<view class="flex f-a-c f-s-0 van-icon f12-size van-icon-arrow t-color-9"></view>
 				</view>
 			</view>
+			<!-- 拼团 -->
+			<view class="bg-color-w b-radius-10 padding-12 margin-t12">
+				<view class="flex f-a-c f-j-s">
+					<view class="f-w-b">{{i18n['1人正在拼团，可直接参与'] | i18n(1)}}</view>
+					<view class="flex f-a-c">
+						<text class="flex f-a-c van-icon van-icon-arrow f10-size t-color-9"></text>
+					</view>
+				</view>
+				<block v-for="item in commentList">
+				<view  class="flex margin-t12">
+					<view class="flex f-s-0 w-30 h-30 b-radius bg-img margin-r12" :style="item.memberHeadImg | bgimg(300)+''"></view>
+					<view class="flex f-s-0 f-a-c f12-size">19023812921</view>
+					<view class="flex f-c f-j-s f-a-e flex-1 margin-r10">
+						<text class="f10-size">{{i18n['差1人成团'] | i18n(1)}}</text>
+						<text class="f10-size t-color-9">剩余22天前</text>
+					</view>
+					<view class="flex f-a-c f-j-c bg-color-linear-y t-color-w b-radius-5 h-30 w-60">{{i18n['去拼单']}}</view>
+				</view>
+				</block>
+			</view>
 			
 			<view class="bg-color-w b-radius-10 padding-12 margin-t12">
 				<view class="flex f-a-c f-j-s">
@@ -87,14 +145,16 @@
 						<text class="flex f-a-c van-icon van-icon-arrow f10-size t-color-y"></text>
 					</view>
 				</view>
-				<view class="flex margin-t12">
-					<view class="flex w-30 h-30 b-radius bg-color margin-r12"></view>
+				<block v-for="item in commentList">
+				<view  class="flex margin-t12">
+					<view class="flex w-30 h-30 b-radius bg-img margin-r12" :style="item.memberHeadImg | bgimg(300)+''"></view>
 					<view class="flex f-c f-j-s">
-						<text class="f10-size">dsasdasa</text>
+						<text class="f10-size">{{item.memberName}}</text>
 						<text class="f10-size t-color-9">22天前</text>
 					</view>
 				</view>
-				<view class="f12-size margin-t10">查看全部查看全部查看全部查看全部查看全部查看全部</view>
+				<view class="f12-size margin-t10">{{item.goodsName}}</view>
+				</block>
 			</view>
 			
 			<view class="bg-color-w b-radius-10 padding-12 margin-t12">
@@ -154,10 +214,14 @@
 					<text class="f10-size t-color-9 margin-t2">{{i18n['收藏']}}</text>
 				</view>
 			</view>
-			<view class="flex f-a-c">
-				<view class="flex b-radius-30 h-34 over-h">
+			<view class="flex f-a-c ">
+				<view  v-if="isMS()" class="flex b-radius-30 h-34 over-h w-200 f-j-e">
+					<view v-if="getMStype('in')" @click="$refs.sku.open()" class="flex f-a-c f-j-c b-radius-30 bg-color-p t-color-w f12-size w-100">{{i18n['马上抢']}}</view>
+					<view v-else  class="flex f-a-c f-j-c b-radius-30 bg-color-e t-color-9 f12-size w-100">{{i18n['马上抢']}}</view>
+				</view>
+				<view  v-else class="flex b-radius-30 h-34 over-h">
 					<view @click="$refs.sku.open()" class="flex f-a-c f-j-c bg-color-linear-y t-color-w f12-size w-100">{{i18n['加入购物车']}}</view>
-					<view @click="$refs.sku.open()" class="flex f-a-c f-j-c bg-color-p t-color-w f12-size w-100">{{i18n['立即购买']}}</view>
+					<view  @click="$refs.sku.open()" class="flex f-a-c f-j-c bg-color-p t-color-w f12-size w-100">{{i18n['立即购买']}}</view>
 				</view>
 			</view>
 		</view>
@@ -228,8 +292,14 @@
 					</view> 
 				</scroll-view>
 				<view class="flex b-radius-30 h-34 over-h margin-t12">
-					<view @click="addCar" class="flex f-a-c flex-1 f-j-c bg-color-linear-y t-color-w f12-size w-100">{{i18n['加入购物车']}}</view>
-					<view @click="buy()" class="flex f-a-c flex-1 f-j-c bg-color-p t-color-w f12-size w-100">{{i18n['立即购买']}}</view>
+					<block v-if="isMS()">
+						<view v-if="getMStype('in')" @click="buy()" class="flex f-a-c flex-1 f-j-c b-radius-30 bg-color-p t-color-w f12-size ">{{i18n['马上抢']}}</view>
+						<view v-else  class="flex f-a-c f-j-c flex-1 b-radius-30 bg-color-e t-color-9 f12-size ">{{i18n['马上抢']}}</view>
+					</block>
+					<block v-else>
+						<view @click="addCar" class="flex f-a-c flex-1 f-j-c bg-color-linear-y t-color-w f12-size w-100">{{i18n['加入购物车']}}</view>
+						<view @click="buy()" class="flex f-a-c flex-1 f-j-c bg-color-p t-color-w f12-size w-100">{{i18n['立即购买']}}</view>
+					</block>
 				</view>
 				<view  :style="{'padding-bottom': isIphonex ? '24px' : ''}"></view>
 			</view>
@@ -245,6 +315,7 @@
 	const API = require('../../utils/api/shops.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
+	let inter;
 	export default {
 		data() {
 			return {
@@ -266,6 +337,12 @@
 				fahuo: '',
 				couponList: [],
 				commentList: [],
+				now: 0,
+				now1: 0,
+				day: 0,
+				hour: 0,
+				minute: 0,
+				second: 0,
 			};
 		},
 		onLoad: function(options) {
@@ -274,6 +351,23 @@
 			this.init();
 		},
 		methods: {
+			isMS() {
+				return self.goods.type == 2
+			},
+			isPT() {
+				return self.goods.type == 3
+			},
+			getMStype(type) {
+				if(type == 'start') {
+					return self.now < self.goods.seckillBeginTime
+				}
+				if(type == 'in') {
+					return self.now >= self.goods.seckillBeginTime && self.now <= self.goods.seckillEndTime
+				}
+				if(type == 'end') {
+					return self.now > self.goods.seckillEndTime
+				}
+			},
 			getCommonList() {
 				$.ajax({
 					url: API.commentListApi,
@@ -299,7 +393,11 @@
 					}
 				}else{
 					if(self.sku.stock > self.num) {
-						self.num += 1;
+						if(self.isMS() && self.num >= self.goods.seckillLimitNum) {//超过单人限购数量
+							
+						}else{
+							self.num += 1;
+						}
 					}
 				}
 			},
@@ -314,6 +412,7 @@
 					];
 					uni.setStorageSync('orderData',postData);
 					this.go('/pages/order/sure');
+					this.$refs.sku.close();
 				}else{
 					$.$toast(self.i18n['请选择正确的规格']);
 				}
@@ -428,13 +527,47 @@
 						self.isLike = info.isCollectGoods;
 						self.fahuo = info.freight ? info.freight : '';
 						self.couponList = info.couponList ? info.couponList : [];
+						self.now = res.now ? res.now : new Data().getTime();
+						if(info.goods.type == 2) {//秒杀
+							self.startInterval();
+							self.caleTime();//计算倒计时间时分秒
+						}
 					}
 				})
+			},
+			startInterval() {
+				clearInterval(inter);
+				let first = true;
+				inter = setInterval(() => {
+					self.now += 1000;
+					//判断是否时第一次秒杀开始时间
+					if(first && self.now >= self.goods.seckillBeginTime && self.now <= self.goods.seckillEndTime) {
+						first = false;
+						self.caleTime();
+					}
+				},1000)
+			},
+			caleTime() {
+				let time = 0;
+				if(self.now < self.goods.seckillBeginTime) {//暂未开始
+					time = self.goods.seckillBeginTime;
+				}else if(self.now >= self.goods.seckillBeginTime && self.now <= self.goods.seckillEndTime) {
+					time = self.goods.seckillEndTime;
+				}
+				if(time <= 0){return};
+				let cha = Math.abs(time-self.now);
+				this.day = parseInt(cha/60/60/1000/24);
+				this.hour =  parseInt(cha/60/60/1000%24);
+				this.minute = parseInt(cha/1000/60%60);
+				this.second = parseInt(cha/1000%60);
 			},
 			init() {
 				this.getDetail();
 				this.getCommonList();
 			},
+		},
+		onHide() {
+			clearInterval(inter);
 		},
 		created() {
 		},
