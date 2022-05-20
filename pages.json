@@ -118,6 +118,12 @@
 			} 
 		},
 		{
+			"path": "pages/order/group",
+			"style": {
+				"navigationBarTitleText": "拼团详情"
+			} 
+		},
+		{
 			"path": "pages/order/order",
 			"style": {
 				"navigationBarTitleText": "我的订单"
@@ -153,6 +159,12 @@
 			"path": "pages/user/address",
 			"style": {
 				"navigationBarTitleText": "收获地址"
+			} 
+		},
+		{
+			"path": "pages/user/refund",
+			"style": {
+				"navigationBarTitleText": "申请售后"
 			} 
 		},
 		{

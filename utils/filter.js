@@ -74,16 +74,19 @@ const time2 = function(source) {
 	替换中间文字*
  */
 const hideCenterText = function(name) {
+		if(!name){return ''}
 		var realName = "";
 		var list = String(name).split("");
 		var length = list.length;
+		var len = 1;
+		if(length <= 7) {len=1}else{len=3}
 		if (length == 1) {
 			realName = name;
 		} else if (length == 2) {
 			realName = list[0] + "*";
 		} else {
 			list.forEach(function(element, index) {
-				if (index <= 3 || index >= length - 3) {
+				if (index < Number(len) || index >= length - Number(len)) {
 					realName += element;
 				} else {
 					realName += "*";
@@ -92,25 +95,6 @@ const hideCenterText = function(name) {
 		}
 		return realName;
 	};
-	const hideCenterText1 = function(name) {
-			var realName = "";
-			var list = String(name).split("");
-			var length = list.length;
-			if (length == 1) {
-				realName = name;
-			} else if (length == 2) {
-				realName = list[0] + "*";
-			} else {
-				list.forEach(function(element, index) {
-					if (index < 1 || index >= length - 1) {
-						realName += element;
-					} else {
-						realName += "*";
-					}
-				});
-			}
-			return realName;
-		};
 		const hideCenterText2 = function(name) {
 				var realName = "";
 				var list = String(name).split("");
@@ -129,7 +113,7 @@ const hideCenterText = function(name) {
 				return realName;
 			};
 	const price = function(num) {
-		
+		if(!num){return ''};
 		return Number(num).toFixed(2);
 	};
 	const time3 = function(source) {
@@ -266,7 +250,6 @@ const hideCenterText = function(name) {
 export default {
 	time,
 	hideCenterText,
-	hideCenterText1,
 	hideCenterText2,
 	time1,
 	time2,

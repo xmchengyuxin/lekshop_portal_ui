@@ -15,9 +15,11 @@ export default {
 	'likeGoodsListApi': 'member/collectGoods/getList',//商品收藏列表
 	'delLikeGoodsApi': 'member/collectGoods/delete',//删除收藏的商品
 	'commentListApi': 'common/goods/getCommentList',//商品评论列表
+	'goodsCommentListApi': 'common/goods/getCommentList',//商品评论列表
 	'shopDetailApi': 'common/shop/get',//店铺详情
 	'likeShopApi': 'member/collectShop/collectOrNoShop',//关注取关店铺
 	'likeShopListApi': 'member/collectShop/getList',//店铺收藏列表
 	'delShopApi': 'member/collectShop/delete',//删除收藏的商品
 	'shopCateApi': 'common/shopCate/getList',//店铺分类列表
+	'validateGroupApi': 'member/order/validateGroup',//校验是否可参团
 }

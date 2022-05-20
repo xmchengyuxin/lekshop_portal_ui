@@ -29,6 +29,11 @@
 	const $ = require('../../utils/api.js');
 	let self;
 	export default {
+		props: {
+			url: {
+				default: '/pages/index/index'
+			}
+		},
 		data() {
 			return {};
 		},

@@ -14,7 +14,7 @@
 						<view class="padding-30"></view>
 						<no-data></no-data>
 					</view>
-					<view v-else v-for="(child,index) in item.list" class="bg-color-w b-radius-5 padding-12 margin-b12">
+					<view @click="go('/pages/order/detail?id='+child.order.id)" v-else v-for="(child,index) in item.list" class="bg-color-w b-radius-5 padding-12 margin-b12">
 						<view class="flex f-j-s margin-b16">
 							<view class="flex f-a-c ">
 								<text class="flex f-a-c van-icon van-icon-shop-o  margin-r6"></text>
@@ -39,7 +39,7 @@
 						</view>
 						<view class="flex f-j-e f12-size f-w-500 margin-t6">
 							<text>{{i18n['实付款']}}：</text>
-							<text class="text-price">{{child.order.totalPrice}}</text>
+							<text class="text-price">{{child.order.payPrice}}</text>
 						</view>
 						<view class="flex f-j-e f-w">
 							<view v-if="state[child.order.status].value == 'dzf'" @click="changeAddress(index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-3 ">{{i18n['修改地址']}}</view>

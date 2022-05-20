@@ -117,10 +117,14 @@
 				len: 0,
 				couponList: [],
 				commonIndex: '',
+				groupId: '',
+				joinGroupId: '',
 			};
 		},
-		onLoad: function() {
+		onLoad: function(options) {
 			self = this;
+			this.groupId = options.groupId ? options.groupId : '';
+			this.joinGroupId = options.joinId ? options.joinId : '';
 			this.init();
 			$.setTitle(self.i18n['确认订单']);
 		},
@@ -199,7 +203,8 @@
 						carIds: carIds != '' && carIds[ele.shopId] ? carIds[ele.shopId] : '',
 						couponId: ele.couponId ? ele.couponId : '',
 						remark: ele.remark ? ele.remark : '',
-						groupId: '',
+						groupId: self.groupId,
+						joinGroupId: self.joinGroupId,
 					}
 					ele.goodsList.forEach((ele1,idx) => {
 						let obj1 = {
@@ -251,7 +256,7 @@
 				let orderData = uni.getStorageSync('orderData') ? uni.getStorageSync('orderData') : '';
 				let postData = {
 					goodsParams: JSON.stringify(orderData),//[shopId,店铺ID,skuId:商品skuId,num:购买数量]
-					groupId: '',//拼团购买方式>>-1单独购买>>0普通拼团>>其他为阶梯拼团ID
+					groupId: self.groupId,//拼团购买方式>>-1单独购买>>0普通拼团>>其他为阶梯拼团ID
 				}
 				if(this.address != '') {
 					self.address.addTime = '';

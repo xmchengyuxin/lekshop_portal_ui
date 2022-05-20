@@ -46,18 +46,19 @@
 		</view>
 		
 		<!-- 团购 -->
-		<view v-if="isPT()" class="wrap-miaosha flex f-a-c f-j-s wrap-tuangou-bg">
+		<view v-if="isPT()" class="wrap-miaosha flex f-a-c f-j-s wrap-tuangou-bg ">
 			<view class="flex f-a-c">
 				<view class="flex f-c">
 					<view class="flex f-a-c">
-						<text class="text-price t-color-w ">{{info.price | price}}</text>
+						<text class="text-price t-color-w f24-size margin-r8">{{goods.price | price}}</text>
+						<text v-if="oriPrice() != ''" class="f13-size   del-line text-price margin-t4" style="color: #FFFCFF;">{{oriPrice() | price}}</text>
 					</view>
-					<!-- <span class="miaosha-price-yuanjia flex"><i class="f-12">¥</i>{{data.price | price}}</span> -->
 				</view>
 			</view>
-			<view class="flex f-c f-a-e">
-				<view class="wrap-tuan-num flex f-a-c"><span class="flex f-a-c f-j-c">1</span>人团</view>
-				<span class="flex f-j-e tuangou-done-num">已团11件</span>
+			<view class="flex f-c f-a-e t-color-w">
+				<text v-if="isPT('2')" class=" flex f-a-c">阶梯拼团</text>
+				<text v-else class=" flex f-a-c">{{goods.groupNum}}人团</text>
+				<text class="flex f-j-e ">已团11件</text>
 			</view>
 		</view>
 		
@@ -92,7 +93,7 @@
 						</view>
 						<view class="flex f-w" v-if="skuInfoList[0] && skuInfoList[0].valList.length > 0">
 							<view  v-for="(child,idx) in skuInfoList[0].valList" class="flex f-a-c f-j-c f-s-0 b-radius-2 bg-color-f7 t-color-9 margin-r12 margin-t12 h-30 f12-size padding-lr10">{{child.value}}</view>
-							<view v-if="skuInfoList.length > 0" class="flex f-a-c f-j-c f-s-0 b-radius-2 bg-color-f7 t-color-9 margin-r12 margin-t12 h-30 f12-size padding-lr10">更多规格可选</view>
+							<view v-if="skuInfoList.length > 0" class="flex f-a-c f-j-c f-s-0 b-radius-2 bg-color-f7 t-color-9 margin-r12 margin-t12 h-30 f12-size padding-lr10">{{i18n['更多规格可选']}}</view>
 						</view>
 					</view>
 					<view class="flex f-a-s " style="padding-top: 3px;">
@@ -117,29 +118,34 @@
 				</view>
 			</view>
 			<!-- 拼团 -->
-			<view class="bg-color-w b-radius-10 padding-12 margin-t12">
+			<view v-if="isPT() && pintuanNum > 0" class="bg-color-w b-radius-10 padding-12 margin-t12">
 				<view class="flex f-a-c f-j-s">
-					<view class="f-w-b">{{i18n['1人正在拼团，可直接参与'] | i18n(1)}}</view>
+					<view v-if="!isShareGroup" class="f-w-b">{{i18n['1人正在拼团，可直接参与'] | i18n(pintuanNum)}}</view>
+					<view v-else class="f-w-b">{{i18n['参与']}} <text class="padding-lr6">{{group.memberName | hideCenterText}}</text> {{i18n['拼团']}}</view>
 					<view class="flex f-a-c">
 						<text class="flex f-a-c van-icon van-icon-arrow f10-size t-color-9"></text>
 					</view>
 				</view>
-				<block v-for="item in commentList">
-				<view  class="flex margin-t12">
+				<block v-for="item in groupList">
+				<view v-if="now <= item.endTime" class="flex margin-t12">
 					<view class="flex f-s-0 w-30 h-30 b-radius bg-img margin-r12" :style="item.memberHeadImg | bgimg(300)+''"></view>
-					<view class="flex f-s-0 f-a-c f12-size">19023812921</view>
-					<view class="flex f-c f-j-s f-a-e flex-1 margin-r10">
-						<text class="f10-size">{{i18n['差1人成团'] | i18n(1)}}</text>
-						<text class="f10-size t-color-9">剩余22天前</text>
+					<view class="flex f-s-0 f-c margin-r6">
+						<view v-if="isPT(2)" class="flex f-s-0 f-a-c f10-size text-price t-color-y">{{item.groupPrice}}</view>
+						<view class="flex f-s-0 f-a-c f12-size ">{{item.memberName | hideCenterText}}</view>
 					</view>
-					<view class="flex f-a-c f-j-c bg-color-linear-y t-color-w b-radius-5 h-30 w-60">{{i18n['去拼单']}}</view>
+					<view class="flex f-c f-j-s f-a-e flex-1 margin-r10">
+						<text class="f10-size">{{i18n['差1人成团'] | i18n(item.groupNum-item.haveGroupNum)}}</text>
+						<text class="f10-size t-color-9">{{i18n['倒计时']}} {{now | timeCount(item.endTime)}}</text>
+					</view>
+					<view v-if="item.haveGroupNum >= item.groupNum"  class="flex f-a-c f-j-c bg-color-e t-color-9 b-radius-5 h-30 w-60">{{i18n['已成团']}}</view>
+					<view v-else @click="joinGroup(item)" class="flex f-a-c f-j-c bg-color-linear-y t-color-w b-radius-5 h-30 w-60">{{i18n['去拼单']}}</view>
 				</view>
 				</block>
 			</view>
 			
-			<view class="bg-color-w b-radius-10 padding-12 margin-t12">
+			<view v-if="goods.commentNum > 0" class="bg-color-w b-radius-10 padding-12 margin-t12">
 				<view class="flex f-a-c f-j-s">
-					<view class="f-w-b">{{i18n['宝贝评价']}}(100+)</view>
+					<view class="f-w-b">{{i18n['宝贝评价']}}({{goods.commentNum}})</view>
 					<view class="flex f-a-c">
 						<text class="f10-size t-color-y margin-r4">{{i18n['查看全部']}}</text>
 						<text class="flex f-a-c van-icon van-icon-arrow f10-size t-color-y"></text>
@@ -219,6 +225,27 @@
 					<view v-if="getMStype('in')" @click="$refs.sku.open()" class="flex f-a-c f-j-c b-radius-30 bg-color-p t-color-w f12-size w-100">{{i18n['马上抢']}}</view>
 					<view v-else  class="flex f-a-c f-j-c b-radius-30 bg-color-e t-color-9 f12-size w-100">{{i18n['马上抢']}}</view>
 				</view>
+				<view  v-else-if="isPT()" class="flex b-radius-30 h-34 over-h w-200 f-j-e">
+					<!-- 单独购买分享状态不显示 -->
+					<block v-if="isShareGroup">
+						<view  @click="$refs.sku.open()" class="flex f-a-c f-j-c f-c bg-color-p b-radius-30 t-color-w f12-size w-100">
+							<text v-if="isPT(2)" class="f12-size">{{i18n['阶梯拼团']}}</text>
+							<text v-else class="f12-size">{{i18n['1人成团'] | i18n(goods.groupNum)}}</text>
+							<text class="text-price f11-size">{{goods.price | price}}</text>
+						</view>
+					</block>
+					<block v-else>
+						<view @click="$refs.sku.open()" class="flex f-a-c f-j-c bg-color-linear-y t-color-w f12-size w-100 f-c">
+							<text class="f12-size">{{i18n['单独购买']}}</text>
+							<text class="text-price f11-size">{{oriPrice() | price}}</text>
+						</view>
+						<view  @click="$refs.sku.open()" class="flex f-a-c f-j-c f-c bg-color-p t-color-w f12-size w-100">
+							<text v-if="isPT(2)" class="f12-size">{{i18n['阶梯拼团']}}</text>
+							<text v-else class="f12-size">{{i18n['1人成团'] | i18n(goods.groupNum)}}</text>
+							<text class="text-price f11-size">{{goods.price | price}}</text>
+						</view>
+					</block>
+				</view>
 				<view  v-else class="flex b-radius-30 h-34 over-h">
 					<view @click="$refs.sku.open()" class="flex f-a-c f-j-c bg-color-linear-y t-color-w f12-size w-100">{{i18n['加入购物车']}}</view>
 					<view  @click="$refs.sku.open()" class="flex f-a-c f-j-c bg-color-p t-color-w f12-size w-100">{{i18n['立即购买']}}</view>
@@ -250,7 +277,7 @@
 		</uni-popup>
 		
 		<!-- 规格弹窗 -->
-		<uni-popup ref="sku" type="bottom" >
+		<uni-popup ref="sku" type="bottom" @change="changeSkuPopup">
 			<view class="padding-10 wrap-popup-radius bg-color-w">
 				<view class="flex">
 					<block v-if="sku == ''">
@@ -264,7 +291,9 @@
 						<view @click="previewImg(sku.img)" class="flex f-s-0 w-80 h-80 b-radius-5 bg-img margin-r12" :style="sku.img | bgimg(300)+''"></view>
 						<view class="flex flex-1 f-c f-j-c">
 							<view class="flex f-a-c ">
-								<view class="t-color-y f18-size f-w-b text-price">{{sku.price}}</view>
+								<!-- 阶梯拼团时需要计算实际价格 -->
+								<view v-if="isPT(2)" class="t-color-y f18-size f-w-b text-price">{{updateSkuPrice()}}</view>
+								<view v-else class="t-color-y f18-size f-w-b text-price">{{sku.price}}</view>
 							</view>
 							<view class="flex f11-size t-color-9">{{i18n['库存']}} {{sku.stock}}</view>
 						</view>
@@ -281,7 +310,13 @@
 						<view class="flex f-w">
 							<view @click="chooseSku(index,child)" v-for="(child,idx) in item.valList" :class="child['isDis'] ? 't-color-9' : chooseSkuList[index] && chooseSkuList[index].id == child.id ? 't-color-y b-color-y' : ''" class="flex f-a-c f-j-c f-s-0 b-radius-2 bg-color-f7 margin-r12 margin-t12 h-30 f12-size padding-lr10">{{child.value}}</view>
 						</view>
-					</view> 
+					</view>
+					 <view v-if="isPT('2')" class="padding-tb10 b-bottom">
+					 	<view >{{i18n['阶梯拼团']}}</view>
+					 	<view class="flex f-w">
+					 		<view v-for="(item,index) in groupListConfig" @click="chooseGroupConfig(item)" :class="groupConfig.id == item.id ? 't-color-y b-color-y' : group != '' ? 't-color-9': ''" class="flex f-a-c f-j-c f-s-0 b-radius-2 bg-color-f7 margin-r12 margin-t12 h-30 f12-size padding-lr10">{{i18n['1人成团'] | i18n(item.num)}}</view>
+					 	</view>
+					 </view>
 					<view class="padding-tb10 flex f-j-s">
 						<view class="flex f-a-c">{{i18n['购买数量']}}</view>
 						<view class="flex">
@@ -295,6 +330,27 @@
 					<block v-if="isMS()">
 						<view v-if="getMStype('in')" @click="buy()" class="flex f-a-c flex-1 f-j-c b-radius-30 bg-color-p t-color-w f12-size ">{{i18n['马上抢']}}</view>
 						<view v-else  class="flex f-a-c f-j-c flex-1 b-radius-30 bg-color-e t-color-9 f12-size ">{{i18n['马上抢']}}</view>
+					</block>
+					<block  v-else-if="isPT()">
+						<!-- 单独开团 -->
+						<block v-if="group == ''">
+							<view  @click="groupBuy('1')" class="flex f-a-c flex-1 f-j-c f-c bg-color-linear-y t-color-w f12-size w-100">
+								<text class="f12-size">{{i18n['单独购买']}}</text>
+								<text class="text-price f11-size" v-if="sku == ''">{{oriPrice() | price}}</text>
+								<text class="text-price f11-size" v-if="sku != ''">{{sku.oriPrice | price}}</text>
+							</view>
+							<view  @click="groupBuy('2')" class="flex f-a-c flex-1 f-j-c f-c bg-color-p t-color-w f12-size w-100">
+								<text v-if="isPT(2)" class="f12-size">{{i18n['阶梯拼团']}}</text>
+								<text v-else class="f12-size">{{i18n['1人成团'] | i18n(goods.groupNum)}}</text>
+								<text class="text-price f11-size" v-if="sku == ''">{{goods.price | price}}</text>
+								<text class="text-price f11-size" v-if="sku != ''">{{updateSkuPrice()}}</text>
+							</view>
+						</block>
+						<block v-else>
+							<view  @click="groupBuy('3')" class="flex f-a-c flex-1 f-j-c b-radius-30 bg-color-p t-color-w f-w-b ">
+								{{i18n['参与']}} <text class="padding-lr6">{{group.memberName | hideCenterText}}</text> {{i18n['拼团']}}
+							</view>
+						</block>	
 					</block>
 					<block v-else>
 						<view @click="addCar" class="flex f-a-c flex-1 f-j-c bg-color-linear-y t-color-w f12-size w-100">{{i18n['加入购物车']}}</view>
@@ -343,19 +399,79 @@
 				hour: 0,
 				minute: 0,
 				second: 0,
+				group: '',
+				groupId: '',
+				joinGroupId: '',
+				isShareGroup: false,
+				groupList: [],
+				pintuanNum: 0,
+				groupListConfig: [],
+				groupConfig: '',
 			};
 		},
 		onLoad: function(options) {
 			self = this;
 			this.id = options.id ? options.id : 6;
+			this.joinGroupId = options.joinId ? options.joinId : '';
+		},
+		onShow() {
 			this.init();
 		},
 		methods: {
+			updateSkuPrice() {//阶梯拼团时需自行更新价格
+				if(this.groupConfig != ''){
+					return (this.sku.price*this.groupConfig.discounts/100).toFixed(2);
+				}else{
+					return this.sku.price
+				}
+			},
+			chooseGroupConfig(info) {
+				if(this.group == '') {//空则可选择自己的阶梯，非空时加入别人的团
+					this.groupConfig = info;
+				}
+			},
+			joinGroup(info) {
+				this.group = info;
+				if(this.isPT(2)) {
+					this.groupListConfig.forEach((ele,index)=> {
+						if(ele.id == self.group.goodsGroupId) {
+							self.groupConfig = ele;
+						}
+					})
+				}
+				this.$refs.sku.open()
+			},
+			changeSkuPopup(e) {//监听规格弹窗关闭初始化数据
+				if(!e.show) {
+					this.clearData();
+				}
+			},
+			clearData() {
+				if(this.isShareGroup){return;}//分享链接一直保持参团信息
+				this.group = '';
+				this.groupId = '';
+			},
+			oriPrice() {
+				if(this.skuList.length > 0) {
+					return this.skuList[0]['oriPrice']
+				}else{
+					return ''
+				}
+			},
 			isMS() {
 				return self.goods.type == 2
 			},
-			isPT() {
-				return self.goods.type == 3
+			isPT(type) {//1普通拼团>>2阶梯拼团
+				if(type){
+					if(type == 1) {
+						return self.goods.type == 3 && self.goods.groupType == 1
+					}
+					if(type == 2) {
+						return self.goods.type == 3 && self.goods.groupType == 2
+					}
+				}else{
+					return self.goods.type == 3
+				}
 			},
 			getMStype(type) {
 				if(type == 'start') {
@@ -370,7 +486,7 @@
 			},
 			getCommonList() {
 				$.ajax({
-					url: API.commentListApi,
+					url: API.goodsCommentListApi,
 					data: {
 						page: 1,
 						pageSize: 10,
@@ -394,10 +510,36 @@
 				}else{
 					if(self.sku.stock > self.num) {
 						if(self.isMS() && self.num >= self.goods.seckillLimitNum) {//超过单人限购数量
-							
+						}else if (self.isPT() && self.num >= self.goods.groupLimitBuy)	{
 						}else{
 							self.num += 1;
 						}
+					}
+				}
+			},
+			groupBuy(type) {
+				if(this.attrSymbolPath == '') {
+					$.$toast(self.i18n['请选择正确的规格']);return;
+				}
+				//type1，单独购买，2创建拼团,3有拼团信息的
+				if(type == 1){
+					this.groupId = '-1';
+					this.buy();
+				}else{
+					//-1单独购买>>0普通拼团>>其他为阶梯拼团ID
+					this.groupId = self.isPT(2) ? self.groupConfig.id : 0;
+					if(type == 2) {
+						this.buy();
+					}else{
+						$.ajax({
+							url: API.validateGroupApi,
+							data: {groupId: this.group.id},
+							method: 'GET',
+							success(res) {
+								self.joinGroupId = self.group.id;
+								self.buy();
+							}
+						})
 					}
 				}
 			},
@@ -411,7 +553,7 @@
 						}
 					];
 					uni.setStorageSync('orderData',postData);
-					this.go('/pages/order/sure');
+					this.go('/pages/order/sure?groupId='+this.groupId+'&joinId='+this.joinGroupId);
 					this.$refs.sku.close();
 				}else{
 					$.$toast(self.i18n['请选择正确的规格']);
@@ -457,7 +599,7 @@
 				this.num = 1;
 				this.$set(this.chooseSkuList,index,data);
 				this.$set(this.skuInfoList[index],'isChoose',true);
-				this.getSkuInfo();
+				this.getSkuInfo(index);
 			},
 			clacSkuStock(attrSymbolPath) {
 				if(this.skuList.length > 0) {
@@ -485,7 +627,7 @@
 				}
 				
 			},
-			getSkuInfo() {
+			getSkuInfo(skuIndex) {
 				if(this.skuList.length > 0) {
 					let attrSymbolPathArr = [];
 					let attrSymbolPath = '';
@@ -503,8 +645,14 @@
 					attrSymbolPath = attrSymbolPathArr.join('/');
 					this.skuList.forEach((ele,index) => {
 						if(ele.attrSymbolPath == attrSymbolPath) {
-							self.sku = ele;
-							self.attrSymbolPath = attrSymbolPath;
+							if(ele.stock <= 0) {
+								$.$toast('库存不足');
+								self.chooseSkuList[skuIndex] = '';
+							}else{
+								self.sku = ele;
+								self.attrSymbolPath = attrSymbolPath;
+							}
+							
 						}
 					})
 				}
@@ -512,7 +660,10 @@
 			getDetail() {
 				$.ajax({
 					url: API.goodsDetailApi,
-					data: {goodsId:self.id},
+					data: {
+						goodsId:self.id,
+						orderGroupId: self.joinGroupId,
+					},
 					method: 'GET',
 					success(res) {
 						let info = res.data ? res.data : '';
@@ -528,6 +679,16 @@
 						self.fahuo = info.freight ? info.freight : '';
 						self.couponList = info.couponList ? info.couponList : [];
 						self.now = res.now ? res.now : new Data().getTime();
+						self.groupList = info.assembleList ? info.assembleList : [];//拼团列表
+						self.pintuanNum = info.pintuanNum ? info.pintuanNum : 0;
+						self.groupListConfig = info.groupList ? info.groupList : [];
+						if(self.joinGroupId != '') {//分享链接过来的
+							self.group = self.groupList.length > 0 ? self.groupList[0] : '';
+							self.isShareGroup = true;
+						}
+						if(self.isPT() && self.groupList.length > 0) {//判断是否时拼团，并且有人发起，开启定时器
+							self.startInterval();
+						}
 						if(info.goods.type == 2) {//秒杀
 							self.startInterval();
 							self.caleTime();//计算倒计时间时分秒
@@ -540,11 +701,14 @@
 				let first = true;
 				inter = setInterval(() => {
 					self.now += 1000;
-					//判断是否时第一次秒杀开始时间
-					if(first && self.now >= self.goods.seckillBeginTime && self.now <= self.goods.seckillEndTime) {
-						first = false;
-						self.caleTime();
+					if(self.isMS()) {
+						//判断是否时第一次秒杀开始时间
+						if(first && self.now >= self.goods.seckillBeginTime && self.now <= self.goods.seckillEndTime) {
+							first = false;
+							self.caleTime();
+						}
 					}
+					
 				},1000)
 			},
 			caleTime() {

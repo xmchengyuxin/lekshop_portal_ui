@@ -9,4 +9,5 @@ export default {
 	'sureOrderApi': 'member/order/confirm',//确认收货
 	'orderDetailApi': 'member/order/get',//订单详情
 	'canUseCouponListApi': 'member/order/getCouponSelector',//获取当前可用优惠券
+	'orderDetailApi': 'member/order/get',//订单详情
 }
