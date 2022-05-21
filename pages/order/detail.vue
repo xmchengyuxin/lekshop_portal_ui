@@ -15,7 +15,7 @@
 				<view class="padding-lr5"></view>
 			</view>
 			<!-- 拼团 -->
-			<view class="bg-color-w b-radius-5 padding-12 margin-b12">
+			<view v-if="order.type == 3" class="bg-color-w b-radius-5 padding-12 margin-b12">
 				<view @click="go('/pages/order/group?id='+id)" class="flex  f-j-s">
 					<text class="f-w-b t-color-3 margin-r4 ">{{i18n['差1人成团'] | i18n(1)}}</text>
 					<view class="flex f-a-c">
@@ -53,6 +53,10 @@
 					<view v-if="item.remark != ''" class="flex f-j-s padding-tb6 f11-size">
 						<text class="flex f-s-0">{{i18n['订单备注']}}</text>
 						<text class="">{{item.remark}}</text>
+					</view>
+					<view class="flex f-a-c f-j-e">
+						<view v-if="state[item.refundStatus].value == 'wtk'"  @click="refund(item)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-e t-color-8 ">{{i18n['退款']}}</view>
+						<view v-else  @click="go('/pages/user/refunddetail?detailId='+item.id)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-e t-color-8 ">{{i18n['退款详情']}}</view>
 					</view>
 				</view>
 				<view class="flex f-j-s padding-tb6 f11-size">
@@ -117,6 +121,7 @@
 @import url('../../static/css/iconcolor.css');
 </style>
 <script>
+	const state = require('../../utils/api/state.js').default;
 	const API = require('../../utils/api/order.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
@@ -127,6 +132,7 @@
 				goodsList: [],
 				order: '',
 				groupJoinList: [],
+				state: state.refundStatus,
 			};
 		},
 		onLoad: function(options) {
@@ -136,6 +142,11 @@
 			$.setTitle(self.i18n['订单详情']);
 		},
 		methods: {
+			refund(data) {
+				//与评价共用一个缓存
+				uni.setStorageSync('comment',data);
+				self.go('/pages/user/refund');
+			},
 			getDetail() {
 				$.ajax({
 					url: API.orderDetailApi,

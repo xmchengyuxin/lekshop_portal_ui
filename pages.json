@@ -168,6 +168,18 @@
 			} 
 		},
 		{
+			"path": "pages/user/refunddetail",
+			"style": {
+				"navigationBarTitleText": "退款详情"
+			} 
+		},
+		{
+			"path": "pages/user/refundlist",
+			"style": {
+				"navigationBarTitleText": "退款/售后"
+			} 
+		},
+		{
 			"path": "pages/user/advice",
 			"style": {
 				"navigationBarTitleText": "意见反馈"

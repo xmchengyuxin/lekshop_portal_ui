@@ -789,7 +789,7 @@ function setTitle(name) {
 	})
 }
 function showModal (options,self) {
-	let i18n = self.$t('likelist');
+	let i18n = self.$t('model');
 	uni.showModal({
 		title: options.title ? options.title : '',
 		content: options.content ? i18n[options.content] : '',

@@ -78,7 +78,7 @@
 					<text class="flex f-a-c van-icon van-icon-comment-o f24-size"></text>
 					<text class="f12-size margin-t2">{{i18n['待评价']}}</text>
 				</view>
-				<view class="flex flex-1 f-s-0 f-c f-a-c f-j-c nav-last-item">
+				<view @click="go('/pages/user/refundlist')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c nav-last-item">
 					<text class="flex f-a-c van-icon van-icon-tosend f24-size t-color-y"></text>
 					<text class="f12-size margin-t2">{{i18n['退货/售后']}}</text>
 				</view>

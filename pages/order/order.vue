@@ -22,6 +22,7 @@
 								<text class="flex f-a-c van-icon van-icon-arrow t-color-9 "></text>
 							</view>
 							<text :style="{'color': state[child.order.status].color}" class="t-color-y f-w-500 f12-size">{{i18n[state[child.order.status].text]}}</text>
+							<!-- <text v-else  class="t-color-9 f-w-500 f12-size">{{i18n[refundState[child.order.refundStatus].text]}}</text> -->
 						</view>
 						
 						<view v-for="(goods,idx) in child.orderDetailList" class="flex margin-b10">
@@ -42,11 +43,11 @@
 							<text class="text-price">{{child.order.payPrice}}</text>
 						</view>
 						<view class="flex f-j-e f-w">
-							<view v-if="state[child.order.status].value == 'dzf'" @click="changeAddress(index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-3 ">{{i18n['修改地址']}}</view>
-							<view v-if="state[child.order.status].value == 'dfh'" @click="cancelOrder(parent,index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-3 ">{{i18n['取消订单']}}</view>
+							<view v-if="state[child.order.status].value == 'dfh'" @click.stop="changeAddress(index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-3 ">{{i18n['修改地址']}}</view>
+							<view v-if="state[child.order.status].value == 'dzf'" @click.stop="cancelOrder(parent,index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-3 ">{{i18n['取消订单']}}</view>
 							<view v-if="state[child.order.status].value == 'dsh'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-3">{{i18n['查看物流']}}</view>
 							<view v-if="state[child.order.status].value == 'dzf'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size bg-color-linear-y t-color-w">{{i18n['立即支付']}}</view>
-							<view v-if="state[child.order.status].value == 'dsh'" @click="sureOrder(parent,index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size bg-color-linear-y t-color-w">{{i18n['确认收货']}}</view>
+							<view v-if="state[child.order.status].value == 'dsh'" @click.stop="sureOrder(parent,index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size bg-color-linear-y t-color-w">{{i18n['确认收货']}}</view>
 							<view v-if="state[child.order.status].value == 'ywc'"  class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-y t-color-y ">{{i18n['评价']}}</view>
 						</view>
 					</view>
@@ -60,6 +61,7 @@
 @import url('../../static/css/order/order.css');
 </style>
 <script>
+	const state = require('../../utils/api/state.js').default;
 	const API = require('../../utils/api/order.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
@@ -78,7 +80,8 @@
 					3: {name: '已完成',value: 'ywc',text: '订单完成',color: '#78CA73',},
 					4: {name: '已取消',value: 'yqx',text: '取消订单',color: '#9B9B9B',},
 					6: {name: '退款',value: 'tk',text: '退款',},
-				}
+				},
+				refundState: state.refundStatus
 			};
 		},
 		onLoad: function(options) {
@@ -88,6 +91,7 @@
 			$.setTitle(self.i18n['我的订单']);
 		},
 		methods: {
+			
 			sureOrder(parent,index) {
 				let info = self.navs[parent]['list'][index];
 				$.ajax({
