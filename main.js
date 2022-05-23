@@ -30,6 +30,7 @@ Vue.prototype.clickBanner = global.clickBanner;
 Vue.prototype.getUser = global.getUser;
 Vue.prototype.previewImg = global.previewImg;
 Vue.prototype.getBanner = global.getBanner;
+Vue.prototype.goService = global.goService;
 Vue.component('tabBar',tabbar);
 Vue.component('noData',nodata);
 Vue.component('upDate',update);

@@ -75,6 +75,7 @@
 </style>
 <script>
 	import issueBtn from './components/issuebtn.vue';
+	const API = require('../../utils/api/find.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
 	export default {
@@ -83,6 +84,10 @@
 				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
 				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
 				active: 0,
+				list: [],
+				page: 1,
+				pageSize: 20,
+				totalPage: 1,
 			};
 		},
 		onLoad: function() {
@@ -90,7 +95,31 @@
 			this.init();
 		},
 		methods: {
-			init() {},
+			getList() {
+				const self = this;
+				$.ajax({
+					url: API.findListApi,
+					data: {
+						type: '3',
+						page: self.page,
+						pageSize: self.pageSize
+					},
+					method: 'GET',
+					success(res) {
+						let list = [];
+						if (self.page != 1) {
+							list = self.list.concat(res.data.list);
+						} else {
+							list = res.data.list ? res.data.list : [];
+						}
+						self.totalPage = res.data.totalPage;
+						self.list = list;
+					}
+				})
+			},
+			init() {
+				this.getList();
+			},
 		},
 		created() {},
 		mounted() {},

@@ -12,8 +12,8 @@
 					<text class="f13-size f-w-b">充值</text>
 					<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-b"></text>
 				</view>
-				<view @click="go('/pages/user/zijinlist')" class=" flex f-a-c f-j-s  h-50  padding-lr12 ">
-					<text class="f13-size f-w-b">账单明细</text>
+				<view @click="go('/pages/money/zijinlog')" class=" flex f-a-c f-j-s  h-50  padding-lr12 ">
+					<text class="f13-size f-w-b">资金明细</text>
 					<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-b"></text>
 				</view>
 				<view @click="go('/pages/user/zijinlist')" class="bg-color-w flex f-a-c f-j-s h-50 padding-lr12 ">

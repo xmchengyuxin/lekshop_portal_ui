@@ -50,7 +50,7 @@
 						"pagePath": "/pages/find/index",
 						"iconPath": "../../static/images/tab_find.png",
 						"selectedIconPath": "../../static/images/tab_find_on.png",
-						"text": "发现"
+						"text": "逛逛"
 					},
 					{
 						"pagePath": "/pages/cart/index",

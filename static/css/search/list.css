@@ -6,3 +6,15 @@
 	border-bottom-color: transparent;
 	border-top-color: #ccc;
 }
+.price-up.t-color-p{
+	border-bottom-color: #FB5129;
+}
+.price-down.t-color-p  {
+	border-top-color: #FB5129;
+}
+.wrap-filter-popup .input {
+	text-align: center;
+}
+.on {
+	background-color: #feeae1;
+}

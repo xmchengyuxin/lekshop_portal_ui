@@ -1,14 +1,14 @@
 <template>
 	<view class="contain">
 		<view class="fixed-top bg-color padding-lr12" :style="{ 'padding-top': top + 'px' }">
-			<view @click="go('/pages/search/index')" class="flex f-a-c h-44">
+			<view class="flex f-a-c h-44">
 				<view class="flex f-a-c f-j-c van-icon van-icon-scan t-color-w f22-size margin-r10"></view>
-				<view class="flex flex-1 f-a-c bg-color-w b-radius-30 h-34 padding-lr12 margin-r10" >
+				<view  @click="go('/pages/search/index')" class="flex flex-1 f-a-c bg-color-w b-radius-30 h-34 padding-lr12 margin-r10" >
 					<view class="flex f-a-c van-icon van-icon-search t-color-9 f20-size margin-r8"></view>
 					<view class="flex f-a-c t-color-6">搜索 商品、类目</view>
 				</view>
 				<view @click="go('/pages/coupon/getlist')" class="flex f-a-c f-j-c van-icon van-icon-coupon-o t-color-w f22-size margin-r10"></view>
-				<view class="flex f-a-c f-j-c van-icon van-icon-chat-o t-color-w f22-size"></view>
+				<view @click="goService()" class="flex f-a-c f-j-c van-icon van-icon-chat-o t-color-w f22-size"></view>
 			</view>
 			<view class="h-30">
 				<scroll-view scroll-x="true" :scroll-into-view="'navs'+active" class="h100" >
@@ -30,9 +30,9 @@
 							</swiper-item>
 						</swiper>
 						<view v-if="item.children && item.children.length > 0" class="bg-color-w b-radius-10 flex f-w margin-t12 wrap-sub-cate">
-							<view v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t8">
+							<view @click="go('/pages/search/list?cateTid='+child.id)" v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t8">
 								<view class="flex w-50 h-50 bg-img  b-radius-5" :style="child.img | bgimg(300)+''"></view>
-								<view class="f12-size t-color-6 margin-t4">{{child.name}}{{child.img}}</view>
+								<view class="f12-size t-color-6 margin-t4">{{child.name}}</view>
 							</view>
 						</view>
 						<view  v-if="parent == 0"  class="flex f-w b-radius-10 bg-color-w wrap-tuijian margin-t12">

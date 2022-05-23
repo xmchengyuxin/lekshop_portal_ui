@@ -92,13 +92,13 @@
 
 </style>
 <script>
+	const API = require('../../utils/api/find.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
 	export default {
 		data() {
 			return {
 				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
-				height: 0,
 				scrollTo: 'goods',
 				show: false,
 				info: '',
@@ -114,13 +114,8 @@
 		},
 		onLoad: function(options) {
 			self = this;
-			let height = getApp().globalData.height;
-			height = height - 44 - this.top -50-40;
-			this.height = height;
 			this.id = options.id ? options.id : '';
 			this.init();
-			let config = uni.getStorageSync('config') ? uni.getStorageSync('config') : '';
-			this.isShow = config != '' && config.caner_status == 1 ? false : true;
 		},
 		methods: { 
 			preImg(img) {
@@ -145,12 +140,12 @@
 			getInfo() {
 				const self = this;
 				$.ajax({
-					url: 'common/techUser/get',
-					data: {techUserId: self.id},
+					url: API.userDetailApi,
+					data: {walkMemberId: self.id},
 					method: 'GET',
 					success(res) {
 						self.info = res.data.techUser ? res.data.techUser : '';
-						self.isLike = res.data.isFocus ? res.data.isFocus : false;
+						self.isLike = res.data.isCollect ? res.data.isCollect : false;
 						self.tjList = res.data.spreadUserList ? res.data.spreadUserList : [];
 						self.list = res.data.projectList ? res.data.projectList : [];
 						self.photos = self.info.photos &&  self.info.photos != '' ? self.info.photos.split('|') : [];

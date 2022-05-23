@@ -22,4 +22,5 @@ export default {
 	'delShopApi': 'member/collectShop/delete',//删除收藏的商品
 	'shopCateApi': 'common/shopCate/getList',//店铺分类列表
 	'validateGroupApi': 'member/order/validateGroup',//校验是否可参团
+	'searchTJApi': 'common/search/getList',//系统参数列表
 }

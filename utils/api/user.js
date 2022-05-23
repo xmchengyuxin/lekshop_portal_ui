@@ -9,4 +9,5 @@ export default {
 	'delViewGoodsApi': 'member/viewGoods/delete',//删除足迹
 	'commentListApi': 'member/comment/getList',//获取评价列表
 	'commentApi': 'member/comment/comment',//评价
+	'accountListApi': 'member/account/getList',//资金明细
 }

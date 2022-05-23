@@ -32,7 +32,7 @@
 				<text class="flex f-a-c padding-10 van-icon van-icon-fire-o t-color-9"></text>
 			</view>
 			<view class="flex f-w">
-				<view v-for="(item,index) in 5" class="flex f-a-c f-j-c f-s-0 h-28 bg-color-f3 b-radius-30 padding-lr10 f12-size t-color-9 margin-r10 margin-b12">sdasdas</view>
+				<view @click="hotSearch(item)" v-for="(item,index) in hotList" class="flex f-a-c f-j-c f-s-0 h-28 bg-color-f3 b-radius-30 padding-lr10 f12-size t-color-9 margin-r10 margin-b12">{{item.name}}</view>
 			</view>
 		</view>
 	</view>
@@ -41,6 +41,7 @@
 @import url('../../static/css/page/white.css');
 </style>
 <script>
+	const API = require('../../utils/api/shops.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
 	export default {
@@ -50,6 +51,7 @@
 				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
 				value: '',
 				list: [],
+				hotList: [],
 			};
 		},
 		onLoad: function() {
@@ -58,6 +60,9 @@
 			this.init();
 		},
 		methods: {
+			hotSearch(info) {
+				self.go('/pages/search/list?title='+info.name,2);
+			},
 			search() {
 				if(self.value == ''){
 					self.go('/pages/search/list',2);
@@ -80,7 +85,18 @@
 				uni.setStorageSync('history',self.list);
 				self.go('/pages/search/list?title='+self.value,2);
 			},
+			getHot() {
+				$.ajax({
+					url: API.searchTJApi,
+					data: {},
+					method: 'GET',
+					success(res) {
+						self.hotList = res.data ? res.data : [];
+					}
+				})
+			},
 			init() {
+				this.getHot();
 			},
 		},
 		created() {

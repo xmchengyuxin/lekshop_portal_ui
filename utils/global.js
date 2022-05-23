@@ -6,6 +6,32 @@ const QQMapWX = require('./qqmap-wx-jssdk.min.js');
 let qqmapsdk;
 // import store from '../store/index.js'; //引入store
 export default {
+	goService(obj) {
+		let config = uni.getStorageSync('config') ? uni.getStorageSync('config') : '';
+		let user = uni.getStorageSync('userInfo') ? uni.getStorageSync('userInfo') : '';
+		if(user == '') {
+			// #ifdef MP-WEIXIN
+			this.go('/pages/wxAuth/index')
+			// #endif
+			// #ifndef MP-WEIXIN
+			if(getApp().globalData.isWeiXin) {
+				wxAuthH5(getApp().globalData.tuijianren);
+			}else{
+				this.go('/pages/passport/login')
+			}
+			// #endif
+		}
+		if(config != '') {
+			let url = config.kefu_url;
+			url = url.replace('{uid}',user.id);
+			url = url.replace('{username}',user.code);
+			url = url.replace('{headImg}',user.headImg);
+			url = url.replace('{special}',obj && obj.shopId ? obj.shopId:1);
+			uni.setStorageSync('kefuUrl',url);
+			this.go('/pages/user/webview');
+			//http://im.chyuxin.cn/index/index/home?visiter_id={uid}&visiter_name={username}&avatar={headImg}&business_id={businessId}&groupid=1&special=3
+		}
+	},
 	previewImg(url,urls) {
 		if(!urls){
 			urls = [url];

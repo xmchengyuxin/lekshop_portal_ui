@@ -73,9 +73,22 @@
 			} 
 		},
 		{
+			"path": "pages/shops/shopinfo",
+			"style": {
+				"navigationBarTitleText": "店铺详情"
+			} 
+		},
+		{
 			"path": "pages/money/index",
 			"style": {
 				"navigationBarTitleText": "余额"
+			} 
+		},
+		
+		{
+			"path": "pages/money/zijinlog",
+			"style": {
+				"navigationBarTitleText": "资金明细"
 			} 
 		},
 		{
@@ -148,6 +161,12 @@
 				"navigationBarBackgroundColor": "#FFFFFF"
 				
 			} 
+		},
+		{
+			"path": "pages/user/webview",
+			"style": {
+				"navigationBarTitleText": "在线客服"
+			}
 		},
 		{
 			"path": "pages/user/index",
