@@ -5,7 +5,10 @@
 				<text class="f15-size t-color-3">上传图片</text>
 			</view>
 			<view class="flex f-w">
-				<view class="flex f-a-c f-c f-j-c f-s-0 margin-r10 margin-b10 w-80 h-80 padding-6 b-radius-5 bg-color-e">
+				<view v-for="(item,index) in imgs" :style="item | bgimg(300)+''" class="flex f-s-0  f-j-e b-radius-5 w-80 h-80 bg-img bg-color-e margin-r12 margin-t12">
+					<text @click="delImg(index)" class="flex f-a-s f-j-c van-icon van-icon-cross t-color-9 f20-size"></text>
+				</view>
+				<view @click="addImg" v-if="imgs.length < 9" class="flex f-s-0 f-a-c f-j-c f-c b-radius-5 w-80 h-80 bg-color-e margin-r12 margin-t12">
 					<text class="flex f-a-c f-j-c van-icon t-color-9 van-icon-plus"></text>
 					<text class="f12-size margin-t6 t-color-9">添加图片</text>
 				</view>
@@ -14,7 +17,7 @@
 				<text class="flex f-a-c f-j-c van-icon van-icon-editor t-color-0 f18-size margin-r4"></text>
 				<text class="f15-size t-color-3">种草内容</text>
 			</view>
-			<textarea class="bg-color-e h-140 w100 b-radius-5 f12-size padding-10" value="" placeholder="种草文案~" />
+			<textarea v-model="content" class="bg-color-e h-140 w100 b-radius-5 f12-size padding-10" value="" placeholder="种草文案~" />
 			<view @click="$refs.goodslist.open()" class="flex f-a-c f-j-s padding-tb12">
 				<view class="flex f-a-c">
 					<text class="flex f-a-c f-j-c van-icon van-icon-thumb-circle-o t-color-0 f18-size margin-r4"></text>
@@ -23,7 +26,10 @@
 				<text class="flex f-a-c van-icon van-icon-arrow t-color-9"></text>
 			</view>
 			<view class="flex f-w">
-				<view class="flex f-a-c f-c f-j-c f-s-0 margin-r10 margin-b10 w-80 h-80 padding-6 b-radius-5 bg-color-e">
+				<view v-if='item.isChoose'  @click="choose(index)"  :style="item.goodsMainImg | bgimg(300)+''" v-for="(item,index) in list" class="bg-img flex f-a-s f-j-e f-s-0 margin-r10 margin-b10 w-80 h-80 padding-6 b-radius-5 bg-color-e">
+					<text class="flex f-a-c f-j-c van-icon van-icon-cross"></text>
+				</view>
+				<view @click="$refs.goodslist.open()" class="flex f-a-c f-c f-j-c f-s-0 margin-r10 margin-b10 w-80 h-80 padding-6 b-radius-5 bg-color-e">
 					<text class="flex f-a-c f-j-c van-icon t-color-9 van-icon-plus"></text>
 					<text class="f12-size margin-t6 t-color-9">添加商品</text>
 				</view>
@@ -31,7 +37,7 @@
 		</view>
 		<view class="padding-30"></view>
 		<view class="fixed-top padding-12" :style="{'padding-bottom':isIphonex ? '34px' : ''}">
-			<view class="flex f-a-c f-j-c b-radius-5 h-44 bg-color-linear-r t-color-w">
+			<view @click="issue()" class="flex f-a-c f-j-c b-radius-5 h-44 bg-color-linear-r t-color-w">
 				<text class="flex f-a-c f-j-c van-icon van-icon-fabu t-color-w margin-r4 f18-size"></text>
 				发布种草
 			</view>
@@ -44,12 +50,29 @@
 					<view class="flex f-j-c">选择商品</view>
 					<text @click="$refs.goodslist.close()" class="flex f-a-c f-j-c van-icon van-icon-cross"></text>
 				</view>
+				<view class="flex f-a-c h-40">
+					<view class="flex bg-color-e b-radius-30 h-32 w100">
+						<text class="flex f-a-c f-j-c f-s-0 padding-lr10 van-icon van-icon-search"></text>
+						<view class="flex flex-1">
+							<input v-model="name" placeholder="快速搜索" class="input" type="text" value="" />
+						</view>
+					</view>
+					<view class="flex f-a-c f-j-c f-s-0 f12-size t-color-y padding-lr12">搜索</view>
+				</view>
 				<scroll-view scroll-y="true" style="height: 60vh;">
-					<view class="h100 flex f-c f-a-c f-j-c">
+					<view @click="choose(index)" v-for="(item,index) in list" class="flex padding-12 b-radius-5 bg-color-w margin-t12">
+						<view :style="item.goodsMainImg | bgimg(300)+''" class="flex f-s-0 w-60 h-60 b-radius-5 bg-img margin-r12"></view>
+						<view class="flex flex-1 f-c f-j-s margin-r12">
+							<view class="line2 f12-size">{{item.goodsName}}</view>
+							<text class="text-price t-color-y">{{item.buyPrice}}</text>
+						</view>
+						<view :class="item.isChoose ? 'van-icon-checked t-color-r' :'van-icon-circle t-color-9'" class="flex f-a-c f-j-c f-s-0 van-icon  f20-size"></view>
+					</view>
+					<view v-if="list.length <= 0" class="h100 flex f-c f-a-c f-j-c">
 						<no-data></no-data>
 					</view>
 				</scroll-view>
-				<view class="flex f-a-c f-j-c b-radius-5 h-36 bg-color-linear-r t-color-w">完成</view>
+				<view @click="$refs.goodslist.close()" class="flex f-a-c f-j-c b-radius-5 h-36 bg-color-linear-r t-color-w margin-t12">完成</view>
 				<view class="" :style="{'padding-bottom':isIphonex ? '34px' : ''}"></view>
 			</view>
 		</uni-popup>
@@ -65,6 +88,7 @@
 }
 </style>
 <script>
+	const API = require('../../utils/api/find.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
 	export default {
@@ -72,14 +96,82 @@
 			return {
 				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
 				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
+				type: '',
+				content: '',
+				imgs: [],
+				video: '',
+				name: '',
+				list: [],
 			};
 		},
-		onLoad: function() {
+		onLoad: function(options) {
 			self = this;
+			self.type = options.type ? options.type : '3';//1短视频>>2宝贝上新>>3种草>>4买家秀
 			this.init();
 		},
 		methods: {
-			init() {},
+			addImg() {
+				if(self.imgs.length >= 9){return}
+				$.uploadimg({
+					count: 9-self.imgs.length,
+					success(res) {
+						self.imgs.push(res.imgUrl);
+					}
+				})
+			},
+			choose(index) {
+				let info = self.list[index];
+				if(info['isChoose']) {
+					info['isChoose'] = false;
+				}else{
+					info['isChoose'] = true;
+				}
+				self.$set(self.list,index,info);
+ 			},
+			getList() {
+				$.ajax({
+					url: API.buyGoodsListApi,
+					data: {
+						goodsName: self.name,
+					},
+					method: 'GET',
+					success(res) {
+						self.list = res.data ? res.data : [];
+					}
+				})
+			},
+			issue() {
+				let goodsArr = [];
+				self.list.forEach((ele,index) => {
+					if(ele.isChoose) {
+						goodsArr.push(ele.goodsId);
+					}
+				})
+				if(self.imgs.length <= 0){
+					$.$toast('请上传图片');return;
+				}
+				if(goodsArr.length <= 0){
+					$.$toast('请选择商品');return;
+				}
+				$.ajax({
+					url: API.issueApi,
+					data: {
+						type: self.type,
+						images: self.imgs.join('|'),
+						videoUrl: '',
+						content: self.content,
+						goodsIds: goodsArr.join(','),
+					},
+					method: 'POST',
+					success(res) {
+						$.$toast('操作成功');
+						self.back(1,2000);
+					}
+				})
+			},
+			init() {
+				this.getList();
+			},
 		},
 		created() {
 		},

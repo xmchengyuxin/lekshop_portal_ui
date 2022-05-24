@@ -38,7 +38,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="flex f-a-c f-j-c h-50 margin-t12 bg-color-w f-w-500">退出登录</view>
+		<view @click="loginOut" class="flex f-a-c f-j-c h-50 margin-t12 bg-color-w f-w-500">退出登录</view>
 		
 	</view>
 </template>

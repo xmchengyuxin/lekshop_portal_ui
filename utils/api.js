@@ -95,20 +95,20 @@ function ajax(options) {
 					}
 				})
 			} else if (response.data.code == 401 && !options.isAuth) {
-				let config = uni.getStorageSync('config') ? uni.getStorageSync('config') : '';
-				let isIos = uni.getStorageSync('isIos') ? uni.getStorageSync('isIos') : false;
 				uni.removeStorageSync('token');
-				
-				// #ifdef MP-WEIXIN
-				go('/pages/wxAuth/index')
-				// #endif
-				// #ifndef MP-WEIXIN
-				if(getApp().globalData.isWeiXin) {
-					wxAuthH5(getApp().globalData.tuijianren);
-				}else{
-					go('/pages/passport/login')
-				}
-				// #endif
+				setTimeout(() => {
+					// #ifdef MP-WEIXIN
+					go('/pages/wxAuth/index')
+					// #endif
+					// #ifndef MP-WEIXIN
+					// if(getApp().globalData.isWeiXin) {
+					// 	wxAuthH5(getApp().globalData.tuijianren);
+					// }else{
+					// 	go('/pages/passport/login')
+					// }
+					go('/pages/passport/login');
+					// #endif
+				},600)
 				
 			} else if (response.data.code == 300) {
 				uni.showToast({

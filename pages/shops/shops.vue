@@ -9,14 +9,14 @@
 					<view :class="active == 2 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">拼团</view>
 				</block>
 				<view class="flex flex-1 f-a-c" v-else>
-					<view class="flex flex-1 h-36 b-radius-30 bg-color-f7 padding-lr10">
+					<view @click="go('/pages/search/list?shopId='+id)" class="flex flex-1 h-36 b-radius-30 bg-color-f7 padding-lr10">
 						<text class="flex f-s-0 f-a-c  van-icon van-icon-search f18-size t-color-9 margin-r10"></text>
 						<text class="flex f-a-c f15-size t-color-9">搜索店铺内宝贝</text>
 					</view>
 				</view>
 			</view>
 			<view class="flex f-s-0">
-				<text v-if="tabStatus == 0" class="flex f-s-0 f-a-c padding-lr6 van-icon van-icon-search f20-size"></text>
+				<text  @click="go('/pages/search/list?shopId='+id)" class="flex f-s-0 f-a-c padding-lr6 van-icon van-icon-search f20-size"></text>
 				<text @click="$refs.menuBtn.open()" class="flex f-s-0 f-a-c padding-lr10 van-icon van-icon-weapp-nav f20-size"></text>
 			</view>
 			<xcx-header></xcx-header>
@@ -92,14 +92,14 @@
 			<swiper-item class="bg-color-f7" style="position: relative;">
 				<view class="wrap-list-nav bg-color-w"  :style="{ 'top': top +46+ 'px' }">
 					<view class="flex h-40 bg-color-f7 wrap-list-nav-info">
-						<view class="flex f-a-c f-j-c flex-1 t-color-p">{{i18n['综合']}}</view>
-						<view class="flex f-a-c f-j-c flex-1">{{i18n['销量']}}</view>
-						<view class="flex f-a-c f-j-c flex-1">{{i18n['新上架']}}</view>
-						<view class="flex f-a-c f-j-c flex-1">
+						<view @click="changeSort('')" :class="sort == '' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1 ">{{i18n['综合']}}</view>
+						<view @click="changeSort('sell_num desc')" :class="sort == 'sell_num desc' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1">{{i18n['销量']}}</view>
+						<view @click="changeSort('add_time desc')" :class="sort == 'add_time desc' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1">{{i18n['新上架']}}</view>
+						<view @click="changeSort('price')" :class="sort == 'price desc' || sort == 'price asc' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1">
 							<text class="margin-r4">{{i18n['价格']}}</text>
 							<view class="flex f-c f-a-c f-j-c">
-								<text class="flex f-a-c f-j-c price-up"></text>
-								<text class="flex f-a-c f-j-c price-down margin-t2"></text>
+								<text   :class="sort =='price asc' ? 't-color-p' : ''" class="flex f-a-c f-j-c price-up"></text>
+								<text :class="sort =='price desc' ? 't-color-p' : ''" class="flex f-a-c f-j-c price-down margin-t2"></text>
 							</view>
 						</view>
 						<view @click="sortType == 1 ? sortType=2 : sortType=1" class="flex f-a-c padding-lr10 van-icon van-icon-apps-o f20-size"></view>
@@ -117,17 +117,17 @@
 		<view  v-if="tabStatus == 1"  class="bg-color-f7" style="position: relative;height: 100vh;">
 			<view class="wrap-list-nav bg-color-w"  :style="{ 'top': top +46+ 'px' }">
 				<view class="flex h-40 bg-color-f7 wrap-list-nav-info">
-					<view class="flex f-a-c f-j-c flex-1 t-color-p">{{i18n['综合']}}</view>
-					<view class="flex f-a-c f-j-c flex-1">{{i18n['销量']}}</view>
-					<view class="flex f-a-c f-j-c flex-1">{{i18n['新上架']}}</view>
-					<view class="flex f-a-c f-j-c flex-1">
+					<view @click="changeSort('')" :class="sort == '' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1 ">{{i18n['综合']}}</view>
+					<view @click="changeSort('sell_num desc')" :class="sort == 'sell_num desc' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1">{{i18n['销量']}}</view>
+					<view @click="changeSort('add_time desc')" :class="sort == 'add_time desc' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1">{{i18n['新上架']}}</view>
+					<view @click="changeSort('price')" :class="sort == 'price desc' || sort == 'price asc' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1">
 						<text class="margin-r4">{{i18n['价格']}}</text>
 						<view class="flex f-c f-a-c f-j-c">
-							<text class="flex f-a-c f-j-c price-up"></text>
-							<text class="flex f-a-c f-j-c price-down margin-t2"></text>
+							<text   :class="sort =='price asc' ? 't-color-p' : ''" class="flex f-a-c f-j-c price-up"></text>
+							<text :class="sort =='price desc' ? 't-color-p' : ''" class="flex f-a-c f-j-c price-down margin-t2"></text>
 						</view>
 					</view>
-					<view @click="sortType == 1 ? sortType=2 : sortType=1" class="flex f-a-c padding-lr10 van-icon van-icon-apps-o f20-size"></view>
+					<view @click="sortType == 1 ? sortType=2 : sortType=1" :class="sortType==1?'van-icon-apps-o':'van-icon-bars'" class="flex f-a-c padding-lr10 van-icon  f20-size"></view>
 				</view>
 			</view>
 			<scroll-view class="padding-lr6" scroll-y="true" style="height: 100%;">
@@ -195,14 +195,14 @@
 				<view @click="cateActive=index" v-for="(item,index) in cateList" :class="index === cateActive ? 'cate-on' : ''" :id="'cate'+index" class="flex f-s-0 h-50 f-a-c f-j-c f12-size t-color-5 ">{{item.name}}</view>
 				<view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view>
 			</scroll-view>
-			<scroll-view scroll-y="true" class="flex f-c f-s-0 flex-1 padding-10  "  :style="{'height': height+'px'}">
+			<scroll-view  v-if="cateList.length > 0 && cateList[cateActive] && cateList[cateActive]['children']" scroll-y="true" class="flex f-c f-s-0 flex-1 padding-10  "  :style="{'height': height+'px'}">
 				<view v-for="item in cateList[cateActive]['children']" class="bg-color-w b-radius-10  wrap-sub-cate padding-10">
-					<view class="flex f-a-c f-j-s">
+					<view @click="go('/pages/search/list?shopId='+id+'&cateTid='+item.id)" class="flex f-a-c f-j-s">
 						<text class="t-color-5 f12-size">{{item.name}}</text>
 						<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>
 					</view>
 					<view class="flex f-w">
-						<view v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t20">
+						<view @click="go('/pages/search?list?shopId='+id+'&cateTid='+item.pid+'&cateId='+item.id)" v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t20">
 							<view class="flex w-60 h-60 bg-img  b-radius-5" :style="child.img | bgimg(300)+''"></view>
 							<view class="f12-size t-color-6 margin-t4">{{child.name}}</view>
 						</view>
@@ -257,19 +257,6 @@
 				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
 				active: 0,
 				sortType: 1,
-				list: [{
-						id: 6,
-						image_url: "https://stc.wanlshop.com/1a42d31bbb0f1d8d9aa66f804b47c7a3.jpg?x-oss-process=image/auto-orient,1/interlace,1/format,jpg/quality,q_90/sharpen,50/resize,m_mfit,w_516",
-						title: "恐龙",
-						text: "恐龙来啦",
-					},
-					{
-						id: 1,
-						image_url: "https://stc.wanlshop.com/9b777f933945c6d515ce8313ee3c38cd.jpg?x-oss-process=image/auto-orient,1/interlace,1/format,jpg/quality,q_90/sharpen,50/resize,m_mfit,w_516",
-						title: "可爱的小猫咪呀",
-						text: "小小的猫咪，甚是呆萌，呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌呆萌",
-					},
-				],
 				tabStatus: 0,
 				cateList: [],
 				cateActive: 0,
@@ -277,6 +264,11 @@
 				shop: '',
 				id: '',
 				isLike: false,
+				list: [],
+				page: 1,
+				pageSize: 20,
+				totalPage: 1,
+				sort: '',
 			};
 		},
 		onLoad: function(options) {
@@ -288,6 +280,44 @@
 			this.init();
 		},
 		methods: {
+			changeSort(type) {
+				if(type == 'price'){
+					this.sort = this.sort == 'price desc' ? 'price asc' : 'price desc';
+				}else{
+					this.sort = type;
+				}
+				this.page = 1;
+				this.getList();
+			},
+			getList() {
+				$.ajax({
+					url: API.searchGoodsApi,
+					data: {
+						shopId: self.id,
+						catePid: '',
+						cateTid: '',
+						cateId: '',
+						shopCateId: '',
+						title: '',
+						type: '',//1普通商品>>2秒杀商品>>3拼团商品
+						sort: self.sort,
+						status: '',
+						page: self.page,
+						pageSize: self.pageSize,
+					},
+					method: 'GET',
+					success(res) {
+						let list = [];
+						if (self.page != 1) {
+							list = self.list.concat(res.data.list);
+						} else {
+							list = res.data.list ? res.data.list : [];
+						}
+						self.totalPage = res.data.totalPage;
+						self.list  = list;
+					}
+				})
+			},
 			getCateList() {
 				$.ajax({
 					url: API.shopCateApi,
@@ -317,6 +347,9 @@
 			},
 			changeTab(status) {
 				self.tabStatus = status;
+				if(status == 1 && this.list.length <= 0) {
+					this.getList();
+				}
 				if(status == 3 && this.cateList.length <= 0) {
 					this.getCateList();
 				}
@@ -355,6 +388,10 @@
 		onPullDownRefresh() {
 		},
 		onReachBottom() {
+			if(this.tabStatus == 1 && this.page < this.totalPage) {
+				this.page += 1;
+				this.getList();
+			}
 		}
 	}
 </script>

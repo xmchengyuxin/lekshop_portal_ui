@@ -13,7 +13,7 @@
 			<xcx-header></xcx-header>
 		</view>
 		<view :style="{ 'padding-top': top +46+10+ 'px' }"></view>
-		<view class="flex  padding-lr12">
+		<!-- <view class="flex  padding-lr12">
 			<view class="flex flex-1 f-c over-h bg-color-w b-radius-5 padding-lr12">
 				<view class="padding-6"></view>
 				<view class="flex f-a-c">
@@ -65,6 +65,9 @@
 
 				</view>
 			</view>
+		</view> -->
+		<view class="padding-6">
+			<find-list :list="list" :offset='6'></find-list>
 		</view>
 		<tab-bar :active="2"></tab-bar>
 		<issue-btn ref="showIssue"></issue-btn>
@@ -75,6 +78,7 @@
 </style>
 <script>
 	import issueBtn from './components/issuebtn.vue';
+	import findList from './components/findlist.vue';
 	const API = require('../../utils/api/find.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
@@ -100,17 +104,27 @@
 				$.ajax({
 					url: API.findListApi,
 					data: {
-						type: '3',
+						type: '',
 						page: self.page,
 						pageSize: self.pageSize
 					},
 					method: 'GET',
 					success(res) {
-						let list = [];
+						let list = res.data.list ? res.data.list : [];
+						list.forEach((ele,index)=> {
+							if(ele.walkTrends.videoUrl && ele.walkTrends.videoUrl != '') {
+								ele['mainImg'] = ele.walkTrends.videoUrl+'?vframe/jpg/offset/0/';
+							}else if(String(ele.walkTrends.images).indexOf('|') >= 0) {
+								ele['mainImg'] = ele.walkTrends.images.split('|')[0];
+							}else{
+								ele['mainImg'] = ele.walkTrends.images;
+							}
+						})
+						console.log(list)
 						if (self.page != 1) {
-							list = self.list.concat(res.data.list);
+							list = self.list.concat(list);
 						} else {
-							list = res.data.list ? res.data.list : [];
+							list = list ? list : [];
 						}
 						self.totalPage = res.data.totalPage;
 						self.list = list;
@@ -124,7 +138,7 @@
 		created() {},
 		mounted() {},
 		destroyed() {},
-		components: {issueBtn},
+		components: {issueBtn,findList},
 		onPullDownRefresh() {},
 		onReachBottom() {}
 	}

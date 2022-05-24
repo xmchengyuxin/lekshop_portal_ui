@@ -3,7 +3,7 @@
 		<view class="warp-tabbar bg-color-w flex" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
 			<view @click="goTab(item.pagePath)" v-for="(item,index) in list" class="flex flex-1 f-c f-a-c f-j-c">
 				<image class="w-24" :src="index == active ? item.selectedIconPath : item.iconPath" mode="widthFix"></image>
-				<text class="f10-size margin-t2" :class="index == active ? 't-color-0' : 't-color-9'">{{item.text}}</text>
+				<text class="f11-size margin-t2" :class="index == active ? 't-color-0' : 't-color-9'">{{item.text}}</text>
 			</view>
 		</view>
 		<view v-if="isShow" :style="{'padding-bottom': isIphonex ? '84px' : '50px'}"></view>

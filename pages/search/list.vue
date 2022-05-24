@@ -9,7 +9,7 @@
 						<input @confirm="changeSort(sort)" v-model="title" type="text" class="input">
 					</view>
 				</view>
-				<view @click="sortType == 1 ? sortType=2 : sortType=1" class="flex f-a-c padding-lr10 van-icon van-icon-apps-o f20-size"></view>
+				<view @click="sortType == 1 ? sortType=2 : sortType=1" :class="sortType==1?'van-icon-apps-o':'van-icon-bars'" class="flex f-a-c padding-lr10 van-icon  f20-size"></view>
 			</view>
 			<view class="flex h-40 bg-color-f7">
 				<view @click="changeSort('')" :class="sort == '' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1 ">{{i18n['综合']}}</view>
@@ -62,7 +62,7 @@
 							<text @click="provinceShow= !provinceShow" :class="provinceShow ? 'van-icon-arrow-up':'van-icon-arrow-down'" class="flex f-a-c f-j-c van-icon  t-color-9 f15-size"></text>
 						</view>
 						<view class="grid grid-c-3 grid-g10 margin-t10">
-							<view  class="flex f-a-c f-j-c padding-lr2 h-34 b-radius-2 bg-color-f7 f11-size t-color-6">{{i18n['地位中']}}</view>
+							<view  class="flex f-a-c f-j-c padding-lr2 h-34 b-radius-2 bg-color-f7 f11-size t-color-6">{{i18n['定位中']}}</view>
 						</view>
 						<block v-if="provinceShow">
 						<view class="flex f-a-c f-j-s margin-t10">
@@ -130,7 +130,6 @@
 			this.catePid = options.catePid ? options.catePid : '';
 			this.cateTid = options.cateTid ? options.cateTid : '';
 			this.cateId = options.cateId ? options.cateId : '';
-			this.shopCateId = options.shopCateId ? options.shopCateId : '';
 			this.shopId = options.shopId ? options.shopId : '';
 			this.type = options.type ? options.type : '';
 			this.init();
@@ -162,10 +161,12 @@
 					url: API.searchGoodsApi,
 					data: {
 						shopId: self.shopId,
-						catePid: self.catePid,
-						cateTid: self.cateTid,
-						cateId: self.cateId,
-						shopCateId: self.shopCateId,
+						catePid: self.shopId != '' ? '' : self.catePid,
+						cateTid: self.shopId != '' ? '' : self.cateTid,
+						cateId: self.shopId != '' ? '' : self.cateId,
+						shopCatePid: self.shopId != '' ? self.catePid : '',
+						shopCateTid: self.shopId != '' ? self.cateTid : '',
+						shopCateId: self.shopId != '' ? self.cateId : '',
 						title: self.title,
 						type: self.type,//1普通商品>>2秒杀商品>>3拼团商品
 						sort: self.sort,

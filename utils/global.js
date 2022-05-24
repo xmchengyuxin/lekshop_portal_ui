@@ -6,6 +6,11 @@ const QQMapWX = require('./qqmap-wx-jssdk.min.js');
 let qqmapsdk;
 // import store from '../store/index.js'; //引入store
 export default {
+	loginOut() {
+		uni.removeStorageSync('token');
+		uni.removeStorageSync('userInfo');
+		$.go('/pages/passport/login');
+	},
 	goService(obj) {
 		let config = uni.getStorageSync('config') ? uni.getStorageSync('config') : '';
 		let user = uni.getStorageSync('userInfo') ? uni.getStorageSync('userInfo') : '';
