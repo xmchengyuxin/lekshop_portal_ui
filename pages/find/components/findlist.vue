@@ -30,19 +30,19 @@
 			<template v-slot:default="item">
 				<view class="padding-12">
 					<view class="line2">
-						<text v-if="item.walkTrends.type == 1" class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-r margin-r4">短视频</text>
-						<text v-if="item.walkTrends.type == 3"  class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-g margin-r4">种草</text>
-						<text v-if="item.walkTrends.type == 2"  class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-y margin-r4">上新</text>
-						<text>{{item.walkTrends.content}}</text>
+						<text v-if="item.type == 1" class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-r margin-r4">短视频</text>
+						<text v-if="item.type == 3"  class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-g margin-r4">种草</text>
+						<text v-if="item.type == 2"  class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-y margin-r4">上新</text>
+						<text>{{item.content}}</text>
 					</view>
 					<view class="flex f-a-c f-j-s margin-t8">
 						<view class="flex f-a-c">
-							<view class="flex f-s-0 w-16 h-16 b-radius margin-r4 bg-img" :style="item.walkTrends.walkMemberHeadImg | bgimg(300)+''"></view>
-							<view class="flex  f10-size t-color-9 ">{{item.walkTrends.walkMemberName}}</view>
+							<view class="flex f-s-0 w-16 h-16 b-radius margin-r4 bg-img" :style="item.walkMemberHeadImg | bgimg(300)+''"></view>
+							<view class="flex  f10-size t-color-9 ">{{item.walkMemberName}}</view>
 						</view>
 						<view class="t-color-8 f12-size flex f-a-c f-s-0">
 							<text class="flex f-a-c f-j-c van-icon van-icon-like-o f10-size margin-r4"></text>
-							<text class=""> {{item.walkTrends.collectionNum}}</text>
+							<text class=""> {{item.collectionNum}}</text>
 						</view>
 				 </view>
 				</view>
@@ -98,6 +98,13 @@
 				type: Object
 			},
 			// #endif
+			isSelf: {
+				type: Boolean,
+				default: false
+			},
+			userId: {
+				default: ''
+			}
 		},
 		data() {
 			return {};
@@ -107,7 +114,8 @@
 		},
 		methods: {
 			clickGood(data) {
-				$.go('/pages/find/detail?id='+data.walkTrends.id);
+				let isSelf = this.isSelf ? 1 : 0;
+				$.go('/pages/find/detail?id='+data.id+'&isSelf='+isSelf+'&userId='+this.userId);
 			},
 			init() {},
 

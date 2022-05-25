@@ -2,7 +2,7 @@
 	<view class="contain safe-area">
 		<view class="padding-lr12">
 			<view class="flex f-a-c padding-tb12">
-				<text class="f15-size t-color-3">上传图片</text>
+				<text class="f15-size t-color-3">{{i18n['上传图片']}}</text>
 			</view>
 			<view class="flex f-w">
 				<view v-for="(item,index) in imgs" :style="item | bgimg(300)+''" class="flex f-s-0  f-j-e b-radius-5 w-80 h-80 bg-img bg-color-e margin-r12 margin-t12">
@@ -10,18 +10,18 @@
 				</view>
 				<view @click="addImg" v-if="imgs.length < 9" class="flex f-s-0 f-a-c f-j-c f-c b-radius-5 w-80 h-80 bg-color-e margin-r12 margin-t12">
 					<text class="flex f-a-c f-j-c van-icon t-color-9 van-icon-plus"></text>
-					<text class="f12-size margin-t6 t-color-9">添加图片</text>
+					<text class="f12-size margin-t6 t-color-9">{{i18n['添加图片']}}</text>
 				</view>
 			</view>
 			<view class="flex f-a-c padding-tb12">
 				<text class="flex f-a-c f-j-c van-icon van-icon-editor t-color-0 f18-size margin-r4"></text>
-				<text class="f15-size t-color-3">种草内容</text>
+				<text class="f15-size t-color-3">{{i18n['种草内容']}}</text>
 			</view>
-			<textarea v-model="content" class="bg-color-e h-140 w100 b-radius-5 f12-size padding-10" value="" placeholder="种草文案~" />
+			<textarea v-model="content" class="bg-color-e h-140 w100 b-radius-5 f12-size padding-10" value="" :placeholder="i18n['种草内容']" />
 			<view @click="$refs.goodslist.open()" class="flex f-a-c f-j-s padding-tb12">
 				<view class="flex f-a-c">
 					<text class="flex f-a-c f-j-c van-icon van-icon-thumb-circle-o t-color-0 f18-size margin-r4"></text>
-					<text class="f15-size t-color-3">选择商品</text>
+					<text class="f15-size t-color-3">{{i18n['选择商品']}}</text>
 				</view>
 				<text class="flex f-a-c van-icon van-icon-arrow t-color-9"></text>
 			</view>
@@ -31,7 +31,7 @@
 				</view>
 				<view @click="$refs.goodslist.open()" class="flex f-a-c f-c f-j-c f-s-0 margin-r10 margin-b10 w-80 h-80 padding-6 b-radius-5 bg-color-e">
 					<text class="flex f-a-c f-j-c van-icon t-color-9 van-icon-plus"></text>
-					<text class="f12-size margin-t6 t-color-9">添加商品</text>
+					<text class="f12-size margin-t6 t-color-9">{{i18n['添加商品']}}</text>
 				</view>
 			</view>
 		</view>
@@ -39,7 +39,7 @@
 		<view class="fixed-top padding-12" :style="{'padding-bottom':isIphonex ? '34px' : ''}">
 			<view @click="issue()" class="flex f-a-c f-j-c b-radius-5 h-44 bg-color-linear-r t-color-w">
 				<text class="flex f-a-c f-j-c van-icon van-icon-fabu t-color-w margin-r4 f18-size"></text>
-				发布种草
+				{{i18n['发布种草']}}
 			</view>
 		</view>
 		
@@ -47,17 +47,17 @@
 			<view class="bg-color-f7 padding-12 wrap-goods">
 				<view class="flex f-a-c f-j-s">
 					<view class="flex f-s-0 w-20"></view>
-					<view class="flex f-j-c">选择商品</view>
+					<view class="flex f-j-c">{{i18n['选择商品']}}</view>
 					<text @click="$refs.goodslist.close()" class="flex f-a-c f-j-c van-icon van-icon-cross"></text>
 				</view>
 				<view class="flex f-a-c h-40">
 					<view class="flex bg-color-e b-radius-30 h-32 w100">
 						<text class="flex f-a-c f-j-c f-s-0 padding-lr10 van-icon van-icon-search"></text>
 						<view class="flex flex-1">
-							<input v-model="name" placeholder="快速搜索" class="input" type="text" value="" />
+							<input v-model="name" :placeholder="i18n['请输入']" class="input" type="text" value="" />
 						</view>
 					</view>
-					<view class="flex f-a-c f-j-c f-s-0 f12-size t-color-y padding-lr12">搜索</view>
+					<view class="flex f-a-c f-j-c f-s-0 f12-size t-color-y padding-lr12">{{i18n['搜索']}}</view>
 				</view>
 				<scroll-view scroll-y="true" style="height: 60vh;">
 					<view @click="choose(index)" v-for="(item,index) in list" class="flex padding-12 b-radius-5 bg-color-w margin-t12">
@@ -72,7 +72,7 @@
 						<no-data></no-data>
 					</view>
 				</scroll-view>
-				<view @click="$refs.goodslist.close()" class="flex f-a-c f-j-c b-radius-5 h-36 bg-color-linear-r t-color-w margin-t12">完成</view>
+				<view @click="$refs.goodslist.close()" class="flex f-a-c f-j-c b-radius-5 h-36 bg-color-linear-r t-color-w margin-t12">{{i18n['完成']}}</view>
 				<view class="" :style="{'padding-bottom':isIphonex ? '34px' : ''}"></view>
 			</view>
 		</uni-popup>
@@ -164,13 +164,38 @@
 					},
 					method: 'POST',
 					success(res) {
-						$.$toast('操作成功');
-						self.back(1,2000);
+						$.$toast(self.i18n['操作成功']);
+						setTimeout(() => {
+							let pages = getCurrentPages(); // 当前页面
+							let beforePage = pages[pages.length - 2]; // 前一个页面
+							wx.navigateBack({
+								delta: 1,
+								success: function() {
+									// #ifndef MP-WEIXIN
+									if (beforePage.$vm.init) {
+										beforePage.$vm.init(); // 执行前一个页面的changeBanner方法
+									}
+									// #endif
+									
+									// #ifdef MP-WEIXIN
+									if (beforePage.init) {
+										beforePage.init(); // 执行前一个页面的changeBanner方法
+									}
+									// #endif
+								}
+							});
+						},2000)
+						
 					}
 				})
 			},
 			init() {
 				this.getList();
+			},
+		},
+		computed: {
+			i18n() {
+				return this.$t('find')
 			},
 		},
 		created() {

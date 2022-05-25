@@ -23,4 +23,5 @@ export default {
 	'shopCateApi': 'common/shopCate/getList',//店铺分类列表
 	'validateGroupApi': 'member/order/validateGroup',//校验是否可参团
 	'searchTJApi': 'common/search/getList',//系统参数列表
+	'likeListApi': 'common/goods/getLikeList',//猜你喜欢的商品
 }

@@ -37,6 +37,13 @@
 			} 
 		},
 		{
+			"path": "pages/find/edit",
+			"style": {
+				"navigationBarTitleText": "编辑",
+				"navigationBarBackgroundColor": "#FFFFFF"
+			} 
+		},
+		{
 			"path": "pages/find/index",
 			"style": {
 				"navigationStyle": "custom"

@@ -8,4 +8,9 @@ export default {
 	'likeUserApi': 'member/walkMember/collectOrNo',//关注取关创作人
 	'commentListApi': 'common/trends/getCommentList',//动态评论列表
 	'commentApi': 'member/trends/comment',//评论动态
+	'commentLikeApi': 'member/comment/likeOrNo',//评论动态
+	'editUserApi': 'member/walkMember/update',//编辑创作号资料
+	'findUserListApi': 'member/trends/getList',//我的动态列表
+	'delFindApi': 'member/trends/delete',//删除动态
+	'shopFindListApi': 'common/shop/getTrendsList',//店铺动态
 }

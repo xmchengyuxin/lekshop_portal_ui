@@ -247,6 +247,20 @@ const hideCenterText = function(name) {
 		text = text.slice(0,first)+num+text.slice(last+1,text.length);
 		return text;
 	}
+	const timeDay = function(source) {
+		if(!source) {
+			return '';
+		}
+		source = new Date(parseInt(source));
+		return source.getDate()
+	};
+	const timeMonth = function(source) {
+		if(!source) {
+			return '';
+		}
+		source = new Date(parseInt(source));
+		return source.getMonth() + 1
+	};
 export default {
 	time,
 	hideCenterText,
@@ -266,4 +280,6 @@ export default {
 	km,
 	filterMiao,
 	i18n,
+	timeMonth,
+	timeDay
 };

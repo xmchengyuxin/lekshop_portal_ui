@@ -142,52 +142,7 @@
 			<view class="wrap-list-nav bg-color-w "  :style="{ 'top': top +46+ 'px' }">
 				<view class="flex h-10 bg-color-f7 wrap-list-nav-info"></view>
 			</view>
-			<scroll-view class="padding-lr12" scroll-y="true" style="height: 100%;">
-				<view :style="{ 'padding-top': top +46+10+ 'px' }"></view>
-				<view class="flex">
-					<view class="flex f-s-0 f-w-b f22-size margin-r4">28</view>
-					<view class="flex f-s-0  margin-t2 f10-size t-color-9 margin-r10">8月</view>
-					<view class="flex flex-1 f-c over-h">
-						<view class="line2">
-							<text class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-r margin-r4">短视频</text>
-							<text class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-g margin-r4">种草</text>
-							<text class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-y margin-r4">上新</text>
-							❀最近入手一件超可爱的毛衣外套！质感柔软，亲肤，但又不会软踏踏，也太舒服了吧！衣服上的卡通图案就是本公主最喜欢的了！oversize版型轻松解锁下半身失踪，可爱不失性感~&nbsp;在千篇一律的毛衣中，这种图案
-						</view>
-						<view class="margin-t12 flex">
-							<view class="video-img b-radius-5 bg-color"></view>
-						</view>
-							<scroll-view class="margin-t12  h-50" scroll-x="true" >
-								<view class="flex f-n ">
-									<view v-for="(item,index) in 3" class="flex f-s-0 margin-r6 b-radius-10 over-h bg-color-w">
-										<view class="flex f-s-0 w-50 h-50 bg-img bg-color margin-r10"></view>
-										<view class="flex f-c f-j-c ">
-											<view class="line1 w-80">百褶裙短裙女夏2020新款高腰学生百搭半身裙女a字裙格裙学院秋冬</view>
-											<view class="text-price t-color-y">29</view>
-										</view>
-										<view class="flex f-s-0 f-a-c f-j-c padding-lr6 van-icon van-icon-arrow t-color-9"></view>
-									</view>
-								</view>
-								
-							</scroll-view>
-							<view class="margin-t12 grid grid-c-3 grid-g2">
-								<view v-for="(item,index) in 8" class="flex w100 bg-img h-110 bg-color"></view>
-							</view>
-							<view class="flex f-j-e">
-								<view class="padding-tb10 flex f-a-c margin-r20">
-									<view class="flex f-a-c f-j-c van-icon van-icon-good-job-o margin-r4"></view>
-									<text class=" ">11</text>
-								</view>
-								<view class="padding-tb10 flex f-a-c">
-									<view class="flex f-a-c f-j-c van-icon van-icon-comment-o margin-r4"></view>
-									<text class=" ">11</text>
-								</view>
-								
-							</view>
-					</view>
-				</view>
-				<view :style="isIphonex ? 'padding-bottom:84px' : 'padding-bottom:50px'"></view>
-			</scroll-view>	
+			<find-list :id="id"></find-list>
 		</view>
 		<!-- 店铺分类 -->
 		<view class="flex bg-color-f7" v-if="tabStatus == 3" style="position: relative;height: 100vh;" :style="{ 'padding-top': top +46+ 'px' }">
@@ -247,6 +202,7 @@
 @import url('../../static/css/shops/shops.css');
 </style>
 <script>
+	import findList from './components/findlist.vue'
 	const API = require('../../utils/api/shops.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
@@ -384,7 +340,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {},
+		components: {findList},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

@@ -186,18 +186,14 @@
 	@import url('../../static/css/iconcolor.css');
 </style>
 <script>
+	const shopsAPI = require('../../utils/api/shops.js').default;
 	const API = require('../../utils/api/user.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
 	export default {
 		data() {
 			return {
-				list: [{
-					id: 6,
-					image_url: "https://stc.wanlshop.com/1a42d31bbb0f1d8d9aa66f804b47c7a3.jpg?x-oss-process=image/auto-orient,1/interlace,1/format,jpg/quality,q_90/sharpen,50/resize,m_mfit,w_516",
-					title: "恐龙",
-					text: "恐龙来啦",
-				}, ],
+				list: [],
 				user: '',
 				account: '',
 			};
@@ -234,9 +230,23 @@
 					}
 				})
 			},
+			getList() {
+				$.ajax({
+					url: shopsAPI.likeListApi,
+					data: {
+						page: 1,
+						pageSize: 20
+					},
+					method: 'GET',
+					success(res) {
+						self.list = res.data.list ? res.data.list : [];
+					}
+				})
+			},
 			init() {
 				this.getUserInfo();
 				this.getAccount();
+				this.getList();
 			},
 		},
 		created() {},
