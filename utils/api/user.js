@@ -10,4 +10,12 @@ export default {
 	'commentListApi': 'member/comment/getList',//获取评价列表
 	'commentApi': 'member/comment/comment',//评价
 	'accountListApi': 'member/account/getList',//资金明细
+	'bankListApi': 'member/bank/getList',//获取银行卡列表
+	'bankConfigApi': 'common/getBankSelector',//获取银行卡配置
+	'bindBankApi': 'member/bank/bind',//绑定银行卡
+	'delBankApi': 'member/bank/delete',//删除银行卡
+	'rechargeApi': 'member/recharge/online',//在线充值
+	'rechargeListApi': 'member/recharge/getList',//充值列表
+	'cancelRechargeApi': 'member/recharge/cancel',//取消充值
+	'withdrawApi': 'member/withdraw/apply',//申请提现
 }

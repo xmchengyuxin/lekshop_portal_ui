@@ -16,7 +16,10 @@
 				</view>
 			</view>
 			<view class="flex f-s-0">
-				<text  @click="go('/pages/search/list?shopId='+id)" class="flex f-s-0 f-a-c padding-lr6 van-icon van-icon-search f20-size"></text>
+				<view v-if="tabStatus == 0" class="flex f-a-c">
+					<view @click="getCouponList"  class="wrap-coupon-btn flex f-a-c f-j-c w-30 h-30 f16-size b-radius bg-color-linear-r van-icon van-icon-coupon t-color-w " ></view>
+				</view>
+				<text v-else @click="go('/pages/search/list?shopId='+id)" class="flex f-s-0 f-a-c padding-lr6 van-icon van-icon-search f20-size"></text>
 				<text @click="$refs.menuBtn.open()" class="flex f-s-0 f-a-c padding-lr10 van-icon van-icon-weapp-nav f20-size"></text>
 			</view>
 			<xcx-header></xcx-header>
@@ -146,6 +149,26 @@
 		</view>
 		<!-- 店铺分类 -->
 		<view class="flex bg-color-f7" v-if="tabStatus == 3" style="position: relative;height: 100vh;" :style="{ 'padding-top': top +46+ 'px' }">
+			<block v-if="shop.cateStyle == 1">
+			<scroll-view  scroll-y="true" class="flex f-c f-s-0 w100 bg-color-fb padding-12"  :style="{'height': height+'px'}">
+				<view  @click="go('/pages/search/list?shopId='+id+'&catePid='+item.id)" v-for="(item,index) in cateList" :style="item.img | bgimg(700)+''" :class="item.img ? '':'bg-color'" class="f-a-e f-j-c flex b-radius-10 padding-12 h-160 bg-img  margin-b10">
+					<view class="flex f-a-c f-j-c w-200 h-20 f-w-b f12-size b-radius-2" style="    background-color: hsla(0,0%,100%,.6);">{{item.name}}</view>
+				</view>
+				<view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view>
+			</scroll-view>
+			</block>
+			<block v-if="shop.cateStyle == 2">
+			<scroll-view  scroll-y="true" class="w100 bg-color-fb padding-12"  :style="{'height': height+'px'}">
+				<view class="grid grid-c-3">
+					<view @click="go('/pages/search/list?shopId='+id+'&catePid='+item.id)" v-for="(item,index) in cateList" class="flex f-c f-a-c f-j-c">
+						<view :style="item.img | bgimg(300)+''" class="flex w-80 h-80 bg-img"></view>
+						<text class="f12-size margin-t4">{{item.name}}</text>
+					</view>
+				</view>
+				<view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view>
+			</scroll-view>
+			</block>
+			<block v-if="shop.cateStyle == 4 || shop.cateStyle == 3">
 			<scroll-view :scroll-into-view="'cate'+cateActive" scroll-y="true" class="flex f-c f-s-0 w-100 bg-color-fb "  :style="{'height': height+'px'}">
 				<view @click="cateActive=index" v-for="(item,index) in cateList" :class="index === cateActive ? 'cate-on' : ''" :id="'cate'+index" class="flex f-s-0 h-50 f-a-c f-j-c f12-size t-color-5 ">{{item.name}}</view>
 				<view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view>
@@ -156,7 +179,7 @@
 						<text class="t-color-5 f12-size">{{item.name}}</text>
 						<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>
 					</view>
-					<view class="flex f-w">
+					<view v-if="shop.cateStyle == 4" class="flex f-w">
 						<view @click="go('/pages/search?list?shopId='+id+'&cateTid='+item.pid+'&cateId='+item.id)" v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t20">
 							<view class="flex w-60 h-60 bg-img  b-radius-5" :style="child.img | bgimg(300)+''"></view>
 							<view class="f12-size t-color-6 margin-t4">{{child.name}}</view>
@@ -165,6 +188,7 @@
 				</view>
 				<view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view>
 			</scroll-view>
+			</block>
 		</view>
 		<!-- 店铺分类 end-->		
 				
@@ -193,8 +217,19 @@
 				<view class="flex f-a-c f-j-c h-24 van-icon van-icon-service f22-size"></view>
 				<view class="flex f-a-c f-j-c  f11-size margin-t2">客服</view>
 			</view>
-		</view>		
+		</view>
 		<menu-btn ref="menuBtn"></menu-btn>
+		<uni-popup ref="couponList" type="bottom">
+			<view class="safe-area wrap-popup-radius bg-color-f7">
+				<view class="flex f-j-s f-a-c padding-12">
+					<view class="flex f-s-0 w-30"></view>
+					<view class="f16-size">{{i18n['优惠券']}}</view>
+					<view @click="$refs.couponList.close()" class="flex f-s-0 f-a-c f-j-c van-icon van-icon-cross w-30"></view>
+				</view>
+				<coupon-list :list="couponList"></coupon-list>
+				<view class="padding-10"></view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 <style scoped>
@@ -202,6 +237,7 @@
 @import url('../../static/css/shops/shops.css');
 </style>
 <script>
+	import couponList from '../common/couponlist.vue';
 	import findList from './components/findlist.vue'
 	const API = require('../../utils/api/shops.js').default;
 	const $ = require('../../utils/api.js');
@@ -225,6 +261,7 @@
 				pageSize: 20,
 				totalPage: 1,
 				sort: '',
+				couponList: [],
 			};
 		},
 		onLoad: function(options) {
@@ -234,8 +271,31 @@
 			this.height = height;
 			this.id = options.id ? options.id : '';
 			this.init();
+			if(options.tabStatus && options.tabStatus != '') {
+				this.changeTab(options.tabStatus)
+			}
 		},
 		methods: {
+			getCouponList() {
+				if(self.couponList.length > 0){
+					self.$refs.couponList.open();
+					return;
+				}
+				$.ajax({
+					url: API.shopCouponList,
+					data: {
+						shopId: 1,
+						page: 1,
+						pageSize: 999,
+					},
+					method: 'GET',
+					success(res) {
+						let list = res.data.list ? res.data.list : [];
+						self.couponList = list;
+						self.$refs.couponList.open();
+					}
+				})
+			},
 			changeSort(type) {
 				if(type == 'price'){
 					this.sort = this.sort == 'price desc' ? 'price asc' : 'price desc';
@@ -340,7 +400,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {findList},
+		components: {findList,couponList},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

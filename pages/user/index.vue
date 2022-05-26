@@ -92,7 +92,7 @@
 					<text class="f16-size f-w-b">{{account != '' ? account.amount : 0}}</text>
 					<text class="f12-size margin-t6">{{i18n['余额']}}</text>
 				</view>
-				<view class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
+				<view @click="go('/pages/user/bank')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
 					<text class="f16-size f-w-b">0</text>
 					<text class="f12-size margin-t6">{{i18n['银行卡']}}</text>
 				</view>
@@ -106,18 +106,18 @@
 				</view>
 			</view>
 			<view class="bg-color-w b-radius-5  flex f-w margin-t12" style="padding-top: 12px;">
-				<view class="flex f-s-0 f-c btn-item">
+				<view @click="go('/pages/money/index')" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-qianbao f26-size"></text>
 					</view>
 					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['钱包']}}</view>
 				</view>
-				<view class="flex f-s-0 f-c btn-item">
+				<!-- <view class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-pintuan f24-size"></text>
 					</view>
 					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['拼团订单']}}</view>
-				</view>
+				</view> -->
 				<view @click="go('/pages/user/commentlist')" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-pinglun-08 f24-size"></text>
@@ -136,12 +136,12 @@
 					</view>
 					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['签到']}}</view>
 				</view>
-				<view class="flex f-s-0 f-c btn-item">
+				<!-- <view class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-gerenjubaodengji f24-size"></text>
 					</view>
 					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['我的举报']}}</view>
-				</view>
+				</view> -->
 				<view @click="go('/pages/user/advice')" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-yijianfankui f28-size"></text>

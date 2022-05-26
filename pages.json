@@ -19,6 +19,18 @@
 			} 
 		},
 		{
+			"path": "pages/user/bank",
+			"style": {
+				"navigationBarTitleText": "银行卡"
+			} 
+		},
+		{
+			"path": "pages/user/addbank",
+			"style": {
+				"navigationBarTitleText": "添加银行卡"
+			} 
+		},
+		{
 			"path": "pages/user/comment",
 			"style": {
 				"navigationBarTitleText": "发表评价"
@@ -97,7 +109,18 @@
 				"navigationBarTitleText": "余额"
 			} 
 		},
-		
+		{
+			"path": "pages/money/tixian",
+			"style": {
+				"navigationBarTitleText": "提现"
+			} 
+		},
+		{
+			"path": "pages/money/rechargelist",
+			"style": {
+				"navigationBarTitleText": "充值列表"
+			} 
+		},
 		{
 			"path": "pages/money/zijinlog",
 			"style": {

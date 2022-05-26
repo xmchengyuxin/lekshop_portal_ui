@@ -118,20 +118,18 @@ const hideCenterText = function(name) {
 	};
 	const time3 = function(source) {
 		 let time = '';
-		// let nowtime = Math.ceil((new Date()).getTime()/1000);
-		// let oldtime = Math.ceil(JSON.parse(localStorage.getItem('apptime'))/1000);
-		// let cha = (Number(nowtime) - Number(oldtime));
-		// if(cha > 3600){
-		// 	localStorage.setItem('apptime',nowtime);
-		// 	time = '59分钟前';
-		// }else{
-		// 	if(cha <= 60) {
-		// 		time = '1分钟前';
-		// 	}else{
-		// 		time = Math.ceil(cha/60) + '分钟前';
-		// 	}
-		// }
-		time = parseInt(Math.random()*60) + '分钟前';
+		let nowtime = Math.ceil((new Date()).getTime());
+		let oldtime = new Date(parseInt(source)).getTime();
+		let cha = parseInt((Number(nowtime) - Number(oldtime))/1000);
+		if(cha > 24*60*60 ){
+			time = parseInt(cha/(24*60*60))+'天前';
+		}else if(cha < 24*60*60 && cha >= 3600){
+			time = parseInt(cha/(60*60))+'小时前';
+		}else if(cha < 3600 && cha > 60){
+			time = parseInt(cha/60)+'分钟前';
+		}else{
+			time = '1分钟前';
+		}
 		return time
 	};
 	const hours = function(time) {

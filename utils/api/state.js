@@ -13,5 +13,9 @@ export default {
 		4: {name: '平台介入',value: 'ptjr',text: '平台介入',tip:'等待平台客服介入',color: '#FD6C01',},
 		5: {name: '退款完成',value: 'suc',text: '退款成功',tip:'退款成功¥1',color: '#FD6C01',},
 		6: {name: '退款关闭',value: 'close',text: '退款关闭',tip:'退款已关闭',color: '#FD6C01',},
+	},
+	payType: {
+		'zfbPay': '支付宝',
+		'wxPay': '微信支付',
 	}
 }

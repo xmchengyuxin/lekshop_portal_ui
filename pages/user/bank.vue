@@ -8,11 +8,11 @@
 					</view>
 					<view class="flex flex-1 f-c">
 						<view class="flex f-a-c">
-							<text v-if="item.status == 1" class="f10-size padding-lr2 b-radius-2  t-color-w margin-r4" style="background-color: #CDE676;">默认</text>
-							<text class="f-w-b">{{item.realname}}  {{item.phone}}</text>
+							<text class="f-w-b">{{item.bank}}</text>
 						</view>
 						<view class="flex f-a-c margin-t2">
-							<text class="f12-size t-color-9">{{item.province}}{{item.city}}{{item.area}} {{item.address}}</text>
+							<text v-if="item.zfbAccount" class="f12-size t-color-9">{{item.zfbAccount | hideCenterText}}</text>
+							<text v-if="item.bankAccount" class="f12-size t-color-9">{{item.bankAccount | hideCenterText}}</text>
 						</view>
 					</view>
 					<view @click.stop="edit(item)" class="flex f-a-c padding-lr12">
@@ -24,9 +24,9 @@
 			<view class="padding-15"></view>
 			<view class="padding-30"></view>
 		<view class="warp-tabbar bg-color-w flex f-a-c padding-lr15" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
-			<view @click="go('/pages/user/addaddress')" class="flex f-a-c f-j-c flex-1 bg-color-linear-y t-color-w b-radius-30 h-36">
+			<view @click="go('/pages/user/addbank')" class="flex f-a-c f-j-c flex-1 bg-color-linear-y t-color-w b-radius-30 h-36">
 				<text class="flex f-a-c f-j-c van-icon van-icon-plus t-color-w margin-r6"></text>
-				<text class="t-color-w f-w-500">增加新地址</text>
+				<text class="t-color-w f-w-500">{{i18n['增加新账户']}}</text>
 			</view>
 		</view>
 	</view>
@@ -35,8 +35,9 @@
 @import url('../../static/css/user/address.css');
 </style>
 <script>
-	const API = require('../../utils/api/order.js').default;
+	const API = require('../../utils/api/user.js').default;
 	const $ = require('../../utils/api.js');
+	let self;
 	export default {
 		data() {
 			return {
@@ -48,9 +49,10 @@
 			};
 		},
 		onLoad: function(options) {
+			self = this;
 			this.type = options.type ? options.type : '';
 			this.id = options.id ? options.id : '';
-			// this.init();
+			$.setTitle(self.i18n['银行卡']);
 		},
 		onShow: function() {
 			this.init();
@@ -59,21 +61,6 @@
 			choose(item) {
 				const self = this;
 				if(this.type != '') {
-					if(this.type == 'change') {//订单修改地址
-						$.ajax({
-							url: API.changeAddressApi,
-							data: {
-								orderId: self.id,
-								addressId: item.id,
-							},
-							method: 'POST',
-							success(res) {
-								$.$toast('操作成功');
-								self.back(1,2000)
-							}
-						})
-						return;
-					}
 					let pages = getCurrentPages(); // 当前页面
 					let beforePage = pages[pages.length - 2]; // 前一个页面
 					let len = 1;
@@ -81,14 +68,14 @@
 						delta: len,
 						success: function() {
 							// #ifndef MP-WEIXIN
-							if (beforePage.$vm.setAddress) {
-								beforePage.$vm.setAddress(item); // 执行前一个页面的changeBanner方法
+							if (beforePage.$vm.setBank) {
+								beforePage.$vm.setBank(item); // 执行前一个页面的changeBanner方法
 							}
 							// #endif
 							
 							// #ifdef MP-WEIXIN
-							if (beforePage.setAddress) {
-								beforePage.setAddress(item); // 执行前一个页面的changeBanner方法
+							if (beforePage.setBank) {
+								beforePage.setBank(item); // 执行前一个页面的changeBanner方法
 							}
 							// #endif
 						}
@@ -96,13 +83,13 @@
 				}
 			},
 			edit(item) {
-				uni.setStorageSync('addressinfo',item);
-				this.go('/pages/user/addaddress?id='+item.id);
+				uni.setStorageSync('bankInfo',item);
+				this.go('/pages/user/addbank?id='+item.id);
 			},
 			getList() {
 				const self = this;
 				$.ajax({
-					url: 'member/address/getList',
+					url: API.bankListApi,
 					data: {
 						page: 1,
 						pageSize: 99
@@ -116,8 +103,11 @@
 			init() {
 				this.getList();
 			},
-
-
+		},
+		computed: {
+			i18n() {
+				return this.$t('bank')
+			},
 		},
 		created() {
 		},

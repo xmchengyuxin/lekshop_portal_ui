@@ -56,9 +56,9 @@
 				</view>
 			</view>
 			<view class="flex f-c f-a-e t-color-w">
-				<text v-if="isPT('2')" class=" flex f-a-c">阶梯拼团</text>
-				<text v-else class=" flex f-a-c">{{goods.groupNum}}人团</text>
-				<text class="flex f-j-e ">已团11件</text>
+				<text v-if="isPT('2')" class=" flex f-a-c">{{i18n['阶梯拼团']}}</text>
+				<text v-else class=" flex f-a-c">{{i18n['1人成团'] | i18n(goods.groupNum)}}</text>
+				<!-- <text class="flex f-j-e ">已团11件</text> -->
 			</view>
 		</view>
 		
@@ -67,18 +67,20 @@
 			<view class="bg-color-w b-radius-10 padding-12">
 				<view class="flex f-j-s">
 					<view class="flex f-a-c">
+						<block v-if="goods.type == 1">
 						<view class="text-price f18-size f-w-b t-color-p margin-r8">{{goods.price}}</view>
 						<view class="flex f-a-c f10-size t-color-9">
 							<text class="margin-r4">{{i18n['价格']}}</text>
 							<text class="text-price del-line">{{goods.price}}</text>
 						</view>
+						</block>
 					</view>
 					<view @click="$refs.couponList.open()" v-if="couponList.length > 0" class="w-50 wrap-coupon-btn flex f-a-c f-j-c h-20 bg-color-linear-r t-color-w">
 						<text class="f10-size ">{{i18n['领券']}}</text>
 						<text class="flex f-a-c van-icon van-icon-arrow f10-size"></text>
 					</view>
 				</view>
-				<view class="flex f-a-c f-j-s margin-t6">
+				<view v-if="shop.selfStatus == 1" class="flex f-a-c f-j-s margin-t6">
 					<view class="flex f-a-c f-j-c h-16 b-radius-30 t-color-w bg-color-r f10-size padding-lr6">{{i18n['自营']}}</view>
 					<view class="f10-size t-color-9">{{i18n['月销']}} {{goods.sellNum}}</view>
 				</view>
@@ -107,6 +109,7 @@
 						<!-- <text class="margin-r12 t-color-9">|</text>
 						<text class="margin-r12">快递：免运费</text> -->
 					</view>
+					<view class="flex f-s-0 f10-size t-color-9">{{i18n['月销']}} {{goods.sellNum}}</view>
 					<view class="flex f-a-c f-s-0 van-icon f12-size van-icon-arrow t-color-9"></view>
 				</view>
 				<view @click="$refs.goodsParams.open()" class="flex padding-tb8">
@@ -156,7 +159,7 @@
 					<view class="flex w-30 h-30 b-radius bg-img margin-r12" :style="item.memberHeadImg | bgimg(300)+''"></view>
 					<view class="flex f-c f-j-s">
 						<text class="f10-size">{{item.memberName}}</text>
-						<text class="f10-size t-color-9">22天前</text>
+						<text class="f10-size t-color-9">{{item.addTime | time3}}</text>
 					</view>
 				</view>
 				<view class="f12-size margin-t10">{{item.goodsName}}</view>
@@ -171,14 +174,14 @@
 						<text class="f12-size t-color-9 margin-t4">{{i18n['1人关注店铺'] | i18n(2)}}</text>
 					</view>
 					<view class="flex f-s-0 f-c wrap-shops-pj f-j-c">
-						<view class="flex f-a-c f10-size t-color-9">{{i18n['宝贝描述']}} 4.7 低</view>
-						<view class="flex f-a-c f10-size t-color-9 margin-t2">{{i18n['卖家服务']}} 4.7 低</view>
-						<view class="flex f-a-c f10-size t-color-9 margin-t2">{{i18n['物流服务']}} 4.7 低</view>
+						<view class="flex f-a-c f10-size t-color-9">{{i18n['宝贝描述']}} {{shop.goodsStar}} </view>
+						<view class="flex f-a-c f10-size t-color-9 margin-t2">{{i18n['卖家服务']}} {{shop.sellerStar}} </view>
+						<view class="flex f-a-c f10-size t-color-9 margin-t2">{{i18n['物流服务']}} {{shop.logisticStar}} </view>
 					</view>
 				</view>
 				<view class="flex f-a-c f-j-c padding-10 b-bottom">
-					<view class="flex f-a-c f-j-c h-24 b-color-y b-radius-30 t-color-y f12-size padding-lr10 margin-r12">{{i18n['进店逛逛']}}</view>
-					<view class="flex f-a-c f-j-c h-24 bg-color-p t-color-w b-radius-30 f12-size padding-lr10">{{i18n['全部宝贝']}}</view>
+					<view @click="go('/pages/shops/shops?id='+shop.id)" class="flex f-a-c f-j-c h-24 b-color-y b-radius-30 t-color-y f12-size padding-lr10 margin-r12">{{i18n['进店逛逛']}}</view>
+					<view @click="go('/pages/shops/shops?id='+shop.id+'&tabStatus=1')" class="flex f-a-c f-j-c h-24 bg-color-p t-color-w b-radius-30 f12-size padding-lr10">{{i18n['全部宝贝']}}</view>
 				</view>
 				<view class="padding-tb6"></view>
 				<view class="flex f-a-c f-j-s">
