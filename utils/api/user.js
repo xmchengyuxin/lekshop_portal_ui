@@ -18,4 +18,6 @@ export default {
 	'rechargeListApi': 'member/recharge/getList',//充值列表
 	'cancelRechargeApi': 'member/recharge/cancel',//取消充值
 	'withdrawApi': 'member/withdraw/apply',//申请提现
+	'poinListApi': 'member/point/getList',//积分明细
+	'chatListApi': 'member/chatSession/getList',//会话列表
 }

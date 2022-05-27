@@ -2,10 +2,10 @@
 	<view class="contain">
 		<view class="wrap-header">
 			<view class="flex f-j-e h-44 padding-lr5">
-				<view class="flex f-a-c f-j-c van-icon van-icon-qr f20-size t-color-3 padding-lr5"><text
-						class="f12-size">{{i18n['会员码']}}</text></view>
+				<!-- <view class="flex f-a-c f-j-c van-icon van-icon-qr f20-size t-color-3 padding-lr5"><text
+						class="f12-size">{{i18n['会员码']}}</text></view> -->
 				<view @click="go('/pages/setting/index')" class="flex f-a-c f-j-c van-icon van-icon-setting-o f20-size padding-lr5"></view>
-				<view class="flex f-a-c f-j-c van-icon van-icon-chat-o f20-size padding-lr5"></view>
+				<view @click="go('/pages/chat/index')" class="flex f-a-c f-j-c van-icon van-icon-chat-o f20-size padding-lr5"></view>
 			</view>
 			<view class="padding-lr15 flex">
 				<view @click="updateImg" class="w-60 h-60 b-radius  bg-img margin-r12" :style="user.headImg | bgimg(300)+''"></view>
@@ -47,7 +47,7 @@
 					<image src="../../static/images/user_coupon_icon.png" mode="widthFix" class="w-36 margin-r12">
 					</image>
 				</view>
-				<view class="flex flex-1 f-a-c f-j-s padding-lr2">
+				<view @click="go('/pages/money/role')" class="flex flex-1 f-a-c f-j-s padding-lr2">
 					<view class="flex f-c">
 						<text class="f12-size f-w-b">{{i18n['我的积分']}}</text>
 						<view class="flex f-a-c">

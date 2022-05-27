@@ -29,21 +29,21 @@
 			<!-- app、h5 自定义内容 -->
 			<template v-slot:default="item">
 				<view class="padding-12">
-					<view class="">
+					<view class="line2">
 						<!-- <text class="f10-size bg-color-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">自营</text> -->
-						<text v-if="item.type == 2" class="f10-size bg-color-linear-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">秒杀</text>
-						<text v-if="item.type == 3" class="f10-size bg-color-linear-y t-color-w b-radius-2 h-16 padding-lr5 margin-r6">拼团</text>
+						<text v-if="item.type == 2" class="f10-size bg-color-linear-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['秒杀']}}</text>
+						<text v-if="item.type == 3" class="f10-size bg-color-linear-y t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['拼团']}}</text>
 						<text>{{item.title}}</text>
 					</view>
-					<view class="flex  f-w margin-t4">
+					<!-- <view class="flex  f-w margin-t4">
 						<view class="flex f-a-c f10-size padding-lr5 h-16 b-color-r t-color-r b-radius-2 margin-r8">
 							官方放心购</view>
-					</view>
+					</view> -->
 					<view class="flex f-a-c f-j-s margin-t4">
 						<view class="text-price f16-size f-w-b t-color-p">{{item.price | price}}</view>
 						<view class="t-color-8 f12-size flex f-a-c">
 							<text class="margin-r4"> {{item.commentNum}}</text>
-							<text>评价</text>
+							<text>{{i18n['评价']}}</text>
 						</view>
 				 </view>
 				</view>
@@ -56,20 +56,20 @@
 				<view class="flex flex-1 f-c">
 					<view class="line2">
 						<!-- <text class="f10-size bg-color-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">自营</text> -->
-						<text v-if="item.type == 2" class="f10-size bg-color-linear-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">秒杀</text>
-						<text v-if="item.type == 3" class="f10-size bg-color-linear-y t-color-w b-radius-2 h-16 padding-lr5 margin-r6">拼团</text>
+						<text v-if="item.type == 2" class="f10-size bg-color-linear-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['秒杀']}}</text>
+						<text v-if="item.type == 3" class="f10-size bg-color-linear-y t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['拼团']}}</text>
 						<text class="">{{item.title}}</text>
 					</view>
-					<view class="flex  f-w margin-t4">
+					<!-- <view class="flex  f-w margin-t4">
 						<view class="flex f-a-c f10-size padding-lr5 h-16 b-color-r t-color-r b-radius-2 margin-r8">官方放心购
 						</view>
-					</view>
+					</view> -->
 				</view>
 				<view class="flex f-a-c f-j-s margin-t4">
 					<view class="text-price f16-size f-w-b t-color-p">{{item.price | price}}</view>
 					<view class="t-color-8 f12-size flex f-a-c">
 						<text class="margin-r4"> {{item.commentNum}}</text>
-						<text>评价</text>
+						<text>{{i18n['评价']}}</text>
 					</view>
 				</view>
 			</view>
@@ -139,8 +139,11 @@
 				$.go('/pages/shops/detail?id='+data.id);
 			},
 			init() {},
-
-
+		},
+		computed: {
+			i18n() {
+				return this.$t('goodsdetail')
+			},
 		},
 		created() {},
 		mounted() {},

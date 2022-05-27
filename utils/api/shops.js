@@ -24,4 +24,5 @@ export default {
 	'validateGroupApi': 'member/order/validateGroup',//校验是否可参团
 	'searchTJApi': 'common/search/getList',//系统参数列表
 	'likeListApi': 'common/goods/getLikeList',//猜你喜欢的商品
+	'groupListApi': 'common/goods/getGroupList',//商品拼团列表
 }

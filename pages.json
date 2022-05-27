@@ -13,6 +13,28 @@
 			} 
 		},
 		{
+			"path": "pages/chat/index",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
+		{
+		    "path" : "pages/chat/chat",
+		    "style" : {
+				"navigationBarTitleText":"HM-chat聊天室",
+		    	"app-plus":{
+		    		"softinputNavBar":"none",
+		    		"bounce":"none"
+		    	}
+		    }
+		},
+		{
+			"path": "pages/chat/wuliu",
+			"style": {
+				"navigationBarTitleText": "交易物流"
+			} 
+		},
+		{
 			"path": "pages/user/commentlist",
 			"style": {
 				"navigationBarTitleText": "我的评价"
@@ -107,6 +129,18 @@
 			"path": "pages/money/index",
 			"style": {
 				"navigationBarTitleText": "余额"
+			} 
+		},
+		{
+			"path": "pages/money/role",
+			"style": {
+				"navigationBarTitleText": "积分"
+			} 
+		},
+		{
+			"path": "pages/money/rolelist",
+			"style": {
+				"navigationBarTitleText": "积分"
 			} 
 		},
 		{

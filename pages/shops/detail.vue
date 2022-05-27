@@ -122,7 +122,7 @@
 			</view>
 			<!-- 拼团 -->
 			<view v-if="isPT() && pintuanNum > 0" class="bg-color-w b-radius-10 padding-12 margin-t12">
-				<view class="flex f-a-c f-j-s">
+				<view @click="$refs.wrapgroup.open()" class="flex f-a-c f-j-s">
 					<view v-if="!isShareGroup" class="f-w-b">{{i18n['1人正在拼团，可直接参与'] | i18n(pintuanNum)}}</view>
 					<view v-else class="f-w-b">{{i18n['参与']}} <text class="padding-lr6">{{group.memberName | hideCenterText}}</text> {{i18n['拼团']}}</view>
 					<view class="flex f-a-c">
@@ -214,7 +214,7 @@
 					<text class="flex f-a-c van-icon van-icon-shop-o f18-size t-color-y"></text>
 					<text class="f10-size t-color-9 margin-t2">{{i18n['店铺']}}</text>
 				</view>
-				<view class="flex f-c f-a-c f-j-c">
+				<view @click="go('/pages/chat/chat?id='+shop.memberId)" class="flex f-c f-a-c f-j-c">
 					<text class="flex f-a-c van-icon van-icon-chat-o f18-size "></text>
 					<text class="f10-size t-color-9 margin-t2">{{i18n['客服']}}</text>
 				</view>
@@ -364,6 +364,7 @@
 			</view>
 		</uni-popup>
 		<menu-btn ref="menuBtn"></menu-btn>
+		<group-list :goodsId="id" @joinGroup="joinGroup" ref="wrapgroup"></group-list>
 	</view>
 </template>
 <style scoped>
@@ -371,6 +372,7 @@
 </style>
 <script>
 	import couponList from '../common/couponlist.vue';
+	import groupList from './components/grouplist.vue';
 	const API = require('../../utils/api/shops.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
@@ -601,7 +603,6 @@
 				if(data.isDis){return}
 				this.num = 1;
 				this.$set(this.chooseSkuList,index,data);
-				this.$set(this.skuInfoList[index],'isChoose',true);
 				this.getSkuInfo(index);
 			},
 			clacSkuStock(attrSymbolPath) {
@@ -613,14 +614,16 @@
 					})
 					
 					this.skuList.forEach((ele,index) => {
-						if(ele.attrSymbolPath.indexOf(attrSymbolPath) >= 0 && ele.stock <= 0) {//遍历规格找出该规格下的库存判断
+						// if(attrSymbolPath == ele.attrSymbolPath && ele.stock <= 996) {
+						// 	self.chooseSkuList[self.chooseSkuList.length-1] = '';
+						// 	self.getSkuInfo(self.chooseSkuList.length-1)
+						// }else 
+						if(isSame(ele.attrSymbolPath) && ele.stock <= 0) {//遍历规格找出该规格下的库存判断
 							self.skuInfoList.forEach((ele1,idx1) => {//规格数组里面找未选中的判断是否有库存
-								if(!ele1.isChoose) {//当前选中的无需判断
+								if(!isAttr(ele1)) {//当前选中的无需判断
 									ele1.valList.forEach((ele2,idx2) => {
 										if(ele.attrSymbolPath.indexOf(ele2.id) >= 0){//无库存包含的id禁止选择
 											ele2['isDis'] = true;
-										}else{
-											ele2['isDis'] = false;
 										}
 									})
 								}
@@ -628,15 +631,35 @@
 						}
 					})
 				}
+				function isSame (keys) {//判断所选是否在规格内
+					let chooseArr = attrSymbolPath.split('/');
+					let same = true;//默认包含
+					chooseArr.forEach((ele,index) => {
+						if(keys.indexOf(ele) < 0) {
+							same = false;return;
+						}
+					})
+					return same;
+				}
+				function isAttr (arr) {//判断该规格类型是否已选
+					let attr = false;//默认不包含
+					arr.valList.forEach((ele,index) => {
+						if(attrSymbolPath.indexOf(ele.id) >= 0) {
+							attr = true;return;
+						}
+					})
+					return attr;
+				}
 				
 			},
 			getSkuInfo(skuIndex) {
+				self.attrSymbolPath = '';
 				if(this.skuList.length > 0) {
 					let attrSymbolPathArr = [];
 					let attrSymbolPath = '';
 					let isAll = true;//默认规格全部以选择
 					this.chooseSkuList.forEach((ele,index) => {
-						if(ele.id) {
+						if(ele != '' && ele.id) {
 							attrSymbolPathArr.push(ele.id);
 						}else{
 							isAll = false;
@@ -651,6 +674,7 @@
 							if(ele.stock <= 0) {
 								$.$toast('库存不足');
 								self.chooseSkuList[skuIndex] = '';
+								self.getSkuInfo(skuIndex);//重新计算没库存的不可选
 							}else{
 								self.sku = ele;
 								self.attrSymbolPath = attrSymbolPath;
@@ -676,7 +700,6 @@
 						self.goodsParams = info.goodsParams ? info.goodsParams : [];
 						self.skuList = info.goodsSku.skuList ? info.goodsSku.skuList : [];
 						self.skuInfoList = info.goodsSku.attrKeyResultList ? info.goodsSku.attrKeyResultList : [];
-						self.chooseSkuList = new Array(self.skuInfoList.length);
 						self.shop = info.shop;
 						self.isLike = info.isCollectGoods;
 						self.fahuo = info.freight ? info.freight : '';
@@ -685,6 +708,7 @@
 						self.groupList = info.assembleList ? info.assembleList : [];//拼团列表
 						self.pintuanNum = info.pintuanNum ? info.pintuanNum : 0;
 						self.groupListConfig = info.groupList ? info.groupList : [];
+						self.setSkuList(self.skuInfoList.length);
 						if(self.joinGroupId != '') {//分享链接过来的
 							self.group = self.groupList.length > 0 ? self.groupList[0] : '';
 							self.isShareGroup = true;
@@ -698,6 +722,15 @@
 						}
 					}
 				})
+			},
+			setSkuList(len) {
+				if(self.chooseSkuList.length <= 0) {//前往确认订单页面后返回保留原数据
+					// self.chooseSkuList = [];
+					for(var i=0;i<len;++i) {
+						self.chooseSkuList.push('');
+					}
+				}
+				
 			},
 			startInterval() {
 				clearInterval(inter);
@@ -745,7 +778,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {couponList},
+		components: {couponList,groupList},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {
