@@ -1,6 +1,6 @@
 <template>
 	<view class="contain">
-
+		<no-data :list="list"></no-data>
 	</view>
 </template>
 <style scoped>

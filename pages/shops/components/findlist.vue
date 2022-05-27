@@ -24,7 +24,7 @@
 					</view>	
 					<scroll-view class="margin-t12  h-50" scroll-x="true" >
 						<view class="flex f-n ">
-							<view v-for="(good,idx) in item.trendsGoodsList" class="flex f-s-0 margin-r6 b-radius-10 over-h bg-color-w">
+							<view @click="go('/pages/shops/detail?id='+good.goodsId)" v-for="(good,idx) in item.trendsGoodsList" class="flex f-s-0 margin-r6 b-radius-10 over-h bg-color-w">
 								<view class="flex f-s-0 w-50 h-50 bg-img  margin-r10" :style="good.goodsMainImg | bgimg(300)+''"></view>
 								<view class="flex f-c f-j-c ">
 									<view class="line1 w-80">{{good.goodsName}}</view>

@@ -33,7 +33,7 @@
 			<goodslist class="margin-t12" :sortType="sortType" :list="list"></goodslist>
 		</view>
 		<no-data v-if="list.length <= 0"></no-data>
-		
+		<view class="padding-10"></view>
 		<uni-popup ref="popup" type="right" background-color="#fff">  
 			<view class="h100 bg-color-w wrap-filter-popup" style="width: 70vw;">
 				<scroll-view scroll-y="true" :style="{'height': height+'px'}">
