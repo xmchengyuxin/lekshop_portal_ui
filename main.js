@@ -15,7 +15,9 @@ Vue.prototype._i18n = i18n;
 Vue.mixin(share1)
 App.mpType = 'app'
 import global from './utils/global.js';
+import socket from './utils/socket.js';
 
+Vue.prototype.socket = socket;
 Vue.prototype.copy = global.copy;
 Vue.prototype.setCopy = global.setCopy;
 Vue.prototype.go = global.go;

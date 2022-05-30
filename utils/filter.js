@@ -199,6 +199,7 @@ const hideCenterText = function(name) {
 		}
 		return 'background-image:url('+url+')';
 	};
+	
 	var html = function(dom) {
 		if(!dom){return;}
 		dom = dom.replace(/<img/gi, '<img style="max-width:100%;height:auto;display:block" ');

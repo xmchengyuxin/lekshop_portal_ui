@@ -237,7 +237,7 @@ function uploadimg(options) {
 	uni.chooseImage({
 		count: options.length ? options.length : 1,
 		sizeType: ['original', 'compressed'],
-		sourceType: ['album', 'camera'],
+		sourceType: options.type ? options.type : ['album', 'camera'],
 		success: function(res) {
 			if (res.errMsg == "chooseImage:ok") {
 				if (options.hideloading) {} else {

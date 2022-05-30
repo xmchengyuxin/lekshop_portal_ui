@@ -113,7 +113,7 @@
 						<image mode="widthFix" :src="em.src"></image>
 					</view>
 				</swiper-item>
-			</swiper>
+			</swiper> 
 			<!-- 更多功能 相册-拍照-红包 -->
 			<view class="more-layer" :class="{hidden:hideMore}">
 				<view class="list">

@@ -17,6 +17,7 @@ export default {
 		version: app[appRole]['version'],
 		api: app[appRole]['api'],
 		hot: app[appRole]['hot'],
+		socket: app[appRole]['socket'] ? app[appRole]['socket'] : '',
 		appKey: '15f4200c968b1e0a',
 		appSecret: '31593886409a3f86804a12ec9e4ff176',
 		mapKey: 'ML5BZ-G4JKK-ZUIJN-ACWR7-7TQXV-HBBEC',
@@ -26,6 +27,10 @@ export default {
 	},
 	onLaunch: function(options) {
 		const self = this;
+		self.socket.creatSocket({
+			onMessage(res) {
+			}
+		})
 		this.globalData.tuijianren = options.query.invite ? options.query.invite : '';
 		// #ifdef H5
 			if (window.location.href.indexOf('pages/passport/down') >= 0) {
