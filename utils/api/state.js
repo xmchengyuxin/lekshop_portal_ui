@@ -17,5 +17,13 @@ export default {
 	payType: {
 		'zfbPay': '支付宝',
 		'wxPay': '微信支付',
-	}
+	},
+	orderStatus: {//0待支付>>1待发货>>2待收货>>3已完成>>4已取消
+					0: {name: '待支付',value: 'dzf',text: '等待支付',color: '#FD6C01',},
+					1: {name: '待发货',value: 'dfh',text: '等待发货',color: '#333',},
+					2: {name: '待收货',value: 'dsh',text: '等待收货',color: '#333',},
+					3: {name: '已完成',value: 'ywc',text: '订单完成',color: '#78CA73',},
+					4: {name: '已取消',value: 'yqx',text: '取消订单',color: '#9B9B9B',},
+					6: {name: '退款',value: 'tk',text: '退款',},
+				}
 }

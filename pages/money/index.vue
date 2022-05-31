@@ -20,7 +20,7 @@
 					<text class="f13-size f-w-b">{{i18n['资金明细']}}</text>
 					<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-b"></text>
 				</view>
-				<view @click="go('/pages/user/zijinlist')" class="bg-color-w flex f-a-c f-j-s h-50 padding-lr12 ">
+				<view @click="go('/pages/money/tixianlog')" class="bg-color-w flex f-a-c f-j-s h-50 padding-lr12 ">
 					<text class="f13-size f-w-b">{{i18n['提现明细']}}</text>
 					<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-b"></text>
 				</view>

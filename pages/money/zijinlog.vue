@@ -1,5 +1,19 @@
 <template>
 	<view class="contain">
+		<view class="bg-color-w  padding-lr12">
+			<view class="b-bottom padding-tb10" v-for="item in list">
+				<view class="flex">
+					<view class="flex flex-1 margin-r12">
+						<text class="f-w-b t-color">{{item.remark}}</text>
+					</view>
+					<view class="flex f-c f-s-0 f-a-e">
+						<text class="f-w-b t-color-p">{{item.inOut == 1 ? '+' : '-'}}¥{{item.amount}}</text>
+						<text class=" t-color-9 margin-t6">{{item.addTime | time1}}</text>
+					</view>
+				</view>
+				
+			</view>
+		</view>
 		<no-data :list="list"></no-data>
 	</view>
 </template>
@@ -22,6 +36,7 @@
 		onLoad: function() {
 			self = this;
 			this.init();
+			$.setTitle(this.i18n['资金明细']);
 		},
 		methods: {
 			getList() {
@@ -47,6 +62,11 @@
 			},
 			init() {
 				this.getList();
+			},
+		},
+		computed: {
+			i18n() {
+				return this.$t('money')
 			},
 		},
 		created() {

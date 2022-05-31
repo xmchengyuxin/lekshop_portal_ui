@@ -162,6 +162,12 @@
 			} 
 		},
 		{
+			"path": "pages/money/tixianlog",
+			"style": {
+				"navigationBarTitleText": "提现明细"
+			} 
+		},
+		{
 			"path": "pages/money/recharge",
 			"style": {
 				"navigationBarTitleText": "充值",

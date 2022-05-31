@@ -16,4 +16,5 @@ export default {
 	'cancelRefundApi': 'member/refund/cancel',//取消售后
 	'kefuRefundApi': 'member/refund/applyCustomerServiceIn',//申请客服介入
 	'tuihuoApi': 'member/refund/salesReturnByMember',//退货
+	'wuliuApi' : 'member/order/getFreightList',//物流详情
 }

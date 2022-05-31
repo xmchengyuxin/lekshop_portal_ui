@@ -20,4 +20,10 @@ export default {
 	'withdrawApi': 'member/withdraw/apply',//申请提现
 	'poinListApi': 'member/point/getList',//积分明细
 	'chatListApi': 'member/chatSession/getList',//会话列表
+	'delChatApi': 'member/chatSession/delete',//删除聊天会话
+	'chatNumApi': 'member/chat/countUnReadNum',//统计总未读数量
+	'readChatApi': 'member/chat/read',//当前会话置为已读
+	'wuliuChatApi': 'member/news/getList',//交易物流消息列表
+	'readNewsApi': 'member/news/readAll',//全部置为已读
+	'newsNumApi': 'member/news/countNews',//统计未读消息数量
 }

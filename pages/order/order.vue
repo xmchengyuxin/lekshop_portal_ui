@@ -47,7 +47,7 @@
 						<view class="flex f-j-e f-w">
 							<view v-if="state[child.order.status].value == 'dfh'" @click.stop="changeAddress(index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-3 ">{{i18n['修改地址']}}</view>
 							<view v-if="state[child.order.status].value == 'dzf'" @click.stop="cancelOrder(parent,index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-3 ">{{i18n['取消订单']}}</view>
-							<view v-if="state[child.order.status].value == 'dsh'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-3">{{i18n['查看物流']}}</view>
+							<view @click.stop="showWuliu(child)" v-if="state[child.order.status].value == 'dsh'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-3">{{i18n['查看物流']}}</view>
 							<view v-if="state[child.order.status].value == 'dzf'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size bg-color-linear-y t-color-w">{{i18n['立即支付']}}</view>
 							<view v-if="state[child.order.status].value == 'dsh'" @click.stop="sureOrder(parent,index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size bg-color-linear-y t-color-w">{{i18n['确认收货']}}</view>
 							<view v-if="state[child.order.status].value == 'ywc'"  class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-y t-color-y ">{{i18n['评价']}}</view>
@@ -56,13 +56,15 @@
 						
 				</scroll-view>	
 			</swiper-item>
-		</swiper>		
+		</swiper>	
+		<logistics ref="wuliuinfo"></logistics>
 	</view>
 </template>
 <style scoped>
 @import url('../../static/css/order/order.css');
 </style>
 <script>
+	import logistics from '@/pages/common/logistics.vue';
 	const state = require('../../utils/api/state.js').default;
 	const API = require('../../utils/api/order.js').default;
 	const $ = require('../../utils/api.js');
@@ -93,7 +95,9 @@
 			$.setTitle(self.i18n['我的订单']);
 		},
 		methods: {
-			
+			showWuliu(info) {
+				this.$refs.wuliuinfo.show(info.order.id);
+			},
 			sureOrder(parent,index) {
 				let info = self.navs[parent]['list'][index];
 				$.ajax({
@@ -185,7 +189,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {},
+		components: {logistics},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

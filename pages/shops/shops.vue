@@ -4,9 +4,9 @@
 			<view @click="back(1)" class="flex f-a-c f-s-0 padding-lr10 van-icon van-icon-arrow-left f20-size"></view>
 			<view class="flex flex-1">
 				<block v-if="tabStatus == 0">
-					<view :class="active == 0 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">推荐</view>
-					<view :class="active == 1 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">新品</view>
-					<view :class="active == 2 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">拼团</view>
+					<view @click="active=0;" :class="active == 0 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">推荐</view>
+					<view @click="active=1;" :class="active == 1 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">新品</view>
+					<view @click="active=2;" :class="active == 2 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">拼团</view>
 				</block>
 				<view class="flex flex-1 f-a-c" v-else>
 					<view @click="go('/pages/search/list?shopId='+id)" class="flex flex-1 h-36 b-radius-30 bg-color-f7 padding-lr10">
@@ -58,86 +58,29 @@
 						</swiper-item>
 					</swiper>
 					<!-- 广告图 -->
-					<view class="padding-12">
+					<!-- <view class="padding-12">
 						<image class="w100" src="https://stc.wanlshop.com/uploads/a5cbe1ac839ba51dafbac8fa004ee73b.png" mode="widthFix"></image>
-					</view>
+					</view> -->
 					<!-- 广告图 end-->
 					<!-- 拼团 -->
-					<view class="b-radius-10 bg-color-w wrap-pintuan margin-t12">
-						<view class="flex padding-lr12 h-40 f-a-c f-j-s">
-							<view class="flex f-a-c">
-								<text class="f-w-b margin-r8">热门拼团</text>
-								<text class="f10-size" >拼着买，更便宜~</text>
-							</view>
-							<view class="flex f-a-c">
-								<text class="f12-size t-color-9 margin-r2">更多</text>
-								<text class="flex f-a-c van-icon van-icon-arrow t-color-9"></text>
-							</view>
-						</view>
-						<view class="flex padding-lr12 ">
-							<view v-for="item in 3" class="flex  f-s-0 margin-r12 f-c pintuan-item">
-								<view class="h-100 bg-img bg-color b-radius-8"></view>
-								<view class="f12-size line1 margin-t4">反季羽绒棉服2020新款棉衣韩版宽松面包服女冬装外套短款棉袄清仓</view>
-								<view class="flex f-a-c f-j-s margin-t4">
-									<view class="text-price f16-size t-color-y">189.00</view>
-									<view class="bg-color-linear-y h-16 t-color-w f10-size padding-lr5 b-radius-30">拼</view>
-								</view>
-							</view>
-						</view>
-					</view>
+					<groupList :shopId="id"></groupList>
 					<!-- 拼团 end-->
-					<view class="padding-12 bg-color-f7 ">
-						<goodslist class="" :offset="6" :sortType="sortType" :list="list"></goodslist>
+					<view class="padding-6 bg-color-f7 ">
+						<goodsShopList ref="indexGoods" v-if='active == 0' class="h100" pageSize="20" showType="2" :shopId="id"></goodsShopList>
 					</view>
 					<view :style="isIphonex ? 'padding-bottom:84px' : 'padding-bottom:50px'"></view>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item class="bg-color-f7" style="position: relative;">
-				<view class="wrap-list-nav bg-color-w"  :style="{ 'top': top +46+ 'px' }">
-					<view class="flex h-40 bg-color-f7 wrap-list-nav-info">
-						<view @click="changeSort('')" :class="sort == '' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1 ">{{i18n['综合']}}</view>
-						<view @click="changeSort('sell_num desc')" :class="sort == 'sell_num desc' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1">{{i18n['销量']}}</view>
-						<view @click="changeSort('add_time desc')" :class="sort == 'add_time desc' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1">{{i18n['新上架']}}</view>
-						<view @click="changeSort('price')" :class="sort == 'price desc' || sort == 'price asc' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1">
-							<text class="margin-r4">{{i18n['价格']}}</text>
-							<view class="flex f-c f-a-c f-j-c">
-								<text   :class="sort =='price asc' ? 't-color-p' : ''" class="flex f-a-c f-j-c price-up"></text>
-								<text :class="sort =='price desc' ? 't-color-p' : ''" class="flex f-a-c f-j-c price-down margin-t2"></text>
-							</view>
-						</view>
-						<view @click="sortType == 1 ? sortType=2 : sortType=1" class="flex f-a-c padding-lr10 van-icon van-icon-apps-o f20-size"></view>
-					</view>
-				</view>
-				<scroll-view class="padding-lr6" scroll-y="true" style="height: 100%;">
-					<view :style="{ 'padding-top': top +46+40+ 'px' }"></view>
-					<goodslist class="margin-t12" :offset="6" :sortType="sortType" :list="list"></goodslist>
-					<view :style="isIphonex ? 'padding-bottom:84px' : 'padding-bottom:50px'"></view>
-				</scroll-view>
-				
+				<goodsShopList class="h100" v-if='active == 1' :shopId="id"></goodsShopList>
+			</swiper-item>
+			<swiper-item class="bg-color-f7" style="position: relative;">
+				<goodsShopList class="h100" v-if='active == 2'   :shopId="id" :type="3"></goodsShopList>
 			</swiper-item>
 		</swiper>	
 		<!-- 全部宝贝 -->
 		<view  v-if="tabStatus == 1"  class="bg-color-f7" style="position: relative;height: 100vh;">
-			<view class="wrap-list-nav bg-color-w"  :style="{ 'top': top +46+ 'px' }">
-				<view class="flex h-40 bg-color-f7 wrap-list-nav-info">
-					<view @click="changeSort('')" :class="sort == '' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1 ">{{i18n['综合']}}</view>
-					<view @click="changeSort('sell_num desc')" :class="sort == 'sell_num desc' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1">{{i18n['销量']}}</view>
-					<view @click="changeSort('add_time desc')" :class="sort == 'add_time desc' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1">{{i18n['新上架']}}</view>
-					<view @click="changeSort('price')" :class="sort == 'price desc' || sort == 'price asc' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1">
-						<text class="margin-r4">{{i18n['价格']}}</text>
-						<view class="flex f-c f-a-c f-j-c">
-							<text   :class="sort =='price asc' ? 't-color-p' : ''" class="flex f-a-c f-j-c price-up"></text>
-							<text :class="sort =='price desc' ? 't-color-p' : ''" class="flex f-a-c f-j-c price-down margin-t2"></text>
-						</view>
-					</view>
-					<view @click="sortType == 1 ? sortType=2 : sortType=1" :class="sortType==1?'van-icon-apps-o':'van-icon-bars'" class="flex f-a-c padding-lr10 van-icon  f20-size"></view>
-				</view>
-			</view>
-			<scroll-view class="padding-lr6" scroll-y="true" style="height: 100%;">
-				<view :style="{ 'padding-top': top +46+40+ 'px' }"></view>
-				<goodslist class="margin-t12" :offset="6" :sortType="sortType" :list="list"></goodslist>
-				<view :style="isIphonex ? 'padding-bottom:84px' : 'padding-bottom:50px'"></view>
-			</scroll-view>
+			<goodsShopList class="h100"   :shopId="id"></goodsShopList>
 		</view>
 		<!-- 全部宝贝 end-->
 		<!-- 发布动态 -->
@@ -239,6 +182,8 @@
 <script>
 	import couponList from '../common/couponlist.vue';
 	import findList from './components/findlist.vue'
+	import goodsShopList from './components/goodslist.vue'
+	import groupList from './components/groupgoods.vue'
 	const API = require('../../utils/api/shops.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
@@ -296,44 +241,6 @@
 					}
 				})
 			},
-			changeSort(type) {
-				if(type == 'price'){
-					this.sort = this.sort == 'price desc' ? 'price asc' : 'price desc';
-				}else{
-					this.sort = type;
-				}
-				this.page = 1;
-				this.getList();
-			},
-			getList() {
-				$.ajax({
-					url: API.searchGoodsApi,
-					data: {
-						shopId: self.id,
-						catePid: '',
-						cateTid: '',
-						cateId: '',
-						shopCateId: '',
-						title: '',
-						type: '',//1普通商品>>2秒杀商品>>3拼团商品
-						sort: self.sort,
-						status: '',
-						page: self.page,
-						pageSize: self.pageSize,
-					},
-					method: 'GET',
-					success(res) {
-						let list = [];
-						if (self.page != 1) {
-							list = self.list.concat(res.data.list);
-						} else {
-							list = res.data.list ? res.data.list : [];
-						}
-						self.totalPage = res.data.totalPage;
-						self.list  = list;
-					}
-				})
-			},
 			getCateList() {
 				$.ajax({
 					url: API.shopCateApi,
@@ -362,13 +269,15 @@
 				})
 			},
 			changeTab(status) {
-				self.tabStatus = status;
-				if(status == 1 && this.list.length <= 0) {
-					this.getList();
+				if(status == 4) {
+					self.go('/pages/chat/chat?id='+self.shop.memberId);
+					return;
 				}
+				self.tabStatus = status;
 				if(status == 3 && this.cateList.length <= 0) {
 					this.getCateList();
 				}
+				
 			},
 			changeSwiper(e) {
 				self.active = e.detail.current;
@@ -400,14 +309,10 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {findList,couponList},
+		components: {findList,couponList,goodsShopList,groupList},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {
-			if(this.tabStatus == 1 && this.page < this.totalPage) {
-				this.page += 1;
-				this.getList();
-			}
 		}
 	}
 </script>

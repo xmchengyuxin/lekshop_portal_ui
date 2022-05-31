@@ -2,9 +2,9 @@
   font-family: "shops-icon"; /* Project id 3352422 */
   /* Color fonts */
   src: 
-       url('//at.alicdn.com/t/font_3352422_t0xhqg2gli9.woff2?t=1651736212369') format('woff2'),
-       url('//at.alicdn.com/t/font_3352422_t0xhqg2gli9.woff?t=1651736212369') format('woff'),
-       url('//at.alicdn.com/t/font_3352422_t0xhqg2gli9.ttf?t=1651736212369') format('truetype');
+       url('//at.alicdn.com/t/font_3352422_wk5ry6r8lre.woff2?t=1653985064159') format('woff2'),
+       url('//at.alicdn.com/t/font_3352422_wk5ry6r8lre.woff?t=1653985064159') format('woff'),
+       url('//at.alicdn.com/t/font_3352422_wk5ry6r8lre.ttf?t=1653985064159') format('truetype');
 }
 
 .shops-icon {
@@ -13,6 +13,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.shops-icon-wuliu:before {
+  content: "\e604";
 }
 
 .shops-icon-success:before {

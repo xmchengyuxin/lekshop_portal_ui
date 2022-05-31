@@ -74,6 +74,7 @@
 								</view>
 							</view>
 						</view>
+						<groupList></groupList>
 						<view class="flex f-a-c f-j-c f-w-b t-color-8 padding-tb6 wrap-tuijian-title margin-t12">
 							<image class="w-20 margin-r8" src="../../static/images/zan-on.png" mode="widthFix"></image>
 							<text>好物推荐</text>
@@ -92,7 +93,7 @@
 @import url('../../static/css/index/index.css');
 </style>
 <script>
-	import waterfallsFlow from "@/components/maramlee-waterfalls-flow/maramlee-waterfalls-flow.vue";
+	import groupList from '../shops/components/groupgoods.vue';
 	const $ = require('../../utils/api.js');
 	let self = this;
 	export default {
@@ -175,7 +176,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {waterfallsFlow},
+		components: {groupList},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

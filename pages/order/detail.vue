@@ -1,6 +1,10 @@
 <template>
 	<view class="contain">
 		<view class="padding-12">
+			<view class="bg-color-w padding-12 b-radius-5 margin-b12">
+				<view class="f-w-b f15-size" :style="{'color': orderState[order.status]['color']}">{{orderState[order.status]['text']}}</view>
+			</view>
+			
 			<view class="flex bg-color-w b-radius-5 margin-b12">
 				<view class="flex flex-1">
 					<view class="flex f-a-c f-j-c f-s-0 shops-icon shops-icon-address f44-size padding-10"></view>
@@ -108,7 +112,7 @@
 					<text class="">{{order.finishTime | time}}</text>
 				</view>
 				<view class="b-bottom margin-t10"></view>
-				<view class="flex f-a-c f-j-c" style="padding-top: 10px;">
+				<view @click="go('/pages/chat/chat?id='+shopMemberId+'&orderId='+order.id)" class="flex f-a-c f-j-c" style="padding-top: 10px;">
 					<text class="flex f-a-c f-j-c van-icon van-icon-chat-o t-color-y margin-r4"></text>
 					<text class="f12-size f-w-500">{{i18n['联系卖家']}}</text>
 				</view>
@@ -133,6 +137,8 @@
 				order: '',
 				groupJoinList: [],
 				state: state.refundStatus,
+				orderState: state.orderStatus,
+				shopMemberId: '',
 			};
 		},
 		onLoad: function(options) {
@@ -160,6 +166,7 @@
 						self.goodsList = info.orderDetailList ? info.orderDetailList : [];
 						self.groupJoinList = info.groupMemberList ? info.groupMemberList : [];
 						self.order = info.order ? info.order : '';
+						self.shopMemberId = info.shopMemberId ? info.shopMemberId : '';
 					}
 				})
 			},

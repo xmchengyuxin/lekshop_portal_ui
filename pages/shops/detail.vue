@@ -214,7 +214,7 @@
 					<text class="flex f-a-c van-icon van-icon-shop-o f18-size t-color-y"></text>
 					<text class="f10-size t-color-9 margin-t2">{{i18n['店铺']}}</text>
 				</view>
-				<view @click="go('/pages/chat/chat?id='+shop.memberId)" class="flex f-c f-a-c f-j-c">
+				<view @click="go('/pages/chat/chat?id='+shop.memberId+'&goodsId=' + goods.id)" class="flex f-c f-a-c f-j-c">
 					<text class="flex f-a-c van-icon van-icon-chat-o f18-size "></text>
 					<text class="f10-size t-color-9 margin-t2">{{i18n['客服']}}</text>
 				</view>

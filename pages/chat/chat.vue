@@ -33,6 +33,29 @@
 						<view class="my" v-if="row.sendType == 1">
 							<!-- 左-消息 -->
 							<view class="left">
+								<!-- 发送商品链接 -->
+								<view @click="go('/pages/shops/detail?id='+JSONGoods(row.msgContent,'id'))" v-if="row.msgType=='goods'" class="bubble flex f-a-s bg-color-w">
+									<view class="flex f-s-0 w-70 h-70 bg-img margin-r10" :style="JSONGoods(row.msgContent,'mainImg') | bgimg(300)+''"></view>
+									<view class="flex flex-1 f-c f-j-s h100">
+										<view class="line2 f12-size t-color-6">{{JSONGoods(row.msgContent,'title')}}</view>
+										<view class="text-price t-color-y margin-t6">{{JSONGoods(row.msgContent,'price')}}</view>
+									</view>
+								</view>
+								<!-- 发送订单 -->
+								<view @click="go('/pages/order/detail?id='+JSONGoods(row.msgContent,'id'))" v-if="row.msgType=='order'" class="bubble f-c f-a-s  bg-color-w">
+									<view class="f13-size f-w-b t-color-3">您正在咨询的订单</view>
+									<view class="flex margin-t8">
+										<view class="flex f-s-0 w-50 h-50 bg-img margin-r10" :style="JSONGoods(row.msgContent,'mainImg') | bgimg(300)+''"></view>
+										<view class="flex flex-1 f-c f-j-s h100">
+											<view class="line2 f12-size t-color-6">{{JSONGoods(row.msgContent,'title')}}</view>
+											<view class="flex f-a-c margin-t6 f11-size t-color-9">
+												<text class="margin-r4">合计</text>
+												<text class="text-price">{{JSONGoods(row.msgContent,'price')}}</text>
+											</view>
+										</view>
+									</view>
+									<view class="flex f-a-c  w100 f11-size t-color-9 margin-t6">订单号: {{JSONGoods(row.msgContent,'orderNo')}}</view>
+								</view>
 								<!-- 文字消息 -->
 								<view v-if="row.msgType=='text'" class="bubble">
 									<rich-text :nodes="emojiNameToImage(row.msgContent)"></rich-text>
@@ -71,8 +94,30 @@
 							</view>
 							<!-- 右-用户名称-时间-消息 -->
 							<view class="right">
-								<view class="username">
+								<!-- <view class="username">
 									<view class="name">{{row.targetNickname}}</view> <view class="time">{{row.sendTime | time}}</view>
+								</view> -->
+								<!-- 发送商品链接 -->
+								<view @click="go('/pages/shops/detail?id='+JSONGoods(row.msgContent,'id'))" v-if="row.msgType=='goods'" class="bubble flex bg-color-w">
+									<view class="flex f-s-0 w-70 h-70 bg-img margin-r10" :style="JSONGoods(row.msgContent,'mainImg') | bgimg(300)+''"></view>
+									<view class="flex flex-1 f-c f-j-s h100">
+										<view class="line2 f12-size t-color-6">{{JSONGoods(row.msgContent,'title')}}</view>
+										<view class="text-price t-color-y margin-t6">{{JSONGoods(row.msgContent,'price')}}</view>
+									</view>
+								</view>
+								<!-- 发送订单 -->
+								<view @click="go('/pages/order/detail?id='+JSONGoods(row.msgContent,'id'))" v-if="row.msgType=='order'" class="bubble f-c f-a-s  bg-color-w">
+									<view class="flex">
+										<view class="flex f-s-0 w-50 h-50 bg-img margin-r10" :style="JSONGoods(row.msgContent,'mainImg') | bgimg(300)+''"></view>
+										<view class="flex flex-1 f-c f-j-s h100">
+											<view class="line2 f12-size t-color-6">{{JSONGoods(row.msgContent,'title')}}</view>
+											<view class="flex f-a-c margin-t6 f11-size t-color-9">
+												<text class="margin-r4">合计</text>
+												<text class="text-price">{{JSONGoods(row.msgContent,'price')}}</text>
+											</view>
+										</view>
+									</view>
+									<view class="flex f-a-c  w100 f11-size t-color-9 margin-t6">订单号: {{JSONGoods(row.msgContent,'orderNo')}}</view>
 								</view>
 								<!-- 文字消息 -->
 								<view v-if="row.msgType=='text'" class="bubble">
@@ -101,6 +146,7 @@
 						</view>
 					</block>
 				</view>
+				<view v-if="showGoods" style="padding: 55px;"></view>
 				<view id="bottompage" class="padding-10"></view>
 			</scroll-view>
 		</view>
@@ -125,16 +171,32 @@
 		</view>
 		<!-- 商品链接 -->
 		<view v-if="showGoods" class="popup-goods padding-12">
-			<view class="bg-color-w b-radius-5 padding-10 flex">
-				<view class="flex f-s-0 w-60 h-60 b-radius-5 bg-color margin-r12"></view>
+			<view v-if="goodsId != ''" class="bg-color-w b-radius-5 padding-10 flex">
+				<view :style="goods.mainImg | bgimg(300)+''" class="flex f-s-0 w-60 h-60 b-radius-5 bg-img  margin-r12"></view>
 				<view class="flex flex-1 f-c f-j-s">
 					<view class="flex">
-						<view class="flex flex-1 f-w-500"><text class="line1">12212112121221</text></view>
-						<text class="flex f-a-c f-j-c f-s-0 van-icon van-icon-cross t-color-9"></text>
+						<view class="flex flex-1 f-w-500"><text class="line1">{{goods.title}}</text></view>
+						<text @click="showGoods=!showGoods" class="flex f-a-c f-j-c f-s-0 van-icon van-icon-cross t-color-9"></text>
 					</view>
 					<view class="flex f-a-c f-j-s">
-						<text class="text-price t-color-y">123</text>
-						<view class="flex f-a-c f-j-c b-radius-30 f11-size t-color-w bg-color-linear-y h-24 padding-lr10">发送商品</view>
+						<text class="text-price t-color-y">{{goods.price}}</text>
+						<view @click="sendGoods()" class="flex f-a-c f-j-c b-radius-30 f11-size t-color-w bg-color-linear-y h-24 padding-lr10">发送商品</view>
+					</view>
+				</view>
+			</view>
+			<view v-if="orderId != ''" class="bg-color-w b-radius-5 padding-10 flex">
+				<view :style="order.orderDetailList[0].goodsMainImg | bgimg(300)+''" class="flex f-s-0 w-60 h-60 b-radius-5 bg-img  margin-r12"></view>
+				<view class="flex flex-1 f-c f-j-s">
+					<view class="flex">
+						<view class="flex flex-1 f-w-500"><text class="line1">你可能想咨询该订单</text></view>
+						<text @click="showGoods=!showGoods" class="flex f-a-c f-j-c f-s-0 van-icon van-icon-cross t-color-9"></text>
+					</view>
+					<view class="flex f-a-c f-j-s">
+						<view class="flex f-a-c">
+							<text class="f12-size t-color-9 margin-r4">共{{order.orderDetailList.length}}件商品：合计</text>
+							<text class="f12-size t-color-9 text-price">{{order.order.payPrice}}</text>
+						</view>
+						<view @click="sendOrder()" class="flex f-a-c f-j-c b-radius-30 f11-size t-color-w bg-color-linear-y h-24 padding-lr10">发送订单</view>
 					</view>
 				</view>
 			</view>
@@ -205,6 +267,8 @@
 <script>
 	const emojis = require('./utils/emoji.js').default;
 	const API = require('./utils/api.js').default;
+	const shopApi = require('../../utils/api/shops.js').default;
+	const orderApi = require('../../utils/api/order.js').default;
 	const $ = require('../../utils/api.js');
 	const emojiMap ={};
 	export default {
@@ -260,17 +324,20 @@
 				page: 1,
 				pageSize: 20,
 				totalPage: 1,
+				goodsId: '',
+				goods: '',
+				orderId:'',
+				order: '',
 			};
 		},
 		onLoad(options) {
 			const self = this;
-			this.getUser({
-				success(res) {
-					self.myuid = res.id ? res.id : ''
-				}
-			})
 			this.id = options.id ? options.id : '';
+			this.goodsId = options.goodsId ? options.goodsId : '';
+			this.orderId = options.orderId ? options.orderId : '';
 			this.getMsgList();
+			this.getGoods();
+			this.getOrder();
 			//语音自然播放结束
 			this.AUDIO.onEnded((res)=>{
 				this.playMsgid=null;
@@ -294,10 +361,50 @@
 			this.read();
 		},
 		methods:{
+			JSONGoods(info,dom) {
+				info = JSON.parse(info);
+				 return info[dom]
+			},
+			getOrder() {
+				if(this.orderId == ''){return};
+				const self = this;
+				$.ajax({
+					url: orderApi.orderDetailApi,
+					data: {
+						orderId: self.id
+					},
+					method: 'GET',
+					success(res) {
+						self.order = res.data ? res.data : '';
+						if(self.order != ''){
+							self.showGoods = true;
+							self.updateMsg();
+						}
+					}
+				})
+			},
+			getGoods() {
+				if(this.goodsId == ''){return};
+				const self = this;
+				$.ajax({
+					url: shopApi.goodsDetailApi,
+					data: {
+						goodsId: self.goodsId
+					},
+					method: 'GET',
+					success(res) {
+						self.goods = res.data ? res.data.goods : '';
+						if(self.goods != ''){
+							self.showGoods = true;
+							self.updateMsg();
+						}
+					}
+				})
+			},
 			read() {
 				const self = this;
-				if(self.msgImgList.length <= 0){return;}
-				let id = self.msgImgList[0]['sessionId'];
+				if(self.msgList.length <= 0){return;}
+				let id = self.msgList[0]['sessionId'];
 				$.ajax({
 					url: API.readChatApi,
 					data: {
@@ -446,6 +553,7 @@
 						self.msgList = list;
 						self.updateMsg();
 						if(self.msgList.length <= 0){return;}
+						self.read();
 						$.setTitle(list[0]['targetNickname']);
 					}
 				})
@@ -549,12 +657,35 @@
 				this.sendMsg(msg,'text');
 				this.textMsg = '';//清空输入框
 			},
+			sendOrder() {
+				let order = this.order.order;
+				let goods = this.order.orderDetailList[0];
+				let obj = {
+					'mainImg': goods.goodsMainImg,
+					'id': order.id,
+					'orderNo': order.orderNo,
+					'price': order.payPrice,
+					'title': goods.goodsName
+				}
+				this.sendMsg(JSON.stringify(obj),'order');
+				this.showGoods = false;
+			},
+			sendGoods() {
+				let obj = {
+					'mainImg': this.goods.mainImg,
+					'id': this.goods.id,
+					'price': this.goods.price,
+					'title': this.goods.title
+				}
+				this.sendMsg(JSON.stringify(obj),'goods');
+				this.showGoods = false;
+			},
 			
 			// 发送消息
 			sendMsg(content,type){
 				//实际应用中，此处应该提交长连接，模板仅做本地处理。
 				var nowDate = new Date();
-				let lastObj = this.msgList.length > 0 ? this.msgList[this.msgList.length-1] : {};
+				let lastObj = this.msgList.length > 0 ? this.msgList[this.msgList.length-1] : {id: 0};
 				let obj = Object.assign({},lastObj);
 				obj['id'] = lastObj['id']+=1;
 				obj['sendTime'] = nowDate.getTime();
