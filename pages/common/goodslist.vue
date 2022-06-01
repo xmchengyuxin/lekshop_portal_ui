@@ -6,19 +6,20 @@
 			<!-- 微信小程序自定义内容 -->
 			<view v-for="(item, index) of list" :key="index" slot="slot{{index}}">
 				<view class="padding-12">
-					<view class="">
-						<text class="f10-size bg-color-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">自营</text>
+					<view class="line2">
+						<text v-if="item.type == 2" class="f10-size bg-color-linear-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['秒杀']}}</text>
+						<text v-if="item.type == 3" class="f10-size bg-color-linear-y t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['拼团']}}</text>
 						<text>{{item.title}}</text>
 					</view>
-					<view class="flex  f-w margin-t4">
+					<!-- <view class="flex  f-w margin-t4">
 						<view class="flex f-a-c f10-size padding-lr5 h-16 b-color-r t-color-r b-radius-2 margin-r8">
 							官方放心购</view>
-					</view>
+					</view> -->
 					<view class="flex f-a-c f-j-s margin-t4">
-						<view class="text-price f16-size f-w-b t-color-p">59.00</view>
+						<view class="text-price f16-size f-w-b t-color-p">{{item.price | price}}</view>
 						<view class="t-color-8 f12-size flex f-a-c">
-							<text class="margin-r4"> 0</text>
-							<text>评价</text>
+							<text class="margin-r4"> {{item.commentNum}}</text>
+							<text>{{i18n['评价']}}</text>
 						</view>
 				 </view>
 				</view>
@@ -30,7 +31,6 @@
 			<template v-slot:default="item">
 				<view class="padding-12">
 					<view class="line2">
-						<!-- <text class="f10-size bg-color-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">自营</text> -->
 						<text v-if="item.type == 2" class="f10-size bg-color-linear-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['秒杀']}}</text>
 						<text v-if="item.type == 3" class="f10-size bg-color-linear-y t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['拼团']}}</text>
 						<text>{{item.title}}</text>
@@ -55,7 +55,6 @@
 			<view class="flex flex-1 f-c f-j-s padding-10">
 				<view class="flex flex-1 f-c">
 					<view class="line2">
-						<!-- <text class="f10-size bg-color-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">自营</text> -->
 						<text v-if="item.type == 2" class="f10-size bg-color-linear-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['秒杀']}}</text>
 						<text v-if="item.type == 3" class="f10-size bg-color-linear-y t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['拼团']}}</text>
 						<text class="">{{item.title}}</text>

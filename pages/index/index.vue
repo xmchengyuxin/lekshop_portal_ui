@@ -5,10 +5,11 @@
 				<view class="flex f-a-c f-j-c van-icon van-icon-scan t-color-w f22-size margin-r10"></view>
 				<view  @click="go('/pages/search/index')" class="flex flex-1 f-a-c bg-color-w b-radius-30 h-34 padding-lr12 margin-r10" >
 					<view class="flex f-a-c van-icon van-icon-search t-color-9 f20-size margin-r8"></view>
-					<view class="flex f-a-c t-color-6">搜索 商品、类目</view>
+					<view class="flex f-a-c t-color-6">搜索商品</view>
 				</view>
 				<view @click="go('/pages/coupon/getlist')" class="flex f-a-c f-j-c van-icon van-icon-coupon-o t-color-w f22-size margin-r10"></view>
-				<view @click="goService()" class="flex f-a-c f-j-c van-icon van-icon-chat-o t-color-w f22-size"></view>
+				<view @click="go('/pages/index/cate')" class="flex f-a-c f-j-c van-icon van-icon-cate t-color-w f22-size"></view>
+				<xcx-header></xcx-header>
 			</view>
 			<view class="h-30">
 				<scroll-view scroll-x="true" :scroll-into-view="'navs'+active" class="h100" >
@@ -31,7 +32,8 @@
 						</swiper>
 						<view v-if="item.children && item.children.length > 0" class="bg-color-w b-radius-10 flex f-w margin-t12 wrap-sub-cate">
 							<view @click="go('/pages/search/list?cateTid='+child.id)" v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t8">
-								<view class="flex w-50 h-50 bg-img  b-radius-5" :style="child.img | bgimg(300)+''"></view>
+								<view v-if="child.img" class="flex w-50 h-50 bg-img  b-radius-5" :style="child.img | bgimg(300)+''"></view>
+								<view v-else class="flex w-50 h-50 bg-img  b-radius-5 f-a-c f-j-c shops-icon shops-icon-cate f44-size"></view>
 								<view class="f12-size t-color-6 margin-t4">{{child.name}}</view>
 							</view>
 						</view>
@@ -52,34 +54,14 @@
 							</view>
 						</view>
 						
-						<view class="b-radius-10 bg-color-w wrap-pintuan margin-t12">
-							<view class="flex padding-lr12 h-40 f-a-c f-j-s">
-								<view class="flex f-a-c">
-									<text class="f-w-b margin-r8" style="color: rgb(173, 78, 0);">热门拼团</text>
-									<text class="f10-size" style="color: rgb(199, 90, 0);">拼着买，更便宜~</text>
-								</view>
-								<view class="flex f-a-c">
-									<text class="f12-size t-color-9 margin-r2">更多</text>
-									<text class="flex f-a-c van-icon van-icon-arrow t-color-9"></text>
-								</view>
-							</view>
-							<view class="flex padding-lr12 ">
-								<view v-for="item in 3" class="flex  f-s-0 margin-r12 f-c pintuan-item">
-									<view class="h-100 bg-img bg-color b-radius-8"></view>
-									<view class="f12-size line1 margin-t4">反季羽绒棉服2020新款棉衣韩版宽松面包服女冬装外套短款棉袄清仓</view>
-									<view class="flex f-a-c f-j-s margin-t4">
-										<view class="text-price f16-size t-color-y">189.00</view>
-										<view class="bg-color-linear-y h-16 t-color-w f10-size padding-lr5 b-radius-30">拼</view>
-									</view>
-								</view>
-							</view>
-						</view>
-						<groupList></groupList>
+						<groupList class=" margin-t12" v-if="active == parent" shopId="" :catePid="item.id"  :isSpread="active == 0 ? true : false"></groupList>
+						
 						<view class="flex f-a-c f-j-c f-w-b t-color-8 padding-tb6 wrap-tuijian-title margin-t12">
 							<image class="w-20 margin-r8" src="../../static/images/zan-on.png" mode="widthFix"></image>
 							<text>好物推荐</text>
 						</view>
-						<goodslist v-if="item.list" class="margin-t12" :list="item.list" ></goodslist>
+						<goodsShopList class="margin-t12" v-if="active == parent" showType="2" shopId="" :catePid="item.id" :isSpread="active == 0 ? true : false"></goodsShopList>
+						<!-- <goodslist v-if="item.list" class="margin-t12" :list="item.list" ></goodslist> -->
 						<view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view>
 					</view>
 				</scroll-view>
@@ -90,10 +72,12 @@
 	</view>
 </template>
 <style scoped>
+@import url('../../static/css/iconcolor.css');
 @import url('../../static/css/index/index.css');
 </style>
 <script>
 	import groupList from '../shops/components/groupgoods.vue';
+	import goodsShopList from '../shops/components/goodslist.vue';
 	const $ = require('../../utils/api.js');
 	let self = this;
 	export default {
@@ -145,7 +129,7 @@
 					method: 'GET',
 					success(res) {
 						res.data.unshift({
-							id: '0',
+							id: '',
 							name: '推荐'
 						})
 						self.navs = res.data;
@@ -154,14 +138,14 @@
 			},
 			changeSwiper(e) {
 				self.active = e.detail.current;
-				self.getGoodsList();
+				// self.getGoodsList();
 			},
 			loadList(e) {
-				let cate = self.navs[self.active];
-				if(cate.page < cate.totalPage) {
-					cate.page +=1;
-					self.getGoodsList();
-				}
+				// let cate = self.navs[self.active];
+				// if(cate.page < cate.totalPage) {
+				// 	cate.page +=1;
+				// 	self.getGoodsList();
+				// }
 			},
 			init() {
 				this.getCate();
@@ -176,7 +160,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {groupList},
+		components: {groupList,goodsShopList},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

@@ -2,14 +2,14 @@
 	<view class="">
 		<uni-popup ref="pjcontent" type="bottom">
 			<view class="wrap-popup-radius bg-color-w safe-area">
-				<view class="flex f-a-c f-j-c padding-12 f15-size f-w-b b-bottom">{{i18n['评论']}}({{total}})</view>
+				<view class="flex f-r f-a-c f-j-c padding-12 f15-size f-w-b b-bottom">{{i18n['评论']}}({{total}})</view>
 				<scroll-view class="b-bottom" scroll-y="true" style="height: 60vh;">
-					<view v-for="(item,index) in list" class="padding-12 flex">
-						<view class="flex f-a-s margin-r12">
+					<view v-for="(item,index) in list" class="padding-12 flex f-r">
+						<view class="flex f-r f-a-s margin-r12">
 							<view class="flex f-s-0 w-30 h-30 b-radius bg-img " :style="item.walkTrendsComment.viewMemberHeadImg | bgimg(300)+''"></view>
 						</view>
 						<view class="flex flex-1 f-c">
-							<view class="flex">
+							<view class="flex f-r">
 								<view @click="chooseComment(index,'-1')" class="flex f-c flex-1">
 									<view class="t-color-9 f11-size">{{item.walkTrendsComment.viewMemberName}}</view>
 									<view class="f12-size f-w-500 margin-t4">{{item.walkTrendsComment.content}}</view>
@@ -20,8 +20,8 @@
 								</view>
 							</view>
 							
-							<view v-for="(child,idx) in item.chilidCommentList" class="padding-tb12 flex">
-								<view class="flex f-a-s margin-r12">
+							<view v-for="(child,idx) in item.chilidCommentList" class="padding-tb12 flex f-r">
+								<view class="flex f-r f-a-s margin-r12">
 									<view class="flex f-s-0 w-30 h-30 b-radius bg-img " :style="child.viewMemberHeadImg | bgimg(300)+''"></view>
 								</view>
 								<view  @click="chooseComment(index,idx)" class="flex flex-1 f-c">
@@ -37,11 +37,11 @@
 						</view>
 						
 					</view>
-					<view v-if="page < totalPage" @click="loadMore()" class="flex f-a-c f-j-c f12-size t-color-9 padding-10">{{i18n['点击查看更多']}}</view>
-					<view v-else class="flex f-a-c f-j-c no-more">{{i18n['到底了']}}</view>
+					<view v-if="page < totalPage" @click="loadMore()" class="flex f-r f-a-c f-j-c f12-size t-color-9 padding-10">{{i18n['点击查看更多']}}</view>
+					<view v-else class="flex f-r f-a-c f-j-c no-more">{{i18n['到底了']}}</view>
 					<view class="padding-10"></view>
 				</scroll-view>
-				<view class="flex f-a-c h-40 box-c padding-lr20">
+				<view class="flex f-a-c f-r h-40 box-c padding-lr20">
 					<view :style="user.headImg | bgimg(300)+''" class="flex f-s-0 w-24 h-24 b-radius bg-img  margin-r12"></view>
 					<view class="flex flex-1 h-30 b-radius-30 bg-color-f7 padding-lr12">
 						<input @confirm="issue()" @blur="blur" :focus="focus" v-model="value" class="input f12-size" :placeholder="comment != '' ? '@'+comment['viewMemberName'] : i18n['展开说说吧']" type="text"  />

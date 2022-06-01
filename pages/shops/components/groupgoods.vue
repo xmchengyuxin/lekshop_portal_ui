@@ -1,13 +1,13 @@
 <template>
 	<view>
-		<view class="b-radius-10 bg-color-w wrap-pintuan ">
+		<view v-if="list.length > 0" class="b-radius-10 bg-color-w wrap-pintuan  over-h">
 			<view @click="go('/pages/search/list?type='+type+'&shopId='+shopId)" class="flex padding-lr12 h-40 f-a-c f-j-s">
 				<view class="flex f-a-c">
-					<text class="f-w-b margin-r8">{{i18n['热门拼团']}}</text>
-					<text class="f10-size" >{{i18n['拼着买，更便宜']}}</text>
+					<text class="f-w-b margin-r8" style="color: rgb(173, 78, 0);">热门拼团</text>
+					<text class="f10-size" style="color: rgb(199, 90, 0);">拼着买，更便宜~</text>
 				</view>
 				<view class="flex f-a-c">
-					<text class="f12-size t-color-9 margin-r2">{{i18n['更多']}}</text>
+					<text class="f12-size t-color-9 margin-r2">更多</text>
 					<text class="flex f-a-c van-icon van-icon-arrow t-color-9"></text>
 				</view>
 			</view>
@@ -39,6 +39,15 @@
 			},
 			shopId: {
 				default: ''
+			},
+			catePid: {
+				default: ''
+			},
+			cateTid: {
+				default: ''
+			},
+			cateId: {
+				default: ''
 			}
 		},
 		data() {
@@ -55,6 +64,12 @@
 				$.ajax({
 					url: API.searchGoodsApi,
 					data: {
+						catePid: self.shopId != '' ? '' : self.catePid,
+						cateTid: self.shopId != '' ? '' : self.cateTid,
+						cateId: self.shopId != '' ? '' : self.cateId,
+						shopCatePid: self.shopId != '' ? self.catePid : '',
+						shopCateTid: self.shopId != '' ? self.cateTid : '',
+						shopCateId: self.shopId != '' ? self.cateId : '',
 						shopId: self.shopId,
 						type: self.type,
 						page: self.page,
@@ -91,5 +106,5 @@
 </script>
 
 <style scoped>
-	@import url('../../../static/css/shops/shops.css');
+	@import url('../../../static/css/index/index.css');
 </style>

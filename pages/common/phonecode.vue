@@ -49,14 +49,14 @@
 			getCode() {
 				const self = this;
 				if(this.code == '') {
-					this.$toast('请输入图形验证码');
+					this.$toast(self.i18n['请输入图形验证码']);
 					return;
 				}
 				if (this.phone == '' || this.phone.length != 11) {
-					this.$toast('请输入正确手机号');
+					this.$toast(self.i18n['请输入正确手机号']);
 					return;
 				}
-				if (this.smsTxt != '获取验证码') {
+				if (this.smsTxt != self.i18n['获取验证码']) {
 					return;
 				}
 				clearInterval(codeTimeOut);
@@ -72,7 +72,7 @@
 					self.smsTxt = time + 's';
 					if (time <= 0) {
 						clearInterval(codeTimeOut);
-						self.smsTxt = '获取验证码';
+						self.smsTxt = self.i18n['获取验证码'];
 					}
 				}, 1000);
 				$.ajax({
@@ -83,13 +83,20 @@
 						if(res.code != 200) {
 							self.$toast(res.message);
 							clearInterval(codeTimeOut);
-							self.smsTxt = '获取验证码';
+							self.smsTxt = self.i18n['获取验证码'];
 						}else{
 						}
 					}
 				});
 			},
-			init() {},
+			init() {
+				self.smsTxt = self.i18n['获取验证码'];
+			},
+		},
+		computed: {
+			i18n() {
+				return this.$t('validate')
+			},
 		},
 		created() {
 		},

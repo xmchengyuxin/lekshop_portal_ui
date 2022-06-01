@@ -28,6 +28,11 @@ export default {
 			}
 		})
 	},
+	playAudio() {
+		let AUDIO = uni.createInnerAudioContext();
+		AUDIO.src = 'https://qiniu.chengyuwb.com/ding.mp3';
+		AUDIO.play();
+	},
 	onMessage: function(options) {
 		let self = this;
 		//监听websocket接收消息事件（接收来自服务器的实时消息）
@@ -35,6 +40,7 @@ export default {
 			let info = JSON.parse(res.data);
 			console.log("App.vue收到服务器内容", info);
 			if (info.cmd == 5 && options && options.onMessage) { //正常聊天信息
+				self.playAudio();
 				options.onMessage(JSON.parse(info.data));
 			}
 		});

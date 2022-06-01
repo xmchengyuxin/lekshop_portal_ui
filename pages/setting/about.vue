@@ -5,19 +5,19 @@
 					<view class="flex f-c f-a-c f-j-c">
 						<view class="w-70 h-70 b-radius-5 bg-img " :style="config.logo | bgimg('300')+''"></view>
 						<view class="f-w-b margin-t16">{{config.web_name}}</view>
-						<view class=" margin-t6">当前版本{{verson}}</view>
+						<view class=" margin-t6">{{i18n['当前版本']}}{{verson}}</view>
 					</view>
 					<view class="padding-15"></view>
 					<view @click="go('/pages/user/rules?type=2')" class="flex f-a-c f-j-s b-bottom h-50">
-						<text class="f-w-b">隐私协议</text>
+						<text class="f-w-b">{{i18n['隐私协议']}}</text>
 						<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-b"></text>
 					</view>
 					<view @click="go('/pages/user/rules?type=3')" class="flex f-a-c f-j-s b-bottom h-50">
-						<text class="f-w-b">平台申明</text>
+						<text class="f-w-b">{{i18n['平台申明']}}</text>
 						<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-b"></text>
 					</view>
 					<view class="flex f-a-c f-j-s b-bottom h-50">
-						<text class="f-w-b">系统通知</text>
+						<text class="f-w-b">{{i18n['系统通知']}}</text>
 						<view class="flex f-a-c" style="position: relative;"><switch @change="switch2Change" class="switch" color="#2EB37E" :checked="notice" /></view>
 					</view>
 				</view>
@@ -56,7 +56,7 @@ switch2Change: function(e) {
 				},
 				method: 'POST',
 				success(res) {
-					$.$toast('操作成功');
+					$.$toast(self.i18n['操作成功']);
 				}
 			});
 		},
@@ -68,6 +68,11 @@ switch2Change: function(e) {
 			},
 
 
+		},
+		computed: {
+			i18n() {
+				return this.$t('set')
+			},
 		},
 		created() {
 		},

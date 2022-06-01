@@ -23,7 +23,7 @@
 						<view v-else class="flex f-s-0 w-70 h-70 margin-r8 f-a-c f-j-c shops-icon shops-icon-kefu f44-size"></view>
 						<view class="flex flex-1 f-c f-j-c">
 							<text class="f11-size t-color-9 line1">{{item.content}}</text>
-							<text class="f11-size t-color-9 line1 margin-t12">点击查看详情>></text>
+							<text class="f11-size t-color-9 line1 margin-t12">{{i18n['点击查看详情']}}>></text>
 						</view>
 					</view>
 				</view>
@@ -96,6 +96,11 @@
 				this.page = 1;
 				this.getList();
 				
+			},
+		},
+		computed: {
+			i18n() {
+				return this.$t('chat')
 			},
 		},
 		created() {

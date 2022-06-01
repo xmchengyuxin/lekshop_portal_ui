@@ -21,13 +21,13 @@
 					</view>
 					<text class="f12-size margin-t4">{{i18n['交易物流']}}</text>
 				</view>
-				<view class="flex f-c f-a-c f-j-c f-s-0">
+				<view  @click="goService(1)" class="flex f-c f-a-c f-j-c f-s-0">
 					<view
 						class="w-50 h-50 b-radius btn-color2 flex f-a-c f-j-c van-icon van-icon-kefu t-color-w f24-size">
 					</view>
 					<text class="f12-size margin-t4">{{i18n['人工客服']}}</text>
 				</view>
-				<view class="flex f-c f-a-c f-j-c f-s-0">
+				<view @click="goService(2)" class="flex f-c f-a-c f-j-c f-s-0">
 					<view
 						class="w-50 h-50 b-radius bg-color-linear-bg flex f-a-c f-j-c van-icon van-icon-chat-o t-color-w f24-size">
 					</view>
@@ -64,6 +64,7 @@
 				</uni-swipe-action-item>
 			</uni-swipe-action>
 		</view>
+		<tab-bar :active="1" :isShow="false"></tab-bar>
 	</view>
 </template>
 <style scoped>
@@ -110,6 +111,7 @@
 		},
 		onLoad: function() {
 			self = this;
+			
 			this.options = [{
 					text: this.i18n['标记已读'],
 					style: {
@@ -128,6 +130,7 @@
 			this.init();
 		},
 		methods: {
+			
 			read() {
 				const self = this;
 				let url = API.readChatApi;
@@ -197,6 +200,7 @@
 					}
 				})
 			},
+			
 			init() {
 				this.page = 1;
 				this.getList();

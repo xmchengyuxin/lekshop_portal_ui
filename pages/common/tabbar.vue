@@ -41,10 +41,10 @@
 						"text": "首页"
 					},
 					{
-						"pagePath": "/pages/index/cate",
+						"pagePath": "/pages/chat/index",
 						"iconPath": "../../static/images/tab_cate.png",
 						"selectedIconPath": "../../static/images/tab_cate_on.png",
-						"text": "分类"
+						"text": "消息"
 					},
 					{
 						"pagePath": "/pages/find/index",

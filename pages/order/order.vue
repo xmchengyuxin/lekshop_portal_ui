@@ -20,8 +20,8 @@
 								<text class="flex f-a-c van-icon van-icon-shop-o  margin-r6"></text>
 								<text class="f-w-500 t-color-3 margin-r4 ">{{child.order['shopName']}}</text>
 								<text class="flex f-a-c van-icon van-icon-arrow t-color-9 margin-r4"></text>
-								<text v-if="child.order.type == 2" class="f10-size bg-color-linear-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">秒杀</text>
-								<text v-if="child.order.type == 3" class="f10-size bg-color-linear-y t-color-w b-radius-2 h-16 padding-lr5 margin-r6">拼团</text>
+								<text v-if="child.order.type == 2" class="f10-size bg-color-linear-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['秒杀']}}</text>
+								<text v-if="child.order.type == 3" class="f10-size bg-color-linear-y t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['拼团']}}</text>
 							</view>
 							<text :style="{'color': state[child.order.status].color}" class="t-color-y f-w-500 f12-size">{{i18n[state[child.order.status].text]}}</text>
 							<!-- <text v-else  class="t-color-9 f-w-500 f12-size">{{i18n[refundState[child.order.refundStatus].text]}}</text> -->

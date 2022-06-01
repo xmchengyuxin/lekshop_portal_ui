@@ -2,42 +2,42 @@
 	<view class="contain bg-color-w">
 			<view class="padding-lr15">
 				<view class="flex h-50 b-bottom">
-					<view class="f-w-b flex f-a-c">联系人</view>
+					<view class="f-w-b flex f-a-c">{{i18n['联系人']}}</view>
 					<view class="flex flex-1 f-j-e">
-						<input v-model="name" type="text" class="f12-size" value="" placeholder="请填写联系人姓名" />
+						<input v-model="name" type="text" class="f12-size" value="" :placeholder="i18n['请输入']" />
 					</view>
 				</view>
 				<view class="flex h-50 b-bottom">
-					<view class="f-w-b flex f-a-c">手机号</view>
+					<view class="f-w-b flex f-a-c">{{i18n['手机号']}}</view>
 					<view class="flex flex-1 f-j-e">
-						<input v-model="phone" type="number" class="f12-size" value="" placeholder="请填写手机号" />
+						<input v-model="phone" type="number" class="f12-size" value="" :placeholder="i18n['请输入']" />
 					</view>
 				</view>
 				<view @click="show=true" class="flex h-50 b-bottom">
-					<view class="f-w-b flex f-a-c">所在地址</view>
+					<view class="f-w-b flex f-a-c">{{i18n['所在地址']}}</view>
 					<view class="flex flex-1 f-j-e">
-						<input v-model="address" disabled="true" type="text" class="f12-size margin-r6" value="" placeholder="请选择地址" />
+						<input v-model="address" disabled="true" type="text" class="f12-size margin-r6" value="" :placeholder="i18n['请输入']" />
 						<view class="flex f-a-c">
 							<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f13-size"></text>
 						</view>
 					</view>
 				</view>
 				<view class="flex h-50 b-bottom">
-					<view class="f-w-b flex f-a-c">详细地址</view>
+					<view class="f-w-b flex f-a-c">{{i18n['详细地址']}}</view>
 					<view class="flex flex-1 f-j-e">
-						<input v-model="addressDetail" type="text" class="f12-size margin-r6" value="" placeholder="例：6栋三单元501" />
+						<input v-model="addressDetail" type="text" class="f12-size margin-r6" value="" :placeholder="i18n['请输入']" />
 					</view>
 				</view>
 				<view class="flex h-50 ">
-					<view class="f-w-b flex f-a-c">设置为默认地址</view>
+					<view class="f-w-b flex f-a-c">{{i18n['设置为默认地址']}}</view>
 					<view class="flex flex-1 f-a-c f-j-e">
 						<switch @change="switchChange" class="switch" color="#2EB37E" :checked="isDefault" />
 					</view>
 				</view>
 				<!-- <view class="f12-size t-color-b">每次打开App会优先定位至该地址，方便您轻松下单享受服务</view> -->
 				<view class="padding-15 margin-t15">
-					<view @click="save" class="flex f-a-c f-j-c bg-color-linear-y t-color-w f-w-500 b-radius-30 h-40">{{id != '' ? '编辑' : '保存'}}</view>
-					<view v-if="id != ''" @click="del" class="flex f-a-c f-j-c b-color-y t-color-y margin-t12 f-w-500 b-radius-30 h-40">删除</view>
+					<view @click="save" class="flex f-a-c f-j-c bg-color-linear-y t-color-w f-w-500 b-radius-30 h-40">{{id != '' ? i18n['编辑'] : i18n['保存']}}</view>
+					<view v-if="id != ''" @click="del" class="flex f-a-c f-j-c b-color-y t-color-y margin-t12 f-w-500 b-radius-30 h-40">{{i18n['删除']}}</view>
 				</view>
 			</view>
 			<uni-popup ref="region" type="bottom">
@@ -95,20 +95,19 @@
 				const self = this;
 				
 				$.showModal({
-					title: '删除地址',
-					content: '是否确认删除该地址',
+					content: '是否确认删除',
 					success (res) {
 						$.ajax({
 							url: 'member/address/delete',
 							data: {id: self.id},
 							method: 'POST',
 							success(res) {
-								$.$toast('操作成功');
+								$.$toast(self.i18n['操作成功']);
 								$.back(1,2000);
 							}
 						})
 					}
-				})
+				},this)
 			},
 			getAddress(map) {
 				this.province = map.ad_info ? map.ad_info.province : map.province;
@@ -144,22 +143,22 @@
 				const self = this;
 				let check = api.validate([{
 						value: this.name,
-						text: '请输入您的称呼',
+						text: self.i18n['请输入您的称呼'],
 						rules: ''
 					},
 					{
 						value: this.phone,
-						text: '请输入正确手机号码',
+						text: self.i18n['请输入正确手机号码'],
 						rules: 'phone'
 					},
 					{
 						value: this.address,
-						text: '请选择地址',
+						text: self.i18n['请选择地址'],
 						rules: ''
 					},
 					{
 						value: this.addressDetail,
-						text: '请输入具体地址',
+						text: self.i18n['请输入具体地址'],
 						rules: ''
 					},
 							
@@ -190,8 +189,8 @@
 					data: postData,
 					method: 'POST',
 					success(res) {
-						$.$toast('操作成功');
-						self.back(1);
+						$.$toast(self.i18n['操作成功']);
+						self.back(1,2000);
 					}
 				})
 			},
@@ -201,6 +200,11 @@
 			init() {},
 
 
+		},
+		computed: {
+			i18n() {
+				return this.$t('address')
+			},
 		},
 		created() {
 		},

@@ -100,7 +100,7 @@
 					<text class="f16-size f-w-b">{{account != '' ? account.point : 0}}</text>
 					<text class="f12-size margin-t6">{{i18n['积分']}}</text>
 				</view>
-				<view class="flex flex-1 f-s-0 f-c f-a-c f-j-c nav-last-item">
+				<view @click="go('/pages/money/zijinlog')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c nav-last-item">
 					<text class="flex f-a-c van-icon van-icon-bill-o f24-size t-color-y"></text>
 					<text class="f12-size margin-t2">{{i18n['账单明细']}}</text>
 				</view>
@@ -154,7 +154,7 @@
 					</view>
 					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['帮助中心']}}</view>
 				</view>
-				<view class="flex f-s-0 f-c btn-item">
+				<view @click="goService(2)" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-kefu f24-size"></text>
 					</view>

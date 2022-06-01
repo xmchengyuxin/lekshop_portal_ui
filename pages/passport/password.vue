@@ -3,19 +3,19 @@
 <view class="padding-15">
 			<view class="padding-30"></view>
 			<view class="padding-lr12">
-				<view class="f20-size f-w-b">修改登录密码</view>
+				<view class="f20-size f-w-b">{{i18n['修改登录密码']}}</view>
 				<view @click="isAgree = !isAgree" class="flex f-a-c margin-t8">
 					<text :class="isAgree ? 'van-icon-checked t-color-g1' : 'van-icon-circle t-color-b'" class="flex f-a-c f-j-c van-icon  f16-size margin-r4"></text>
-					<text class="margin-r4">已阅读并同意</text>
-					<text @click="go('/pages/user/rules?type=1')" class="t-color-blue1 margin-r4">用户协议</text>
-					<text class="margin-r4">和</text>
-					<text @click="go('/pages/user/rules?type=2')" class="t-color-blue1">隐私政策</text>
+					<text class="margin-r4">{{i18n['已阅读并同意']}}</text>
+					<text @click="go('/pages/user/rules?type=1')" class="t-color-blue1 margin-r4">{{i18n['用户协议']}}</text>
+					<text class="margin-r4">{{i18n['和']}}</text>
+					<text @click="go('/pages/user/rules?type=2')" class="t-color-blue1">{{i18n['隐私政策']}}</text>
 				</view>
 				<view class="padding-tb6"></view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
 					<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">+86</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="phone"  type="tel" maxlength="11" placeholder="请输入">
+						<input v-model="phone"  type="tel" maxlength="11" :placeholder="i18n['请输入']">
 					</view>
 				</view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
@@ -23,7 +23,7 @@
 						<image class="w-20" src="../../static/images/login_passport.png" mode="widthFix"></image>
 					</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="password" type="password" placeholder="请输入密码">
+						<input v-model="password" type="password" :placeholder="i18n['请输入']">
 					</view>
 				</view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
@@ -31,7 +31,7 @@
 						<image class="w-20" src="../../static/images/login_passport.png" mode="widthFix"></image>
 					</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="comfirmPassword" type="password" placeholder="请确认密码">
+						<input v-model="comfirmPassword" type="password" :placeholder="i18n['请输入']">
 					</view>
 				</view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
@@ -39,17 +39,17 @@
 						<image class="w-20" src="../../static/images/login_code.png" mode="widthFix"></image>
 					</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="sms" type="tel" placeholder="请输入验证码">
+						<input v-model="sms" type="tel" :placeholder="i18n['请输入']">
 					</view>
 					<view class="padding-6">
 						<phone-code :phone="phone" :sendType="3"  ></phone-code>
 					</view>
 				</view>
-				<view @click="changePay" class="flex f-a-c f-j-c b-radius-30 h-44 bg-color-linear-g t-color-w f-w-500 margin-t20">登录</view>
+				<view @click="changePay" class="flex f-a-c f-j-c b-radius-30 h-44 bg-color-linear-g t-color-w f-w-500 margin-t20">{{i18n['登录']}}</view>
 				<view class="flex f-j-s ">
-					<view @click="go('/pages/passport/login',2)" class="f12-size  padding-tb20">密码登录</view>
+					<view @click="go('/pages/passport/login',2)" class="f12-size  padding-tb20">{{i18n['密码登录']}}</view>
 					<view @click="go('/pages/passport/register',2)" class="flex f-a-c">
-						<text class="f12-size ">注册</text>
+						<text class="f12-size ">{{i18n['注册']}}</text>
 					</view>
 				</view>
 			</view>
@@ -77,27 +77,27 @@
 			changePay() {
 				const self = this;
 				if(!self.isAgree) {
-					$.$toast('请阅读并同意用户协议');return;
+					$.$toast(self.i18n['请阅读并同意用户协议']);return;
 				}
 				let check = api.validate([
 					{
 						value: this.phone,
-						text:'请输入手机号码',
+						text:self.i18n['请输入手机号码'],
 						rules: 'phone'
 					},
 					{
 						value: this.password,
-						text:'请输入新登录密码',
+						text:self.i18n['请输入新登录密码'],
 						rules: ''
 					},
 					{
 						value: this.comfirmPassword,
-						text:'请输入确认新密码',
+						text:self.i18n['请输入确认新密码'],
 						rules: ''
 					},
 					{
 						value: this.sms,
-						text:'请输入验证码',
+						text:self.i18n['请输入验证码'],
 						rules: ''
 					}
 				]);
@@ -126,7 +126,7 @@
 					},
 					method: 'POST',
 					success(res) {
-						$.$toast('操作成功');
+						$.$toast(self.i18n['操作成功']);
 						$.go('/pages/index/index',3,2000);
 					}
 				})
@@ -136,6 +136,11 @@
 			},
 
 
+		},
+		computed: {
+			i18n() {
+				return this.$t('login')
+			},
 		},
 		created() {
 		},

@@ -4,14 +4,14 @@
 			<view @click="back(1)" class="flex f-a-c f-s-0 padding-lr10 van-icon van-icon-arrow-left f20-size"></view>
 			<view class="flex flex-1">
 				<block v-if="tabStatus == 0">
-					<view @click="active=0;" :class="active == 0 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">推荐</view>
-					<view @click="active=1;" :class="active == 1 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">新品</view>
-					<view @click="active=2;" :class="active == 2 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">拼团</view>
+					<view @click="active=0;" :class="active == 0 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">{{i18nShop['推荐']}}</view>
+					<view @click="active=1;" :class="active == 1 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">{{i18nShop['新品']}}</view>
+					<view @click="active=2;" :class="active == 2 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">{{i18nShop['拼团']}}</view>
 				</block>
 				<view class="flex flex-1 f-a-c" v-else>
 					<view @click="go('/pages/search/list?shopId='+id)" class="flex flex-1 h-36 b-radius-30 bg-color-f7 padding-lr10">
 						<text class="flex f-s-0 f-a-c  van-icon van-icon-search f18-size t-color-9 margin-r10"></text>
-						<text class="flex f-a-c f15-size t-color-9">搜索店铺内宝贝</text>
+						<text class="flex f-a-c f15-size t-color-9">{{i18nShop['搜索店铺内宝贝']}}</text>
 					</view>
 				</view>
 			</view>
@@ -142,23 +142,23 @@
 			</view>
 			<view v-if="tabStatus != 0" class="flex flex-1  f-j-c f-c f-s-0 " @click="changeTab(0)" :class="tabStatus == 0 ? 't-color-y' : 't-color-5'">
 				<view class="flex f-a-c f-j-c h-24 van-icon van-icon-shop-o f22-size"></view>
-				<view class="flex f-a-c f-j-c  f11-size margin-t2">首页</view>
+				<view class="flex f-a-c f-j-c  f11-size margin-t2">{{i18nShop['首页']}}</view>
 			</view>
 			<view class="flex flex-1  f-j-c f-c f-s-0" @click="changeTab(1)" :class="tabStatus == 1 ? 't-color-y' : 't-color-5'">
 				<view class="flex f-a-c f-j-c h-24 van-icon van-icon-goods-collect-o f22-size"></view>
-				<view class="flex f-a-c f-j-c  f11-size margin-t2">全部宝贝</view>
+				<view class="flex f-a-c f-j-c  f11-size margin-t2">{{i18nShop['全部宝贝']}}</view>
 			</view>
 			<view class="flex flex-1  f-j-c f-c f-s-0" @click="changeTab(2)" :class="tabStatus == 2 ? 't-color-y' : 't-color-5'">
 				<view class="flex f-a-c f-j-c h-24 van-icon van-icon-fire-o f22-size"></view>
-				<view class="flex f-a-c f-j-c  f11-size margin-t2">发现动态</view>
+				<view class="flex f-a-c f-j-c  f11-size margin-t2">{{i18nShop['发现动态']}}</view>
 			</view>
 			<view class="flex flex-1  f-j-c f-c f-s-0" @click="changeTab(3)" :class="tabStatus == 3 ? 't-color-y' : 't-color-5'">
 				<view class="flex f-a-c f-j-c h-24 van-icon van-icon-bars f22-size"></view>
-				<view class="flex f-a-c f-j-c  f11-size margin-t2">店铺分类</view>
+				<view class="flex f-a-c f-j-c  f11-size margin-t2">{{i18nShop['店铺分类']}}</view>
 			</view>
 			<view class="flex flex-1  f-j-c f-c f-s-0" @click="changeTab(4)" :class="tabStatus == 4 ? 't-color-y' : 't-color-5'">
 				<view class="flex f-a-c f-j-c h-24 van-icon van-icon-service f22-size"></view>
-				<view class="flex f-a-c f-j-c  f11-size margin-t2">客服</view>
+				<view class="flex f-a-c f-j-c  f11-size margin-t2">{{i18nShop['客服']}}</view>
 			</view>
 		</view>
 		<menu-btn ref="menuBtn"></menu-btn>

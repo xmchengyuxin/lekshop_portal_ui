@@ -11,31 +11,20 @@ export default {
 		uni.removeStorageSync('userInfo');
 		$.go('/pages/passport/login');
 	},
-	goService(obj) {
-		let config = uni.getStorageSync('config') ? uni.getStorageSync('config') : '';
-		let user = uni.getStorageSync('userInfo') ? uni.getStorageSync('userInfo') : '';
-		if(user == '') {
-			// #ifdef MP-WEIXIN
-			this.go('/pages/wxAuth/index')
-			// #endif
-			// #ifndef MP-WEIXIN
-			if(getApp().globalData.isWeiXin) {
-				wxAuthH5(getApp().globalData.tuijianren);
-			}else{
-				this.go('/pages/passport/login')
-			}
-			// #endif
+	goService(type) {//1人工，2智能,3返回人工id,4返回置能Id
+		let id = '';
+		let kefu = uni.getStorageSync('kefuId') ? uni.getStorageSync('kefuId') : '';
+		if(kefu == '') {return}
+		if(type == 1){id = kefu.customerAdminId}
+		if(type == 2){id = kefu.customerMemberId}
+		if(type == 3){
+			return kefu.customerMemberId
 		}
-		if(config != '') {
-			let url = config.kefu_url;
-			url = url.replace('{uid}',user.id);
-			url = url.replace('{username}',user.code);
-			url = url.replace('{headImg}',user.headImg);
-			url = url.replace('{special}',obj && obj.shopId ? obj.shopId:1);
-			uni.setStorageSync('kefuUrl',url);
-			this.go('/pages/user/webview');
-			//http://im.chyuxin.cn/index/index/home?visiter_id={uid}&visiter_name={username}&avatar={headImg}&business_id={businessId}&groupid=1&special=3
+		if(type == 4){
+			return kefu.customerMemberId
 		}
+		$.go('/pages/chat/chat?id='+id);
+		
 	},
 	previewImg(url,urls) {
 		if(!urls){

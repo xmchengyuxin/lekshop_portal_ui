@@ -30,7 +30,7 @@
 						<view class="flex flex-1 f-c">
 							<view class="line2 t-color-6">{{item.goodsName}}</view>
 							<view class="flex margin-t4">
-								<view class="flex f-a-c f-j-c b-radius-2 bg-color-f7 t-color-9 f10-size h-18 padding-lr6">规格：{{item.goodsParamName}}</view>
+								<view class="flex f-a-c f-j-c b-radius-2 bg-color-f7 t-color-9 f10-size h-18 padding-lr6">{{i18n['规格']}}：{{item.goodsParamName}}</view>
 							</view>
 						</view>
 						<view class="flex f-a-c f-j-s">
@@ -57,7 +57,7 @@
 						<text class="f11-size margin-r4">{{i18n['合计']}}:</text>
 						<text class="f18-size text-price t-color-y f-w-b margin-r12">{{totalPrice}}</text>
 					</view>
-					<text class="f11-size">不含运费</text>
+					<text class="f11-size">{{i18n['不含运费']}}</text>
 				</view>
 				
 				<view @click="pay" class="flex f-a-c f-j-c b-radius-30 h-32 t-color-w bg-color-linear-y w-80">{{i18n['结算']}}</view>

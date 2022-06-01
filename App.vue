@@ -1,4 +1,6 @@
 <script>
+	
+	const API = require('./utils/api/user.js').default;
 const app = require('./utils/app.js').default;
 const $ = require('./utils/api.js');
 const QQMapWX = require('./utils/qqmap-wx-jssdk.min.js');
@@ -93,6 +95,9 @@ export default {
 				uni.setStorageSync('model', res.model);
 			}
 		});
+		
+		
+		this.getKefuId();
 	
 		
 	},
@@ -279,6 +284,18 @@ export default {
 					if(!info.phone) {
 						self.go('/pages/wxAuth/bindphone')
 					}
+				}
+			})
+		},
+		getKefuId() {
+			$.ajax({
+				url: API.getKefuIdApi,
+				data: {},
+				method: 'GET',
+				success(res) {
+					let info = res.data ? res.data : '';
+					if(info == ''){return;}
+					uni.setStorageSync('kefuId',info);
 				}
 			})
 		},

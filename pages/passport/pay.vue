@@ -2,32 +2,32 @@
 	<view class="contain flex f-c f-j-s" style="min-height: 90vh;">
 		<view>
 		<view class="h-50 flex f-a-c padding-lr12">
-			<text class="f16-size t-color f-w-b">手机号：</text>
+			<text class="f16-size t-color f-w-b">{{i18n['手机号']}}：</text>
 			<text class="f16-size t-color-b f-w-b">{{user.phone | hideCenterText}}</text>
 		</view>
 		<view class="bg-color-w padding-lr12">
 			<view class="flex h-50 f-a-c b-bottom">
-				<text class="flex f-s-0 t-color f-w-b">新的二级密码</text>
+				<text class="flex f-s-0 t-color f-w-b">{{i18n['新的二级密码']}}</text>
 				<view class="flex flex-1">
-					<input v-model="password" type="password" class="input f-w-500" placeholder="请输入" placeholder-class="t-color-9"> 
+					<input v-model="password" type="password" class="input f-w-500" :placeholder="i18n['请输入']" placeholder-class="t-color-9"> 
 				</view>
 			</view>
 			<view class="flex h-50 f-a-c b-bottom">
-				<text class="flex f-s-0 t-color f-w-b">确认新的二级密码</text>
+				<text class="flex f-s-0 t-color f-w-b">{{i18n['确认新的二级密码']}}</text>
 				<view class="flex flex-1">
-					<input v-model="surePassword" type="password" class="input f-w-500" placeholder="请输入" placeholder-class="t-color-9"> 
+					<input v-model="surePassword" type="password" class="input f-w-500" :placeholder="i18n['请输入']" placeholder-class="t-color-9"> 
 				</view>
 			</view>
 			<view class="flex h-50 f-a-c b-bottom">
-				<text class="flex f-s-0 t-color f-w-b">手机验证码</text>
+				<text class="flex f-s-0 t-color f-w-b">{{i18n['手机验证码']}}</text>
 				<view class="flex flex-1">
-					<input v-model="sms" maxlength="6" type="text" class="input f-w-500" placeholder="请输入" placeholder-class="t-color-9"> 
+					<input v-model="sms" maxlength="6" type="text" class="input f-w-500" :placeholder="i18n['请输入']" placeholder-class="t-color-9"> 
 				</view>
 			</view>
 			<view class="flex h-50 f-a-c">
-				<text class="flex f-s-0 t-color f-w-b">图形验证码</text>
+				<text class="flex f-s-0 t-color f-w-b">{{i18n['图形验证码']}}</text>
 				<view class="flex flex-1 f-a-c">
-					<input v-model="codeText" maxlength="6" type="text" class="input f-w-500 margin-r12" placeholder="请输入" placeholder-class="t-color-9"> 
+					<input v-model="codeText" maxlength="6" type="text" class="input f-w-500 margin-r12" :placeholder="i18n['请输入']" placeholder-class="t-color-9"> 
 					<image class="flex f-s-0" style="width: 80px;height: 30px;" @click="getCode" :src="'data:image/png;base64,'+code.img" ></image>
 				</view>
 			</view>
@@ -39,7 +39,7 @@
 				<text class="f16-size t-color-r f-w-b">{{smsTxt}}</text>
 			</view>
 			<view @click="changePay" class="flex f-a-c f-j-c h-50 bg-color-linear-g b-radius-5 t-color-w margin-t12">
-				<text class="f16-size t-color-w f-w-500">确定修改</text>
+				<text class="f16-size t-color-w f-w-500">{{i18n['确定修改']}}</text>
 			</view>
 		</view>
 	</view>
@@ -123,22 +123,22 @@
 				let check = api.validate([
 					{
 						value: this.password,
-						text:'请输入新的二级密码',
+						text:self.i18n['请输入新的二级密码'],
 						rules: ''
 					},
 					{
 						value: this.surePassword,
-						text:'请输入确认新的二级密码',
+						text:self.i18n['请输入确认新的二级密码'],
 						rules: ''
 					},
 					{
 						value: this.codeText,
-						text:'请输入图形验证码',
+						text:self.i18n['请输入图形验证码'],
 						rules: ''
 					},
 					{
 						value: this.sms,
-						text:'请输入手机验证码',
+						text:self.i18n['请输入手机验证码'],
 						rules: ''
 					}
 				]);
@@ -154,7 +154,7 @@
 					},
 					method: 'POST',
 					success(res) {
-						self.$toast('操作成功');
+						self.$toast(self.i18n['操作成功']);
 						$.back(1,2000);
 					}
 				})
@@ -165,6 +165,11 @@
 			},
 
 
+		},
+		computed: {
+			i18n() {
+				return this.$t('login')
+			},
 		},
 		created() {
 		},

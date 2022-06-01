@@ -43,7 +43,7 @@
 								</view>
 								<!-- 发送订单 -->
 								<view @click="go('/pages/order/detail?id='+JSONGoods(row.msgContent,'id'))" v-if="row.msgType=='order'" class="bubble f-c f-a-s  bg-color-w">
-									<view class="f13-size f-w-b t-color-3">您正在咨询的订单</view>
+									<view class="f13-size f-w-b t-color-3">{{i18n['您正在咨询的订单']}}</view>
 									<view class="flex margin-t8">
 										<view class="flex f-s-0 w-50 h-50 bg-img margin-r10" :style="JSONGoods(row.msgContent,'mainImg') | bgimg(300)+''"></view>
 										<view class="flex flex-1 f-c f-j-s h100">
@@ -54,7 +54,7 @@
 											</view>
 										</view>
 									</view>
-									<view class="flex f-a-c  w100 f11-size t-color-9 margin-t6">订单号: {{JSONGoods(row.msgContent,'orderNo')}}</view>
+									<view class="flex f-a-c  w100 f11-size t-color-9 margin-t6">{{i18n['订单号']}}: {{JSONGoods(row.msgContent,'orderNo')}}</view>
 								</view>
 								<!-- 文字消息 -->
 								<view v-if="row.msgType=='text'" class="bubble">
@@ -112,12 +112,12 @@
 										<view class="flex flex-1 f-c f-j-s h100">
 											<view class="line2 f12-size t-color-6">{{JSONGoods(row.msgContent,'title')}}</view>
 											<view class="flex f-a-c margin-t6 f11-size t-color-9">
-												<text class="margin-r4">合计</text>
+												<text class="margin-r4">{{i18n['合计']}}</text>
 												<text class="text-price">{{JSONGoods(row.msgContent,'price')}}</text>
 											</view>
 										</view>
 									</view>
-									<view class="flex f-a-c  w100 f11-size t-color-9 margin-t6">订单号: {{JSONGoods(row.msgContent,'orderNo')}}</view>
+									<view class="flex f-a-c  w100 f11-size t-color-9 margin-t6">{{i18n['订单号']}}: {{JSONGoods(row.msgContent,'orderNo')}}</view>
 								</view>
 								<!-- 文字消息 -->
 								<view v-if="row.msgType=='text'" class="bubble">
@@ -147,6 +147,7 @@
 					</block>
 				</view>
 				<view v-if="showGoods" style="padding: 55px;"></view>
+				<view v-if="isAi()" style="padding: 15px;"></view>
 				<view id="bottompage" class="padding-10"></view>
 			</scroll-view>
 		</view>
@@ -180,7 +181,7 @@
 					</view>
 					<view class="flex f-a-c f-j-s">
 						<text class="text-price t-color-y">{{goods.price}}</text>
-						<view @click="sendGoods()" class="flex f-a-c f-j-c b-radius-30 f11-size t-color-w bg-color-linear-y h-24 padding-lr10">发送商品</view>
+						<view @click="sendGoods()" class="flex f-a-c f-j-c b-radius-30 f11-size t-color-w bg-color-linear-y h-24 padding-lr10">{{i18n['发送商品']}}</view>
 					</view>
 				</view>
 			</view>
@@ -188,18 +189,21 @@
 				<view :style="order.orderDetailList[0].goodsMainImg | bgimg(300)+''" class="flex f-s-0 w-60 h-60 b-radius-5 bg-img  margin-r12"></view>
 				<view class="flex flex-1 f-c f-j-s">
 					<view class="flex">
-						<view class="flex flex-1 f-w-500"><text class="line1">你可能想咨询该订单</text></view>
+						<view class="flex flex-1 f-w-500"><text class="line1">{{i18n['你可能想咨询该订单']}}</text></view>
 						<text @click="showGoods=!showGoods" class="flex f-a-c f-j-c f-s-0 van-icon van-icon-cross t-color-9"></text>
 					</view>
 					<view class="flex f-a-c f-j-s">
 						<view class="flex f-a-c">
-							<text class="f12-size t-color-9 margin-r4">共{{order.orderDetailList.length}}件商品：合计</text>
+							<text class="f12-size t-color-9 margin-r4">{{i18n['共1件商品'] | i18n(order.orderDetailList.length)}}：{{i18n['合计']}}</text>
 							<text class="f12-size t-color-9 text-price">{{order.order.payPrice}}</text>
 						</view>
-						<view @click="sendOrder()" class="flex f-a-c f-j-c b-radius-30 f11-size t-color-w bg-color-linear-y h-24 padding-lr10">发送订单</view>
+						<view @click="sendOrder()" class="flex f-a-c f-j-c b-radius-30 f11-size t-color-w bg-color-linear-y h-24 padding-lr10">{{i18n['发送订单']}}</view>
 					</view>
 				</view>
 			</view>
+		</view>
+		<view v-if="isAi()" class="popup-goods padding-12 flex f-j-e">
+			<view @click="goService(1)" class="flex f-a-c f-j-c b-radius-30 f11-size t-color-w bg-color-linear-y h-24 padding-lr10">{{i18n['人工客服']}}</view>
 		</view>
 		<!-- 底部输入栏 -->
 		<view class="input-box" :class="popupLayerClass" @touchmove.stop.prevent="discard">
@@ -231,7 +235,7 @@
 			</view>
 			<!-- #endif -->
 			<view class="send" :class="isVoice?'hidden':''" @tap="sendText">
-				<view class="btn">发送</view>
+				<view class="btn">{{i18n['发送']}}</view>
 			</view>
 		</view>
 		<!-- 录音UI效果 -->
@@ -361,6 +365,9 @@
 			this.read();
 		},
 		methods:{
+			isAi() {
+				return this.id == this.goService(4)
+			},
 			JSONGoods(info,dom) {
 				info = JSON.parse(info);
 				 return info[dom]
@@ -450,7 +457,8 @@
 				const self = this;
 				self.socket.onMessage({
 					onMessage(res){
-						if(res.type == 5 && res.comtent.targetId == self.id) {
+						console.log(res);
+						if(res.type == 5 && res.content.targetId == self.id) {
 							self.msgList.push(JSON.parse(res.content));
 							uni.vibrateLong();
 							self.updateMsg();
@@ -846,7 +854,12 @@
 			discard(){
 				return;
 			}
-		}
+		},
+		computed: {
+			i18n() {
+				return this.$t('chat')
+			},
+		},
 	}
 </script>
 <style scoped lang="scss">

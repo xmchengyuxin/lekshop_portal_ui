@@ -19,11 +19,13 @@
 		<scroll-view class="padding-lr6" @scrolltolower="loadMore" scroll-y="true" style="height: 100%;">
 			<view  :style="{ 'padding-top': top +46+40+ 'px' }"></view>
 			<goodslist class="margin-t12" :offset="6" :sortType="sortType" :list="list"></goodslist>
+			<no-data v-if="list.length <= 0"></no-data>
 			<view :style="isIphonex ? 'padding-bottom:84px' : 'padding-bottom:60px'"></view>
 		</scroll-view>
 		</block>
 		<block v-else>
 			<goodslist class="" :offset="6" :sortType="sortType" :list="list"></goodslist>
+			<no-data v-if="list.length <= 0"></no-data>
 			<view :style="isIphonex ? 'padding-bottom:84px' : 'padding-bottom:60px'"></view>
 		</block>
 	</view>
@@ -46,6 +48,18 @@
 			},
 			pageSize: {
 				default: 20
+			},
+			catePid: {
+				default: ''
+			},
+			cateTid: {
+				default: ''
+			},
+			cateId: {
+				default: ''
+			},
+			isSpread: {
+				default: false
 			}
 		},
 		data() {
@@ -57,9 +71,6 @@
 				totalPage: 1,
 				sort: '',
 				sortType: 1,
-				catePid: '',
-				cateTid: '',
-				cateId: '',
 				title: ''
 			};
 		},
@@ -90,6 +101,7 @@
 						status: '',
 						page: self.page,
 						pageSize: self.pageSize,
+						spreadStatus: self.isSpread ? '1' : '',
 					},
 					method: 'GET',
 					success(res) {

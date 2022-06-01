@@ -1,9 +1,7 @@
 <template>
 	<view class="contain">
 		<view class="flex f-s-0 h-44 bg-color-w b-bottom" :style="{ 'padding-top': top + 'px' }">
-			<view class="flex f-a-c padding-lr10">
-				<image class="w-24" src="../../static/images/tuan.png" mode="widthFix"></image>
-			</view>
+			<view @click="back(1)" class="flex f-s-0 padding-lr10 f-a-c f-j-c van-icon van-icon-arrow-left f20-size"></view>
 			<view @click="go('/pages/search/index')" class="flex f-a-c flex-1">
 				<view class="flex flex-1 h-30 f-a-c b-radius-30 bg-color-f9 padding-lr10">
 					<text class="flex f-a-c van-icon van-icon-search f18-size t-color-0 margin-r8"></text>
@@ -15,7 +13,7 @@
 		<view class="flex">
 			<scroll-view :scroll-into-view="'cate'+active" scroll-y="true" class="flex f-c f-s-0 w-100 bg-color-fb" :style="{'height': height+'px'}">
 				<view @click="active=index" v-for="(item,index) in cateList" :class="index === active ? 'cate-on' : ''" :id="'cate'+index" class="flex f-s-0 h-50 f-a-c f-j-c f12-size t-color-5 ">{{item.name}}</view>
-				<view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view>
+				<view  :style="{ 'padding-top': !isIphonex ? '0px' : '34px'}"></view>
 			</scroll-view>
 			<scroll-view v-if="cateList.length > 0" scroll-y="true" class="flex f-c f-s-0 flex-1 padding-10" :style="{'height': height+'px'}">
 				<view v-for="item in cateList[active]['children']" class="bg-color-w b-radius-10  wrap-sub-cate padding-10">
@@ -30,11 +28,11 @@
 						</view>
 					</view>
 				</view>
-				<view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view>
+				<!-- <view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view> -->
+				<view  :style="{ 'padding-top': !isIphonex ? '0px' : '34px'}"></view>
 			</scroll-view>
 		</view>
 		<menu-btn ref="menuBtn"></menu-btn>
-		<tab-bar :active="1" :isShow="false"></tab-bar>
 	</view>
 </template>
 <style scoped>

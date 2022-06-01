@@ -8,7 +8,7 @@
 					</view>
 					<view class="flex flex-1 f-c">
 						<view class="flex f-a-c">
-							<text v-if="item.status == 1" class="f10-size padding-lr2 b-radius-2  t-color-w margin-r4" style="background-color: #CDE676;">默认</text>
+							<text v-if="item.status == 1" class="f10-size padding-lr2 b-radius-2  t-color-w margin-r4" style="background-color: #CDE676;">{{i18n['默认']}}</text>
 							<text class="f-w-b">{{item.realname}}  {{item.phone}}</text>
 						</view>
 						<view class="flex f-a-c margin-t2">
@@ -26,7 +26,7 @@
 		<view class="warp-tabbar bg-color-w flex f-a-c padding-lr15" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
 			<view @click="go('/pages/user/addaddress')" class="flex f-a-c f-j-c flex-1 bg-color-linear-y t-color-w b-radius-30 h-36">
 				<text class="flex f-a-c f-j-c van-icon van-icon-plus t-color-w margin-r6"></text>
-				<text class="t-color-w f-w-500">增加新地址</text>
+				<text class="t-color-w f-w-500">{{i18n['增加新地址']}}</text>
 			</view>
 		</view>
 	</view>
@@ -68,7 +68,7 @@
 							},
 							method: 'POST',
 							success(res) {
-								$.$toast('操作成功');
+								$.$toast(self.i18n['操作成功']);
 								self.back(1,2000)
 							}
 						})
@@ -118,6 +118,11 @@
 			},
 
 
+		},
+		computed: {
+			i18n() {
+				return this.$t('address')
+			},
 		},
 		created() {
 		},

@@ -184,22 +184,7 @@
 					<view @click="go('/pages/shops/shops?id='+shop.id+'&tabStatus=1')" class="flex f-a-c f-j-c h-24 bg-color-p t-color-w b-radius-30 f12-size padding-lr10">{{i18n['全部宝贝']}}</view>
 				</view>
 				<view class="padding-tb6"></view>
-				<view class="flex f-a-c f-j-s">
-					<text @click="go('/pages/shops/shops?id='+shop.id)" class="f12-size f-w-b">{{i18n['店铺推荐']}}</text>
-					<view class="flex f-a-c">
-						<text class="f10-size t-color-y">{{i18n['查看全部']}}</text>
-						<text class="flex f-a-c van-icon van-icon-arrow t-color-y f12-size"></text>
-					</view>
-				</view>
-				<view class="flex f-w ">
-					<view v-for="item in 5" class="flex  f-s-0  f-c pintuan-item">
-						<view class="h-100 bg-img bg-color b-radius-8"></view>
-						<view class="f10-size line1 margin-t4">{{goods.title}}</view>
-						<view class="flex f-a-c f-j-s margin-t4">
-							<view class="text-price f16-size t-color-y">189.00</view>
-						</view>
-					</view>
-				</view>
+				<shopSpread v-if="shop != ''" :shopId="shop.id"></shopSpread>
 				
 			</view>
 			
@@ -373,6 +358,7 @@
 <script>
 	import couponList from '../common/couponlist.vue';
 	import groupList from './components/grouplist.vue';
+	import shopSpread from './components/shopspread.vue';
 	const API = require('../../utils/api/shops.js').default;
 	const $ = require('../../utils/api.js');
 	let self;
@@ -778,7 +764,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {couponList,groupList},
+		components: {couponList,groupList,shopSpread},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

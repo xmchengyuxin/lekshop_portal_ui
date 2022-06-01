@@ -116,6 +116,7 @@
 				province: '',
 				max: '',
 				min: '',
+				spread: ''
 			};
 		},
 		onLoad: function(options) {
@@ -132,6 +133,7 @@
 			this.cateId = options.cateId ? options.cateId : '';
 			this.shopId = options.shopId ? options.shopId : '';
 			this.type = options.type ? options.type : '';
+			this.spread = options.spread ? options.spread : '';
 			this.init();
 		},
 		methods: {
@@ -173,6 +175,7 @@
 						status: '',
 						page: self.page,
 						pageSize: self.pageSize,
+						spreadStatus: self.spread != '' ? '1' : '',
 					},
 					method: 'GET',
 					success(res) {

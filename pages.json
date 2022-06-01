@@ -21,7 +21,7 @@
 		{
 		    "path" : "pages/chat/chat",
 		    "style" : {
-				"navigationBarTitleText":"HM-chat聊天室",
+				"navigationBarTitleText":"客服",
 		    	"app-plus":{
 		    		"softinputNavBar":"none",
 		    		"bounce":"none"
@@ -57,6 +57,17 @@
 			"style": {
 				"navigationBarTitleText": "发表评价"
 			} 
+		},
+		{
+		    "path" : "pages/find/video",
+		    "style" :                                                                                    
+		    {
+		        "app-plus":{
+		        	"titleNView":false,
+		        	"bounce":"none"
+		        }
+		    }
+		    
 		},
 		{
 			"path": "pages/find/issue",

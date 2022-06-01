@@ -4,7 +4,7 @@
 			<view @click="$refs.showIssue.open()" class="flex f-a-c f-s-0 padding-lr10 van-icon van-icon-photograph t-color-w f20-size"></view>
 			<view class="flex flex-1 t-color-w">
 					<view :class="active == 0 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">{{i18n['发现']}}</view>
-					<view :class="active == 1 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">{{i18n['视频']}}</view>
+					<view @click="go('/pages/find/video')" :class="active == 1 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">{{i18n['视频']}}</view>
 			</view>
 			<view class="flex f-s-0">
 				<text  class="flex f-s-0 f-a-c padding-lr6 t-color-w van-icon van-icon-search f20-size"></text>
