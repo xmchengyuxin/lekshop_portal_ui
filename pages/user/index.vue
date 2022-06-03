@@ -1,11 +1,12 @@
 <template>
 	<view class="contain">
-		<view class="wrap-header">
+		<view class="wrap-header" :style="{ 'padding-top': top + 'px' }">
 			<view class="flex f-j-e h-44 padding-lr5">
 				<!-- <view class="flex f-a-c f-j-c van-icon van-icon-qr f20-size t-color-3 padding-lr5"><text
 						class="f12-size">{{i18n['会员码']}}</text></view> -->
 				<view @click="go('/pages/setting/index')" class="flex f-a-c f-j-c van-icon van-icon-setting-o f20-size padding-lr5"></view>
 				<view @click="go('/pages/chat/index')" class="flex f-a-c f-j-c van-icon van-icon-chat-o f20-size padding-lr5"></view>
+				<xcx-header></xcx-header>
 			</view>
 			<view class="padding-lr15 flex">
 				<view @click="updateImg" class="w-60 h-60 b-radius  bg-img margin-r12" :style="user.headImg | bgimg(300)+''"></view>
@@ -18,19 +19,19 @@
 			</view>
 			<view class="flex margin-t15">
 				<view @click="go('/pages/user/like')" class="flex flex-1 f-c f-a-c f-j-c">
-					<text class="f16-size f-w-b">0</text>
+					<view class="flex f-a-c f-j-c van-icon van-icon-star-o f24-size margin-b4"></view>
 					<text class="f12-size">{{i18n['收藏夹']}}</text>
 				</view>
 				<view @click="go('/pages/user/likeshops')" class="flex flex-1 f-c f-a-c f-j-c">
-					<text class="f16-size f-w-b">0</text>
+					<view class="flex f-a-c f-j-c van-icon van-icon-sign f24-size margin-b4"></view>
 					<text class="f12-size">{{i18n['关注店铺']}}</text>
 				</view>
 				<view @click="go('/pages/user/history')" class="flex flex-1 f-c f-a-c f-j-c">
-					<text class="f16-size f-w-b">0</text>
+					<view class="flex f-a-c f-j-c van-icon van-icon-clock-o f24-size margin-b4"></view>
 					<text class="f12-size">{{i18n['足迹']}}</text>
 				</view>
 				<view @click="go('/pages/order/order')" class="flex flex-1 f-c f-a-c f-j-c">
-					<text class="f16-size f-w-b">0</text>
+					<view class="flex f-a-c f-j-c van-icon van-icon-description f24-size margin-b4"></view>
 					<text class="f12-size">{{i18n['全部订单']}}</text>
 				</view>
 			</view>
@@ -176,7 +177,8 @@
 			<view class="flex f-a-c f-j-c margin-t12">
 				<image class="h-18" src="../../static/images/guess_you_like_it.png" mode="heightFix"></image>
 			</view>
-			<goodslist class="margin-t12" :list="list"></goodslist>
+			<view class="padding-6"></view>
+			<goodslist  :list="list"></goodslist>
 		</view>
 		<tab-bar :active="4"></tab-bar>
 	</view>
@@ -193,6 +195,8 @@
 	export default {
 		data() {
 			return {
+				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
+				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
 				list: [],
 				user: '',
 				account: '',
@@ -216,6 +220,7 @@
 				$.ajax({
 					url: API.getAccountApi,
 					data: {},
+					isAuth: true,
 					method: 'GET',
 					success(res) {
 						self.account = res.data ? res.data : '';
@@ -233,6 +238,7 @@
 			getList() {
 				$.ajax({
 					url: shopsAPI.likeListApi,
+					isAuth: true,
 					data: {
 						page: 1,
 						pageSize: 20

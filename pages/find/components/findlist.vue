@@ -1,7 +1,8 @@
 <template>
 	<view>
-		<waterfallsFlow @wapper-lick="clickGood" :list="list" :offset="offset" :idKey="idKey" :imageSrcKey="imageSrcKey"
-			:cols="cols" :imageStyle="imageStyle" :single="single">
+	
+		<custom-waterfalls-flow :value="list" @wapperClick="clickGood" @imageClick="clickGood"  :list="list" :columnSpace="offset":imageKey="imageSrcKey"
+				:column="cols"  >
 			<!--  #ifdef  MP-WEIXIN -->
 			<!-- 微信小程序自定义内容 -->
 			<view v-for="(item, index) of list" :key="index" slot="slot{{index}}">
@@ -49,13 +50,12 @@
 				</view>
 			</template>
 			<!-- #endif -->
-		</waterfallsFlow>
+		</custom-waterfalls-flow>
 	</view>
 </template>
 <style scoped>
 </style>
 <script>
-	import waterfallsFlow from "@/components/maramlee-waterfalls-flow/maramlee-waterfalls-flow.vue";
 	const $ = require('../../../utils/api.js');
 	export default {
 		props: {
@@ -66,7 +66,7 @@
 			// offset 间距，单位为 px
 			offset: {
 				type: Number,
-				default: 12
+				default: 1.2
 			},
 			// 列表渲染的 key 的键名，值必须唯一，默认为 id
 			idKey: {
@@ -135,7 +135,7 @@
 		mounted() {},
 		destroyed() {},
 		components: {
-			waterfallsFlow
+			
 		},
 		onPullDownRefresh() {},
 		onReachBottom() {}

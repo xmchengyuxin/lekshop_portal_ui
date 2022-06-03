@@ -18,15 +18,15 @@
 		</view>
 		<scroll-view class="padding-lr6" @scrolltolower="loadMore" scroll-y="true" style="height: 100%;">
 			<view  :style="{ 'padding-top': top +46+40+ 'px' }"></view>
-			<goodslist class="margin-t12" :offset="6" :sortType="sortType" :list="list"></goodslist>
+			<goodslist class="margin-t12" :offset="1.2" :sortType="sortType" :list="list"></goodslist>
 			<no-data v-if="list.length <= 0"></no-data>
 			<view :style="isIphonex ? 'padding-bottom:84px' : 'padding-bottom:60px'"></view>
 		</scroll-view>
 		</block>
 		<block v-else>
-			<goodslist class="" :offset="6" :sortType="sortType" :list="list"></goodslist>
+			<goodslist class="" :offset="1.2" :sortType="sortType" :list="list"></goodslist>
 			<no-data v-if="list.length <= 0"></no-data>
-			<view :style="isIphonex ? 'padding-bottom:84px' : 'padding-bottom:60px'"></view>
+			<view :style="isIphonex ? 'padding-bottom:94px' : 'padding-bottom:60px'"></view>
 		</block>
 	</view>
 </template>
@@ -38,7 +38,8 @@
 	export default {
 		props: {
 			shopId: {
-				required: true,
+				type: String,
+				default: ''
 			},
 			type: {
 				default: ''

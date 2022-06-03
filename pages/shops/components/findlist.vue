@@ -62,7 +62,7 @@
 	let self;
 	export default {
 		props: {
-			id: {
+			findId: {
 				required:true,
 			},
 		},
@@ -125,7 +125,7 @@
 				$.ajax({
 					url: API.shopFindListApi,
 					data: {
-						shopId: self.id,
+						shopId: self.findId,
 						page: self.page,
 						pageSize: self.pageSize
 					},

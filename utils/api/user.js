@@ -26,5 +26,5 @@ export default {
 	'wuliuChatApi': 'member/news/getList',//交易物流消息列表
 	'readNewsApi': 'member/news/readAll',//全部置为已读
 	'newsNumApi': 'member/news/countNews',//统计未读消息数量
-	'getKefuIdApi': 'member/chat/getCustomerId',//获取人工客服和智能客服的ID
+	'getKefuIdApi': 'common/chat/getCustomerId',//获取人工客服和智能客服的ID
 }

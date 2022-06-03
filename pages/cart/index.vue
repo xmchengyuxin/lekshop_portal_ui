@@ -46,7 +46,7 @@
 			</view>
 			<no-data v-if="list.length <= 0" ></no-data>
 		</view>
-		<view class="fixed-top wrap-btn  h-50 bg-color-f7 flex f-j-s">
+		<view class="fixed-top wrap-btn  h-50 bg-color-f7 flex f-j-s" :style="{'bottom': !isIphonex ? '50px' : '84px'}">
 			<view @click="chooseAll" class="flex padding-lr10 f-a-c">
 				<text :class="isAll ? 'van-icon-checked t-color-y' : 'van-icon-circle t-color-9'" class="flex f-a-c van-icon  f18-size margin-r4"></text>
 				<text class="f11-size">{{i18n['全选']}}</text>
@@ -67,6 +67,7 @@
 				<view @click="del" class="flex f-a-c f-j-c b-radius-30 h-28 f10-size t-color-w bg-color-linear-y w-80">{{i18n['删除']}}</view>
 			</view>
 		</view>
+		<view class="padding-30"></view>
 		<view class="padding-30"></view>
 		<tab-bar :active="3"></tab-bar>
 	</view>
@@ -264,6 +265,7 @@
 			getList() {
 				$.ajax({
 					url: API.carListApi,
+					isAuth: true,
 					data: {},
 					method: 'GET',
 					success(res) {

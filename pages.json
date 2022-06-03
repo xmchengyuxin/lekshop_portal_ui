@@ -62,6 +62,7 @@
 		    "path" : "pages/find/video",
 		    "style" :                                                                                    
 		    {
+				"navigationStyle": "custom",
 		        "app-plus":{
 		        	"titleNView":false,
 		        	"bounce":"none"
@@ -189,6 +190,12 @@
 			"path": "pages/setting/index",
 			"style": {
 				"navigationBarTitleText": "设置"
+			} 
+		},
+		{
+			"path": "pages/setting/language",
+			"style": {
+				"navigationBarTitleText": "设置语言"
 			} 
 		},
 		{
@@ -397,6 +404,19 @@
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
 		"fontSize": "13px",
-		"list": []
+		"list": [
+			{
+					"pagePath": "pages/index/index",
+					"iconPath": "/static/images/tab_index_on.png",
+					"selectedIconPath": "/static/images/tab_index_on.png",
+					"text": "首页"
+				},
+				{
+					"pagePath": "pages/user/index",
+					"iconPath": "/static/images/tab_index_on.png",
+					"selectedIconPath": "/static/images/tab_index_on.png",
+					"text": "我的"
+				}
+		]
 	}
 }

@@ -18,9 +18,15 @@
 				<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>
 			</view>
 		</view>
-		<view @click="go('/pages/setting/safe')" class="bg-color-w padding-lr12 flex f-j-s f-a-c h-50 margin-t12">
-			<text class="f15-size">{{i18n['账号与安全']}}</text>
-			<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>
+		<view class="bg-color-w padding-lr12 margin-t12 margin-t12">
+			<view @click="go('/pages/setting/safe')" class="  flex f-j-s f-a-c h-50 b-bottom">
+				<text class="f15-size">{{i18n['账号与安全']}}</text>
+				<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>
+			</view>
+			<view @click="go('/pages/setting/language')" class="  flex f-j-s f-a-c h-50 ">
+				<text class="f15-size">{{i18n['设置语言']}}</text>
+				<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>
+			</view>
 		</view>
 		<view class="bg-color-w padding-lr12 margin-t12">
 			<view class="bg-color-w  flex f-j-s f-a-c h-50 b-bottom">

@@ -14,7 +14,7 @@
 			<view class="h-30">
 				<scroll-view scroll-x="true" :scroll-into-view="'navs'+active" class="h100" >
 					<view class="flex f-n h100">
-						<view v-for="(item,index) in navs" :id="'navs'+index" :class="active == index ? 'navs-on' : ''" class="flex f-s-0  f-a-c h100 margin-r20 t-color-w  f-w-500">{{item.name}}</view>
+						<view @click="active=index" v-for="(item,index) in navs" :id="'navs'+index" :class="active == index ? 'navs-on' : ''" class="flex f-s-0  f-a-c h100 margin-r20 t-color-w  f-w-500">{{item.name}}</view>
 					</view>
 				</scroll-view>
 			</view>
@@ -37,7 +37,7 @@
 								<view class="f12-size t-color-6 margin-t4">{{child.name}}</view>
 							</view>
 						</view>
-						<view  v-if="parent == 0"  class="flex f-w b-radius-10 bg-color-w wrap-tuijian margin-t12">
+						<view  v-if="parent == 0"  class="grid grid-c-2 b-radius-10 bg-color-w wrap-tuijian margin-t12">
 							<view v-for="(item,index) in 6" class="flex f-s-0 tuijain-item f-c padding-12">
 								<view class="flex f-a-c">
 									<text class="f15-size f-w-500 t-color-y margin-r4">连衣裙</text>
@@ -54,15 +54,15 @@
 							</view>
 						</view>
 						
-						<groupList class=" margin-t12" v-if="active == parent" shopId="" :catePid="item.id"  :isSpread="active == 0 ? true : false"></groupList>
+						<groupList class=" margin-t12" v-if="active == parent" :catePid="item.id"  :isSpread="active == 0 ? true : false"></groupList>
 						
 						<view class="flex f-a-c f-j-c f-w-b t-color-8 padding-tb6 wrap-tuijian-title margin-t12">
 							<image class="w-20 margin-r8" src="../../static/images/zan-on.png" mode="widthFix"></image>
 							<text>好物推荐</text>
 						</view>
-						<goodsShopList class="margin-t12" v-if="active == parent" showType="2" shopId="" :catePid="item.id" :isSpread="active == 0 ? true : false"></goodsShopList>
+						<goodsShopList class="margin-t12" v-if="active == parent" showType="2"  :catePid="item.id" :isSpread="active == 0 ? true : false"></goodsShopList>
 						<!-- <goodslist v-if="item.list" class="margin-t12" :list="item.list" ></goodslist> -->
-						<view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view>
+						<!-- <view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view> -->
 					</view>
 				</scroll-view>
 			</swiper-item>

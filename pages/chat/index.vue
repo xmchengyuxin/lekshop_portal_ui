@@ -1,6 +1,6 @@
 <template>
 	<view class="contain">
-		<view class="flex fixed-top h-44 bg-color-f7" :style="{'padding-top': top + 'px'}">
+		<view class="flex fixed-top h-44 bg-color-f7 box-c" :style="{'padding-top': top + 'px'}">
 			<view @click="back(1)" v-if="type != ''"
 				class="flex f-s-0 padding-lr10 f-a-c f-j-c van-icon van-icon-arrow-left f20-size"></view>
 			<view v-else class="flex f-s-0 padding-lr10 f-a-c f-j-c van-icon  f20-size"></view>
@@ -46,13 +46,14 @@
 						</view>
 						<view class="flex f-c flex-1 b-bottom " style="padding: 10px 12px 10px 0;">
 							<view class="flex f-a-c f-j-s">
-								<text class="f12-size f-w-500 t-color-y">{{item.targetNickname}}</text>
-								<text class="f10-size t-color-9">{{item.updTime | time3}}</text>
+								<text class="f13-size f-w-500 t-color-y">{{item.targetNickname}}</text>
+								<text class="f11-size t-color-9">{{item.updTime | time3}}</text>
 							</view>
 							<view class="flex f-a-c f-j-s margin-t6">
 								<view class="flex flex-1 margin-r12">
-									<text v-if="item.msgType == 'goods'" class="line1 f11-size t-color-6">[{{i18n['商品链接']}}]</text>
-									<text v-else-if="item.msgType == 'order'" class="line1 f11-size t-color-6">[{{i18n['订单详情']}}]</text>
+									<text v-if="item.msgType == 'goods'" class="line1 f12-size t-color-6">[{{i18n['商品链接']}}]</text>
+									<text v-else-if="item.msgType == 'order'" class="line1 f12-size t-color-6">[{{i18n['订单详情']}}]</text>
+									<text v-else-if="item.msgType == 'image'" class="line1 f12-size t-color-6">[{{i18n['图片']}}]</text>
 									<text v-else class="line1 f11-size t-color-6">{{item.lastMsg}}</text>
 								</view>
 								<text v-if="item.unReadNum > 0"
@@ -164,6 +165,7 @@
 				$.ajax({
 					url: API.chatNumApi,
 					data: {},
+					isAuth: true,
 					method: 'GET',
 					success(res) {
 						self.len = res.data ? res.data : 0;
@@ -174,6 +176,7 @@
 				$.ajax({
 					url: API.newsNumApi,
 					data: {},
+					isAuth: true,
 					method: 'GET',
 					success(res) {
 						self.newsLen = res.data ? res.data.num : 0;
@@ -183,9 +186,10 @@
 			getList() {
 				$.ajax({
 					url: API.chatListApi,
+					isAuth: true,
 					data: {
 						page: self.page,
-						pageSize: self.pageSize
+						pageSize: self.pageSize,
 					},
 					method: 'GET',
 					success(res) {
@@ -216,7 +220,7 @@
 		created() {},
 		mounted() {},
 		destroyed() {},
-		components: {},
+		components: {uniSwipeAction,uniSwipeActionItem},
 		onPullDownRefresh() {},
 		onReachBottom() {}
 	}

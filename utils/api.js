@@ -97,6 +97,7 @@ function ajax(options) {
 			} else if (response.data.code == 401 && !options.isAuth) {
 				uni.removeStorageSync('token');
 				setTimeout(() => {
+					go('/pages/passport/login');return;
 					// #ifdef MP-WEIXIN
 					go('/pages/wxAuth/index')
 					// #endif

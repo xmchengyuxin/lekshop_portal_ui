@@ -5,7 +5,7 @@
 			<view @click="go('/pages/user/helpdetail?id='+item.id)" v-for="(item,index) in list">
 				<view class="f15-size f-w-b margin-t16">{{index+1}}、{{item.title}}</view>
 				<view class="f13-size t-color-9 margin-t8">{{item.produce}}</view>
-				<view class="h-120 b-radius-8  margin-t10 bg-img" :style="item.image | bgimg(600)+''"></view>
+				<view v-if="item.image != ''" class="h-120 b-radius-8  margin-t10 bg-img" :style="item.image | bgimg(600)+''"></view>
 			</view>
 		</view>
 		<view class="padding-10"></view>

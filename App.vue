@@ -29,10 +29,7 @@ export default {
 	},
 	onLaunch: function(options) {
 		const self = this;
-		self.socket.creatSocket({
-			onMessage(res) {
-			}
-		})
+		
 		this.globalData.tuijianren = options.query.invite ? options.query.invite : '';
 		// #ifdef H5
 			if (window.location.href.indexOf('pages/passport/down') >= 0) {
@@ -93,12 +90,16 @@ export default {
 					})
 				}
 				uni.setStorageSync('model', res.model);
+				uni.setStorageSync('isIphonex', true);
 			}
 		});
 		
 		
 		this.getKefuId();
-	
+		self.socket.creatSocket({
+			onMessage(res) {
+			}
+		})
 		
 	},
 
@@ -184,12 +185,17 @@ export default {
 				data: {},
 				method: 'GET',
 				success(res) {
+					let info = res.data;
 					uni.setStorageSync('config', res.data);
 					// #ifdef H5
 					if(self.globalData.isWeiXin){
 						self.getWxConfig();
 					}
 					// #endif
+					info.language = 'zh_CN';
+					if(info.language != 'all' && info.language != 'folowSystem') {
+						self.changeLang(info.language)
+					}
 				}
 			});
 		},

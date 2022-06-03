@@ -34,6 +34,7 @@ Vue.prototype.previewImg = global.previewImg;
 Vue.prototype.getBanner = global.getBanner;
 Vue.prototype.goService = global.goService;
 Vue.prototype.loginOut = global.loginOut;
+Vue.prototype.changeLang = global.changeLang;
 Vue.component('tabBar',tabbar);
 Vue.component('noData',nodata);
 Vue.component('upDate',update);

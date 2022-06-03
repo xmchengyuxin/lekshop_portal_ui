@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="fixed-top h-46 flex f-r bg-color-t box-c">
+		<view class="fixed-top h-46 flex f-r bg-color-t box-c"  :style="{ 'padding-top': top + 'px' }">
 			<view @click="back(1)" class="flex f-a-c f-r f-s-0 padding-lr10 van-icon van-icon-arrow-left t-color-w f20-size"></view>
 			<xcx-header></xcx-header>
 		</view>
@@ -118,6 +118,8 @@
 	export default {
 		data() {
 			return {
+				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
+				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
 				windowWidth: 0,
 				windowHeight: 0,
 				platform: "",
@@ -144,7 +146,9 @@
 				pageSize: 20,
 				totalPage: 1,
 				commentId: '',
-				goodsList: []
+				goodsList: [],
+				id: '',
+				userId: '',
 			}
 		},
 		watch:{
@@ -171,7 +175,9 @@
 				console.log('预加载第' + (p + 1) + '个视频：' + this.dataList[p]._id+''+p)
 			}
 		},
-		onLoad() {
+		onLoad(options) {
+			this.id = options.id ? options.id : '';
+			this.userId = options.userId ? options.userId : '';
 			this.platform = uni.getSystemInfoSync().platform
 			var model = uni.getSystemInfoSync().model
 			if(this.platform == 'ios' && (model !== 'iPhone6' || model !== 'iPhone6s' || model !== 'iPhone7' || model !== 'iPhone8')){

@@ -29,7 +29,6 @@
 }
 .tuijain-item {
 	position: relative;
-	width: 50%;
 }
 .tuijian-img {
 	width: calc((100% - 12px) / 2);

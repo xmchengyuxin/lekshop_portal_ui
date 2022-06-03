@@ -74,7 +74,7 @@
 		},
 		methods: {
 			goTab(url) {
-				$.go(url);
+				$.go(url,3);
 			},
 			init() {},
 

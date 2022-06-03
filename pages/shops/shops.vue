@@ -63,7 +63,9 @@
 					</view> -->
 					<!-- 广告图 end-->
 					<!-- 拼团 -->
-					<groupList :shopId="id"></groupList>
+					<view class="padding-6">
+						<groupList :shopId="id"></groupList>
+					</view>
 					<!-- 拼团 end-->
 					<view class="padding-6 bg-color-f7 ">
 						<goodsShopList ref="indexGoods" v-if='active == 0' class="h100" pageSize="20" showType="2" :shopId="id"></goodsShopList>
@@ -88,7 +90,7 @@
 			<view class="wrap-list-nav bg-color-w "  :style="{ 'top': top +46+ 'px' }">
 				<view class="flex h-10 bg-color-f7 wrap-list-nav-info"></view>
 			</view>
-			<find-list :id="id"></find-list>
+			<find-list :findId="id"></find-list>
 		</view>
 		<!-- 店铺分类 -->
 		<view class="flex bg-color-f7" v-if="tabStatus == 3" style="position: relative;height: 100vh;" :style="{ 'padding-top': top +46+ 'px' }">

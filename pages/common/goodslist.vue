@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<waterfallsFlow @wapper-lick="clickGood" v-if="sortType == 1" :list="list" :offset="offset" :idKey="idKey" :imageSrcKey="imageSrcKey"
-			:cols="cols" :imageStyle="imageStyle" :single="single">
+		<custom-waterfalls-flow :value="list" @wapperClick="clickGood" @imageClick="clickGood" v-if="sortType == 1" :list="list" :columnSpace="offset":imageKey="imageSrcKey"
+			:column="cols"  >
 			<!--  #ifdef  MP-WEIXIN -->
 			<!-- 微信小程序自定义内容 -->
 			<view v-for="(item, index) of list" :key="index" slot="slot{{index}}">
@@ -49,9 +49,9 @@
 				</view>
 			</template>
 			<!-- #endif -->
-		</waterfallsFlow>
+		</custom-waterfalls-flow>
 		<view @click="clickGood(item)" v-if="sortType == 2" v-for="(item, index) of list" :key="index" class="b-radius-5 bg-color-w flex margin-t10">
-			<view class="flex  f-s-0 w-120 h-120 bg-img b-radius-5" :style="item[imageSrcKey] | bgimg(400)"></view>
+			<view class="flex  f-s-0 w-120 h-120 bg-img b-radius-5" :style="item[imageSrcKey] | bgimg(400)+''"></view>
 			<view class="flex flex-1 f-c f-j-s padding-10">
 				<view class="flex flex-1 f-c">
 					<view class="line2">
@@ -78,7 +78,6 @@
 <style scoped>
 </style>
 <script>
-	import waterfallsFlow from "@/components/maramlee-waterfalls-flow/maramlee-waterfalls-flow.vue";
 	const $ = require('../../utils/api.js');
 	export default {
 		props: {
@@ -89,7 +88,7 @@
 			// offset 间距，单位为 px
 			offset: {
 				type: Number,
-				default: 12
+				default: 1.2
 			},
 			sortType: {
 				type: Number,
@@ -148,7 +147,7 @@
 		mounted() {},
 		destroyed() {},
 		components: {
-			waterfallsFlow
+			
 		},
 		onPullDownRefresh() {},
 		onReachBottom() {}

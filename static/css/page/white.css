@@ -1,7 +1,7 @@
 page {
 		background-color: #fff;
 	}
-	/* #ifdef APP-PLUS */
+	/* #ifndef H5 */
 	.contain {
 		min-height: 100vh;
 		background-color: #fff;

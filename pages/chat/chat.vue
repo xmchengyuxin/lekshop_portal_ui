@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="content" @touchstart="hideDrawer">
-			<scroll-view class="msg-list" scroll-y="true" :scroll-with-animation="scrollAnimation" :scroll-top="scrollTop" :scroll-into-view="scrollToView" @scrolltoupper="loadHistory" upper-threshold="50">
+			<scroll-view class="msg-list " scroll-y="true" :scroll-with-animation="scrollAnimation" :scroll-top="scrollTop" :scroll-into-view="scrollToView" @scrolltoupper="loadHistory" upper-threshold="50">
 				<!-- 加载历史数据waitingUI -->
 				<view v-if="isHistoryLoading" class="loading">
 					<view class="spinner">
@@ -107,6 +107,7 @@
 								</view>
 								<!-- 发送订单 -->
 								<view @click="go('/pages/order/detail?id='+JSONGoods(row.msgContent,'id'))" v-if="row.msgType=='order'" class="bubble f-c f-a-s  bg-color-w">
+									<view class="f13-size f-w-b t-color-3">{{i18n['您正在咨询的订单']}}</view>
 									<view class="flex">
 										<view class="flex f-s-0 w-50 h-50 bg-img margin-r10" :style="JSONGoods(row.msgContent,'mainImg') | bgimg(300)+''"></view>
 										<view class="flex flex-1 f-c f-j-s h100">
@@ -148,7 +149,9 @@
 				</view>
 				<view v-if="showGoods" style="padding: 55px;"></view>
 				<view v-if="isAi()" style="padding: 15px;"></view>
-				<view id="bottompage" class="padding-10"></view>
+				<view v-if="isIphonex" class="padding-10"></view>
+				<view  class="padding-10"></view>
+				<view id="bottompage" class="padding-30"></view>
 			</scroll-view>
 		</view>
 		<!-- 抽屉栏 -->
@@ -206,11 +209,14 @@
 			<view @click="goService(1)" class="flex f-a-c f-j-c b-radius-30 f11-size t-color-w bg-color-linear-y h-24 padding-lr10">{{i18n['人工客服']}}</view>
 		</view>
 		<!-- 底部输入栏 -->
-		<view class="input-box" :class="popupLayerClass" @touchmove.stop.prevent="discard">
+		<view class="input-box" :style="{'padding-bottom': isIphonex ?'34px':''}" :class="popupLayerClass" @touchmove.stop.prevent="discard">
 			<!-- H5下不能录音，输入栏布局改动一下 -->
 			<!-- #ifndef H5 -->
-			<view class="voice">
+			<!-- <view class="voice">
 				<view class="icon" :class="isVoice?'jianpan':'yuyin'" @tap="switchVoice"></view>
+			</view> -->
+			<view class="more" @tap="showMore">
+				<view class="icon add"></view>
 			</view>
 			<!-- #endif -->
 			<!-- #ifdef H5 -->
@@ -218,6 +224,7 @@
 				<view class="icon add"></view>
 			</view>
 			<!-- #endif -->
+			
 			<view class="textbox">
 				<view class="voice-mode" :class="[isVoice?'':'hidden',recording?'recording':'']" @touchstart="voiceBegin" @touchmove.stop.prevent="voiceIng" @touchend="voiceEnd" @touchcancel="voiceCancel">{{voiceTis}}</view>
 				<view class="text-mode"  :class="isVoice?'hidden':''">
@@ -230,11 +237,11 @@
 				</view>
 			</view>
 			<!-- #ifndef H5 -->
-			<view class="more" @tap="showMore">
+			<!-- <view class="more" @tap="showMore">
 				<view class="icon add"></view>
-			</view>
+			</view> -->
 			<!-- #endif -->
-			<view class="send" :class="isVoice?'hidden':''" @tap="sendText">
+			<view class="send margin-l6" :class="isVoice?'hidden':''" @tap="sendText">
 				<view class="btn">{{i18n['发送']}}</view>
 			</view>
 		</view>
@@ -278,6 +285,8 @@
 	export default {
 		data() {
 			return {
+				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
+				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
 				showGoods: false,
 				//文字消息
 				textMsg:'',

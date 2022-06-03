@@ -16,7 +16,7 @@
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
 					<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">+86</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="phone" type="tel" maxlength="11" :placeholder="i18n['请输入']">
+						<input v-model="phone" type="tel" maxlength="11" :placeholder="i18n['请输入登录账号']">
 					</view>
 				</view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
@@ -24,7 +24,7 @@
 						<image class="w-20" src="../../static/images/login_passport.png" mode="widthFix"></image>
 					</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="password" type="password" :placeholder="i18n['请输入']">
+						<input v-model="password" type="password" :placeholder="i18n['请输入登录密码']">
 					</view>
 				</view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8 over-h">
@@ -32,7 +32,7 @@
 						<image class="w-20" src="../../static/images/login_code.png" mode="widthFix"></image>
 					</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="code" type="number" :placeholder="i18n['请输入']">
+						<input v-model="code" type="number" :placeholder="i18n['图形验证码']">
 					</view>
 					<view class="flex f-a-c f-s-0">
 						<img-code ref="imgCode" class="flex  h-30"></img-code>
@@ -99,6 +99,11 @@
 						uni.setStorageSync('userInfo', res.data.member);
 						$.$toast(self.i18n['登录成功']);
 						self.go('/pages/index/index',3,2000);
+						self.socket.close();
+						self.socket.creatSocket({
+							onMessage(res) {
+							}
+						})
 					}
 				});
 			},

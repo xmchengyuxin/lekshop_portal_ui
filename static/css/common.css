@@ -218,6 +218,7 @@ image {
   padding-bottom: 0;  
   padding-bottom: constant(safe-area-inset-bottom);  
   padding-bottom: env(safe-area-inset-bottom);  
+  background-color: #fff;
 }  
 
 .no-more {
@@ -276,6 +277,10 @@ textarea {
 }
 view {
 	word-break: break-all;
+	box-sizing: border-box;
+}
+scroll-view {
+	box-sizing: border-box;
 }
 
 .uni-popup {
@@ -388,6 +393,7 @@ uni-toast {
 	left: 0;
 	right: 0;
 	z-index: 111;
+	box-sizing: content-box;
 }
 
 .text-price::before {

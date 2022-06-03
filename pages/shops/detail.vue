@@ -192,8 +192,9 @@
 		<view class="flex f-a-c f-j-c no-more t-color-9 f12-size margin-t2">{{i18n['宝贝详情']}}</view>
 		<view class="padding-tb6"></view>
 		<rich-text :nodes="goods.detail | html"></rich-text>
+		<view v-if="isIphonex" class="padding-15"></view>
 		<view  :style="{'padding-bottom': isIphonex ? '84px' : '50px'}"></view>
-		<view class="fixed-top bottom-btn bg-color-w flex padding-lr12 h-50" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
+		<view class="fixed-top bottom-btn bg-color-w flex padding-lr12 h-50 box-c" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
 			<view class="flex flex-1 f-j-s margin-r20">
 				<view @click="go('/pages/shops/shops?id='+shop.id)" class="flex f-c f-a-c f-j-c">
 					<text class="flex f-a-c van-icon van-icon-shop-o f18-size t-color-y"></text>

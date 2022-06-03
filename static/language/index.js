@@ -1,4 +1,5 @@
 import LangCn from './zh_CN.js'
+import LangEn from './en_US.js'
 import Vue from 'vue'
 import VueI18n from './vue-i18n'
 Vue.use(VueI18n)
@@ -12,11 +13,13 @@ if (!system_info) {
         }
     })
 }
-    const cur_lang = system_info.language == 'en' ? 'en' : 'zh'
+    const cur_lang = system_info.language == 'en' ? 'en_US' : 'zh_CN'
+	uni.setStorageSync('locale_key',cur_lang);
     const i18n = new VueI18n({
-        locale: cur_lang || 'zh',  // 默认选择的语言
+        locale: cur_lang || 'zh_CN',  // 默认选择的语言
         messages: {  
-                'zh': LangCn
+                'zh_CN': LangCn,
+				'en_US': LangEn
             }
     })
     export default i18n

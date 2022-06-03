@@ -272,7 +272,8 @@ page{
 		padding: 0 2%;
 		position: absolute;
 		top: 0;
-		bottom: 100upx;
+		bottom: 0px;
+		box-sizing: border-box;
 		.loading{
 			//loading动画
 			display: flex;

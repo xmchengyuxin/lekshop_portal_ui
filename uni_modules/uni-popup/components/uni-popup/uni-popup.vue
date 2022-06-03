@@ -80,7 +80,7 @@
 			},
 			safeArea: {
 				type: Boolean,
-				default: true
+				default: false
 			},
 			maskBackgroundColor: {
 				type: String,

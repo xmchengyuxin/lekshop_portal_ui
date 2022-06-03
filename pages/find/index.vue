@@ -1,6 +1,6 @@
 <template>
 	<view class="contain ">
-		<view class="fixed-top h-46 flex bg-color-r box-c">
+		<view class="fixed-top h-46 flex bg-color-r box-c" :style="{ 'padding-top': top + 'px' }">
 			<view @click="$refs.showIssue.open()" class="flex f-a-c f-s-0 padding-lr10 van-icon van-icon-photograph t-color-w f20-size"></view>
 			<view class="flex flex-1 t-color-w">
 					<view :class="active == 0 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">{{i18n['发现']}}</view>
@@ -67,7 +67,7 @@
 			</view>
 		</view> -->
 		<view class="padding-6">
-			<find-list :list="list" :offset='6'></find-list>
+			<find-list :list="list" :offset='1.2'></find-list>
 		</view>
 		<tab-bar :active="2"></tab-bar>
 		<issue-btn ref="showIssue"></issue-btn>

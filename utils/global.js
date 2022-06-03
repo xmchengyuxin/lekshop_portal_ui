@@ -6,6 +6,23 @@ const QQMapWX = require('./qqmap-wx-jssdk.min.js');
 let qqmapsdk;
 // import store from '../store/index.js'; //引入store
 export default {
+	changeLang(code) {
+		let locale = code;
+		var self = this;
+		uni.setStorage({
+			key: "locale_key",
+			data: locale,
+			success: function() {
+				self.$i18n.locale = locale;
+				// self.$t('tabbartxt').map(function(t, e) {
+				// 	uni.setTabBarItem({
+				// 		index: e,
+				// 		text: t
+				// 	});
+				// });
+			}
+		})
+	},
 	loginOut() {
 		uni.removeStorageSync('token');
 		uni.removeStorageSync('userInfo');

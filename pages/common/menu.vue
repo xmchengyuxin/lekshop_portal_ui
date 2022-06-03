@@ -5,7 +5,10 @@
 				<view :style="{ 'padding-top': top + 'px' }"></view>
 				<view class="flex f-a-c f-j-s">
 					<text class="f16-size t-color-w">{{i18n['功能直达']}}</text>
-					<text @click="close()" class="flex f-a-c f-j-c van-icon van-icon-cross t-color-w f18-size"></text>
+					<view class="flex f-a-c">
+						<text @click="close()" class="flex f-a-c f-j-c van-icon van-icon-cross t-color-w f18-size"></text>
+						<xcx-header></xcx-header>
+					</view>
 				</view>
 				<view class="grid grid-c-4 grid-g10 margin-t20">
 					<view @click="go('/pages/chat/index')" class="flex f-c f-a-c f-j-c b-radius-10 padding-tb15 menu-item">
