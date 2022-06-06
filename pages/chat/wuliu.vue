@@ -28,6 +28,7 @@
 					</view>
 				</view>
 			</view>
+			<no-data :list="list"></no-data>
 		</view>
 	</view>
 </template>

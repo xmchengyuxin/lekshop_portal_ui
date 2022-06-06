@@ -3,18 +3,18 @@
 		<view class="h-30 ">
 			<scroll-view scroll-x="true" :scroll-into-view="'navs'+active" class="h100" >
 				<view class="flex f-n h100">
-					<view v-for="(item,index) in navs" :id="'navs'+index" :class="active == index ? 'navs-on t-color-y' : ''" class="flex f-s-0 flex-1 f-j-c  f-a-c h100   f-w-500">{{item.name}}</view>
+					<view @click="active=index" v-for="(item,index) in navs" :id="'navs'+index" :class="active == index ? 'navs-on t-color-y' : ''" class="flex f-s-0 flex-1 f-j-c  f-a-c h100   f-w-500">{{item.name}}</view>
 				</view>
 			</scroll-view>
 		</view>
 		<swiper class="wrap-swiper" :current="active" @change="changeSwiper" :indicator-dots="false" :autoplay="false" :interval="1000" :duration="500">
 			<swiper-item v-for="(item,parent) in navs">
-				<scroll-view class="padding-12 safe-area" @scrolltolower="loadList" scroll-y="true" style="height: 100%;">
-					<view v-if="item.list.length <= 0" class="flex f-a-c f-j-c f-c">
+				<scroll-view v-if="active==parent" class="padding-12 safe-area bg-color-f7" @scrolltolower="loadList" scroll-y="true" style="height: 100%;">
+					<view v-if="list.length <= 0" class="flex f-a-c f-j-c f-c">
 						<view class="padding-30"></view>
 						<no-data></no-data>
 					</view>
-					<view @click="go('/pages/order/detail?id='+child.order.id)" v-else v-for="(child,index) in item.list" class="bg-color-w b-radius-5 padding-12 margin-b12">
+					<view @click="go('/pages/order/detail?id='+child.order.id)" v-else v-for="(child,index) in list" class="bg-color-w b-radius-5 padding-12 margin-b12">
 						<view class="flex f-j-s margin-b16">
 							<view class="flex f-a-c ">
 								<text class="flex f-a-c van-icon van-icon-shop-o  margin-r6"></text>
@@ -76,6 +76,9 @@
 				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
 				active: 0,
 				navs: [],
+				list: [],
+				totalPage: 1,
+				page: 1,
 				pageSize: 20,
 				state: {//0待支付>>1待发货>>2待收货>>3已完成>>4已取消
 					0: {name: '待支付',value: 'dzf',text: '等待支付',color: '#FD6C01',},
@@ -99,7 +102,7 @@
 				this.$refs.wuliuinfo.show(info.order.id);
 			},
 			sureOrder(parent,index) {
-				let info = self.navs[parent]['list'][index];
+				let info = self.list[index];
 				$.ajax({
 					url: API.sureOrderApi,
 					data: {
@@ -109,7 +112,7 @@
 					success(res) {
 						$.$toast(self.i18n['操作成功']);
 						info.order.status = 3;
-						self.$set(self.navs[parent]['list'],index,info);
+						self.$set(self.list,index,info);
 					}
 				})
 			},
@@ -117,7 +120,7 @@
 				$.showModal({
 					content: '是否确认删除',
 					success() {
-						let info = self.navs[parent]['list'][index];
+						let info = self.list[index];
 						$.ajax({
 							url: API.cancelOrderApi,
 							data: {
@@ -127,7 +130,7 @@
 							success(res) {
 								$.$toast(self.i18n['操作成功']);
 								info.order.status = 4;
-								self.$set(self.navs[parent]['list'],index,info);
+								self.$set(self.list,index,info);
 							}
 						})
 					},
@@ -135,7 +138,7 @@
 				
 			},
 			changeAddress(index) {
-				let info = self.navs[self.active]['list'][index];
+				let info = self.list[index];
 				self.go('/pages/user/address?id='+info.order.id+'&type=change');
 			},
 			getList() {
@@ -143,41 +146,52 @@
 				$.ajax({
 					url: API.getOrderListApi,
 					data: {
-						page: self.navs[self.active]['page'],
-						pageSize: self.pageSize
+						page: self.page,
+						pageSize: self.pageSize,
+						status: info.status
 					},
 					method: 'GET',
 					success(res) {
-						let list = res.data.list ? res.data.list : [];
-						if (list.length > 0) {
-							info.list = info.list.concat(list);
-						} 
-						info.totalPage = res.data.totalPage;
-						self.$set(self.navs,self.active,info);
+						if (!res.data.list) {
+							self.list = [];
+							return;
+						}
+						let list = [];
+						if (self.page != 1) {
+							list = self.list.concat(res.data.list);
+						} else {
+							list = res.data.list ? res.data.list : [];
+						}
+						self.list = list;
+						self.totalPage = res.data.totalPage;
 					}
 				})
 			},
 			initNavs() {
 				self.navs = [
-					{name: self.i18n['全部'],page:1,list:[],totalPage: 1},
-					{name: self.i18n['待支付'],page:1,list:[],totalPage: 1},
-					{name: self.i18n['待发货'],page:1,list:[],totalPage: 1},
-					{name: self.i18n['待收货'],page:1,list:[],totalPage: 1},
-					{name: self.i18n['待评论'],page:1,list:[],totalPage: 1},
+					{name: self.i18n['全部'],status:'',page:1,list:[],totalPage: 1},
+					{name: self.i18n['待支付'],status:'0',page:1,list:[],totalPage: 1},
+					{name: self.i18n['待发货'],status:'1',page:1,list:[],totalPage: 1},
+					{name: self.i18n['待收货'],status:'2',page:1,list:[],totalPage: 1},
+					{name: self.i18n['已完成'],status:'3',page:1,list:[],totalPage: 1},
 					];
 				self.getList();
 			},
 			changeSwiper(e) {
 				self.active = e.detail.current;
+				self.page = 1;
+				self.totalPage= 1;
+				self.getList();
 			},
 			init() {
 				this.initNavs();
 			},
 			loadList() {
-				if(self.navs[self.active]['page'] < self.navs[self.active]['totalPage']) {
-					self.navs[self.active]['page'] += 1;
-					self.getList();
+				if(this.page < this.totalPage) {
+					this.page += 1;
+					this.getList();
 				}
+				
 			},
 		},
 		created() {

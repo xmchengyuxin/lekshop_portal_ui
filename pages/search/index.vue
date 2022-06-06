@@ -1,6 +1,6 @@
 <template>
 	<view class="contain">
-		<view class="flex f-s-0 h-44 bg-color-w b-bottom" :style="{ 'padding-top': top + 'px' }">
+		<view class="flex f-s-0 h-44 bg-color-w b-bottom box-c" :style="{ 'padding-top': top + 'px' }">
 			<view @click="back(1)" class="flex padding-lr10 f-a-c van-icon van-icon-arrow-left f20-size"></view>
 			<view class="flex f-a-c flex-1">
 				<view class="flex flex-1 h-32  b-radius-30 bg-color-f9 padding-lr4">
@@ -13,7 +13,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="flex f-a-c f-j-c padding-lr6 f20-size"></view>
+			<view class="flex f-s-0 f-a-c f-j-c padding-lr6 f20-size"></view>
 			<xcx-header></xcx-header>
 		</view>
 		<view class="padding-6"></view>

@@ -126,6 +126,12 @@
 			} 
 		},
 		{
+			"path": "pages/shops/detailcomment",
+			"style": {
+				"navigationBarTitleText": "商品评价"
+			} 
+		},
+		{
 			"path": "pages/shops/shops",
 			"style": {
 				"navigationStyle": "custom"
@@ -413,6 +419,24 @@
 				},
 				{
 					"pagePath": "pages/user/index",
+					"iconPath": "/static/images/tab_index_on.png",
+					"selectedIconPath": "/static/images/tab_index_on.png",
+					"text": "我的"
+				},
+				{
+					"pagePath": "pages/cart/index",
+					"iconPath": "/static/images/tab_index_on.png",
+					"selectedIconPath": "/static/images/tab_index_on.png",
+					"text": "我的"
+				},
+				{
+					"pagePath": "pages/find/index",
+					"iconPath": "/static/images/tab_index_on.png",
+					"selectedIconPath": "/static/images/tab_index_on.png",
+					"text": "我的"
+				},
+				{
+					"pagePath": "pages/chat/index",
 					"iconPath": "/static/images/tab_index_on.png",
 					"selectedIconPath": "/static/images/tab_index_on.png",
 					"text": "我的"

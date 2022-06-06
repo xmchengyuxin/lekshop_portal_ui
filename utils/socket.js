@@ -56,6 +56,12 @@ export default {
 	},
 	creatSocket(options) {
 		let self = this;
+		if(!getApp()){
+			setTimeout(() => {
+				this.creatSocket(options)
+			},500)
+			return;
+		}
 		this.socketUrl = getApp().globalData.socket;
 		const url = this.socketUrl;
 		let userInfo = uni.getStorageSync('userInfo') ? uni.getStorageSync('userInfo') : '';

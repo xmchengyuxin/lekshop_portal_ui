@@ -23,3 +23,10 @@
 	width: 20%;
 	margin-bottom: 14px;
 }
+.order-num {
+	min-width: 15px;
+	padding: 0 2px;
+	position: absolute;
+	top: -6px;
+	right: 8px;
+}

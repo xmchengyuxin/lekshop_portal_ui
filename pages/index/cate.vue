@@ -1,6 +1,6 @@
 <template>
 	<view class="contain">
-		<view class="flex f-s-0 h-44 bg-color-w b-bottom" :style="{ 'padding-top': top + 'px' }">
+		<view class="flex f-s-0 h-44 bg-color-w b-bottom box-c" :style="{ 'padding-top': top + 'px' }">
 			<view @click="back(1)" class="flex f-s-0 padding-lr10 f-a-c f-j-c van-icon van-icon-arrow-left f20-size"></view>
 			<view @click="go('/pages/search/index')" class="flex f-a-c flex-1">
 				<view class="flex flex-1 h-30 f-a-c b-radius-30 bg-color-f9 padding-lr10">
@@ -9,6 +9,7 @@
 				</view>
 			</view>
 			<view @click="$refs.menuBtn.open()" class="flex f-a-c f-j-c padding-lr10 van-icon van-icon-ellipsis f20-size"></view>
+			<xcx-header></xcx-header>
 		</view>
 		<view class="flex">
 			<scroll-view :scroll-into-view="'cate'+active" scroll-y="true" class="flex f-c f-s-0 w-100 bg-color-fb" :style="{'height': height+'px'}">

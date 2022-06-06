@@ -63,23 +63,27 @@
 		<view class="padding-12"></view>
 		<view class="padding-lr12">
 			<view class="bg-color-w b-radius-5  flex margin-t12 wrap-nav">
-				<view @click="go('/pages/order/order?type=1')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
+				<view @click="go('/pages/order/order?type=1')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c p-r">
 					<text class="flex f-a-c van-icon van-icon-pending-payment f24-size"></text>
 					<text class="f12-size margin-t2">{{i18n['待支付']}}</text>
 				</view>
-				<view @click="go('/pages/order/order?type=2')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
+				<view @click="go('/pages/order/order?type=2')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c p-r">
+					<text v-if="order != '' && order.waitDeliveryNum" class="order-num flex f-a-c f-j-c h-16 b-radius-30 bg-color-r t-color-w f10-size">{{order.waitDeliveryNum}}</text>
 					<text class="flex f-a-c van-icon van-icon-send-gift-o f24-size"></text>
 					<text class="f12-size margin-t2">{{i18n['待发货']}}</text>
 				</view>
-				<view @click="go('/pages/order/order?type=3')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
+				<view @click="go('/pages/order/order?type=3')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c p-r">
+					<text v-if="order != '' && order.waitReceiveNum" class="order-num flex f-a-c f-j-c h-16 b-radius-30 bg-color-r t-color-w f10-size">{{order.waitReceiveNum}}</text>
 					<text class="flex f-a-c van-icon van-icon-logistics f24-size"></text>
 					<text class="f12-size margin-t2">{{i18n['待收货']}}</text>
 				</view>
-				<view @click="go('/pages/order/order?type=4')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
+				<view @click="go('/pages/user/commentlist')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c p-r">
+					<text v-if="order != '' && order.waitCommentNum" class="order-num flex f-a-c f-j-c h-16 b-radius-30 bg-color-r t-color-w f10-size">{{order.waitCommentNum}}</text>
 					<text class="flex f-a-c van-icon van-icon-comment-o f24-size"></text>
 					<text class="f12-size margin-t2">{{i18n['待评价']}}</text>
 				</view>
-				<view @click="go('/pages/user/refundlist')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c nav-last-item">
+				<view @click="go('/pages/user/refundlist')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c nav-last-item p-r">
+					<text v-if="order != '' && order.refundNum" class="order-num flex f-a-c f-j-c h-16 b-radius-30 bg-color-r t-color-w f10-size">{{order.refundNum}}</text>
 					<text class="flex f-a-c van-icon van-icon-tosend f24-size t-color-y"></text>
 					<text class="f12-size margin-t2">{{i18n['退货/售后']}}</text>
 				</view>
@@ -200,10 +204,14 @@
 				list: [],
 				user: '',
 				account: '',
+				order: '',
 			};
 		},
 		onLoad: function() {
 			self = this;
+			this.getList();
+		},
+		onShow:function(){
 			this.init();
 		},
 		methods: {
@@ -249,10 +257,21 @@
 					}
 				})
 			},
+			getOrderNum() {
+				$.ajax({
+					url: API.getOrderNum,
+					data: {},
+					isAuth: true,
+					method: 'GET',
+					success(res) {
+						self.order = res.data ? res.data :'';
+					}
+				})
+			},
 			init() {
 				this.getUserInfo();
 				this.getAccount();
-				this.getList();
+				this.getOrderNum();
 			},
 		},
 		created() {},

@@ -174,7 +174,7 @@
 			</view>
 		</view>
 		<!-- 商品链接 -->
-		<view v-if="showGoods" class="popup-goods padding-12">
+		<view v-if="showGoods" class="popup-goods padding-12" :style="{'padding-bottom': isIphonex ?'34px!important':''}">
 			<view v-if="goodsId != ''" class="bg-color-w b-radius-5 padding-10 flex">
 				<view :style="goods.mainImg | bgimg(300)+''" class="flex f-s-0 w-60 h-60 b-radius-5 bg-img  margin-r12"></view>
 				<view class="flex flex-1 f-c f-j-s">
@@ -205,7 +205,7 @@
 				</view>
 			</view>
 		</view>
-		<view v-if="isAi()" class="popup-goods padding-12 flex f-j-e">
+		<view v-if="isAi()" class="popup-goods padding-12 flex f-j-e" :style="{'padding-bottom': isIphonex ?'34px!important':''}">
 			<view @click="goService(1)" class="flex f-a-c f-j-c b-radius-30 f11-size t-color-w bg-color-linear-y h-24 padding-lr10">{{i18n['人工客服']}}</view>
 		</view>
 		<!-- 底部输入栏 -->
@@ -229,7 +229,7 @@
 				<view class="voice-mode" :class="[isVoice?'':'hidden',recording?'recording':'']" @touchstart="voiceBegin" @touchmove.stop.prevent="voiceIng" @touchend="voiceEnd" @touchcancel="voiceCancel">{{voiceTis}}</view>
 				<view class="text-mode"  :class="isVoice?'hidden':''">
 					<view class="box">
-						<textarea auto-height="true" v-model="textMsg" @focus="textareaFocus"/>
+						<input @confirm="sendText" cursor-spacing="10" confirm-type="send" class="input h100" auto-height="true" v-model="textMsg" @focus="textareaFocus"/>
 					</view>
 					<view class="em" @tap="chooseEmoji">
 						<view class="icon biaoqing"></view>
@@ -365,8 +365,8 @@
 				this.recordEnd(e);
 			})
 			// #endif
-			self.onMessage();
 			self.initMap();
+			self.onMessage();
 		},
 		onShow(){
 		},
@@ -466,7 +466,7 @@
 				const self = this;
 				self.socket.onMessage({
 					onMessage(res){
-						console.log(res);
+						// console.log(res);
 						if(res.type == 5 && res.content.targetId == self.id) {
 							self.msgList.push(JSON.parse(res.content));
 							uni.vibrateLong();
@@ -487,7 +487,7 @@
 					},
 					method: 'POST',
 					success(res) {
-						if(self.msgImgList.length <= 0){//第一条时无数据
+						if(self.msgList.length <= 0){//第一条时无数据
 							self.getMsgList();return;
 						}
 						self.msgList.push(msg);

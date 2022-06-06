@@ -54,7 +54,7 @@
 									<text v-if="item.msgType == 'goods'" class="line1 f12-size t-color-6">[{{i18n['商品链接']}}]</text>
 									<text v-else-if="item.msgType == 'order'" class="line1 f12-size t-color-6">[{{i18n['订单详情']}}]</text>
 									<text v-else-if="item.msgType == 'image'" class="line1 f12-size t-color-6">[{{i18n['图片']}}]</text>
-									<text v-else class="line1 f11-size t-color-6">{{item.lastMsg}}</text>
+									<text v-else class="line1 f12-size t-color-6">{{item.lastMsg}}</text>
 								</view>
 								<text v-if="item.unReadNum > 0"
 									class="flex f-a-c f-j-c f10-size t-color-w bg-color-r b-radius padding-lr2 h-16"

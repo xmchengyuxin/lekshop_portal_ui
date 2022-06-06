@@ -147,7 +147,7 @@
 			</view>
 			
 			<view v-if="goods.commentNum > 0" class="bg-color-w b-radius-10 padding-12 margin-t12">
-				<view class="flex f-a-c f-j-s">
+				<view @click="go('/pages/shops/detailcomment?id='+id)" class="flex f-a-c f-j-s">
 					<view class="f-w-b">{{i18n['宝贝评价']}}({{goods.commentNum}})</view>
 					<view class="flex f-a-c">
 						<text class="f10-size t-color-y margin-r4">{{i18n['查看全部']}}</text>
@@ -162,7 +162,7 @@
 						<text class="f10-size t-color-9">{{item.addTime | time3}}</text>
 					</view>
 				</view>
-				<view class="f12-size margin-t10">{{item.goodsName}}</view>
+				<view class="f12-size margin-t10">{{item.content}}</view>
 				</block>
 			</view>
 			

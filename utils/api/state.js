@@ -24,6 +24,6 @@ export default {
 					2: {name: '待收货',value: 'dsh',text: '等待收货',color: '#333',},
 					3: {name: '已完成',value: 'ywc',text: '订单完成',color: '#78CA73',},
 					4: {name: '已取消',value: 'yqx',text: '取消订单',color: '#9B9B9B',},
-					6: {name: '退款',value: 'tk',text: '退款',},
+					6: {name: '退款',value: 'tk',text: '退款',color: '#9B9B9B',},
 				}
 }

@@ -1,6 +1,5 @@
 <script>
-	
-	const API = require('./utils/api/user.js').default;
+const API = require('./utils/api/user.js').default;
 const app = require('./utils/app.js').default;
 const $ = require('./utils/api.js');
 const QQMapWX = require('./utils/qqmap-wx-jssdk.min.js');
@@ -17,7 +16,7 @@ export default {
 		appRole: appRole,
 		name: app[appRole]['name'],
 		version: app[appRole]['version'],
-		api: app[appRole]['api'],
+		api: app[appRole]['api'], 
 		hot: app[appRole]['hot'],
 		socket: app[appRole]['socket'] ? app[appRole]['socket'] : '',
 		appKey: '15f4200c968b1e0a',
@@ -90,10 +89,8 @@ export default {
 					})
 				}
 				uni.setStorageSync('model', res.model);
-				uni.setStorageSync('isIphonex', true);
 			}
 		});
-		
 		
 		this.getKefuId();
 		self.socket.creatSocket({
@@ -137,7 +134,7 @@ export default {
 				}
 			})
 		},
-		share() {
+		shareWx() {
 			const self = this;
 			let data = uni.getStorageSync('config') ? uni.getStorageSync('config') : '';
 			let user = uni.getStorageSync('userInfo') ? uni.getStorageSync('userInfo') : '';
@@ -299,6 +296,7 @@ export default {
 				data: {},
 				method: 'GET',
 				success(res) {
+					console.log(res)
 					let info = res.data ? res.data : '';
 					if(info == ''){return;}
 					uni.setStorageSync('kefuId',info);

@@ -29,9 +29,31 @@ export default {
 		$.go('/pages/passport/login');
 	},
 	goService(type) {//1人工，2智能,3返回人工id,4返回置能Id
+		const self = this;
 		let id = '';
 		let kefu = uni.getStorageSync('kefuId') ? uni.getStorageSync('kefuId') : '';
-		if(kefu == '') {return}
+		if(kefu == '') {
+			$.ajax({
+				url: API.getKefuIdApi,
+				data: {},
+				method: 'GET',
+				success(res) {
+					let info = res.data ? res.data : '';
+					if(info == ''){return;}
+					uni.setStorageSync('kefuId',info);
+					if(type == 1){id = info.customerAdminId}
+					if(type == 2){id = info.customerMemberId}
+					if(type == 3){
+						return info.customerMemberId
+					}
+					if(type == 4){
+						return info.customerMemberId
+					}
+					$.go('/pages/chat/chat?id='+id);
+				}
+			})
+			return
+		}
 		if(type == 1){id = kefu.customerAdminId}
 		if(type == 2){id = kefu.customerMemberId}
 		if(type == 3){

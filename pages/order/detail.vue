@@ -1,8 +1,12 @@
 <template>
 	<view class="contain">
 		<view class="padding-12">
-			<view class="bg-color-w padding-12 b-radius-5 margin-b12">
+			<view v-if="order != ''" class="bg-color-w padding-12 b-radius-5 margin-b12">
 				<view class="f-w-b f15-size" :style="{'color': orderState[order.status]['color']}">{{orderState[order.status]['text']}}</view>
+				<view class="margin-t6 flex f-a-c">
+					<uni-countdown v-if="orderState[order.status]['value'] == 'dsh' && autoGetGoods > 0"  color="#9B9B9B" splitorColor="#9B9B9B" :font-size="11" :second="autoGetGoods" />
+					<uni-countdown v-if="orderState[order.status]['value'] == 'dzf' && cancelTime > 0"  color="#9B9B9B" splitorColor="#9B9B9B" :font-size="11" :second="cancelTime" />
+				</view>
 			</view>
 			
 			<view class="flex bg-color-w b-radius-5 margin-b12">
@@ -59,8 +63,10 @@
 						<text class="">{{item.remark}}</text>
 					</view>
 					<view class="flex f-a-c f-j-e">
+						<block v-if='order.refundExpiredTime <= now'>
 						<view v-if="state[item.refundStatus].value == 'wtk'"  @click="refund(item)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-e t-color-8 ">{{i18n['退款']}}</view>
 						<view v-else  @click="go('/pages/user/refunddetail?detailId='+item.id)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-e t-color-8 ">{{i18n['退款详情']}}</view>
+						</block>
 					</view>
 				</view>
 				<view class="flex f-j-s padding-tb6 f11-size">
@@ -139,6 +145,9 @@
 				state: state.refundStatus,
 				orderState: state.orderStatus,
 				shopMemberId: '',
+				now: 0,
+				autoGetGoods: 0,
+				cancelTime: 0,
 			};
 		},
 		onLoad: function(options) {
@@ -167,6 +176,13 @@
 						self.groupJoinList = info.groupMemberList ? info.groupMemberList : [];
 						self.order = info.order ? info.order : '';
 						self.shopMemberId = info.shopMemberId ? info.shopMemberId : '';
+						self.now = res.now;
+						if(self.order.finishExpiredTime) {//自动确认收货时间
+							self.autoGetGoods = Number(self.order.finishExpiredTime - res.now)/1000;
+						}
+						if(self.order.payEndTime) {//超过这个时间未支付订单取消
+							self.cancelTime = Number(self.order.payEndTime - res.now)/1000;
+						}
 					}
 				})
 			},

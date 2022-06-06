@@ -74,7 +74,9 @@
 		},
 		methods: {
 			goTab(url) {
-				$.go(url,3);
+				uni.switchTab({
+					url: url
+				})
 			},
 			init() {},
 

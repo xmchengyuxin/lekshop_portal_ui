@@ -68,7 +68,8 @@ function ajax(options) {
 		method: options.method ? options.method : 'POST',
 		header: {
 			'Content-Type': 'application/x-www-form-urlencoded',
-			'Authorization': uni.getStorageSync("token") ? uni.getStorageSync("token") : ''
+			'Authorization': uni.getStorageSync("token") ? uni.getStorageSync("token") : '',
+			'lang': uni.getStorageSync('locale_key') ? uni.getStorageSync('locale_key') : 'zh_CN',
 		},
 		success: (response) => {
 			if (response.data.code != 501 && response.data.code != 200 && response.data.code != 300 && response.data.code != 401 && !options.complete) {

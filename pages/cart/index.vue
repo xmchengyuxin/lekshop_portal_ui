@@ -96,6 +96,8 @@
 		onLoad: function(options) {
 			self = this;
 			self.type = options.type ? options.type : '';
+		},
+		onShow() {
 			this.init();
 		},
 		methods: {

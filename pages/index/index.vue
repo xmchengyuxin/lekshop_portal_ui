@@ -1,6 +1,6 @@
 <template>
 	<view class="contain">
-		<view class="fixed-top bg-color padding-lr12" :style="{ 'padding-top': top + 'px' }">
+		<view class="fixed-top bg-color-linear-y padding-lr12" :style="{ 'padding-top': top + 'px' }">
 			<view class="flex f-a-c h-44">
 				<view class="flex f-a-c f-j-c van-icon van-icon-scan t-color-w f22-size margin-r10"></view>
 				<view  @click="go('/pages/search/index')" class="flex flex-1 f-a-c bg-color-w b-radius-30 h-34 padding-lr12 margin-r10" >
@@ -25,7 +25,7 @@
 				<scroll-view @scrolltolower="loadList" scroll-y="true" style="height: 100%;">
 					<view class="swiper-item padding-12" :style="'https://stc.wanlshop.com/assets/addons/wanlshop/img/show/main_bg3x.png' | bgimg(700)+''">
 						<view  :style="{ 'padding-top': top +74+ 'px' }"></view>
-						<swiper v-if="parent == 0"  class="wrap-banner h-120 b-radius-5" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
+						<swiper v-if="parent == 0"  class="wrap-banner   b-radius-5" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
 							<swiper-item v-for="img in banner">
 								<view class="bg-img h100 b-radius-5 " :style="img.img | bgimg(700)+''"></view>
 							</swiper-item>
@@ -37,22 +37,7 @@
 								<view class="f12-size t-color-6 margin-t4">{{child.name}}</view>
 							</view>
 						</view>
-						<view  v-if="parent == 0"  class="grid grid-c-2 b-radius-10 bg-color-w wrap-tuijian margin-t12">
-							<view v-for="(item,index) in 6" class="flex f-s-0 tuijain-item f-c padding-12">
-								<view class="flex f-a-c">
-									<text class="f15-size f-w-500 t-color-y margin-r4">连衣裙</text>
-									<view class="flex f-a-c h-16 padding-lr5 bg-color-linear-y b-radius-30 t-color-w f10-size">
-										<text style="padding: 3px;" class="b-radius bg-color-y1 margin-r4"></text>
-										新品尝鲜
-									</view>
-								</view>
-								<view class="t-color-8 f12-size">30天包退 365天包换</view>
-								<view class="flex f-j-s margin-t10">
-									<view class="tuijian-img b-radius-5 bg-img bg-color"></view>
-									<view class="tuijian-img b-radius-5 bg-img bg-color"></view>
-								</view>
-							</view>
-						</view>
+						<tuijian :cates="navs" v-if="parent == 0"></tuijian>
 						
 						<groupList class=" margin-t12" v-if="active == parent" :catePid="item.id"  :isSpread="active == 0 ? true : false"></groupList>
 						
@@ -78,6 +63,7 @@
 <script>
 	import groupList from '../shops/components/groupgoods.vue';
 	import goodsShopList from '../shops/components/goodslist.vue';
+	import tuijian from './components/tuijian.vue';
 	const $ = require('../../utils/api.js');
 	let self = this;
 	export default {
@@ -160,7 +146,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {groupList,goodsShopList},
+		components: {groupList,goodsShopList,tuijian},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

@@ -59,6 +59,7 @@
 	background-size: 100% auto;
 }
 .wrap-banner {
+	height: 390upx;
 	transform: translateY(0);overflow: hidden;
 }
 
