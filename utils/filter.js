@@ -199,6 +199,21 @@ const hideCenterText = function(name) {
 		}
 		return 'background-image:url('+url+')';
 	};
+	const videobgimg = function(url,width) {
+		if(!url){return ''};
+		if(url.indexOf('?') >= 0){
+			url = url.slice(0,url.indexOf('?'))
+		}
+		if(url.indexOf('http') <= -1){
+			url = 'http:' + url
+		}
+		if(width){
+			url = url + '?vframe/jpg/offset/0/w/'+width;
+		}else{
+			url = url + '?vframe/jpg/offset/0/w/600';
+		}
+		return 'background-image:url('+url+')';
+	};
 	
 	var html = function(dom) {
 		if(!dom){return;}
@@ -280,5 +295,6 @@ export default {
 	filterMiao,
 	i18n,
 	timeMonth,
-	timeDay
+	timeDay,
+	videobgimg
 };

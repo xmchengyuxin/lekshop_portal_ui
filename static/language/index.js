@@ -19,7 +19,8 @@ if (!system_info) {
         locale: cur_lang || 'zh_CN',  // 默认选择的语言
         messages: {  
                 'zh_CN': LangCn,
-				'en_US': LangEn
+				'en_US': LangEn,
+				'zh_TW': LangEn,
             }
     })
     export default i18n

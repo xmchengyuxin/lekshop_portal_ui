@@ -132,6 +132,7 @@
 				})
 			},
 			init() {
+				this.page = 1;
 				this.getList();
 			},
 		},

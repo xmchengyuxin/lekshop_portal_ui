@@ -11,7 +11,7 @@
 				</view>
 				<!-- <view class="t-color-8 f12-size">30天包退 365天包换</view> -->
 				<view class="flex f-j-s margin-t10">
-					<view v-for="goods in item.list" class="tuijian-img b-radius-5 bg-img " :style="goods.mainImg | bgimg(300)"></view>
+					<view v-for="goods in item.list" class="tuijian-img b-radius-5 bg-img " :style="goods.mainImg | bgimg(300)+''"></view>
 				</view>
 			</view>
 		</view>

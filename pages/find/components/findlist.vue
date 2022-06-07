@@ -29,8 +29,14 @@
 
 			<!-- #ifndef  MP-WEIXIN -->
 			<!-- app、h5 自定义内容 -->
+			
 			<template v-slot:default="item">
-				<view class="padding-12">
+				<text v-if="isSelf"  @click.stop="show(item.index)" class="flex f-a-c f-j-c van-icon van-icon-weapp-nav find-menu-btn f20-size t-color-w"></text>
+				<view @click.stop="show(item.index)" v-if="showMenu && item.index == showIndex" class="flex  f-a-c f-j-c wrap-layout">
+					<view  class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30 margin-r12">编辑</view>
+					<view @click="del(item.index)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30">删除</view>
+				</view>
+				<view class="padding-12 p-r">
 					<view class="line2">
 						<text v-if="item.type == 1" class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-r margin-r4">{{i18n['短视频']}}</text>
 						<text v-if="item.type == 3"  class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-g margin-r4">{{i18n['种草']}}</text>
@@ -46,7 +52,7 @@
 							<text class="flex f-a-c f-j-c van-icon van-icon-like-o f10-size margin-r4"></text>
 							<text class=""> {{item.collectionNum}}</text>
 						</view>
-				 </view>
+					</view>
 				</view>
 			</template>
 			<!-- #endif -->
@@ -54,6 +60,18 @@
 	</view>
 </template>
 <style scoped>
+	.find-menu-btn {
+		position: absolute;
+		right: 0;
+		top: 0;
+		padding: 4px 10px;
+	}
+	.wrap-layout {
+		position: absolute;
+	}
+	.wrap-layout view {
+		background-color: rgba(0,0,0,0.3);
+	}
 </style>
 <script>
 	const $ = require('../../../utils/api.js');
@@ -108,12 +126,36 @@
 			}
 		},
 		data() {
-			return {};
+			return {
+				showMenu: false,
+				showIndex: '',
+			};
 		},
 		onLoad: function() {
 			this.init();
 		},
 		methods: {
+			del(index) {
+				const self = this;
+				let info = this.list[index];
+				$.showModal({
+					content: '是否确认删除',
+					success() {
+						$.ajax({
+							url: 'member/trends/delete',
+							data: {ids:info.id},
+							method: 'GET',
+							success(res) {
+								self.$emit('del',index)
+							}
+						})
+					}
+				})
+			},
+			show(index) {
+				this.showIndex = index;
+				this.showMenu = !this.showMenu;
+			},
 			clickGood(data) {
 				let isSelf = this.isSelf ? 1 : 0;
 				if(data.type == 1) {

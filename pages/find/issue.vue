@@ -1,6 +1,7 @@
 <template>
 	<view class="contain safe-area">
 		<view class="padding-lr12">
+			<block v-if="type != 1">
 			<view class="flex f-a-c padding-tb12">
 				<text class="f15-size t-color-3">{{i18n['上传图片']}}</text>
 			</view>
@@ -18,6 +19,22 @@
 				<text class="f15-size t-color-3">{{i18n['种草内容']}}</text>
 			</view>
 			<textarea v-model="content" class="bg-color-e h-140 w100 b-radius-5 f12-size padding-10" value="" :placeholder="i18n['种草内容']" />
+			</block>
+			<block v-if="type == 1">
+				<view class="flex f-a-c padding-tb12">
+					<text class="f15-size t-color-3">{{i18n['上传视频']}}</text>
+				</view>
+				<view class="flex f-w">
+					<view @click="uploadVideo" :style="video | videobgimg(300)+''" class="bg-img flex f-s-0 f-a-c f-j-c f-c b-radius-5 w-80 h-80 bg-color-e margin-r12 ">
+						<text class="flex f-a-c f-j-c van-icon t-color-9 van-icon-plus"></text>
+					</view>
+				</view>
+				<view class="flex f-a-c padding-tb12">
+					<text class="flex f-a-c f-j-c van-icon van-icon-editor t-color-0 f18-size margin-r4"></text>
+					<text class="f15-size t-color-3">{{i18n['视频内容']}}</text>
+				</view>
+				<textarea v-model="content" class="bg-color-e h-140 w100 b-radius-5 f12-size padding-10" value="" :placeholder="i18n['视频内容']" />
+			</block>
 			<view @click="$refs.goodslist.open()" class="flex f-a-c f-j-s padding-tb12">
 				<view class="flex f-a-c">
 					<text class="flex f-a-c f-j-c van-icon van-icon-thumb-circle-o t-color-0 f18-size margin-r4"></text>
@@ -39,7 +56,7 @@
 		<view class="fixed-top padding-12" :style="{'padding-bottom':isIphonex ? '34px' : ''}">
 			<view @click="issue()" class="flex f-a-c f-j-c b-radius-5 h-44 bg-color-linear-r t-color-w">
 				<text class="flex f-a-c f-j-c van-icon van-icon-fabu t-color-w margin-r4 f18-size"></text>
-				{{i18n['发布种草']}}
+				{{type == 1 ? i18n['发布短视频'] : i18n['发布种草']}}
 			</view>
 		</view>
 		
@@ -110,6 +127,13 @@
 			this.init();
 		},
 		methods: {
+			uploadVideo() {
+				$.uploadvideo({
+					success(res) {
+						self.video = res.videoUrl;
+					}
+				})
+			},
 			addImg() {
 				if(self.imgs.length >= 9){return}
 				$.uploadimg({
@@ -147,7 +171,10 @@
 						goodsArr.push(ele.goodsId);
 					}
 				})
-				if(self.imgs.length <= 0){
+				if(self.video == '' && this.type == 1){
+					$.$toast('请上传视频');return;
+				}
+				if(self.imgs.length <= 0 && this.type != 1){
 					$.$toast('请上传图片');return;
 				}
 				if(goodsArr.length <= 0){
@@ -158,7 +185,7 @@
 					data: {
 						type: self.type,
 						images: self.imgs.join('|'),
-						videoUrl: '',
+						videoUrl: self.video,
 						content: self.content,
 						goodsIds: goodsArr.join(','),
 					},

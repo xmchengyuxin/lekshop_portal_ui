@@ -192,24 +192,24 @@ image {
 }
 
 .line3 {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
+	display: -webkit-box!important;
+	-webkit-box-orient: vertical!important;
 	-webkit-line-clamp: 3;
 	overflow: hidden;
 	word-break: break-all;
 }
 
 .line2 {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
+	display: -webkit-box!important;
+	-webkit-box-orient: vertical!important;
 	-webkit-line-clamp: 2;
 	overflow: hidden;
 	word-break: break-all;
 }
 
 .line1 {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
+	display: -webkit-box!important;
+	-webkit-box-orient: vertical!important;
 	-webkit-line-clamp: 1;
 	overflow: hidden;
 	word-break: break-all;

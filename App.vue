@@ -189,7 +189,6 @@ export default {
 						self.getWxConfig();
 					}
 					// #endif
-					info.language = 'zh_CN';
 					if(info.language != 'all' && info.language != 'folowSystem') {
 						self.changeLang(info.language)
 					}
@@ -296,7 +295,6 @@ export default {
 				data: {},
 				method: 'GET',
 				success(res) {
-					console.log(res)
 					let info = res.data ? res.data : '';
 					if(info == ''){return;}
 					uni.setStorageSync('kefuId',info);

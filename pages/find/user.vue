@@ -80,7 +80,7 @@
 				<view class="padding-lr20"></view>
 				<view @click="scrollGo('order-tip')" :class="scrollTo == 'order-tip' ? 'nav-on' :'f13-size f-w-b'"  class="flex f-a-c "><text class="f13-size f-w-b ">喜欢</text></view>
 			</view>	 -->
-			<find-list :list="list" :isSelf="isSelf" :userId="id"></find-list>
+			<find-list :list="list" :isSelf="isSelf" @del="del" :userId="id"></find-list>
 			<block v-if="list.length <= 0">
 				<no-data style="padding-top: 10vh!important;"></no-data>
 				<view class="flex f-a-c f-j-c">
@@ -131,6 +131,9 @@
 			this.getInfo();
 		},
 		methods: { 
+			del(index) {
+				this.list.splice(index,1);
+			},
 			goEdit() {
 				if(this.id == '') {
 					self.go('/pages/find/edit');

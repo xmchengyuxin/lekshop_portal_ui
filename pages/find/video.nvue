@@ -85,7 +85,7 @@
 					<text class="words" :style="'width: '+ (windowWidth - 90) +'px;'">{{list.content}}</text><!-- k={{k}} -->
 					
 					<view @click="showGoods(allList[index]['trendsGoodsList'])" v-if="allList[index] && allList[index]['trendsGoodsList'].length > 0" class=" b-bottom flex f-a-c f-r f-j-s">
-						<text class="flex f-a-c f11-size t-color-9">{{i18n['查看Ta提到的宝贝']}}</text>
+						<text class="flex f-a-c f11-size t-color-w" style="opacity: 0.5;">{{i18n['查看Ta提到的宝贝']}}</text>
 						<view class="flex f-a-c f-r padding-tb6">
 							<view class="w-30 h-30 b-radius-2 bg-img  b-radius-2 margin-r4" :style="allList[index]['trendsGoodsList'][0]['goodsMainImg'] | bgimg(300)+''"></view>
 							<view class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f15-size"></view>
@@ -99,7 +99,7 @@
 				<view class="flex f-r f-a-c f-j-c b-bottom f15-size f-w-b padding-tb12">{{i18n['Ta提到的商品']}}</view>
 				<view @click="go('/pages/shops/detail?id='+item.goodsId)" v-for="(item,index) in goodsList" class="padding-tb10 flex f-r">
 					<view class="flex f-s-0 w-80 h-80 b-radius-5 bg-img margin-r12" :style="item.goodsMainImg | bgimg(300)+''"></view>
-					<view class="flex f-c f-j-s">
+					<view class="flex flex-1 f-c f-j-s">
 						<view class="f12-size line2 f-w">{{item.goodsName}}</view>
 						<view class="text-price t-color-y flex f-r">{{item.price}}</view>
 					</view>

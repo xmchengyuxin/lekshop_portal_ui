@@ -43,6 +43,11 @@ function getToken() {
  */
 function ajax(options) {
 	API = getApp() && getApp().globalData ? getApp().globalData.api : '';
+	if(API == '') {
+		setTimeout(() => {
+			ajax(options);
+		},500)
+	}
 	// API = 'http://192.168.0.102:7070/';
 	// API = 'http://portalapi.wode24h.com/';
 	if (options.loading) {
@@ -69,7 +74,7 @@ function ajax(options) {
 		header: {
 			'Content-Type': 'application/x-www-form-urlencoded',
 			'Authorization': uni.getStorageSync("token") ? uni.getStorageSync("token") : '',
-			'lang': uni.getStorageSync('locale_key') ? uni.getStorageSync('locale_key') : 'zh_CN',
+			'lang': uni.getStorageSync('locale_key') ? uni.getStorageSync('locale_key') : '',
 		},
 		success: (response) => {
 			if (response.data.code != 501 && response.data.code != 200 && response.data.code != 300 && response.data.code != 401 && !options.complete) {
@@ -318,7 +323,6 @@ function uploadvideo(options) {
 					success(suc) {
 						uni.hideLoading();
 						if (options.success) {
-							console.log(suc.data)
 							options.success(JSON.parse(suc.data).data);
 						}
 					},
