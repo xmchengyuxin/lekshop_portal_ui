@@ -1,6 +1,7 @@
 
 // const API = 'http://192.168.0.113:7076/';
 // import  './ican-H5Api.js';
+const authList = require('./authList.js').default.pages;
 let API;
 
 /**
@@ -357,7 +358,7 @@ function uploadvideo(options) {
 function go(url, type = 1, time) {
 	//type 1:navigate,2redirectTo,3reLaunch
 	//list:判断是否需要登录页面数组
-	let list = []
+	let list = authList;
 	throttle(function() {
 		// 判断是否需要登录再跳转
 		for (var i = 0; i < list.length; i++) {
