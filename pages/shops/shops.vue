@@ -49,12 +49,9 @@
 							</view>
 						</view>
 					</view>
-					<swiper class="wrap-banner h-120 margin-t12" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
-						<swiper-item >
-							<view class="bg-color h100 "></view>
-						</swiper-item>
-						<swiper-item>
-							<view class="bg-color-linear-y h100 "></view>
+					<swiper v-if="banner.length > 0" class="wrap-banner h-120 margin-t12" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
+						<swiper-item v-for="item in banner" >
+							<view class="bg-img h100 " :style="item | bgimg(700)+''"></view>
 						</swiper-item>
 					</swiper>
 					<!-- 广告图 -->
@@ -209,6 +206,7 @@
 				totalPage: 1,
 				sort: '',
 				couponList: [],
+				banner: [],
 			};
 		},
 		onLoad: function(options) {
@@ -292,6 +290,7 @@
 					success(res) {
 						self.shop = res.data ? res.data : '';
 						self.isLike = self.shop != '' ? self.shop.isCollectShop : false;
+						self.banner = self.shop.banner && self.shops.banner != '' ? self.shops.split('|') : [];
 					}
 				})
 			},

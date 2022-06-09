@@ -38,6 +38,7 @@
 					:show-center-play-btn="false"
 					:enable-progress-gesture="false"
 					:src="list.videoUrl"
+					@play="playEvent"
 					@ended="ended"
 					@click="tapVideoHover(list.state,$event)"
 					:style="'width: '+ windowWidth +'px; height: '+ windowHeight +'px; background-color: #000000;'"
@@ -205,6 +206,10 @@
 			
 		},
 		methods: {
+			playEvent() {//避免what没监听到
+				this.$set(this.dataList[this.k],'isplay',false);
+				this.$set(this.dataList[this.k],'playIng',true);
+			},
 			showGoods(list) {
 				this.goodsList = list;
 				this.$refs.goods.open();
@@ -314,6 +319,8 @@
 							let obj = list[i]['walkTrends'];
 							obj['_id']= obj.id;
 							obj['state']= '';
+							obj['playIng']= false;
+							obj['isplay']= false;
 							self.dataList.push(obj);
 							self.allList.push(list[i])
 						}
@@ -430,7 +437,7 @@
 		bottom:110px;
 		right: 10px;
 		flex-direction: column;
-		
+		z-index: 1;
 	}
 	.userAvatar{
 		border-radius: 500%;

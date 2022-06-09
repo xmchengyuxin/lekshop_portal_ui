@@ -37,7 +37,7 @@
 			</view>
 			
 			<view class="bg-color-w b-radius-5 padding-12 margin-b12">
-				<view class="flex f-j-s margin-b16">
+				<view @click="go('/pages/shops/shops?id'+order.shopId)" class="flex f-j-s margin-b16">
 					<view class="flex f-a-c ">
 						<text class="flex f-a-c van-icon van-icon-shop-o  margin-r6"></text>
 						<text class="f-w-500 t-color-3 margin-r4 ">{{order.shopName}}</text>
@@ -69,15 +69,16 @@
 						</block>
 					</view>
 				</view>
-				<view class="flex f-j-s padding-tb6 f11-size">
+				<view class="flex f-j-s padding-tb6 f12-size">
 					<text>{{i18n['商品总价']}}</text>
 					<text class="text-price">{{order.totalPrice | price}}</text>
 				</view>
-				<view class="flex f-j-s padding-tb6 f11-size">
+				<view class="flex f-j-s padding-tb6 f12-size">
 					<text>{{i18n['运费']}}</text>
-					<text class="text-price">{{order.freightFee | price}}</text>
+					<text v-if="order.freightFee" class="text-price">{{order.freightFee | price}}</text>
+					<text v-else class="text-price">0</text>
 				</view>
-				<view class="flex f-j-s padding-tb6 f11-size">
+				<view class="flex f-j-s padding-tb6 f12-size">
 					<text>{{i18n['优惠']}}</text>
 					<text class="text-price">24.00</text>
 				</view>

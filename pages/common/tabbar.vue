@@ -1,7 +1,10 @@
 <template>
 	<view >
 		<view class="warp-tabbar bg-color-w flex" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
-			<view @click="goTab(item.pagePath)" v-for="(item,index) in list" class="flex flex-1 f-c f-a-c f-j-c">
+			<view @click="goTab(item.pagePath)" v-for="(item,index) in list" class="flex flex-1 f-c f-a-c f-j-c p-r">
+				<text v-if="index == 1 && len > 0"
+					class="flex f-a-c f-j-c box-b f11-size t-color-w bg-color-r wrap-len b-radius padding-lr2 h-16"
+					style="min-width: 16px;">{{len}}</text>
 				<image class="w-24" :src="index == active ? item.selectedIconPath : item.iconPath" mode="widthFix"></image>
 				<text class="f11-size margin-t2" :class="index == active ? 't-color-0' : 't-color-9'">{{item.text}}</text>
 			</view>
@@ -22,8 +25,15 @@
 		box-sizing: content-box;
 		z-index: 1111;
 	}
+	.wrap-len {
+		position: absolute;
+		left: 44px;
+		top: 3px;
+		z-index: 1;
+	}
 </style>
 <script>
+	const API = require('../../utils/api/user.js').default;
 	const $ = require('../../utils/api.js');
 	export default {
 		props: {
@@ -66,13 +76,29 @@
 					},
 					
 				],
+				len: 0
 			};
 		},
 		onLoad: function() {
-		uni.hideTabBar();
+			uni.hideTabBar();
 			this.init();
 		},
+		onShow() {
+			// this.getChatLen();
+		},
 		methods: {
+			getChatLen() {
+				const self= this;
+				$.ajax({
+					url: API.chatNumApi,
+					data: {},
+					isAuth: true,
+					method: 'GET',
+					success(res) {
+						self.len = res.data ? res.data : 0;
+					}
+				})
+			},
 			goTab(url) {
 				uni.switchTab({
 					url: url
@@ -83,6 +109,7 @@
 
 		},
 		created() {
+			this.getChatLen();
 		},
 		mounted() {},
 		destroyed() {},

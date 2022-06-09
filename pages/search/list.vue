@@ -10,6 +10,7 @@
 					</view>
 				</view>
 				<view @click="sortType == 1 ? sortType=2 : sortType=1" :class="sortType==1?'van-icon-apps-o':'van-icon-bars'" class="flex f-a-c padding-lr10 van-icon  f20-size"></view>
+				<xcx-header></xcx-header>
 			</view>
 			<view class="flex h-40 bg-color-f7">
 				<view @click="changeSort('')" :class="sort == '' ? 't-color-p' : ''" class="flex f-a-c f-j-c flex-1 ">{{i18n['综合']}}</view>

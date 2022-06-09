@@ -38,8 +38,8 @@
 							</view>
 						</view>
 						<tuijian :cates="navs" v-if="parent == 0"></tuijian>
-						
-						<groupList class=" margin-t12" v-if="active == parent" :catePid="item.id"  :isSpread="active == 0 ? true : false"></groupList>
+						<view class="padding-6"></view>	
+						<groupList class="" v-if="active == parent" :catePid="item.id"  :isSpread="active == 0 ? true : false"></groupList>
 						
 						<view class="flex f-a-c f-j-c f-w-b t-color-8 padding-tb6 wrap-tuijian-title margin-t12">
 							<image class="w-20 margin-r8" src="../../static/images/zan-on.png" mode="widthFix"></image>

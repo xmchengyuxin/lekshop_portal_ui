@@ -3,7 +3,7 @@
 		<view class="fixed-top flex h-44 bg-color-f3" :style="{'padding-top': top + 'px'}">
 			<view @click="back(1)" class="flex f-a-c f-j-c padding-lr12 van-icon van-icon-arrow-left f20-size"></view>
 			<view class="flex flex-1 f-a-c margin-r4">
-				<view class="flex flex-1 f-a-c h-32 bg-color-w b-radius-30 padding-lr10">
+				<view @click="go('/pages/search/index')" class="flex flex-1 f-a-c h-32 bg-color-w b-radius-30 padding-lr10">
 					<text class="flex f-a-c van-icon van-icon-search f16-size margin-r4"></text>
 					<text class="t-color-9">{{i18n['搜索商品']}}</text>
 				</view>
@@ -81,10 +81,10 @@
 					</view>
 				</view>
 				<view v-if="shop.selfStatus == 1" class="flex f-a-c f-j-s margin-t6">
-					<view class="flex f-a-c f-j-c h-16 b-radius-30 t-color-w bg-color-r f10-size padding-lr6">{{i18n['自营']}}</view>
-					<view class="f10-size t-color-9">{{i18n['月销']}} {{goods.sellNum}}</view>
+					<view class="flex f-a-c f-j-c h-16 b-radius-30 t-color-w bg-color-r f12-size padding-lr6">{{i18n['自营']}}</view>
+					<view class="f12-size t-color-9">{{i18n['月销']}} {{goods.sellNum}}</view>
 				</view>
-				<view class="f12-size f-w-b margin-t6">{{goods.title}}</view>
+				<view class="f13-size f-w-b margin-t6">{{goods.title}}</view>
 			</view>
 			<view class="bg-color-w b-radius-10 padding-12 margin-t12">
 				<view @click="$refs.sku.open()" class="flex padding-tb8">
@@ -109,7 +109,14 @@
 						<!-- <text class="margin-r12 t-color-9">|</text>
 						<text class="margin-r12">快递：免运费</text> -->
 					</view>
-					<view class="flex f-s-0 f10-size t-color-9">{{i18n['月销']}} {{goods.sellNum}}</view>
+					<view v-if="shop.selfStatus != 1" class="flex f-s-0 f10-size t-color-9">{{i18n['月销']}} {{goods.sellNum}}</view>
+					<view class="flex f-a-c f-s-0 van-icon f12-size van-icon-arrow t-color-9"></view>
+				</view>
+				<view v-if="shop.serviceName" @click="$refs.goodsService.open()" class="flex padding-tb8">
+					<view class="flex f-s-0 f12-size t-color-9 margin-r10">{{i18n['服务']}}</view>
+					<view class="flex f12-size flex-1 padding-lr10">
+						<text class="line1">{{shop.serviceName}}</text>
+					</view>
 					<view class="flex f-a-c f-s-0 van-icon f12-size van-icon-arrow t-color-9"></view>
 				</view>
 				<view @click="$refs.goodsParams.open()" class="flex padding-tb8">
@@ -119,6 +126,7 @@
 					</view>
 					<view class="flex f-a-c f-s-0 van-icon f12-size van-icon-arrow t-color-9"></view>
 				</view>
+				
 			</view>
 			<!-- 拼团 -->
 			<view v-if="isPT() && pintuanNum > 0" class="bg-color-w b-radius-10 padding-12 margin-t12">
@@ -171,12 +179,12 @@
 					<view class="flex w-50 h-50 b-radius bg-img margin-r12" :style="shop.logo | bgimg(300)+''"></view>
 					<view class="flex f-c f-j-c flex-1">
 						<text class="f15-size f-w-b">{{goods.shopName}}</text>
-						<text class="f12-size t-color-9 margin-t4">{{i18n['1人关注店铺'] | i18n(2)}}</text>
+						<text class="f12-size t-color-9 margin-t4">{{i18n['1人关注店铺'] | i18n(shop.likeNum)}}</text>
 					</view>
 					<view class="flex f-s-0 f-c wrap-shops-pj f-j-c">
-						<view class="flex f-a-c f10-size t-color-9">{{i18n['宝贝描述']}} {{shop.goodsStar}} </view>
-						<view class="flex f-a-c f10-size t-color-9 margin-t2">{{i18n['卖家服务']}} {{shop.sellerStar}} </view>
-						<view class="flex f-a-c f10-size t-color-9 margin-t2">{{i18n['物流服务']}} {{shop.logisticStar}} </view>
+						<view class="flex f-a-c f12-size t-color-9">{{i18n['宝贝描述']}} {{shop.goodsStar}} </view>
+						<view class="flex f-a-c f12-size t-color-9 margin-t2">{{i18n['卖家服务']}} {{shop.sellerStar}} </view>
+						<view class="flex f-a-c f12-size t-color-9 margin-t2">{{i18n['物流服务']}} {{shop.logisticStar}} </view>
 					</view>
 				</view>
 				<view class="flex f-a-c f-j-c padding-10 b-bottom">
@@ -210,11 +218,11 @@
 				</view>
 			</view>
 			<view class="flex f-a-c ">
-				<view  v-if="isMS()" class="flex b-radius-30 h-34 over-h w-200 f-j-e">
+				<view  v-if="isMS()" class="flex b-radius-30 h-40 over-h w-200 f-j-e">
 					<view v-if="getMStype('in')" @click="$refs.sku.open()" class="flex f-a-c f-j-c b-radius-30 bg-color-p t-color-w f12-size w-100">{{i18n['马上抢']}}</view>
 					<view v-else  class="flex f-a-c f-j-c b-radius-30 bg-color-e t-color-9 f12-size w-100">{{i18n['马上抢']}}</view>
 				</view>
-				<view  v-else-if="isPT()" class="flex b-radius-30 h-34 over-h w-200 f-j-e">
+				<view  v-else-if="isPT()" class="flex b-radius-30 h-40 over-h w-200 f-j-e">
 					<!-- 单独购买分享状态不显示 -->
 					<block v-if="isShareGroup">
 						<view  @click="$refs.sku.open()" class="flex f-a-c f-j-c f-c bg-color-p b-radius-30 t-color-w f12-size w-100">
@@ -235,7 +243,7 @@
 						</view>
 					</block>
 				</view>
-				<view  v-else class="flex b-radius-30 h-34 over-h">
+				<view  v-else class="flex b-radius-30 h-40 over-h">
 					<view @click="$refs.sku.open()" class="flex f-a-c f-j-c bg-color-linear-y t-color-w f12-size w-100">{{i18n['加入购物车']}}</view>
 					<view  @click="$refs.sku.open()" class="flex f-a-c f-j-c bg-color-p t-color-w f12-size w-100">{{i18n['立即购买']}}</view>
 				</view>
@@ -254,6 +262,17 @@
 			</view>
 		</uni-popup>
 		
+		<!-- 产品服务 -->
+		<uni-popup ref="goodsService" type="bottom" >
+			<view class="padding-12 wrap-popup-radius bg-color-w">
+				<view class="flex f-a-c f-j-c f16-size margin-b10">{{i18n['服务']}}</view>
+				<scroll-view scroll-y="true" style="height: 50vh;">
+					<view class=" padding-tb10 " >
+						<view class="f12-size t-color-0">{{shop.serviceName}}</view>
+					</view>
+				</scroll-view>
+			</view>
+		</uni-popup>
 		<!-- 产品参数 -->
 		<uni-popup ref="goodsParams" type="bottom" >
 			<view class="padding-12 wrap-popup-radius bg-color-w">
@@ -315,7 +334,7 @@
 						</view>
 					</view> 
 				</scroll-view>
-				<view class="flex b-radius-30 h-34 over-h margin-t12">
+				<view class="flex b-radius-30 h-40 over-h margin-t12">
 					<block v-if="isMS()">
 						<view v-if="getMStype('in')" @click="buy()" class="flex f-a-c flex-1 f-j-c b-radius-30 bg-color-p t-color-w f12-size ">{{i18n['马上抢']}}</view>
 						<view v-else  class="flex f-a-c f-j-c flex-1 b-radius-30 bg-color-e t-color-9 f12-size ">{{i18n['马上抢']}}</view>

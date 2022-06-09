@@ -359,14 +359,26 @@ function go(url, type = 1, time) {
 	//type 1:navigate,2redirectTo,3reLaunch
 	//list:判断是否需要登录页面数组
 	let list = authList;
+	let tabbarList = ['/pages/index/index','/pages/user/index','/pages/chat/index','/pages/cart/index'];
 	throttle(function() {
 		// 判断是否需要登录再跳转
 		for (var i = 0; i < list.length; i++) {
 			if (url.indexOf(list[i]) >= 0 && !uni.getStorageSync("token")) {
 				uni.navigateTo({
-					url: '/pages/passport/login',
+					url: '/pages/passport/login?url='+url,
 				})
 				return
+			}
+		}
+		if(type != 3) {
+			// 判断是否需要登录再跳转
+			for (var i = 0; i < tabbarList.length; i++) {
+				if (url.indexOf(tabbarList[i]) >= 0) {
+					uni.switchTab({
+						url: url
+					})
+					return
+				}
 			}
 		}
 

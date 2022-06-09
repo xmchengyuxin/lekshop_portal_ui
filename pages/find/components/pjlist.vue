@@ -11,8 +11,9 @@
 						<view class="flex flex-1 f-c">
 							<view class="flex f-r">
 								<view @click="chooseComment(index,'-1')" class="flex f-c flex-1">
-									<view class="t-color-9 f11-size">{{item.walkTrendsComment.viewMemberName}}</view>
-									<view class="f12-size f-w-500 margin-t4">{{item.walkTrendsComment.content}}</view>
+									<view class="t-color-9 f13-size">{{item.walkTrendsComment.viewMemberName}}</view>
+									<view class="f13-size  margin-t4">{{item.walkTrendsComment.content}}</view>
+									<view class="t-color-9 f11-size margin-t4">{{item.walkTrendsComment.addTime | time4}}</view>
 								</view>
 								<view @click="likeComment(index,'-1')" class="flex f-c f-a-c f-s-0" style="padding-left: 10px;">
 									<view :class="item.walkTrendsComment.likeStatus == 1 ? 'van-icon-like t-color-y' : 'van-icon-like-o'" class="flex f-s-0 f-a-c f-j-c  van-icon "></view>
@@ -25,8 +26,8 @@
 									<view class="flex f-s-0 w-30 h-30 b-radius bg-img " :style="child.viewMemberHeadImg | bgimg(300)+''"></view>
 								</view>
 								<view  @click="chooseComment(index,idx)" class="flex flex-1 f-c">
-									<view class="t-color-9 f11-size">{{child.viewMemberName}}</view>
-									<view class="f12-size f-w-500 margin-t4">{{child.content}}</view>
+									<view class="t-color-9 f13-size">{{child.viewMemberName}}</view>
+									<view class="f13-size  margin-t4">{{child.content}}</view>
 									
 								</view>
 								<view @click="likeComment(index,idx)" class="flex f-c f-a-c" style="padding-left: 10px;">

@@ -1,5 +1,5 @@
 <template>
-	<view @click="getCode()">
+	<view  @click="getCode()">
 		<image v-if="code != '' && code.img" class="h100" :src="'data:image/png;base64,'+code.img" mode="heightFix"></image>
 	</view>
 </template>

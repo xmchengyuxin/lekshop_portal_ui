@@ -6,7 +6,7 @@
 			<view class="padding-lr12">
 				<view class="f20-size f-w-b">{{i18n['手机号注册']}}</view>
 				<view @click="isAgree = !isAgree" class="flex f-a-c margin-t8">
-					<text :class="isAgree ? 'van-icon-checked t-color-g1' : 'van-icon-circle t-color-b'" class="flex f-a-c f-j-c van-icon  f16-size margin-r4"></text>
+					<text :class="isAgree ? 'van-icon-checked t-color-y' : 'van-icon-circle t-color-b'" class="flex f-a-c f-j-c van-icon  f16-size margin-r4"></text>
 					<text class="margin-r4">{{i18n['已阅读并同意']}}</text>
 					<text @click="go('/pages/user/rules?type=1')" class="t-color-blue1 margin-r4">{{i18n['用户协议']}}</text>
 					<text class="margin-r4">{{i18n['和']}}</text>

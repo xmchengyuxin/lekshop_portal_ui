@@ -35,6 +35,12 @@
 			} 
 		},
 		{
+			"path": "pages/user/rules",
+			"style": {
+				"navigationBarTitleText": "协议"
+			} 
+		},
+		{
 			"path": "pages/user/commentlist",
 			"style": {
 				"navigationBarTitleText": "我的评价"

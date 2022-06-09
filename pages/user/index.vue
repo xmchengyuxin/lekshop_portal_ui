@@ -5,7 +5,7 @@
 				<!-- <view class="flex f-a-c f-j-c van-icon van-icon-qr f20-size t-color-3 padding-lr5"><text
 						class="f12-size">{{i18n['会员码']}}</text></view> -->
 				<view @click="go('/pages/setting/index')" class="flex f-a-c f-j-c van-icon van-icon-setting-o f20-size padding-lr5"></view>
-				<view @click="go('/pages/chat/index')" class="flex f-a-c f-j-c van-icon van-icon-chat-o f20-size padding-lr5"></view>
+				<!-- <view @click="go('/pages/chat/index')" class="flex f-a-c f-j-c van-icon van-icon-chat-o f20-size padding-lr5"></view> -->
 				<xcx-header></xcx-header>
 			</view>
 			<view class="padding-lr15 flex">

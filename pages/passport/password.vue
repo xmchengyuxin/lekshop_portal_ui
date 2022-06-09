@@ -5,7 +5,7 @@
 			<view class="padding-lr12">
 				<view class="f20-size f-w-b">{{i18n['修改登录密码']}}</view>
 				<view @click="isAgree = !isAgree" class="flex f-a-c margin-t8">
-					<text :class="isAgree ? 'van-icon-checked t-color-g1' : 'van-icon-circle t-color-b'" class="flex f-a-c f-j-c van-icon  f16-size margin-r4"></text>
+					<text :class="isAgree ? 'van-icon-checked t-color-y' : 'van-icon-circle t-color-b'" class="flex f-a-c f-j-c van-icon  f16-size margin-r4"></text>
 					<text class="margin-r4">{{i18n['已阅读并同意']}}</text>
 					<text @click="go('/pages/user/rules?type=1')" class="t-color-blue1 margin-r4">{{i18n['用户协议']}}</text>
 					<text class="margin-r4">{{i18n['和']}}</text>
@@ -39,13 +39,24 @@
 						<image class="w-20" src="../../static/images/login_code.png" mode="widthFix"></image>
 					</view>
 					<view class="flex flex-1 padding-lr12">
+						<input v-model="code" type="tel" :placeholder="i18n['请输入']">
+					</view>
+					<view class="padding-6">
+						<img-code class="h-30" @imgSuc="getImgCode"  ></img-code>
+					</view>
+				</view>
+				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
+					<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">
+						<image class="w-20" src="../../static/images/login_code.png" mode="widthFix"></image>
+					</view>
+					<view class="flex flex-1 padding-lr12">
 						<input v-model="sms" type="tel" :placeholder="i18n['请输入']">
 					</view>
 					<view class="padding-6">
-						<phone-code :phone="phone" :sendType="3"  ></phone-code>
+						<phone-code :phone="phone" :code="code" :codeImg="codeImg" :sendType="3"  ></phone-code>
 					</view>
 				</view>
-				<view @click="changePay" class="flex f-a-c f-j-c b-radius-30 h-44 bg-color-linear-g t-color-w f-w-500 margin-t20">{{i18n['登录']}}</view>
+				<view @click="changePay" class="flex f-a-c f-j-c b-radius-30 h-44 bg-color-linear-y t-color-w f-w-500 margin-t20">{{i18n['登录']}}</view>
 				<view class="flex f-j-s ">
 					<view @click="go('/pages/passport/login',2)" class="f12-size  padding-tb20">{{i18n['密码登录']}}</view>
 					<view @click="go('/pages/passport/register',2)" class="flex f-a-c">
@@ -57,6 +68,7 @@
 	</view>
 </template>
 <script>
+	import imgCode from '../common/imgcode.vue';
 	import phoneCode from '../common/phonecode.vue';
 	const $ = require('../../utils/api.js');
 	const api = require('../../utils/validate.js');
@@ -67,13 +79,18 @@
 				password: '',
 				comfirmPassword: '',
 				isAgree: false,
-				sms: ''
+				sms: '',
+				code: '',
+				codeImg: '',
 			};
 		},
 		onLoad: function() {
 			this.init();
 		},
 		methods: {
+			getImgCode(info) {
+				this.codeImg = info;
+			},
 			changePay() {
 				const self = this;
 				if(!self.isAgree) {
@@ -146,7 +163,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {phoneCode},
+		components: {phoneCode,imgCode},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

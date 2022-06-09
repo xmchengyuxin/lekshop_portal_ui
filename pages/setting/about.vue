@@ -12,7 +12,7 @@
 						<text class="f-w-b">{{i18n['隐私协议']}}</text>
 						<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-b"></text>
 					</view>
-					<view @click="go('/pages/user/rules?type=3')" class="flex f-a-c f-j-s b-bottom h-50">
+					<view @click="go('/pages/user/rules?type=1')" class="flex f-a-c f-j-s b-bottom h-50">
 						<text class="f-w-b">{{i18n['平台申明']}}</text>
 						<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-b"></text>
 					</view>

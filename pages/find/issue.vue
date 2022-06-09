@@ -18,7 +18,7 @@
 				<text class="flex f-a-c f-j-c van-icon van-icon-editor t-color-0 f18-size margin-r4"></text>
 				<text class="f15-size t-color-3">{{i18n['种草内容']}}</text>
 			</view>
-			<textarea v-model="content" class="bg-color-e h-140 w100 b-radius-5 f12-size padding-10" value="" :placeholder="i18n['种草内容']" />
+			<textarea v-model="content" class="bg-color-e h-140 box-c w100 b-radius-5 f12-size padding-10" value="" :placeholder="i18n['种草内容']" />
 			</block>
 			<block v-if="type == 1">
 				<view class="flex f-a-c padding-tb12">

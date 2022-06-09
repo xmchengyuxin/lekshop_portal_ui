@@ -10,7 +10,7 @@
 							<text class="flex f-a-c f-w-b f15-size margin-r12">{{address.realname}}</text>
 							<text class="flex f-a-c f12-size t-color-9">{{address.phone}}</text>
 						</view>
-						<view class="line1 margin-t4 f12-size">{{address.privince}}{{address.city}}{{address.area}}{{address.address}}</view>
+						<view class="line1 margin-t4 f12-size">{{address.province}}{{address.city}}{{address.area}}{{address.address}}</view>
 					</view>
 					<view v-if="address == ''" class="flex f-c flex-1 f-j-c">
 						<text class="t-color-9">{{i18n['选择收货地址']}}</text>

@@ -7,7 +7,7 @@
 					<view v-else class="flex f-a-c f-j-c shops-icon shops-icon-wuliu f44-size margin-r12"></view>
 					<view class="flex f-c">
 						<text class="">{{info.deliveryType}}</text>
-						<text class="f12-size t-color-b margin-t4">{{info.orderNo}}</text>
+						<text class="f12-size t-color-b margin-t4">{{info.deliveryNo}}</text>
 					</view>
 				</view>
 				<scroll-view scroll-y="true" style="height: 60vh;">

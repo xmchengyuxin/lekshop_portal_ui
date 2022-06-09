@@ -80,17 +80,9 @@
 					uni.navigateBack({
 						delta: len,
 						success: function() {
-							// #ifndef MP-WEIXIN
 							if (beforePage.$vm.setAddress) {
 								beforePage.$vm.setAddress(item); // 执行前一个页面的changeBanner方法
 							}
-							// #endif
-							
-							// #ifdef MP-WEIXIN
-							if (beforePage.setAddress) {
-								beforePage.setAddress(item); // 执行前一个页面的changeBanner方法
-							}
-							// #endif
 						}
 					});
 				}

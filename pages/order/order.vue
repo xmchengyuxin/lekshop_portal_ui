@@ -45,12 +45,12 @@
 							<text class="text-price">{{child.order.payPrice}}</text>
 						</view>
 						<view class="flex f-j-e f-w">
-							<view v-if="state[child.order.status].value == 'dfh'" @click.stop="changeAddress(index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-3 ">{{i18n['修改地址']}}</view>
-							<view v-if="state[child.order.status].value == 'dzf'" @click.stop="cancelOrder(parent,index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-3 ">{{i18n['取消订单']}}</view>
-							<view @click.stop="showWuliu(child)" v-if="state[child.order.status].value == 'dsh'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-3">{{i18n['查看物流']}}</view>
-							<view v-if="state[child.order.status].value == 'dzf'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size bg-color-linear-y t-color-w">{{i18n['立即支付']}}</view>
-							<view v-if="state[child.order.status].value == 'dsh'" @click.stop="sureOrder(parent,index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size bg-color-linear-y t-color-w">{{i18n['确认收货']}}</view>
-							<view v-if="state[child.order.status].value == 'ywc'"  class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-y t-color-y ">{{i18n['评价']}}</view>
+							<view v-if="state[child.order.status].value == 'dfh'" @click.stop="changeAddress(index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-3 ">{{i18n['修改地址']}}</view>
+							<view v-if="state[child.order.status].value == 'dzf'" @click.stop="cancelOrder(parent,index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-3 ">{{i18n['取消订单']}}</view>
+							<view @click.stop="showWuliu(child)" v-if="state[child.order.status].value == 'dsh'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-3">{{i18n['查看物流']}}</view>
+							<view v-if="state[child.order.status].value == 'dzf'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size bg-color-linear-y t-color-w">{{i18n['立即支付']}}</view>
+							<view v-if="state[child.order.status].value == 'dsh'" @click.stop="sureOrder(parent,index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size bg-color-linear-y t-color-w">{{i18n['确认收货']}}</view>
+							<view v-if="state[child.order.status].value == 'ywc'"  class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-y t-color-y ">{{i18n['评价']}}</view>
 						</view>
 					</view>
 						

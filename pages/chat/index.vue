@@ -6,7 +6,7 @@
 			<view v-else class="flex f-s-0 padding-lr10 f-a-c f-j-c van-icon  f20-size"></view>
 			<view class="flex flex-1 f-a-c f-j-c f16-size">
 				{{i18n['消息中心']}}
-				<text v-if="len > 0" class="f10-size t-color-9 margin-l6">({{len}})</text>
+				<text v-if="len > 0" class="f16-size t-color-9 margin-l6">({{len}})</text>
 			</view>
 			<view @click="read" class="flex f-s-0 f-a-c padding-lr10 van-icon van-icon-readed"></view>
 			<xcx-header></xcx-header>
@@ -57,7 +57,7 @@
 									<text v-else class="line1 f12-size t-color-6">{{item.lastMsg}}</text>
 								</view>
 								<text v-if="item.unReadNum > 0"
-									class="flex f-a-c f-j-c f10-size t-color-w bg-color-r b-radius padding-lr2 h-16"
+									class="flex f-a-c f-j-c box-b f11-size t-color-w bg-color-r b-radius padding-lr2 h-16"
 									style="min-width: 16px;">{{item.unReadNum}}</text>
 							</view>
 						</view>

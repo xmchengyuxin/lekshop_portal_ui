@@ -387,7 +387,7 @@
 				$.ajax({
 					url: orderApi.orderDetailApi,
 					data: {
-						orderId: self.id
+						orderId: self.orderId
 					},
 					method: 'GET',
 					success(res) {
