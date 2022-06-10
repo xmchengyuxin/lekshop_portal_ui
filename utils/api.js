@@ -80,12 +80,21 @@ function ajax(options) {
 		success: (response) => {
 			if (response.data.code != 501 && response.data.code != 200 && response.data.code != 300 && response.data.code != 401 && !options.complete) {
 				console.log(response.data)
-				uni.showToast({
-					title: response.data.message,
-					icon: 'none',
-					duration: 2000
-				})
-				
+				if(options.loading){
+					setTimeout(() => {
+						uni.showToast({
+							title: response.data.message,
+							icon: 'none',
+							duration: 2000
+						})
+					},200)
+				}else{
+					uni.showToast({
+						title: response.data.message,
+						icon: 'none',
+						duration: 2000
+					})
+				}
 			}else if (response.data.code == 501) {
 				uni.showModal({
 					title: '',

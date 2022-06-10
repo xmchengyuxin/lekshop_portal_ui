@@ -4,19 +4,19 @@
 				<view class="flex h-50 b-bottom">
 					<view class="f-w-b flex f-a-c">{{i18n['联系人']}}</view>
 					<view class="flex flex-1 f-j-e">
-						<input v-model="name" type="text" class="f12-size" value="" :placeholder="i18n['请输入']" />
+						<input v-model="name" type="text" class="f15-size" value="" :placeholder="i18n['请输入']" />
 					</view>
 				</view>
 				<view class="flex h-50 b-bottom">
 					<view class="f-w-b flex f-a-c">{{i18n['手机号']}}</view>
 					<view class="flex flex-1 f-j-e">
-						<input v-model="phone" type="number" class="f12-size" value="" :placeholder="i18n['请输入']" />
+						<input v-model="phone" type="number" class="f15-size" value="" :placeholder="i18n['请输入']" />
 					</view>
 				</view>
 				<view @click="show=true" class="flex h-50 b-bottom">
 					<view class="f-w-b flex f-a-c">{{i18n['所在地址']}}</view>
 					<view class="flex flex-1 f-j-e">
-						<input v-model="address" disabled="true" type="text" class="f12-size margin-r6" value="" :placeholder="i18n['请输入']" />
+						<input v-model="address" disabled="true" type="text" class="f15-size margin-r6" value="" :placeholder="i18n['请输入']" />
 						<view class="flex f-a-c">
 							<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f13-size"></text>
 						</view>
@@ -25,7 +25,7 @@
 				<view class="flex h-50 b-bottom">
 					<view class="f-w-b flex f-a-c">{{i18n['详细地址']}}</view>
 					<view class="flex flex-1 f-j-e">
-						<input v-model="addressDetail" type="text" class="f12-size margin-r6" value="" :placeholder="i18n['请输入']" />
+						<input v-model="addressDetail" type="text" class="f15-size margin-r6" value="" :placeholder="i18n['请输入']" />
 					</view>
 				</view>
 				<view class="flex h-50 ">
@@ -34,7 +34,7 @@
 						<switch @change="switchChange" class="switch" color="#2EB37E" :checked="isDefault" />
 					</view>
 				</view>
-				<!-- <view class="f12-size t-color-b">每次打开App会优先定位至该地址，方便您轻松下单享受服务</view> -->
+				<!-- <view class="f15-size t-color-b">每次打开App会优先定位至该地址，方便您轻松下单享受服务</view> -->
 				<view class="padding-15 margin-t15">
 					<view @click="save" class="flex f-a-c f-j-c bg-color-linear-y t-color-w f-w-500 b-radius-30 h-40">{{id != '' ? i18n['编辑'] : i18n['保存']}}</view>
 					<view v-if="id != ''" @click="del" class="flex f-a-c f-j-c b-color-y t-color-y margin-t12 f-w-500 b-radius-30 h-40">{{i18n['删除']}}</view>
@@ -135,8 +135,8 @@
 					this.addressDetail = info.addressDetail;
 					this.target = info.target;
 					this.isDefault = info.status == 1 ? true : false;
-					this.lng = info.coordinate.split(',')[0];
-					this.lat = info.coordinate.split(',')[1];
+					this.lng = info.coordinate? info.coordinate.split(',')[0] : '';
+					this.lat =info.coordinate ? info.coordinate.split(',')[1] : '';
 				uni.removeStorageSync('addressinfo');
 			},
 			save() {

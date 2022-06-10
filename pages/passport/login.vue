@@ -173,6 +173,7 @@
 								title: '登录成功',
 								icon: 'none'
 							});
+							
 							self.getUser();
 						}
 					}
@@ -222,6 +223,31 @@
 					}
 				});
 			},
+			getUser: function() {
+						const self = this;
+						$.ajax({
+							url: 'member/getUser',
+							data: {},
+							method: 'GET',
+							success(res) {
+								uni.setStorageSync('userInfo', res.data);
+								if(!res.data.phone) {//无绑定手机情况下前往绑定手机
+									$.go('/pages/wxAuth/bindphone',2);
+								}else{
+									if(self.url != '') {
+										self.go(self.url, 2, 2000);
+									}else {
+										self.go('/pages/index/index', 3, 2000);
+									}
+									self.socket.close();
+									self.socket.creatSocket({
+										onMessage(res) {}
+									})
+									
+								}
+							}
+						});
+					},
 			init() {},
 
 

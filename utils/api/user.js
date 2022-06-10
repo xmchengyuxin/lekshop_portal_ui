@@ -28,4 +28,6 @@ export default {
 	'newsNumApi': 'member/news/countNews',//统计未读消息数量
 	'getKefuIdApi': 'common/chat/getCustomerId',//获取人工客服和智能客服的ID
 	'getOrderNum': 'member/center/count',//获取用户订单数字统计
+	'delHistory': 'member/viewGoods/delete',//删除足迹
+	'clearHistory': 'member/viewGoods/clear',//清空足迹
 }

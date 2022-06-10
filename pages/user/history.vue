@@ -1,14 +1,20 @@
 <template>
 	<view class="contain ">
 		<view v-for="(item,key) in list" class="padding-12">
-			<view @click="del()" class="f-w-b f11-size">{{key}}</view>
+			<view @click="del()" class="f-w-b f13-size">{{key}}</view>
 			<view class="flex f-w">
-				<view @click="go('/pages/shops/detail?id='+child.goodsId)" v-for="(child,index) in item" class="flex f-c f-s-0 his-item margin-t12">
+				<view @click="go('/pages/shops/detail?id='+child.goodsId)" v-for="(child,index) in item" class="flex f-c f-s-0 his-item margin-t12 p-r">
+					<text @click.stop="show(key,index)" class="padding-6 flex f-a-c f-j-c van-icon van-icon-weapp-nav t-color-3 f18-size find-menu-btn"></text>
+					<view @click.stop="show(key,index)" v-if="showMenu && index == showIndex && key == showKey" class="flex  f-a-c f-j-c wrap-layout">
+						<view @click="clear"  class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30 margin-r12">清空</view>
+						<view @click="del(key,index)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30">删除</view>
+					</view>
 					<view class="bg-img  item-img b-radius-5" :style="child.goodsMainImg | bgimg(300)+''"></view>
 					<view class="flex text-price f-w-b padding-lr10 f12-size t-color-y margin-t8">{{child.price}}</view>
 				</view>
 			</view>
 		</view>
+		<no-data v-if="list == ''"></no-data>
 	</view>
 </template>
 <style scoped>
@@ -22,6 +28,18 @@
 .his-item:nth-child(3n+2) {
 	margin: 0 2%;
 }
+.find-menu-btn {
+		position: absolute;
+		right: 0;
+		top: 0;
+		padding: 4px 10px;
+	}
+	.wrap-layout {
+		position: absolute;
+	}
+	.wrap-layout view {
+		background-color: rgba(0,0,0,0.3);
+	}
 </style>
 <script>
 	const API = require('../../utils/api/user.js').default;
@@ -30,10 +48,13 @@
 	export default {
 		data() {
 			return {
-				list: {},
+				list: '',
 				page: 1,
 				pageSize: 20,
 				totalPage: 1,
+				showMenu: false,
+				showIndex: '',
+				showKey: '',
 			};
 		},
 		onLoad: function() {
@@ -41,7 +62,42 @@
 			this.init();
 		},
 		methods: {
+			show(key,index) {
+				this.showKey = key;
+				this.showIndex = index;
+				this.showMenu = !this.showMenu;
+			},
+			clear() {
+				$.showModal({
+					content: '是否确认删除',
+					success() {
+						$.ajax({
+							url: API.clearHistory,
+							data: {},
+							method: 'POST',
+							success(res) {
+								self.list = '';
+							}
+						})
+					}
+				},this)
+			},
 			del() {
+				$.showModal({
+					content: '是否确认删除',
+					success() {
+						$.ajax({
+							url: API.delHistory,
+							data: {
+								id: self.list[self.showKey][self.showIndex].id,
+							},
+							method: 'POST',
+							success(res) {
+								self.list[self.showKey].splice(self.showIndex,1);
+							}
+						})
+					}
+				},this)
 			},
 			getList() {
 				const self = this;

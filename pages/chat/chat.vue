@@ -467,8 +467,9 @@
 				self.socket.onMessage({
 					onMessage(res){
 						// console.log(res);
-						if(res.type == 5 && res.content.targetId == self.id) {
-							self.msgList.push(JSON.parse(res.content));
+						let info = JSON.parse(res.content);
+						if(res.type == 5 && info.targetId == self.id) {
+							self.msgList.push(info);
 							uni.vibrateLong();
 							self.updateMsg();
 						}

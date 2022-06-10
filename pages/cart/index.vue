@@ -69,7 +69,7 @@
 		</view>
 		<view class="padding-30"></view>
 		<view class="padding-30"></view>
-		<tab-bar :active="3"></tab-bar>
+		<tab-bar ref="tabbar" :active="3"></tab-bar>
 	</view>
 </template>
 <style scoped>
@@ -273,6 +273,7 @@
 					success(res) {
 						self.list = res.data ? res.data : '';
 						self.getGoodsLen();
+						uni.stopPullDownRefresh();
 					}
 				})
 			},
@@ -288,6 +289,9 @@
 			},
 			init() {
 				this.getList();
+				this.$nextTick(() => {
+					this.$refs.tabbar.getChatLen();
+				})
 			},
 		},
 		created() {
@@ -301,6 +305,7 @@
 		destroyed() {},
 		components: {},
 		onPullDownRefresh() {
+			this.init();
 		},
 		onReachBottom() {
 		}

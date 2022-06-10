@@ -30,9 +30,9 @@
 					<view class="flex f-a-c f-j-c van-icon van-icon-clock-o f24-size margin-b4"></view>
 					<text class="f12-size">{{i18n['足迹']}}</text>
 				</view>
-				<view @click="go('/pages/order/order')" class="flex flex-1 f-c f-a-c f-j-c">
-					<view class="flex f-a-c f-j-c van-icon van-icon-description f24-size margin-b4"></view>
-					<text class="f12-size">{{i18n['全部订单']}}</text>
+				<view @click="go('/pages/money/index')" class="flex flex-1 f-c f-a-c f-j-c">
+					<text class="f16-size f-w-b">{{account != '' ? account.amount : 0}}</text>
+					<text class="f12-size margin-t6">{{i18n['余额']}}</text>
 				</view>
 			</view>
 			<view class="padding-20"></view>
@@ -62,33 +62,45 @@
 		</view>
 		<view class="padding-12"></view>
 		<view class="padding-lr12">
-			<view class="bg-color-w b-radius-5  flex margin-t12 wrap-nav">
-				<view @click="go('/pages/order/order?type=1')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c p-r">
-					<text class="flex f-a-c van-icon van-icon-pending-payment f24-size"></text>
-					<text class="f12-size margin-t2">{{i18n['待支付']}}</text>
-				</view>
-				<view @click="go('/pages/order/order?type=2')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c p-r">
-					<text v-if="order != '' && order.waitDeliveryNum" class="order-num flex f-a-c f-j-c h-16 b-radius-30 bg-color-r t-color-w f10-size">{{order.waitDeliveryNum}}</text>
-					<text class="flex f-a-c van-icon van-icon-send-gift-o f24-size"></text>
-					<text class="f12-size margin-t2">{{i18n['待发货']}}</text>
-				</view>
-				<view @click="go('/pages/order/order?type=3')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c p-r">
-					<text v-if="order != '' && order.waitReceiveNum" class="order-num flex f-a-c f-j-c h-16 b-radius-30 bg-color-r t-color-w f10-size">{{order.waitReceiveNum}}</text>
-					<text class="flex f-a-c van-icon van-icon-logistics f24-size"></text>
-					<text class="f12-size margin-t2">{{i18n['待收货']}}</text>
-				</view>
-				<view @click="go('/pages/user/commentlist')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c p-r">
-					<text v-if="order != '' && order.waitCommentNum" class="order-num flex f-a-c f-j-c h-16 b-radius-30 bg-color-r t-color-w f10-size">{{order.waitCommentNum}}</text>
-					<text class="flex f-a-c van-icon van-icon-comment-o f24-size"></text>
-					<text class="f12-size margin-t2">{{i18n['待评价']}}</text>
-				</view>
-				<view @click="go('/pages/user/refundlist')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c nav-last-item p-r">
-					<text v-if="order != '' && order.refundNum" class="order-num flex f-a-c f-j-c h-16 b-radius-30 bg-color-r t-color-w f10-size">{{order.refundNum}}</text>
-					<text class="flex f-a-c van-icon van-icon-tosend f24-size t-color-y"></text>
-					<text class="f12-size margin-t2">{{i18n['退货/售后']}}</text>
+			<view class="bg-color-w b-radius-5 margin-t12">
+				<view class="padding-lr10">
+					<view @click="go('/pages/order/order')" class="flex h-40  f-a-c f-j-s">
+						<text class="f15-size">{{i18n['我的订单']}}</text>
+						<view class="flex f-a-c">
+							<text class="f12-size t-color-9 margin-r4">{{i18n['全部']}}</text>
+							<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>
+						</view>
+					</view>
+				</view>	
+				
+				<view class=" flex  wrap-nav">
+					<view @click="go('/pages/order/order?type=1')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c p-r">
+						<text class="flex f-a-c van-icon van-icon-pending-payment f24-size"></text>
+						<text class="f12-size margin-t2">{{i18n['待支付']}}</text>
+					</view>
+					<view @click="go('/pages/order/order?type=2')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c p-r">
+						<text v-if="order != '' && order.waitDeliveryNum" class="order-num flex f-a-c f-j-c h-16 b-radius-30 bg-color-r t-color-w f10-size">{{order.waitDeliveryNum}}</text>
+						<text class="flex f-a-c van-icon van-icon-send-gift-o f24-size"></text>
+						<text class="f12-size margin-t2">{{i18n['待发货']}}</text>
+					</view>
+					<view @click="go('/pages/order/order?type=3')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c p-r">
+						<text v-if="order != '' && order.waitReceiveNum" class="order-num flex f-a-c f-j-c h-16 b-radius-30 bg-color-r t-color-w f10-size">{{order.waitReceiveNum}}</text>
+						<text class="flex f-a-c van-icon van-icon-logistics f24-size"></text>
+						<text class="f12-size margin-t2">{{i18n['待收货']}}</text>
+					</view>
+					<view @click="go('/pages/user/commentlist')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c p-r">
+						<text v-if="order != '' && order.waitCommentNum" class="order-num flex f-a-c f-j-c h-16 b-radius-30 bg-color-r t-color-w f10-size">{{order.waitCommentNum}}</text>
+						<text class="flex f-a-c van-icon van-icon-comment-o f24-size"></text>
+						<text class="f12-size margin-t2">{{i18n['待评价']}}</text>
+					</view>
+					<view @click="go('/pages/user/refundlist')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c nav-last-item p-r">
+						<text v-if="order != '' && order.refundNum" class="order-num flex f-a-c f-j-c h-16 b-radius-30 bg-color-r t-color-w f10-size">{{order.refundNum}}</text>
+						<text class="flex f-a-c van-icon van-icon-tosend f24-size t-color-y"></text>
+						<text class="f12-size margin-t2">{{i18n['退货/售后']}}</text>
+					</view>
 				</view>
 			</view>
-			<view class="bg-color-w b-radius-5  flex margin-t12 wrap-nav">
+			<!-- <view class="bg-color-w b-radius-5  flex margin-t12 wrap-nav">
 				<view @click="go('/pages/coupon/list')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
 					<text class="f16-size f-w-b">0</text>
 					<text class="f12-size margin-t6">{{i18n['我的卡券']}}</text>
@@ -109,7 +121,7 @@
 					<text class="flex f-a-c van-icon van-icon-bill-o f24-size t-color-y"></text>
 					<text class="f12-size margin-t2">{{i18n['账单明细']}}</text>
 				</view>
-			</view>
+			</view> -->
 			<view class="bg-color-w b-radius-5  flex f-w margin-t12" style="padding-top: 12px;">
 				<view @click="go('/pages/money/index')" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
@@ -117,12 +129,12 @@
 					</view>
 					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['钱包']}}</view>
 				</view>
-				<!-- <view class="flex f-s-0 f-c btn-item">
+				<view @click="go('/pages/coupon/list')" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-pintuan f24-size"></text>
 					</view>
-					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['拼团订单']}}</view>
-				</view> -->
+					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['我的卡券']}}</view>
+				</view>
 				<view @click="go('/pages/user/commentlist')" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-pinglun-08 f24-size"></text>
@@ -184,7 +196,7 @@
 			<view class="padding-6"></view>
 			<goodslist  :list="list"></goodslist>
 		</view>
-		<tab-bar :active="4"></tab-bar>
+		<tab-bar ref="tabbar" :active="4"></tab-bar>
 	</view>
 </template>
 <style scoped>
@@ -232,6 +244,7 @@
 					method: 'GET',
 					success(res) {
 						self.account = res.data ? res.data : '';
+						uni.stopPullDownRefresh();
 					}
 				})
 			},
@@ -265,6 +278,7 @@
 					method: 'GET',
 					success(res) {
 						self.order = res.data ? res.data :'';
+						uni.stopPullDownRefresh();
 					}
 				})
 			},
@@ -272,6 +286,9 @@
 				this.getUserInfo();
 				this.getAccount();
 				this.getOrderNum();
+				this.$nextTick(() => {
+					this.$refs.tabbar.getChatLen();
+				})
 			},
 		},
 		created() {},
@@ -283,7 +300,9 @@
 		mounted() {},
 		destroyed() {},
 		components: {},
-		onPullDownRefresh() {},
+		onPullDownRefresh() {
+			this.init();
+		},
 		onReachBottom() {}
 	}
 </script>

@@ -14,7 +14,7 @@
 		</view>
 		<payItem ref="payitem" class="padding-lr20 margin-t12" :isBalance="false" ></payItem>
 		<view class="padding-30 margin-t12">
-			<view @click="recharge()" class="flex f-a-c f-j-c h-36 bg-color-linear-y t-color-w b-radius-5">{{i18n['充值']}}</view>
+			<view @click="recharge()" class="flex f-a-c f-j-c h-40 f15-size bg-color-linear-y t-color-w b-radius-5">{{i18n['充值']}}</view>
 		</view>
 	</view>
 </template>

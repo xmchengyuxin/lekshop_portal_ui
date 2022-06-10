@@ -119,7 +119,7 @@
 					</view>
 					<view class="flex f-a-c f-s-0 van-icon f12-size van-icon-arrow t-color-9"></view>
 				</view>
-				<view @click="$refs.goodsParams.open()" class="flex padding-tb8">
+				<view v-if="goodsParams.length > 0" @click="$refs.goodsParams.open()" class="flex padding-tb8">
 					<view class="flex f-s-0 f12-size t-color-9 margin-r10">{{i18n['参数']}}</view>
 					<view class="flex f12-size flex-1 padding-lr10">
 						<text class="f12-size margin-r2" v-if="index <= 2" v-for="(item,index) in goodsParams">{{item.name}}</text>
@@ -202,19 +202,19 @@
 		<rich-text :nodes="goods.detail | html"></rich-text>
 		<view v-if="isIphonex" class="padding-15"></view>
 		<view  :style="{'padding-bottom': isIphonex ? '84px' : '50px'}"></view>
-		<view class="fixed-top bottom-btn bg-color-w flex padding-lr12 h-50 box-c" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
-			<view class="flex flex-1 f-j-s margin-r20">
-				<view @click="go('/pages/shops/shops?id='+shop.id)" class="flex f-c f-a-c f-j-c">
+		<view class="fixed-top bottom-btn bg-color-w flex  f-j-s padding-lr12 h-50 box-c" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
+			<view class="flex w-120 f-s-0 f-j-s margin-r20">
+				<view @click="go('/pages/shops/shops?id='+shop.id)" class="flex  f-c f-a-c f-j-c">
 					<text class="flex f-a-c van-icon van-icon-shop-o f18-size t-color-y"></text>
-					<text class="f10-size t-color-9 margin-t2">{{i18n['店铺']}}</text>
+					<text class="f12-size t-color-9 margin-t2">{{i18n['店铺']}}</text>
 				</view>
-				<view @click="go('/pages/chat/chat?id='+shop.memberId+'&goodsId=' + goods.id)" class="flex f-c f-a-c f-j-c">
+				<view @click="go('/pages/chat/chat?id='+shop.memberId+'&goodsId=' + goods.id)" class="flex  f-c f-a-c f-j-c">
 					<text class="flex f-a-c van-icon van-icon-chat-o f18-size "></text>
-					<text class="f10-size t-color-9 margin-t2">{{i18n['客服']}}</text>
+					<text class="f12-size t-color-9 margin-t2">{{i18n['客服']}}</text>
 				</view>
-				<view @click="like" class="flex f-c f-a-c f-j-c">
+				<view @click="like" class="flex f-c f-a-c f-j-c ">
 					<text :class="isLike ? 't-color-r van-icon-star' : 'van-icon-star-o '" class="flex f-a-c van-icon f18-size "></text>
-					<text class="f10-size t-color-9 margin-t2">{{i18n['收藏']}}</text>
+					<text class="f12-size t-color-9 margin-t2">{{i18n['收藏']}}</text>
 				</view>
 			</view>
 			<view class="flex f-a-c ">

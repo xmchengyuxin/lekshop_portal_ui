@@ -65,7 +65,7 @@
 				</uni-swipe-action-item>
 			</uni-swipe-action>
 		</view>
-		<tab-bar :active="1" :isShow="false"></tab-bar>
+		<tab-bar ref="tabbar" :active="1" :isShow="false"></tab-bar>
 	</view>
 </template>
 <style scoped>
@@ -201,6 +201,7 @@
 						}
 						self.totalPage = res.data.totalPage;
 						self.list = list;
+						uni.stopPullDownRefresh();
 					}
 				})
 			},
@@ -210,6 +211,9 @@
 				this.getList();
 				this.getChatLen();
 				this.getNewsLen();
+				this.$nextTick(() => {
+					this.$refs.tabbar.getChatLen();
+				})
 			},
 		},
 		computed: {
@@ -221,7 +225,9 @@
 		mounted() {},
 		destroyed() {},
 		components: {uniSwipeAction,uniSwipeActionItem},
-		onPullDownRefresh() {},
+		onPullDownRefresh() {
+			this.init();
+		},
 		onReachBottom() {}
 	}
 </script>

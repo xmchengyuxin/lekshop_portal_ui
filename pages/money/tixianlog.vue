@@ -1,7 +1,7 @@
 <template>
 	<view class="contain">
 		<view class="padding-12">
-		<view class="bg-color-linear-g b-radius-10 padding-30 flex f-a-c f-j-c f-c">
+		<view class="bg-color-linear-y b-radius-10 padding-30 flex f-a-c f-j-c f-c">
 			<text class="f16-size f-w-b t-color-w">{{i18n['提现金额']}}</text>
 			<text class="f24-size f-w-b t-color-w margin-t10">{{total.totalAmount ? total.totalAmount : 0}}</text>
 		</view>

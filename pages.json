@@ -15,7 +15,8 @@
 		{
 			"path": "pages/chat/index",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
 			} 
 		},
 		{
@@ -110,7 +111,8 @@
 		{
 			"path": "pages/cart/index",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
 			} 
 		},
 		{
@@ -277,13 +279,14 @@
 		{
 			"path": "pages/user/index",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
 			} 
 		},
 		{
 			"path": "pages/user/address",
 			"style": {
-				"navigationBarTitleText": "收获地址"
+				"navigationBarTitleText": "收货地址"
 			} 
 		},
 		{

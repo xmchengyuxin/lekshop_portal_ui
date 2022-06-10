@@ -13,7 +13,7 @@
 						</view>
 					</view>
 					<view class="flex f-a-c f-j-s ">
-						<view class="f11-size t-color-9">20人收藏</view>
+						<view class="f11-size t-color-9">{{i18n['1人收藏'] | i18n(item.colletionNum)}}</view>
 						<view class="flex">
 							<view @click.stop="del(index)" style="padding: 6px 10px 10px 10px;" class="flex f-a-c  van-icon van-icon-delete-o"></view>
 							<view  style="padding: 6px 10px 10px 10px;" class="flex f-a-c  van-icon van-icon-shop-o "></view>

@@ -49,7 +49,7 @@
 							</view>
 						</view>
 					</view>
-					<swiper v-if="banner.length > 0" class="wrap-banner h-120 margin-t12" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
+					<swiper v-if="banner.length > 0" class="wrap-banner h-120 margin-t12 margin-b10" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
 						<swiper-item v-for="item in banner" >
 							<view class="bg-img h100 " :style="item | bgimg(700)+''"></view>
 						</swiper-item>
@@ -229,7 +229,7 @@
 				$.ajax({
 					url: API.shopCouponList,
 					data: {
-						shopId: 1,
+						shopId: self.id,
 						page: 1,
 						pageSize: 999,
 					},
@@ -290,7 +290,12 @@
 					success(res) {
 						self.shop = res.data ? res.data : '';
 						self.isLike = self.shop != '' ? self.shop.isCollectShop : false;
-						self.banner = self.shop.banner && self.shops.banner != '' ? self.shops.split('|') : [];
+						let img = self.shop.banner ? self.shop.banner : '';
+						if(img != '' && img.indexOf('|') >= 0) {
+							self.banner = img.split('|');
+						}else{
+							self.banner = [img];
+						}
 					}
 				})
 			},

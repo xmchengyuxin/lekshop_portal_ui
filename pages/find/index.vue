@@ -70,7 +70,7 @@
 			<find-list :list="list" :offset='1.2'></find-list>
 			<no-data :list="list"></no-data>
 		</view>
-		<tab-bar :active="2"></tab-bar>
+		<tab-bar ref="tabbar" :active="2"></tab-bar>
 		<issue-btn ref="showIssue"></issue-btn>
 	</view>
 </template>
@@ -98,6 +98,11 @@
 		onLoad: function() {
 			self = this;
 			this.init();
+		},
+		onShow() {
+			this.$nextTick(() => {
+				this.$refs.tabbar.getChatLen();
+			})
 		},
 		methods: {
 			getList() {

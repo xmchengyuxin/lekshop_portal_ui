@@ -4,7 +4,7 @@
 		<view class="padding-lr15">
 			<view class="f15-size f-w-b">{{i18n['反馈内容']}}</view>
 			<view class="margin-t12 padding-12 b-color-e  b-radius-5">
-				<textarea v-model="value" maxlength="200" value="" class="f12-size" :placeholder="i18n['请输入']" />
+				<textarea v-model="value" maxlength="200" value="" class="f15-size" :placeholder="i18n['请输入']" />
 				<view class="flex f-a-c f-j-e">
 					<text class="f12-size t-color-y margin-r2">{{value.length}}</text>
 					<text class="f12-size t-color-b margin-r2">/200</text>
@@ -24,7 +24,7 @@
 
 		</view>
 		<view class="warp-tabbar flex f-a-c padding-lr12" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
-			<view @click="submit" class="flex flex-1 f-a-c f-j-c b-radius-30 bg-color-linear-y t-color-w h-36">{{i18n['提交意见']}}</view>
+			<view @click="submit" class="flex flex-1 f-a-c f-j-c b-radius-30 bg-color-linear-y t-color-w h-40 f15-size">{{i18n['提交意见']}}</view>
 		</view>
 	</view>
 </template>

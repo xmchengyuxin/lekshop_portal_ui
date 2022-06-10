@@ -37,7 +37,7 @@
 			</view>
 			
 			<view class="bg-color-w b-radius-5 padding-12 margin-b12">
-				<view @click="go('/pages/shops/shops?id'+order.shopId)" class="flex f-j-s margin-b16">
+				<view @click="go('/pages/shops/shops?id='+order.shopId)" class="flex f-j-s margin-b16">
 					<view class="flex f-a-c ">
 						<text class="flex f-a-c van-icon van-icon-shop-o  margin-r6"></text>
 						<text class="f-w-500 t-color-3 margin-r4 ">{{order.shopName}}</text>

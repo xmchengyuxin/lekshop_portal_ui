@@ -53,7 +53,7 @@
 			</swiper-item>
 		</swiper>
 		
-		<tab-bar :active="0" :isShow="false"></tab-bar>
+		<tab-bar ref="tabbar" :active="0" :isShow="false"></tab-bar>
 	</view>
 </template>
 <style scoped>
@@ -80,6 +80,11 @@
 		onLoad: function() {
 			self = this;
 			this.init();
+		},
+		onShow() {
+			this.$nextTick(() => {
+				this.$refs.tabbar.getChatLen();
+			})
 		},
 		methods: {
 			getGoodsList() {

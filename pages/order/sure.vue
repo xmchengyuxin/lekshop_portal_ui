@@ -138,8 +138,19 @@
 				self.getPrice();
 			},
 			chooseCoupon(data) {
+				if(data.reason && data.reason != '') {
+					$.$toast(dta.reason);return;
+				}
 				let info = self.list[self.commonIndex];
-				info['couponPrice'] = data.discountAmount;
+				if(data.type == 2) {//折扣券
+					let price = 0;
+					info.goodsList.forEach((ele,index) => {
+						price += ele.goodsSku.price*ele.buyNum;
+					})
+					info['couponPrice'] = price*(10-data.amount)/10;
+				}else{
+					info['couponPrice'] = data.discountAmount;
+				}
 				info['couponId'] = data.id;
 				self.$set(self.list,self.commonIndex,info);
 				self.$refs.coupon.close();

@@ -41,7 +41,7 @@
 		onLoad: function() {
 			self = this;
 			this.init();
-			$.setTitle(self.i18n['我的收藏']);
+			$.setTitle(self.i18n['我关注的店铺']);
 		},
 		methods: {
 			del(index) {

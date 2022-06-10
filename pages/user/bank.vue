@@ -24,9 +24,9 @@
 			<view class="padding-15"></view>
 			<view class="padding-30"></view>
 		<view class="warp-tabbar bg-color-w flex f-a-c padding-lr15" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
-			<view @click="go('/pages/user/addbank')" class="flex f-a-c f-j-c flex-1 bg-color-linear-y t-color-w b-radius-30 h-36">
+			<view @click="go('/pages/user/addbank')" class="flex f-a-c f-j-c flex-1 bg-color-linear-y t-color-w b-radius-30 h-40">
 				<text class="flex f-a-c f-j-c van-icon van-icon-plus t-color-w margin-r6"></text>
-				<text class="t-color-w f-w-500">{{i18n['增加新账户']}}</text>
+				<text class="t-color f15-size t-color-w f-w-500">{{i18n['增加新账户']}}</text>
 			</view>
 		</view>
 	</view>

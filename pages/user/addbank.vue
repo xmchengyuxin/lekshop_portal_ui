@@ -4,7 +4,7 @@
 				<view @click="$refs.bank.open()" class="flex h-50 b-bottom">
 					<view class="f-w-b flex f-a-c">{{i18n['银行类型']}}</view>
 					<view class="flex flex-1 f-j-e">
-						<input v-model="bank.bankName" disabled="true" type="text" class="f12-size margin-r6" value="" :placeholder="i18n['请选择银行类型']" />
+						<input v-model="bank.bankName" disabled="true" type="text" class="f15-size margin-r6" value="" :placeholder="i18n['请选择银行类型']" />
 						<view class="flex f-a-c">
 							<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f13-size"></text>
 						</view>
@@ -13,13 +13,13 @@
 				<view v-if="bank.bank != 'ZFB' && bank.bank != 'WX'" class="flex h-50 b-bottom">
 					<view class="f-w-b flex f-a-c">{{i18n['银行卡号']}}</view>
 					<view class="flex flex-1 f-j-e">
-						<input v-model="bankNo" type="number" class="f12-size" value="" :placeholder="i18n['请填写银行卡号']" />
+						<input v-model="bankNo" type="number" class="f15-size" value="" :placeholder="i18n['请填写银行卡号']" />
 					</view>
 				</view>
 				<view v-if="bank.bank == 'ZFB'" class="flex h-50 b-bottom">
 					<view class="f-w-b flex f-a-c">{{i18n['支付宝账号']}}</view>
 					<view class="flex flex-1 f-j-e">
-						<input v-model="zfbNo" type="text" class="f12-size" value="" :placeholder="i18n['请填写支付宝账号']" />
+						<input v-model="zfbNo" type="text" class="f15-size" value="" :placeholder="i18n['请填写支付宝账号']" />
 					</view>
 				</view>
 				<view v-if="bank != '' && bank.bank == 'WX'" class="flex padding-tb10 b-bottom">
@@ -33,7 +33,7 @@
 				<view class="flex h-50 b-bottom">
 					<view class="f-w-b flex f-a-c">{{i18n['持卡姓名']}}</view>
 					<view class="flex flex-1 f-j-e">
-						<input v-model="name" type="text" class="f12-size" value="" :placeholder="i18n['请填写持卡姓名']" />
+						<input v-model="name" type="text" class="f15-size" value="" :placeholder="i18n['请填写持卡姓名']" />
 					</view>
 				</view>
 				<view class="padding-15 margin-t15">

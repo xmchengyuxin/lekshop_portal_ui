@@ -109,7 +109,6 @@
 
 		},
 		created() {
-			this.getChatLen();
 		},
 		mounted() {},
 		destroyed() {},

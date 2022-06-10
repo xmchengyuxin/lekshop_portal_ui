@@ -48,7 +48,7 @@
 							<view v-if="state[child.order.status].value == 'dfh'" @click.stop="changeAddress(index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-3 ">{{i18n['修改地址']}}</view>
 							<view v-if="state[child.order.status].value == 'dzf'" @click.stop="cancelOrder(parent,index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-3 ">{{i18n['取消订单']}}</view>
 							<view @click.stop="showWuliu(child)" v-if="state[child.order.status].value == 'dsh'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-3">{{i18n['查看物流']}}</view>
-							<view v-if="state[child.order.status].value == 'dzf'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size bg-color-linear-y t-color-w">{{i18n['立即支付']}}</view>
+							<view @click.stop="showPay(index)" v-if="state[child.order.status].value == 'dzf'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size bg-color-linear-y t-color-w">{{i18n['立即支付']}}</view>
 							<view v-if="state[child.order.status].value == 'dsh'" @click.stop="sureOrder(parent,index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size bg-color-linear-y t-color-w">{{i18n['确认收货']}}</view>
 							<view v-if="state[child.order.status].value == 'ywc'"  class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-y t-color-y ">{{i18n['评价']}}</view>
 						</view>
@@ -58,12 +58,14 @@
 			</swiper-item>
 		</swiper>	
 		<logistics ref="wuliuinfo"></logistics>
+		<pay-item ref="payitem" @pay='pay' pageType="2"></pay-item>
 	</view>
 </template>
 <style scoped>
 @import url('../../static/css/order/order.css');
 </style>
 <script>
+	import payItem from '../common/payitem';
 	import logistics from '@/pages/common/logistics.vue';
 	const state = require('../../utils/api/state.js').default;
 	const API = require('../../utils/api/order.js').default;
@@ -88,7 +90,8 @@
 					4: {name: '已取消',value: 'yqx',text: '取消订单',color: '#9B9B9B',},
 					6: {name: '退款',value: 'tk',text: '退款',},
 				},
-				refundState: state.refundStatus
+				refundState: state.refundStatus,
+				payIndex: '',
 			};
 		},
 		onLoad: function(options) {
@@ -98,6 +101,44 @@
 			$.setTitle(self.i18n['我的订单']);
 		},
 		methods: {
+			showPay(index) {
+				this.payIndex = index;
+				this.$refs.payitem.open();
+			},
+			pay(type) {
+				$.ajax({
+					url: API.payOrderApi,
+					data: {
+						payOrderNo: self.list[self.payIndex].order.payOrderNo,
+						payMethod: type
+					},
+					method: 'POST',
+					success(res) {
+						if (type != 'balance') {
+							// #ifndef H5
+							$.wxPay({
+								payType: type.toLocaleLowerCase(),
+								data: res.data.message,
+								success(res) {
+									self.list[self.payIndex]['order']['status'] = 1;
+								}
+							})
+							// #endif
+							// #ifdef H5
+							$.wxPayH5({
+								data: res.data.message,
+								success(res) {
+									self.list[self.payIndex]['order']['status'] = 1;
+								}
+							})
+							// #endif
+						}
+						if (type == 'balance') {
+							self.list[self.payIndex]['order']['status'] = 1;
+						}
+					}
+				})
+			},
 			showWuliu(info) {
 				this.$refs.wuliuinfo.show(info.order.id);
 			},
@@ -203,7 +244,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {logistics},
+		components: {logistics,payItem},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

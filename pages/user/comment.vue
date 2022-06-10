@@ -35,7 +35,7 @@
 				</view>
 			</view>
 			<view  class="wrap-value b-radius-5 margin-t12">
-				<textarea class="f12-size" v-model="value"  :placeholder="i18n['从多个角度评价宝贝,可以帮助更多想买的人']"></textarea>
+				<textarea class="f13-size" v-model="value"  :placeholder="i18n['从多个角度评价宝贝,可以帮助更多想买的人']"></textarea>
 			</view>
 			<view class="flex f-w">
 				<view v-for="(item,index) in imgs" :style="item | bgimg(300)+''" class="flex f-s-0  f-j-e b-radius-5 w-80 h-80 bg-img bg-color-f7 margin-r12 margin-t12">

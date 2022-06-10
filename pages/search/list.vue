@@ -38,39 +38,35 @@
 		<uni-popup ref="popup" type="right" background-color="#fff">  
 			<view class="h100 bg-color-w wrap-filter-popup" style="width: 70vw;">
 				<scroll-view scroll-y="true" :style="{'height': height+'px'}">
+					<view :style="{ 'padding-top': top+44 + 'px' }"></view>
 					<view class="padding-10 b-bottom">
 						<view class="flex f-a-c f-j-s">
-							<text class="f11-size t-color-6">{{i18n['品牌']}}</text>
-						</view>
-					</view>
-					<view class="padding-10 b-bottom">
-						<view class="flex f-a-c f-j-s">
-							<text class="f11-size t-color-6">{{i18n['价格区间']}}</text>
+							<text class="f12-size t-color-6">{{i18n['价格区间']}}</text>
 						</view>
 						<view class="flex margin-t15">
 							<view class="flex flex-1 b-radius-30 bg-color-f7 h-30">
-								<input v-model="min" class="f11-size input w100 h100" type="number" :placeholder="i18n['最低价']">
+								<input v-model="min" class="f12-size input w100 h100" type="number" :placeholder="i18n['最低价']">
 							</view>
 							<view class="flex f-s-0 f-a-c f-j-c t-color-9 padding-lr15"><text class="b-bottom w-30"></text></view>
 							<view class="flex flex-1 b-radius-30 bg-color-f7 h-30">
-								<input v-model="max" class="f11-size input w100 h100" type="number" :placeholder="i18n['最高价']">
+								<input v-model="max" class="f12-size input w100 h100" type="number" :placeholder="i18n['最高价']">
 							</view>
 						</view>
 					</view>
 					<view class="padding-10 b-bottom">
 						<view class="flex f-a-c f-j-s">
-							<text class="f11-size t-color-6">{{i18n['发货地']}}</text>
+							<text class="f12-size t-color-6">{{i18n['发货地']}}</text>
 							<text @click="provinceShow= !provinceShow" :class="provinceShow ? 'van-icon-arrow-up':'van-icon-arrow-down'" class="flex f-a-c f-j-c van-icon  t-color-9 f15-size"></text>
 						</view>
 						<view class="grid grid-c-3 grid-g10 margin-t10">
-							<view  class="flex f-a-c f-j-c padding-lr2 h-34 b-radius-2 bg-color-f7 f11-size t-color-6">{{i18n['定位中']}}</view>
+							<view  class="flex f-a-c f-j-c padding-lr2 h-34 b-radius-2 bg-color-f7 f12-size t-color-6">{{i18n['定位中']}}</view>
 						</view>
 						<block v-if="provinceShow">
 						<view class="flex f-a-c f-j-s margin-t10">
-							<text class="f11-size t-color-6">{{i18n['城市']}}</text>
+							<text class="f12-size t-color-6">{{i18n['城市']}}</text>
 						</view>
 						<view class="grid grid-c-3 grid-g10 margin-t10">
-							<view @click="chooseProvince(item)" v-for="(item,key) in provinceList" :class="province == item ? 'on t-color-y' : 'bg-color-f7 t-color-6'" class="flex f-a-c f-j-c padding-lr2 h-34 b-radius-2  f11-size ">{{item}}</view>
+							<view @click="chooseProvince(key)" v-for="(item,key) in provinceList" :class="province == key ? 'on t-color-y' : 'bg-color-f7 t-color-6'" class="flex f-a-c f-j-c padding-lr2 h-34 b-radius-2  f12-size ">{{item}}</view>
 						</view>
 						</block>
 					</view>
@@ -78,7 +74,7 @@
 				<view class="flex f-a-c f-j-e padding-lr10 h-60">
 					<view class="flex w-160 b-radius-30 h-36 over-h">
 						<view @click="reset" class="flex flex-1 f-a-c f-j-c bg-color-linear-y t-color-w">{{i18n['重置']}}</view>
-						<view class="flex flex-1 f-a-c f-j-c bg-color-p t-color-w">{{i18n['确定']}}</view>
+						<view @click="seach()" class="flex flex-1 f-a-c f-j-c bg-color-p t-color-w">{{i18n['确定']}}</view>
 					</view>
 				</view>
 			</view>
@@ -174,6 +170,9 @@
 						type: self.type,//1普通商品>>2秒杀商品>>3拼团商品
 						sort: self.sort,
 						status: '',
+						minAmount: self.min,
+						maxAmount: self.max,
+						provinceCode: self.province,
 						page: self.page,
 						pageSize: self.pageSize,
 						spreadStatus: self.spread != '' ? '1' : '',
@@ -190,6 +189,11 @@
 						self.list  = list;
 					}
 				})
+			},
+			seach() {
+				this.page = 1;
+				this.getList();
+				this.$refs.popup.close();
 			},
 			init() {
 				this.getList();
