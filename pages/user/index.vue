@@ -9,10 +9,11 @@
 				<xcx-header></xcx-header>
 			</view>
 			<view class="padding-lr15 flex">
-				<view @click="updateImg" class="w-60 h-60 b-radius  bg-img margin-r12" :style="user.headImg | bgimg(300)+''"></view>
+				<view v-if="user != ''" @click="updateImg" class="w-60 h-60 b-radius  bg-img margin-r12" :style="user.headImg | bgimg(300)+''"></view>
+				<view v-else class="w-60 h-60 b-radius  bg-img margin-r12" :style="defaultImg | bgimg(300)+''"></view>
 				<view class="flex f-c f-a-s">
 					<view v-if="user == ''" @click="go('/pages/passport/login')" class="f22-size">{{i18n['登录']}} / {{i18n['注册']}}</view>
-					<view v-if="user != ''"  class="f22-size">{{user.phone | hideCenterText}}</view>
+					<view v-if="user != ''"  class="f22-size">{{user.nickname}}</view>
 					<view class="f10-size padding-lr6 b-radius-2 h-16 t-color-w bg-color-linear-r margin-t6">
 						{{i18n['Hi，欢迎登录']}}</view>
 				</view>
@@ -217,11 +218,14 @@
 				user: '',
 				account: '',
 				order: '',
+				defaultImg: ''
 			};
 		},
 		onLoad: function() {
 			self = this;
 			this.getList();
+			let config = uni.getStorageSync('config') ? uni.getStorageSync('config') : '';
+			self.defaultImg = config != '' ? config.default_head_img : '';
 		},
 		onShow:function(){
 			this.init();

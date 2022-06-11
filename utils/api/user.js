@@ -9,6 +9,7 @@ export default {
 	'delViewGoodsApi': 'member/viewGoods/delete',//删除足迹
 	'commentListApi': 'member/comment/getList',//获取评价列表
 	'commentApi': 'member/comment/comment',//评价
+	'addCommentApi': 'member/comment/continuteAdd',//发表追评
 	'accountListApi': 'member/account/getList',//资金明细
 	'bankListApi': 'member/bank/getList',//获取银行卡列表
 	'bankConfigApi': 'common/getBankSelector',//获取银行卡配置

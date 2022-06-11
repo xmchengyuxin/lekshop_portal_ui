@@ -4,8 +4,8 @@
 			<view @click="go('/pages/setting/edit')" class="bg-color-w padding-tb12 flex f-j-s f-a-c b-bottom">
 				<view class="flex f-s-0 w-50 h-50 b-radius bg-img margin-r12" :style="user.headImg | bgimg(300)+''"></view>
 				<view class="flex flex-1 f-c">
-					<view class="f16-size">{{user.phone | hideCenterText}}</view>
-					<view class="margin-t2">{{i18n['用户名']}}：{{user.code}}</view>
+					<view class="f16-size">{{user.nickname}}</view>
+					<view class="margin-t2">{{i18n['用户名']}}：{{user.code | hideCenterText}}</view>
 				</view>
 				<view class="flex f-s-0">
 					<text class="flex f-a-c f-j-c van-icon van-icon-edit t-color-9 f16-size margin-r4"></text>
@@ -62,6 +62,8 @@
 		},
 		onLoad: function() {
 			self = this;
+		},
+		onShow() {
 			this.init();
 		},
 		methods: {

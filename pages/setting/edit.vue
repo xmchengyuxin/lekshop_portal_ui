@@ -14,7 +14,7 @@
 			<view class="padding-15 flex f-j-s b-bottom">
 				<view class=" f15-size">{{i18n['昵称']}}</view>
 				<view class="flex flex-1">
-					<input v-model="name" maxlength="4" type="text" class="w100 h100  right f15-size" value="" :placeholder="i18n['请输入']" />
+					<input v-model="name"  type="text" class="w100 h100  right f15-size" value="" :placeholder="i18n['请输入']" />
 				</view>
 			</view>
 			<view class="padding-15 flex f-j-s b-bottom">
@@ -81,7 +81,7 @@ input.right {
 						personSign: self.sign,
 						gender: self.sex,
 						nickname: self.name,
-						age: self.age,
+						// age: self.age,
 					},
 					method: 'POST',
 					success(res) {

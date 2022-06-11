@@ -177,7 +177,7 @@
 				if(self.imgs.length <= 0 && this.type != 1){
 					$.$toast('请上传图片');return;
 				}
-				if(goodsArr.length <= 0){
+				if(goodsArr.length <= 0 && this.type != 1){
 					$.$toast('请选择商品');return;
 				}
 				$.ajax({
@@ -198,17 +198,9 @@
 							wx.navigateBack({
 								delta: 1,
 								success: function() {
-									// #ifndef MP-WEIXIN
 									if (beforePage.$vm.init) {
 										beforePage.$vm.init(); // 执行前一个页面的changeBanner方法
 									}
-									// #endif
-									
-									// #ifdef MP-WEIXIN
-									if (beforePage.init) {
-										beforePage.init(); // 执行前一个页面的changeBanner方法
-									}
-									// #endif
 								}
 							});
 						},2000)

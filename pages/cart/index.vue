@@ -7,7 +7,7 @@
 			{{i18n['购物车']}}
 			<text v-if="len > 0" class="f10-size t-color-9 margin-l6">({{i18n['共1件宝贝'] | i18n(len)}})</text>
 			</view>
-			<view @click="showDel=!showDel" class="flex f-s-0 f-a-c padding-lr10" :class="showDel ? 't-color-y' : ''">{{showDel ? i18n['完成'] : i18n['管理']}}</view>
+			<view v-if="list.length > 0" @click="showDel=!showDel" class="flex f-s-0 f-a-c padding-lr10" :class="showDel ? 't-color-y' : ''">{{showDel ? i18n['完成'] : i18n['管理']}}</view>
 			<xcx-header></xcx-header>
 		</view>
 		<view :style="{'padding-top': top+44+'px'}"></view>
@@ -44,12 +44,12 @@
 					</view>
 				</view>
 			</view>
-			<no-data v-if="list.length <= 0" ></no-data>
+			<no-data v-if="list.length <= 0" text="cart"></no-data>
 		</view>
-		<view class="fixed-top wrap-btn  h-50 bg-color-f7 flex f-j-s" :style="{'bottom': !isIphonex ? '50px' : '84px'}">
+		<view v-if="list.length > 0" class="fixed-top wrap-btn  h-50 bg-color-f7 flex f-j-s" :style="{'bottom': !isIphonex ? '50px' : '84px'}">
 			<view @click="chooseAll" class="flex padding-lr10 f-a-c">
 				<text :class="isAll ? 'van-icon-checked t-color-y' : 'van-icon-circle t-color-9'" class="flex f-a-c van-icon  f18-size margin-r4"></text>
-				<text class="f11-size">{{i18n['全选']}}</text>
+				<text class="f13-size">{{i18n['全选']}}</text>
 			</view>
 			<view v-if="!showDel" class="flex f-a-c padding-lr10">
 				<view class="flex f-c">
@@ -63,8 +63,8 @@
 				<view @click="pay" class="flex f-a-c f-j-c b-radius-30 h-32 t-color-w bg-color-linear-y w-80">{{i18n['结算']}}</view>
 			</view>
 			<view v-if="showDel" class="flex f-a-c padding-lr10">
-				<view @click="clearCar" class="flex f-a-c f-j-c b-radius-30 h-28 f10-size t-color-y b-color-y padding-lr12 margin-r12">{{i18n['清空购物车']}}</view>
-				<view @click="del" class="flex f-a-c f-j-c b-radius-30 h-28 f10-size t-color-w bg-color-linear-y w-80">{{i18n['删除']}}</view>
+				<view @click="clearCar" class="flex f-a-c f-j-c b-radius-30 h-28 f12-size t-color-y b-color-y padding-lr12 margin-r12">{{i18n['清空购物车']}}</view>
+				<view @click="del" class="flex f-a-c f-j-c b-radius-30 h-28 f12-size t-color-w bg-color-linear-y w-80">{{i18n['删除']}}</view>
 			</view>
 		</view>
 		<view class="padding-30"></view>

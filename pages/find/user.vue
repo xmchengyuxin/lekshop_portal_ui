@@ -21,7 +21,7 @@
 		</block>
 		<view class="wrap-header-page1" >
 			<view v-if="info.background && info.background != ''" class="header-user-img bg-img" :style="info.background | bgimg(700)+''"></view>
-			<view v-else class="header-user-img bg-img" :style="info.headImg | bgimg(700)+''"></view>
+			<view v-else class="header-user-img bg-img" :style="'https://qiniu.chengyuwb.com/shop_find_bg.png' | bgimg(700)+''"></view>
 			<view   :style="{'padding-top': top+'px'}"></view>
 			<view class="flex f-j-s h-44" style="position: relative;z-index: 1;">
 				<view @click="back(1)" class="padding-lr10 flex f-a-c f-j-c">
@@ -41,6 +41,7 @@
 					<view class="flex f-c f-j-c">
 						<view class="flex f-a-c">
 							<view class="f16-size t-color-w f-w-b margin-r12">{{info.nickname}}</view>
+							<text v-if="isSelf" class="flex f-a-c f-j-c van-icon van-icon-edit t-color-w"></text>	
 						</view>
 						<view class="flex f-a-c margin-t6">
 							<text v-if="info.personSign"  class="f12-size t-color-w line2">{{info.personSign}}</text>
@@ -135,7 +136,7 @@
 				this.list.splice(index,1);
 			},
 			goEdit() {
-				if(this.id == '') {
+				if(this.isSelf) {
 					self.go('/pages/find/edit');
 				}
 			},

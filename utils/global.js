@@ -95,6 +95,7 @@ export default {
 				method: 'GET',
 				success(res) {
 					if(options.success) {
+						uni.removeStorageSync('userInfo');
 						user = res.data ? res.data : '';
 						uni.setStorageSync('userInfo',user);
 						options.success(user);

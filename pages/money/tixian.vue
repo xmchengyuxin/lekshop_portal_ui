@@ -3,7 +3,7 @@
 		<view class="padding-6"></view>
 		<view @click="go('/pages/user/bank?type=tixian')" class="padding-12 bg-color-w flex margin-b12">
 			<view class="flex flex-1 f-j-c h-36 f-c">
-				<view v-if="bank == ''" class="flex f-a-c f13-size f-w-500">{{i18n['选择提现账户']}}</view>
+				<view v-if="bank == ''" class="flex f-a-c f15-size ">{{i18n['选择提现账户']}}</view>
 				<block v-if="bank != ''">
 					<view class="flex f-a-c">
 						<text class="flex f13-size f-w-b margin-r12">{{bank.accountName | hideCenterText}}</text>
@@ -16,7 +16,7 @@
 		</view>
 		<view class="bg-color-w padding-12">
 			<view class="">
-				<view class="">{{i18n['提现金额']}}</view>
+				<view class="f16-size">{{i18n['提现金额']}}</view>
 				<view class="flex f-a-c margin-t12 b-bottom">
 					<text class="flex f-s-0 margin-r12 f32-size">￥</text>
 					<view class="flex flex-1 h-70">
@@ -34,7 +34,7 @@
 			
 		</view>
 		<view class="padding-12 margin-t15">
-			<view @click="tixian" class="flex f-a-c f-j-c h-40 t-color-w bg-color-linear-y b-radius-5">{{i18n['提现']}}</view>
+			<view @click="tixian" class="flex f-a-c f-j-c h-40 t-color-w bg-color-linear-y b-radius-5 f15-size">{{i18n['提现']}}</view>
 		</view>
 	</view>
 </template>

@@ -35,11 +35,32 @@
 		<block v-if="pageType != 1">
 			<uni-popup ref="wrappay" type="bottom">
 				<div class="wrap-popup-radius bg-color-w">
-					<view @click="pay('balance')" v-if="isBalance" class="flex f-a-c f-j-c h-44 f12-size">{{i18n['余额支付']}}</view>
+					<view class="flex f-a-c f-j-c padding-10 f16-size f-w-500">请选择</view>
+					<view class="padding-15"></view>	
+					<view v-if="isBalance" @click="pay('balance')" class="flex h-50 padding-lr20">
+						<view class="flex f-a-c f-s-0 w-44 shops-icon shops-icon-qianbao f28-size"></view>
+						<view class="flex flex-1 b-bottom f-a-c f-j-s ">
+							<text class="f-w-500 f18-size">{{i18n['余额支付']}}</text>
+							<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>	
+						</view>
+					</view>
 					<!-- #ifndef MP-WEIXIN -->
-					<view @click="pay('zfbPay')" class="flex f-a-c f-j-c h-44 f12-size">{{i18n['支付宝']}}</view>
+					<view @click="pay('zfbPay')" class="flex h-50 padding-lr20">
+						<view class="flex f-a-c f-s-0 w-44 shops-icon shops-icon-zfbpay f28-size"></view>
+						<view class="flex flex-1 b-bottom f-a-c f-j-s ">
+							<text class="f-w-500 f18-size">{{i18n['支付宝']}}</text>
+							<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>	
+						</view>
+					</view>
 					<!-- #endif -->
-					<view @click="pay('wxPay')" class="flex f-a-c f-j-c h-44 f12-size">{{i18n['微信支付']}}</view>
+					<view @click="pay('wxPay')" class="flex h-50 padding-lr20">
+						<view class="flex f-a-c f-s-0 w-44 shops-icon shops-icon-wxpay f28-size"></view>
+						<view class="flex flex-1 b-bottom f-a-c f-j-s ">
+							<text class="f-w-500 f18-size">{{i18n['微信支付']}}</text>
+							<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>	
+						</view>
+					</view>
+					
 					<view class="padding-10"></view>
 				</div>
 			</uni-popup>	

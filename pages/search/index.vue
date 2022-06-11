@@ -23,7 +23,7 @@
 				<text class="flex f-a-c padding-10 van-icon van-icon-delete-o t-color-9"></text>
 			</view>
 			<view class="flex f-w">
-				<view v-for="(item,index) in list" class="flex f-a-c f-j-c f-s-0 h-28 bg-color-f3 b-radius-30 padding-lr10 f12-size t-color-9 margin-r10 margin-b12">{{item}}</view>
+				<view @click="hisSearch(item)" v-for="(item,index) in list" class="flex f-a-c f-j-c f-s-0 h-28 bg-color-f3 b-radius-30 padding-lr10 f12-size t-color-9 margin-r10 margin-b12">{{item}}</view>
 			</view>
 		</view>
 		<view class="padding-lr12 ">
@@ -60,6 +60,9 @@
 			this.init();
 		},
 		methods: {
+			hisSearch(name) {
+				self.go('/pages/search/list?title='+name,2);
+			},
 			hotSearch(info) {
 				self.go('/pages/search/list?title='+info.name,2);
 			},

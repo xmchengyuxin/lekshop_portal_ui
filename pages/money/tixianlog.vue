@@ -2,8 +2,8 @@
 	<view class="contain">
 		<view class="padding-12">
 		<view class="bg-color-linear-y b-radius-10 padding-30 flex f-a-c f-j-c f-c">
-			<text class="f16-size f-w-b t-color-w">{{i18n['提现金额']}}</text>
-			<text class="f24-size f-w-b t-color-w margin-t10">{{total.totalAmount ? total.totalAmount : 0}}</text>
+			<text class="f16-size  t-color-w">{{i18n['提现金额']}}</text>
+			<text class="f24-size  t-color-w margin-t10">{{total.totalAmount ? total.totalAmount : 0}}</text>
 		</view>
 		</view>
 		<view class="h-10"></view>
@@ -11,11 +11,11 @@
 			<view class="b-bottom padding-tb10" v-for="item in list">
 				<view class="flex f-a-c f-j-s">
 					<text class=" t-color">{{item.orderNo}}</text>
-					<text class="f-w-b t-color-y">-¥{{item.totalAmount}}</text>
+					<text class=" t-color-y">-¥{{item.totalAmount}}</text>
 				</view>
 				<view class="flex f-a-c f-j-s margin-t6">
 					<view class="flex f-a-c">
-						<text class="f-w-b t-color margin-r20" >{{item.bankName}}</text>
+						<text class="f13-size t-color margin-r20" >{{item.bankName}}</text>
 						<text class="f11-size t-color-9">{{item.addTime | time1}}</text>
 					</view>
 					<text class=" t-color-y" v-if="item.status == 0">{{i18n['待审核']}}</text>

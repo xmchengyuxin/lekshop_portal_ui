@@ -94,7 +94,7 @@
 							<text class="f12-size margin-r2" v-if="index <= 2" v-for="(item,index) in skuInfoList">{{item.attrKey}}</text>
 						</view>
 						<view class="flex f-w" v-if="skuInfoList[0] && skuInfoList[0].valList.length > 0">
-							<view  v-for="(child,idx) in skuInfoList[0].valList" class="flex f-a-c f-j-c f-s-0 b-radius-2 bg-color-f7 t-color-9 margin-r12 margin-t12 h-30 f12-size padding-lr10">{{child.value}}</view>
+							<view v-if="idx <= 5" v-for="(child,idx) in skuInfoList[0].valList" class="flex f-a-c f-j-c f-s-0 b-radius-2 bg-color-f7 t-color-9 margin-r12 margin-t12 h-30 f12-size padding-lr10">{{child.value}}</view>
 							<view v-if="skuInfoList.length > 0" class="flex f-a-c f-j-c f-s-0 b-radius-2 bg-color-f7 t-color-9 margin-r12 margin-t12 h-30 f12-size padding-lr10">{{i18n['更多规格可选']}}</view>
 						</view>
 					</view>
@@ -164,13 +164,28 @@
 				</view>
 				<block v-for="item in commentList">
 				<view  class="flex margin-t12">
-					<view class="flex w-30 h-30 b-radius bg-img margin-r12" :style="item.memberHeadImg | bgimg(300)+''"></view>
+					<view class="flex w-30 h-30 b-radius bg-img margin-r12" :style="item.comment.memberHeadImg | bgimg(300)+''"></view>
 					<view class="flex f-c f-j-s">
-						<text class="f10-size">{{item.memberName}}</text>
-						<text class="f10-size t-color-9">{{item.addTime | time3}}</text>
+						<text class="f10-size">{{item.comment.memberName}}</text>
+						<text class="f10-size t-color-9">{{item.comment.addTime | time3}}</text>
 					</view>
 				</view>
-				<view class="f12-size margin-t10">{{item.content}}</view>
+				<view class="f12-size t-color-9 padding-lr10 margin-t6">
+					{{i18n['已购商品']}}：{{item.comment.goodsParamName}}
+				</view>	
+				<view class=" margin-t10">{{item.comment.content}}</view>
+				<view v-if="item.comment.img != ''" :class="getImgs(item.comment.img).length >= 3 ? 'grid-c-3' : 'grid-c-2'" class="grid  grid-g10 margin-t10">
+					<view @click="previewImg(img)" v-for="(img,index) in getImgs(item.comment.img)" class="b-radius-5 bg-img" :style="img | bgimg(300)+''" style="padding: 50%;"></view>
+				</view>
+				<block v-if="item.leftCommentList" v-for="child in item.leftCommentList">
+					<view v-if="child.type == 1" class="padding-10 bg-color-e b-radius-5 t-color-8 margin-t8">
+						{{i18n['商家回复']}}：{{child.content}}
+					</view>	
+					<view v-if="child.type == 2" class="padding-10  margin-t8"  >
+						<text class="t-color-y ">{{child.addTime | time1}}{{i18n['追评']}}：</text>
+						{{child.content}}
+					</view>	
+				</block>
 				</block>
 			</view>
 			
@@ -429,6 +444,13 @@
 			this.init();
 		},
 		methods: {
+			getImgs(imgs) {
+				if(imgs.indexOf('|') > 0) {
+					return imgs.split('|')
+				}else{
+					return [imgs]
+				}
+			},
 			updateSkuPrice() {//阶梯拼团时需自行更新价格
 				if(this.groupConfig != ''){
 					return (this.sku.price*this.groupConfig.discounts/100).toFixed(2);

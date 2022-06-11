@@ -316,14 +316,14 @@
 		{
 			"path": "pages/user/help",
 			"style": {
-				"navigationBarTitleText": "问题帮助",
+				"navigationBarTitleText": "帮助中心",
 				"backgroundColor": "#FFFFFF"
 			} 
 		},
 		{
 			"path": "pages/user/helpdetail",
 			"style": {
-				"navigationBarTitleText": "问题帮助"
+				"navigationBarTitleText": "帮助中心"
 			} 
 		},
 		{

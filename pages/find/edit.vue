@@ -2,17 +2,17 @@
 	<view class="contain">
 		<view class="contain-page top-0">
 			<view class="padding-15 flex f-a-c f-j-s b-bottom">
-				<view class="f-w-b">{{i18n['头像']}}</view>
+				<view class="f15-size">{{i18n['头像']}}</view>
 				<view @click="updateImg" class="w-60 h-60 b-radius bg-img" :style="headImg | bgimg(300)+''"></view>
 			</view>
 			<view class="padding-15 flex f-j-s b-bottom">
-				<view class="f-w-b">{{i18n['昵称']}}</view>
+				<view class="f15-size">{{i18n['昵称']}}</view>
 				<view class="flex flex-1">
 					<input v-model="name" maxlength="4" type="text" class="w100 h100 f-w-500 right" value="" :placeholder="i18n['请输入']" />
 				</view>
 			</view>
 			<view class="padding-15 flex f-j-s b-bottom">
-				<view class="f-w-b">{{i18n['性别']}}</view>
+				<view class="f15-size">{{i18n['性别']}}</view>
 				<view class="flex flex-1 f-j-e">
 					<view @click="sex='1'" class="flex f-a-c f-j-c margin-r20">
 						<text class="flex f-a-c f-j-c van-icon  margin-r8 f18-size" :class="sex == '1' ? 'van-icon-checked t-color-y' : 'van-icon-circle t-color-b'"></text>
@@ -25,11 +25,11 @@
 				</view>
 			</view>
 			<view class="padding-15 flex f-a-c f-j-s b-bottom">
-				<view class="f-w-b">{{i18n['背景图片']}}</view>
+				<view class="f15-size">{{i18n['背景图片']}}</view>
 				<view @click="updateImgBg" class="w-60 h-60  bg-img" :style="bg | bgimg(300)+''"></view>
 			</view>
 			<view class="padding-15 ">
-				<view class="f-w-b">{{i18n['个性签名']}}</view>
+				<view class="f15-size">{{i18n['个性签名']}}</view>
 				<view class="flex flex-1 h-40">
 					<input v-model="sign" type="text" class="w100 h100 f-w-500" value="" :placeholder="i18n['请输入']" />
 				</view>

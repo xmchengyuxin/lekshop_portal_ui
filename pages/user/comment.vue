@@ -90,7 +90,7 @@
 			
 		</view>
 		<view  v-if="isAdd == ''" @click="issue"  class="flex f-a-c f-j-c bg-color-linear-y t-color-w b-radius-30 f16-size f-w-500 btn">{{i18n['发表评价']}}</view>
-		<view  v-else @click="issue"  class="flex f-a-c f-j-c bg-color-linear-y t-color-w b-radius-30 f16-size f-w-500 btn">{{i18n['发表追评']}}</view>
+		<view  v-else @click="add"  class="flex f-a-c f-j-c bg-color-linear-y t-color-w b-radius-30 f16-size f-w-500 btn">{{i18n['发表追评']}}</view>
 		<view class="padding-30"></view>
 		
 	</view>
@@ -125,6 +125,31 @@
 			this.init();
 		},
 		methods: {
+			add() {
+				let check = api.validate([
+					{
+						value: this.value,
+						text:this.i18n['评价内容不能为空'],
+						rules: ''
+					},
+				]);
+				if(!check){return};
+				$.ajax({
+					url: API.addCommentApi,
+					data: {
+						anonymousStatus: self.showName ? 0 : 1,
+						content: self.value,
+						img: self.imgs.join('|'),
+						id: self.info.id,
+					},
+					method: 'POST',
+					success(res) {
+						$.$toast('操作成功');
+						uni.removeStorageSync('comment');
+						$.back(1,2000);
+					}
+				})
+			},
 			issue() {
 				let check = api.validate([
 					{
@@ -189,6 +214,7 @@
 			},
 			init() {
 				this.info = uni.getStorageSync('comment') ? uni.getStorageSync('comment') : '';
+				this.isAdd = this.info.status == 1 ? '1' : '';
 			},
 		},
 		created() {

@@ -9,7 +9,7 @@
 					<view class="flex flex-1 f-c">
 						<view class="flex f-a-c">
 							<text v-if="item.status == 1" class="f10-size padding-lr2 b-radius-2  t-color-w margin-r4" style="background-color: #CDE676;">{{i18n['默认']}}</text>
-							<text class="f-w-b">{{item.realname}}  {{item.phone}}</text>
+							<text class="f15-size">{{item.realname}}  {{item.phone}}</text>
 						</view>
 						<view class="flex f-a-c margin-t2">
 							<text class="f12-size t-color-9">{{item.province}}{{item.city}}{{item.area}} {{item.address}}</text>

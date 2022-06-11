@@ -8,11 +8,11 @@
 					</view>
 					<view class="flex flex-1 f-c">
 						<view class="flex f-a-c">
-							<text class="f-w-b">{{item.bank}}</text>
+							<text class="f15-size">{{item.bank}}</text>
 						</view>
-						<view class="flex f-a-c margin-t2">
-							<text v-if="item.zfbAccount" class="f12-size t-color-9">{{item.zfbAccount | hideCenterText}}</text>
-							<text v-if="item.bankAccount" class="f12-size t-color-9">{{item.bankAccount | hideCenterText}}</text>
+						<view class="flex f-a-c margin-t4">
+							<text v-if="item.zfbAccount" class="f13-size t-color-9">{{item.zfbAccount | hideCenterText}}</text>
+							<text v-if="item.bankAccount" class="f13-size t-color-9">{{item.bankAccount | hideCenterText}}</text>
 						</view>
 					</view>
 					<view @click.stop="edit(item)" class="flex f-a-c padding-lr12">
@@ -67,17 +67,9 @@
 					uni.navigateBack({
 						delta: len,
 						success: function() {
-							// #ifndef MP-WEIXIN
 							if (beforePage.$vm.setBank) {
 								beforePage.$vm.setBank(item); // 执行前一个页面的changeBanner方法
 							}
-							// #endif
-							
-							// #ifdef MP-WEIXIN
-							if (beforePage.setBank) {
-								beforePage.setBank(item); // 执行前一个页面的changeBanner方法
-							}
-							// #endif
 						}
 					});
 				}

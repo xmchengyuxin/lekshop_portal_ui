@@ -5,8 +5,8 @@
 				<block v-for="(item,index) in list" :key="item.id">
 			<view class="b-bottom padding-10" style="width: 100%;">
 				<view class="flex f-a-c f-j-s">
-					<text class="f-w-b t-color">{{item.orderNo}}</text>
-					<text class="f-w-b t-color-p">¥{{item.amount}}</text>
+					<text class="f15-size t-color">{{item.orderNo}}</text>
+					<text class=" t-color-p">¥{{item.amount}}</text>
 				</view>
 				<view class="flex f-a-c f-j-s margin-t6">
 					<view class="flex f-a-c">

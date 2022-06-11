@@ -57,8 +57,10 @@
 		},
 		onLoad: function() {
 			self = this;
-			this.init();
 			$.setTitle(self.i18n['我的评价'])
+		},
+		onShow() {
+			this.init();
 		},
 		methods: {
 			comment(data) {
@@ -96,6 +98,7 @@
 			},
 			init() {
 				this.navs = [this.i18n['待评价'],this.i18n['可追评'],this.i18n['已追评'],];
+				this.page =1;
 				this.getList();
 			},
 		},

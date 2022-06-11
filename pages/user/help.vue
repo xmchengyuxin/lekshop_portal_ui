@@ -1,11 +1,15 @@
 <template>
 	<view class="contain">
 		<view style="padding-top: 1px;"></view>
+		<view class="flex b-bottom f-a-c h-50 padding-lr15 f15-size">{{i18n['常见问题']}}</view>	
 		<view class="padding-lr15">
-			<view @click="go('/pages/user/helpdetail?id='+item.id)" v-for="(item,index) in list">
-				<view class="f15-size f-w-b margin-t16">{{index+1}}、{{item.title}}</view>
-				<view class="f13-size t-color-9 margin-t8">{{item.produce}}</view>
-				<view v-if="item.image != ''" class="h-120 b-radius-8  margin-t10 bg-img" :style="item.image | bgimg(600)+''"></view>
+			<view @click="go('/pages/user/helpdetail?id='+item.id)" v-for="(item,index) in list" class="flex h-50 b-bottom">
+				<view class="flex flex-1 f-a-c">
+					<view class="f15-size  line1">{{item.title}}</view>
+				</view>	
+				<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>	
+				<!-- <view class="f13-size t-color-9 margin-t8">{{item.produce}}</view>
+				<view v-if="item.image != ''" class="h-120 b-radius-8  margin-t10 bg-img" :style="item.image | bgimg(600)+''"></view> -->
 			</view>
 		</view>
 		<view class="padding-10"></view>
@@ -30,6 +34,7 @@
 			height = height - 44 - this.top - 15;
 			this.height = height;
 			this.init();
+			$.setTitle(this.i18n['帮助中心'])
 		},
 		methods: {
 			getList() {
@@ -37,7 +42,7 @@
 				$.ajax({
 					url: 'common/article/getList',
 					data: {
-						cateId: 1
+						cateId: '1'
 					},
 					method: 'GET',
 					success(res) {
@@ -48,8 +53,11 @@
 			init() {
 				this.getList();
 			},
-
-
+		},
+		computed: {
+			i18n() {
+				return this.$t('user')
+			},
 		},
 		created() {},
 		mounted() {},

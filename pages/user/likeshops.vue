@@ -5,10 +5,10 @@
 			<view class="flex f-s-0 w-50 h-50 b-radius bg-img margin-r12" :style="item.headImg | bgimg(300)+''"></view>
 			<view class="flex flex-1 f-c f-j-c">
 				<view @click="go('/pages/shops/shops?id='+item.shopId)" class="flex">{{item.shopName}}</view>
-				<view class="flex f-a-c margin-t2">
+				<!-- <view class="flex f-a-c margin-t2">
 					<text class="flex t-color-9 f11-size margin-r2">{{i18n['前往创作中心']}}</text>
 					<text class="flex f-a-c van-icon van-icon-arrow t-color-9 f11-size"></text>
-				</view>
+				</view> -->
 			</view>
 			<view class="flex f-a-c f-j-c f-s-0">
 				<view @click="del(index)"  class="flex f-a-c f-j-c b-radius-5 bg-color-e padding-lr10 h-30">

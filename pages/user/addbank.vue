@@ -2,7 +2,7 @@
 	<view class="contain bg-color-w">
 			<view class="padding-lr15">
 				<view @click="$refs.bank.open()" class="flex h-50 b-bottom">
-					<view class="f-w-b flex f-a-c">{{i18n['银行类型']}}</view>
+					<view class="f15-size flex f-a-c">{{i18n['银行类型']}}</view>
 					<view class="flex flex-1 f-j-e">
 						<input v-model="bank.bankName" disabled="true" type="text" class="f15-size margin-r6" value="" :placeholder="i18n['请选择银行类型']" />
 						<view class="flex f-a-c">
@@ -11,19 +11,19 @@
 					</view>
 				</view>
 				<view v-if="bank.bank != 'ZFB' && bank.bank != 'WX'" class="flex h-50 b-bottom">
-					<view class="f-w-b flex f-a-c">{{i18n['银行卡号']}}</view>
+					<view class="f15-size flex f-a-c">{{i18n['银行卡号']}}</view>
 					<view class="flex flex-1 f-j-e">
 						<input v-model="bankNo" type="number" class="f15-size" value="" :placeholder="i18n['请填写银行卡号']" />
 					</view>
 				</view>
 				<view v-if="bank.bank == 'ZFB'" class="flex h-50 b-bottom">
-					<view class="f-w-b flex f-a-c">{{i18n['支付宝账号']}}</view>
+					<view class="f15-size flex f-a-c">{{i18n['支付宝账号']}}</view>
 					<view class="flex flex-1 f-j-e">
 						<input v-model="zfbNo" type="text" class="f15-size" value="" :placeholder="i18n['请填写支付宝账号']" />
 					</view>
 				</view>
 				<view v-if="bank != '' && bank.bank == 'WX'" class="flex padding-tb10 b-bottom">
-					<view class="f-w-b flex f-a-c">{{i18n['微信收款码']}}</view>
+					<view class="f15-size flex f-a-c">{{i18n['微信收款码']}}</view>
 					<view class="flex flex-1 f-j-e">
 						<view @click="addImg" class="flex f-a-c f-j-c w-80 h-80 b-color-e bg-img" :style="wxNo | bgimg(300)+''">
 							<text v-if="wxNo == ''" class="flex f-a-c f-j-c van-icon van-icon-plus t-color-9 f18-size"></text>
@@ -31,19 +31,19 @@
 					</view>
 				</view>
 				<view class="flex h-50 b-bottom">
-					<view class="f-w-b flex f-a-c">{{i18n['持卡姓名']}}</view>
+					<view class="f15-size flex f-a-c">{{i18n['持卡姓名']}}</view>
 					<view class="flex flex-1 f-j-e">
 						<input v-model="name" type="text" class="f15-size" value="" :placeholder="i18n['请填写持卡姓名']" />
 					</view>
 				</view>
 				<view class="padding-15 margin-t15">
-					<view @click="save" class="flex f-a-c f-j-c bg-color-linear-y t-color-w f-w-500 b-radius-30 h-40">{{id != '' ? i18n['编辑'] : i18n['保存']}}</view>
-					<view v-if="id != ''" @click="del" class="flex f-a-c f-j-c b-color-y t-color-y margin-t12 f-w-500 b-radius-30 h-40">{{i18n['删除']}}</view>
+					<view @click="save" class="flex f-a-c f-j-c bg-color-linear-y t-color-w f15-size b-radius-30 h-40">{{id != '' ? i18n['编辑'] : i18n['保存']}}</view>
+					<view v-if="id != ''" @click="del" class="flex f-a-c f-j-c b-color-y t-color-y margin-t12 f15-size b-radius-30 h-40">{{i18n['删除']}}</view>
 				</view>
 			</view>
 		<uni-popup ref="bank" type="bottom">
 			<view class="bg-color-w safe-area wrap-popup-radius padding-12">
-				<view class="flex f-a-c f-j-c f-w-b margin-b12">{{i18n['选择银行']}}</view>
+				<view class="flex f-a-c f-j-c f15-size margin-b12">{{i18n['选择银行']}}</view>
 				<scroll-view scroll-y="true" style="height: 60vh;">
 					<view @click="chooseBank(item)" class="h-40 flex f-a-c f-j-c b-bottom" v-for="item in bankList">{{item.bankName}}</view>
 					<no-data v-if="bankList.length <= 0"></no-data>

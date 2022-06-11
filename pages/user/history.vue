@@ -4,7 +4,7 @@
 			<view @click="del()" class="f-w-b f13-size">{{key}}</view>
 			<view class="flex f-w">
 				<view @click="go('/pages/shops/detail?id='+child.goodsId)" v-for="(child,index) in item" class="flex f-c f-s-0 his-item margin-t12 p-r">
-					<text @click.stop="show(key,index)" class="padding-6 flex f-a-c f-j-c van-icon van-icon-weapp-nav t-color-3 f18-size find-menu-btn"></text>
+					<text @click.stop="show(key,index)" class="padding-6 flex f-a-c f-j-c van-icon van-icon-weapp-nav t-color-3 f15-size find-menu-btn"></text>
 					<view @click.stop="show(key,index)" v-if="showMenu && index == showIndex && key == showKey" class="flex  f-a-c f-j-c wrap-layout">
 						<view @click="clear"  class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30 margin-r12">清空</view>
 						<view @click="del(key,index)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30">删除</view>
@@ -14,7 +14,7 @@
 				</view>
 			</view>
 		</view>
-		<no-data v-if="list == ''"></no-data>
+		<no-data :list="list1"></no-data>
 	</view>
 </template>
 <style scoped>
@@ -30,9 +30,12 @@
 }
 .find-menu-btn {
 		position: absolute;
-		right: 0;
-		top: 0;
+		right: 4px;
+		top: 4px;
 		padding: 4px 10px;
+		border-radius: 50%;
+		color: #fff;
+		background-color: rgba(0, 0, 0, 0.5);
 	}
 	.wrap-layout {
 		position: absolute;
@@ -48,7 +51,8 @@
 	export default {
 		data() {
 			return {
-				list: '',
+				list: {},
+				list1: [],
 				page: 1,
 				pageSize: 20,
 				totalPage: 1,
@@ -76,7 +80,8 @@
 							data: {},
 							method: 'POST',
 							success(res) {
-								self.list = '';
+								self.list = {};
+								self.list1 = [];
 							}
 						})
 					}
@@ -110,12 +115,12 @@
 					method: 'GET',
 					success(res) {
 						let list = res.data.list ? res.data.list : [];
+						self.list1 = list;
 						if (list.length >= 0) {
-							
 							list.forEach((ele,index) => {
-								let key = $.timeChange(ele.addTime,'timestamp','Y-m-d');
+								let key =String($.timeChange(ele.addTime,'timestamp','Y-m-d'));
 								if(!self.list[key]){
-									self.$set(self.list,key,[]);
+									self.$set(self.list,key,[])
 								}
 								self.list[key].push(ele);
 							})

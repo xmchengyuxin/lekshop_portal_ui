@@ -10,17 +10,30 @@
 		<view class="padding-12">
 			<view class="padding-15"></view>
 			<block v-for="item in list">
-			<view  class="flex margin-t12">
-				<view class="flex w-30 h-30 b-radius bg-img margin-r12" :style="item.memberHeadImg | bgimg(300)+''"></view>
-				<view class="flex f-c f-j-s">
-					<text class="f10-size">{{item.memberName}}</text>
-					<text class="f10-size t-color-9">{{item.addTime | time3}}</text>
+				<view  class="flex margin-t12">
+					<view class="flex w-30 h-30 b-radius bg-img margin-r12" :style="item.comment.memberHeadImg | bgimg(300)+''"></view>
+					<view class="flex f-c f-j-s">
+						<text class="f10-size">{{item.comment.memberName}}</text>
+						<text class="f10-size t-color-9">{{item.comment.addTime | time3}}</text>
+					</view>
 				</view>
-			</view>
-			<view class="f12-size margin-t10">{{item.content}}</view>
-			<view v-if="item.img != ''" class="grid grid-c-3 grid-g10 margin-t10">
-				<view @click="previewImg(img)" v-for="(img,index) in getImgs(item.img)" class="b-radius-5 bg-img" :style="img | bgimg(300)+''" style="padding: 50%;"></view>
-			</view>
+				<view class=" t-color-9 padding-lr10 margin-t6">
+					{{i18n['已购商品']}}：{{item.comment.goodsParamName}}
+				</view>	
+				<view class="f12-size margin-t10">{{item.comment.content}}</view>
+				<view v-if="item.comment.img != ''" :class="getImgs(item.comment.img).length >= 3 ? 'grid-c-3' : 'grid-c-2'" class="grid  grid-g10 margin-t10">
+					<view @click="previewImg(img)" v-for="(img,index) in getImgs(item.comment.img)" class="b-radius-5 bg-img" :style="img | bgimg(300)+''" style="padding: 50%;"></view>
+				</view>
+				<block v-if="item.leftCommentList" v-for="child in item.leftCommentList">
+					<view v-if="child.type == 1" class="padding-10 bg-color-e b-radius-5 t-color-8 margin-t8">
+						{{i18n['商家回复']}}：{{child.content}}
+					</view>	
+					<view v-if="child.type == 2" class="padding-10  margin-t8"  >
+						<text class="t-color-y ">{{child.addTime | time1}}{{i18n['追评']}}：</text>
+						{{child.content}}
+					</view>	
+				</block>
+			
 			</block>
 			<no-data :list="list"></no-data>
 		</view>
@@ -64,7 +77,11 @@
 				this.getList();
 			},
 			getImgs(imgs) {
-				return imgs.split('|')
+				if(imgs.indexOf('|') > 0) {
+					return imgs.split('|')
+				}else{
+					return [imgs]
+				}
 			},
 			getList() {
 				let info = self.navs[self.active];
