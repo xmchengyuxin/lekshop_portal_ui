@@ -1,6 +1,6 @@
 <template>
 	<view class="contain">
-		<view class="flex fixed-top h-44 bg-color-f7 box-c" :style="{'padding-top': top + 'px'}">
+		<view v-if="!isRefresh" :class="isRefresh ? 'fadeOut' : 'fadeIn'" class="animate flex fixed-top h-44 bg-color-f7 box-c" :style="{'padding-top': top + 'px'}">
 			<view @click="back(1)" v-if="type != ''"
 				class="flex f-s-0 padding-lr10 f-a-c f-j-c van-icon van-icon-arrow-left f20-size"></view>
 			<view v-else class="flex f-s-0 padding-lr10 f-a-c f-j-c van-icon  f20-size"></view>
@@ -108,6 +108,7 @@
 				pageSize: 20,
 				totalPage: 1,
 				options: [],
+				isRefresh: false,//小程序的下拉刷新子定义标题挡住loading
 			};
 		},
 		onLoad: function() {
@@ -126,6 +127,7 @@
 					}
 				}
 			]
+			uni.hideTabBar()
 		},
 		onShow() {
 			this.init();
@@ -202,6 +204,9 @@
 						self.totalPage = res.data.totalPage;
 						self.list = list;
 						uni.stopPullDownRefresh();
+						setTimeout(() => {
+							self.isRefresh = false;
+						},1000)
 					}
 				})
 			},
@@ -226,6 +231,7 @@
 		destroyed() {},
 		components: {uniSwipeAction,uniSwipeActionItem},
 		onPullDownRefresh() {
+			this.isRefresh = true;
 			this.init();
 		},
 		onReachBottom() {}

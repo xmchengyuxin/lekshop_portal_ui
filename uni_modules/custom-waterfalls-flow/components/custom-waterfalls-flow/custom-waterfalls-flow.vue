@@ -220,7 +220,9 @@
 				const i = item.index;
 				item.o = 1;
 				this.$set(this.data[`column_${c}_values`], item.cIndex, JSON.parse(JSON.stringify(item)));
-				this.initValue(i + 1);
+				this.$nextTick(() => {//图片加载完成后等页面渲染完成再执行下一步
+					this.initValue(i + 1);
+				})
 			},
 			// 图片加载失败
 			imgError(item, c) {
@@ -228,7 +230,9 @@
 				item.o = 1;
 				item[this.data.imageKey] = null;
 				this.$set(this.data[`column_${c}_values`], item.cIndex, JSON.parse(JSON.stringify(item)));
-				this.initValue(i + 1);
+				this.$nextTick(() => {//图片加载完成后等页面渲染完成再执行下一步
+					this.initValue(i + 1);
+				})
 			},
 			// 渲染结束
 			loaded() {

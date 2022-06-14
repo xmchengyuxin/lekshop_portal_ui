@@ -2,7 +2,7 @@
 	<view class="contain">
 		<view    class="grid grid-c-2 b-radius-10 bg-color-w wrap-tuijian margin-t12">
 			<view v-for="(item,index) in navs" class="flex f-s-0 tuijain-item f-c padding-12">
-				<view @click="go('/pages/search/list?catePid='+item.id)" class="flex f-a-c">
+				<view @click="go('/pages/search/list?catePid='+item.id+'&cateName='+item.name)" class="flex f-a-c">
 					<text class="f15-size f-w-500 t-color-y margin-r4">{{item.name}}</text>
 					<view class="flex f-a-c h-16 padding-lr5 bg-color-linear-y b-radius-30 t-color-w f10-size">
 						<text style="padding: 3px;" class="b-radius bg-color-y1 margin-r4"></text>

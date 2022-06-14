@@ -15,7 +15,7 @@
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
 					<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">+86</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="phone"  type="tel" maxlength="11" :placeholder="i18n['请输入']">
+						<input class="f16-size" v-model="phone"  type="tel" maxlength="11" :placeholder="i18n['请输入']">
 					</view>
 				</view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
@@ -23,7 +23,7 @@
 						<image class="w-20" src="../../static/images/login_passport.png" mode="widthFix"></image>
 					</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="password" type="password" :placeholder="i18n['请输入']">
+						<input class="f16-size" v-model="password" type="password" :placeholder="i18n['请输入']">
 					</view>
 				</view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
@@ -31,7 +31,7 @@
 						<image class="w-20" src="../../static/images/login_passport.png" mode="widthFix"></image>
 					</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="comfirmPassword" type="password" :placeholder="i18n['请输入']">
+						<input class="f16-size" v-model="comfirmPassword" type="password" :placeholder="i18n['请输入']">
 					</view>
 				</view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
@@ -39,7 +39,7 @@
 						<image class="w-20" src="../../static/images/login_code.png" mode="widthFix"></image>
 					</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="code" type="tel" :placeholder="i18n['请输入']">
+						<input class="f16-size" v-model="code" type="tel" :placeholder="i18n['请输入']">
 					</view>
 					<view class="padding-6">
 						<img-code class="h-30" @imgSuc="getImgCode"  ></img-code>
@@ -50,7 +50,7 @@
 						<image class="w-20" src="../../static/images/login_code.png" mode="widthFix"></image>
 					</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="sms" type="tel" :placeholder="i18n['请输入']">
+						<input class="f16-size" v-model="sms" type="tel" :placeholder="i18n['请输入']">
 					</view>
 					<view class="padding-6">
 						<phone-code :phone="phone" :code="code" :codeImg="codeImg" :sendType="3"  ></phone-code>

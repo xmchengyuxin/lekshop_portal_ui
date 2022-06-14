@@ -119,6 +119,9 @@
 .b-color-e {
 	border: 1px solid #f4f4f4!important;
 }
+.b-color-w {
+	border: 1px solid #fff!important;
+}
 .b-color {
 	border-color: #2EB37E!important;
 }
@@ -483,6 +486,9 @@
 .padding-lr20 {
 	padding: 0 20px!important;
 }
+.padding-lr30 {
+	padding: 0 30px!important;
+}
 .padding-tb6 {
 	padding:  6px 0!important;
 }
@@ -532,4 +538,7 @@
 }
 .p-r {
 	position: relative!important;
+}
+.line-h16 {
+	line-height: 16px;
 }

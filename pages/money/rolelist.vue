@@ -4,19 +4,14 @@
 		<view class="bg-color-w  ">
 				<block v-for="(item,index) in list" :key="item.id">
 			<view class="b-bottom padding-10" style="width: 100%;">
-				<view class="flex f-a-c f-j-s">
-					<text class="f15-size t-color">{{item.orderNo}}</text>
-					<text class=" t-color-p">¥{{item.amount}}</text>
-				</view>
-				<view class="flex f-a-c f-j-s margin-t6">
-					<view class="flex f-a-c">
-						<text class="f12-size t-color margin-r20">{{i18nPay[type[item.paymethod]]}}</text>
-						<text class="f11-size t-color-9">{{item.addTime | time1}}</text>
+				<view class="flex">
+					<view class="flex flex-1 margin-r12">
+						<text class="f15-size t-color">{{item.remark}}</text>
 					</view>
-					<text v-if="item.status == 0" class="f11-size t-color-b">{{i18n['等待审核']}}</text>
-					<text v-if="item.status == 1" class="f11-size t-color-g">{{i18n['充值成功']}}</text>
-					<text v-if="item.status == 2" class="f11-size t-color-r">{{i18n['充值失败']}}</text>
-					<text v-if="item.status == 3" class="f11-size t-color-b">{{i18n['已取消']}}</text>
+					<view class="flex f-c f-s-0 f-a-e">
+						<text class=" t-color-p">{{item.inOut == 1 ? '+' : '-'}} {{item.amount}}</text>
+						<text class=" t-color-9 margin-t6">{{item.addTime | time1}}</text>
+					</view>
 				</view>
 			</view>
 			</block>

@@ -33,7 +33,7 @@
 			<view class="padding-15 ">
 				<view class=" f15-size">{{i18n['个性签名']}}</view>
 				<view class="flex flex-1 h-40">
-					<input v-model="sign" type="text" class="w100 h100 f15-size" value="" :placeholder="i18n['请输入']" />
+					<textarea auto-height="true" v-model="sign" type="text" class="w100 h-100 f15-size" value="" :placeholder="i18n['请输入']" />
 				</view>
 			</view>
 			<view class="padding-10"></view>

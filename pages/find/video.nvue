@@ -27,7 +27,8 @@
 					 -->
 					<video
 					v-if="Math.abs(k-index)<=1"
-					:id="list._id+''+index"
+					:ref="'item'+index"
+					:id="'video'+list._id"
 					:loop="true"
 					:muted="list.isplay"
 					:controls="false"
@@ -38,6 +39,7 @@
 					:show-center-play-btn="false"
 					:enable-progress-gesture="false"
 					:src="list.videoUrl"
+					object-fit="cover"
 					@play="playEvent"
 					@ended="ended"
 					@click="tapVideoHover(list.state,$event)"
@@ -64,9 +66,9 @@
 					<!-- 1.头像 -->
 					<image @click="go('/pages/find/user?id='+list.walkMemberId)" class="userAvatar" :src="list.walkMemberHeadImg" mode="aspectFill"></image>
 					<!-- 2.点赞 -->
-					<view @click="cLike(list.like);" style="opacity: 0.9; margin-top: 17px;">
-						<view v-if="list.like" class="flex f-a-c f-j-c van-icon van-icon-like t-color-r f32-size" style="width: 40px; height: 40px; position: absolute; right: 6px;"></view>
-						<view v-if="!list.like" class="flex f-a-c f-j-c van-icon van-icon-like-o t-color-w f32-size" style="width: 40px; height: 40px; position: absolute; right: 6px;"></view>
+					<view @click="like(index);" style="opacity: 0.9; margin-top: 17px;">
+						<view v-if="list.collectTrends" class="flex f-a-c f-j-c van-icon van-icon-like t-color-r f32-size" style="width: 40px; height: 40px; position: absolute; right: 6px;"></view>
+						<view v-if="!list.collectTrends" class="flex f-a-c f-j-c van-icon van-icon-like-o t-color-w f32-size" style="width: 40px; height: 40px; position: absolute; right: 6px;"></view>
 						<text class="f12-size f-w-500" style="color: #FFFFFF; text-align: center; margin-top: 40px;" :class="{'likeNumActive':list.like}">{{list.collectionNum}}</text>
 					</view>
 					<!-- 3.评论 -->
@@ -95,6 +97,13 @@
 				</view>
 			</swiper-item>
 		</swiper>
+		<view v-if="dataList.length <= 0" class="wrap-layout flex f-c f-a-c f-j-c">
+			<text class="t-color-w">{{i18n['暂时无人发布视频']}}</text>
+			<view @click="go('/pages/find/issue?type=1')" class="flex f-r f-s-0 f-a-c f-j-c b-radius-5 t-color-w b-color-w h-32 w-100 margin-t16">
+				<text class="flex f-a-c f-j-c f-s-0 van-icon van-icon-plus t-color-w margin-r4"></text>
+				<text>{{i18n['立即发布']}}</text>
+			</view>
+		</view>
 		<uni-popup ref="goods" type="bottom">
 			<view class="wrap-popup-radius bg-color-w padding-lr12">
 				<view class="flex f-r f-a-c f-j-c b-bottom f15-size f-w-b padding-tb12">{{i18n['Ta提到的商品']}}</view>
@@ -108,7 +117,7 @@
 				<view class="padding-30"></view>
 			</view>
 		</uni-popup>
-		<comment-list ref="comment" :findId="commentId"></comment-list>
+		<comment-list ref="comment" @pjlisy="changeComment" :findId="commentId"></comment-list>
 	</view>
 </template>
 
@@ -136,6 +145,7 @@
 					'width': 0,
 				},
 				
+				
 				// 双击点赞参数
 				touchNum: 0,
 				aixinLeft: 0,
@@ -154,26 +164,43 @@
 		},
 		watch:{
 			k(k,old_k){
-				console.log(k)
+				console.log(k,old_k,'k')
+				this.dataList[old_k].state = 'stop'//如果是被滑走的视频，就停止播放
 				this.dataList[old_k].playIng = false//如果视频暂停，就加载封面
 				this.dataList[old_k].isplay = true
-				this.dataList[old_k].state = 'pause'
-				// uni.createVideoContext(this.dataList[old_k]._id+''+old_k,this).seek(0)
-				// uni.createVideoContext(this.dataList[old_k]._id+''+old_k,this).pause()
-				console.log('预留第' + (old_k + 1) + '个视频：' + this.dataList[old_k]._id+''+old_k)
+				uni.createVideoContext('video'+this.dataList[old_k]._id,this).play()
+				clearTimeout(this.oldVideo)
+				this.oldVideo = setTimeout(()=>{
+					uni.createVideoContext('video'+this.dataList[old_k]._id,this).seek(0)
+					uni.createVideoContext('video'+this.dataList[old_k]._id,this).pause()
+					console.log('预留第' + (old_k + 1) + '个视频：' + 'video'+this.dataList[old_k]._id)
+				},500)
 				// 2.0版本已经去掉了下面这一句，视频不用暂停，只需要把声音禁止就行
-				uni.createVideoContext(this.dataList[old_k]._id + '' + old_k,this).stop()//如果视频暂停，那么旧视频停止，这里的this.dataList[old_k]._id + '' + old_k，后面加 old_k 是为了每一个视频的 id 值不同，这样就可以大程度的避免串音问题
+				//uni.createVideoContext('video'+this.dataList[old_k]._id + '' + old_k,this).stop()//如果视频暂停，那么旧视频停止，这里的'video'+this.dataList[old_k]._id + '' + old_k，后面加 old_k 是为了每一个视频的 id 值不同，这样就可以大程度的避免串音问题
+				uni.createVideoContext('video'+this.dataList[k]._id,this).play();
 				console.log('已经暂停 --> 第' + (old_k + 1) + '个视频～')//提示
-				this.dataList[k].state = 'play'
+				clearTimeout(this.voice)
+				this.voice = setTimeout(()=>{
+					this.dataList[k].isplay = false
+				},300)
 				setTimeout(()=>{
-					uni.createVideoContext(this.dataList[k]._id+''+k,this).play()
-					setTimeout(()=>{
-						this.dataList[k].isplay = false
-						this.dataList[k].playIng = true
-					},50)
-				},250)
-				var p = k+1;
-				console.log('预加载第' + (p + 1) + '个视频：' + this.dataList[p]._id+''+p)
+					this.dataList[k].playIng = true
+				},850)
+				
+				//【2.0版本更新内容】- start
+				var p = k
+				++p
+				setTimeout(()=>{
+					uni.createVideoContext('video'+this.dataList[p]._id,this).play()
+					this.dataList[p].isplay = true
+				},20)
+				clearTimeout(this.timeout)
+				this.timeout = setTimeout(()=>{
+					uni.createVideoContext('video'+this.dataList[p]._id,this).seek(0)
+					uni.createVideoContext('video'+this.dataList[p]._id,this).pause()
+					console.log('预加载第' + (p + 1) + '个视频：' + 'video'+this.dataList[p]._id)
+				},1500)
+				//【2.0版本更新内容】- end
 			}
 		},
 		onLoad(options) {
@@ -194,12 +221,13 @@
 			console.log('回到前台');
 			if(this.dataList.length !== 0){
 				this.dataList[this.k].state = 'play';
-				uni.createVideoContext(this.dataList[this.k]._id+''+this.k,this).play()
+				uni.createVideoContext('video'+this.dataList[this.k]._id,this).play()
 			}
 		},
 		onHide(){
-			this.dataList[this.k].state = 'pause';//界面隐藏也要停止播放视频
-			uni.createVideoContext(this.dataList[this.k]._id+''+this.k,this).pause();//暂停以后继续播放
+			if(this.dataList.length<=0){return;}
+			this.dataList[this.k]['state'] = 'pause';//界面隐藏也要停止播放视频
+			uni.createVideoContext('video'+this.dataList[this.k]._id,this).pause();//暂停以后继续播放
 			console.log('到后台');
 		},
 		onUnload() {
@@ -250,10 +278,10 @@
 							this.dataList[this.k].state = 'continue';
 						}
 						if(this.dataList[this.k].state == 'continue'){
-							uni.createVideoContext(this.dataList[this.k]._id+''+this.k,this).play();//暂停以后继续播放
+							uni.createVideoContext('video'+this.dataList[this.k]._id,this).play();//暂停以后继续播放
 						}
 						if(this.dataList[this.k].state == 'pause'){
-							uni.createVideoContext(this.dataList[this.k]._id+''+this.k,this).pause();//暂停以后继续播放
+							uni.createVideoContext('video'+this.dataList[this.k]._id,this).pause();//暂停以后继续播放
 						}
 					}
 					if(this.touchNum >= 2){
@@ -269,10 +297,10 @@
 				// 	this.dataList[this.k].state = 'continue';
 				// }
 				// if(this.dataList[this.k].state == 'continue'){
-				// 	uni.createVideoContext(this.dataList[this.k]._id+''+this.k,this).play();//暂停以后继续播放
+				// 	uni.createVideoContext('video'+this.dataList[this.k]._id,this).play();//暂停以后继续播放
 				// }
 				// if(this.dataList[this.k].state == 'pause'){
-				// 	uni.createVideoContext(this.dataList[this.k]._id+''+this.k,this).pause();//暂停以后继续播放
+				// 	uni.createVideoContext('video'+this.dataList[this.k]._id,this).pause();//暂停以后继续播放
 				// }
 				// --------------- ending
 			},
@@ -321,9 +349,12 @@
 							obj['state']= '';
 							obj['playIng']= false;
 							obj['isplay']= false;
+							obj['collectTrends']= list[i]['collectTrends'];
+							obj['collectWalkMember']= list[i]['collectWalkMember'];
 							self.dataList.push(obj);
 							self.allList.push(list[i])
 						}
+						
 					}
 				})
 				
@@ -350,32 +381,35 @@
 							let obj = list[i]['walkTrends'];
 							obj['_id']= obj.id;
 							obj['state']= '';
+							obj['playIng']= false;
+							obj['isplay']= false;
+							obj['collectTrends']= list[i]['collectTrends'];
+							obj['collectWalkMember']= list[i]['collectWalkMember'];
 							self.dataList.push(obj);
 							self.allList.push(list[i])
 						}
-						self.$nextTick(function(){
-							// 3.播放当前视频
-							setTimeout(()=>{
-								self.dataList[self.k].isplay = false
-								self.dataList[self.k].state = 'play'
-								uni.createVideoContext(self.dataList[self.k]._id+''+self.k,self).play()
-								self.dataList[self.k].playIng = true
-							},200)
-							// start - 预加载开始
-							var p = self.k
+						
+						self.dataList[0].state = "play";
+						setTimeout(()=>{
+							//这里的延迟是为了避免执行时间太快而直接跳过执行的 bug
+							uni.createVideoContext('video'+self.dataList[0]._id,self).seek(0)
+							uni.createVideoContext('video'+self.dataList[0]._id,self).play()
+						},200)
+						self.dataList[0].isplay = false
+						setTimeout(()=>{
+							self.dataList[0].playIng = true
+						},500)
+						var p = 0
+						setTimeout(()=>{
 							++p
-							if(p>=self.dataList.length){return}
+							uni.createVideoContext('video'+self.dataList[p]._id,self).play()
+							self.dataList[p].isplay = true
 							setTimeout(()=>{
-								uni.createVideoContext(self.dataList[p]._id+''+p,self).play()
-							},20)
-							clearTimeout(self.timeout)
-							self.timeout = setTimeout(()=>{
-								uni.createVideoContext(self.dataList[p]._id+''+p,self).seek(0)
-								uni.createVideoContext(self.dataList[p]._id+''+p,self).pause()
-								console.log('预加载第' + (p + 1) + '个视频：' + self.dataList[p]._id+''+p)
-							},1500)
-							// end - 预加载结束
-						})
+								uni.createVideoContext('video'+self.dataList[p]._id,self).seek(0)
+								uni.createVideoContext('video'+self.dataList[p]._id,self).pause()
+								console.log('预加载第' + (p + 1) + '个视频：' + 'video'+self.dataList[p]._id)
+							},2000)
+						},50)
 						
 					}
 				})
@@ -386,16 +420,35 @@
 					icon: 'none'
 				})
 			},
+			changeComment(type) {
+				this.dataList[this.k]['commentNum'] += 1;
+			},
 			toComment(index){
 				this.commentId = this.allList[index]['walkTrends']['id'];
 				this.$refs.comment.open();
 				this.$refs.comment.init(this.commentId);
 			},
-			cLike(sss){
-				this.dataList[this.k].like = !this.dataList[this.k].like
-				const video = this.dataList[this.k];
-				sss?video.like_n -= 1:video.like_n += 1;
-			}
+			like(index) {
+				const self = this;
+				let info = self.dataList[index];
+				$.ajax({
+					url: API.likeFindApi,
+					data: {
+						trendsId: info.id
+					},
+					method: 'POST',
+					success(res) {
+						$.$toast(self.i18n['操作成功']);
+						info.collectTrends = !info.collectTrends;
+						if(info.collectTrends){
+							info.collectionNum += 1;
+						}else{
+							info.collectionNum -= 1;
+						}
+						self.dataList[index] = info;
+					}
+				})
+			},
 		},
 		computed: {
 			i18n() {
@@ -408,6 +461,12 @@
 
 <style scoped>
 	
+	.fixed-top {
+		z-index: 9999;
+	}
+	.wrap-layout {
+		position: fixed!important;
+	}
 	.container {background-color: #000000;}
 	.item {
 		/* width : 750rpx; */

@@ -32,6 +32,9 @@
 						<text class="t-color-y ">{{child.addTime | time1}}{{i18n['追评']}}：</text>
 						{{child.content}}
 					</view>	
+					<view v-if="child.img && child.img != ''"  class="grid grid-c-3 grid-g10 margin-t10">
+						<view @click="previewImg(img)" v-for="(img,index) in getImgs(child.img)" class="b-radius-5 bg-img" :style="img | bgimg(300)+''" style="padding: 50%;"></view>
+					</view>
 				</block>
 			
 			</block>
@@ -77,6 +80,7 @@
 				this.getList();
 			},
 			getImgs(imgs) {
+				if(!imgs){return;}
 				if(imgs.indexOf('|') > 0) {
 					return imgs.split('|')
 				}else{

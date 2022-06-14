@@ -7,13 +7,13 @@
 				<view class="flex f-s-0  margin-t2 f10-size t-color-9 margin-r10">{{item.walkTrends.addTime | timeMonth}}月</view>
 				<view class="flex flex-1 f-c over-h">
 					<view @click="showMore(index)">
-						<view :class="item.show ? '' : 'line2'" class="">
+						<view :ref="'text'+index" :class="item.show ? '' : 'line2'" class="">
 							<text v-if="item.walkTrends.type == 1" class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-r margin-r4">短视频</text>
 							<text v-if="item.walkTrends.type == 3" class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-g margin-r4">种草</text>
 							<text v-if="item.walkTrends.type == 2" class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-y margin-r4">上新</text>
 							{{item.walkTrends.content}}
 						</view>
-						<view  :class="item.show ? 'van-icon-arrow-up' : 'van-icon-arrow-down'" class="flex f-a-c f-j-c van-icon  t-color-9 "></view>
+						<view v-if="isLine(item.walkTrends.content,'text'+index,2,14)" :class="item.show ? 'van-icon-arrow-up' : 'van-icon-arrow-down'" class="flex f-a-c f-j-c van-icon  t-color-9 "></view>
 					</view>
 					<view v-if="item.walkTrends.type == 1" class="margin-t12 flex">
 						<view class="video-img b-radius-5 bg-color"></view>
@@ -81,6 +81,20 @@
 			self = this;
 		},
 		methods: {
+				isLine(text,textId,line=2,size=13) {
+					this.$nextTick(function(){
+						if(!this.$refs[textId]){return}
+						let dom = this.$refs[textId][0].$el;
+						let width = dom.clientWidth;
+						let len = width*line/size;
+						if(text.length >= len) {
+							return true
+						}else{
+							return false
+						}
+					})
+					
+				},
 			showMore(index) {
 				let info = this.list[index];
 				if(!info.show){

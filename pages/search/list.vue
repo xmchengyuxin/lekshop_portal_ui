@@ -4,9 +4,14 @@
 			<view class=" flex h-44 flex ">
 				<view @click="back(1)" class="flex padding-lr10 f-a-c van-icon van-icon-arrow-left f20-size"></view>
 				<view class="flex f-a-c flex-1">
-					<view class="flex flex-1 b-radius-30 h-30 bg-color-w padding-lr10">
-						<view @click="changeSort(sort)" class="flex f-a-c van-icon van-icon-search f16-size margin-r8"></view>
-						<input @confirm="changeSort(sort)" v-model="title" type="text" class="input">
+					<view @click="go('/pages/search/index')" class="flex flex-1 f-a-c b-radius-30 h-36 bg-color-w padding-lr10">
+						<view  class="flex f-a-c van-icon van-icon-search f16-size margin-r8"></view>
+						<view v-if="title != '' || cateName != ''" @click.stop="clear" class="flex f-a-c b-radius-30 h-28 padding-lr15 bg-color-f7">
+							<text v-if="cateName != ''" class="f12-size margin-r4">类目:</text>
+							<text class="f12-size margin-r4">{{title != '' ? title : cateName}}</text>
+							<text class="flex f-a-c f-j-c van-icon van-icon-cross"></text>
+						</view>
+						<!-- <input @confirm="changeSort(sort)" v-model="title" type="text" class="input"> -->
 					</view>
 				</view>
 				<view @click="sortType == 1 ? sortType=2 : sortType=1" :class="sortType==1?'van-icon-apps-o':'van-icon-bars'" class="flex f-a-c padding-lr10 van-icon  f20-size"></view>
@@ -113,7 +118,8 @@
 				province: '',
 				max: '',
 				min: '',
-				spread: ''
+				spread: '',
+				cateName: '',
 			};
 		},
 		onLoad: function(options) {
@@ -131,9 +137,20 @@
 			this.shopId = options.shopId ? options.shopId : '';
 			this.type = options.type ? options.type : '';
 			this.spread = options.spread ? options.spread : '';
+			this.cateName = options.cateName ? options.cateName : '';
 			this.init();
 		},
 		methods: {
+			clear() {
+				this.title = '';
+				this.cateName = '';
+				this.catePid ='';
+				this.cateTid = '';
+				this.cateId ='';
+				this.shopCateId = '';
+				this.page = 1;
+				this.getList();
+			},
 			reset() {
 				this.province = '';
 				this.max = '';

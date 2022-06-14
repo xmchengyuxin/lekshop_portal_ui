@@ -31,13 +31,16 @@
 							<view class="flex f-s-0 w-70 h-70 b-radius-5 bg-img  margin-r10" :style="goods.goodsMainImg | bgimg(300)+''"></view>
 							<view class="flex flex-1 f-c margin-r8">
 								<view class="line2 f12-size">{{goods.goodsName}}</view>
-								<view class="flex f-a-c margin-t6">
-									<view class="flex f-a-c f-j-c padding-lr6 bg-color-f7 f11-size t-color-9 b-radius-2 h-20">{{goods.goodsParamName}}</view>
+								<view class="flex flex-1 w100 f-a-c f-j-s margin-t6">
+									<view class="flex f-a-c f-j-c f-s-0 padding-lr6 bg-color-f7 f11-size t-color-9 b-radius-2 h-20">{{goods.goodsParamName}}</view>
 								</view>
 							</view>
-							<view class="flex f-s-0 f-c">
-								<view class="text-price f12-size">{{goods.buyPrice}}</view>
-								<view class="flex f-j-e margin-t6 t-color-9 f11-size">x{{goods.buyNum}}</view>
+							<view class="flex f-s-0 f-c f-j-s">
+								<view class="flex f-c">
+									<view class="text-price flex f-j-e  f12-size">{{goods.buyPrice}}</view>
+									<view class="flex f-j-e margin-t6 t-color-9 f11-size">x{{goods.buyNum}}</view>
+								</view>
+								<view @click="goComment(goods)" v-if="state[child.order.status].value == 'ywc' && goods.commentStatus == 0"  class="flex f-a-c f-j-c f-s-0 padding-lr10 h-24  b-radius-30 f11-size b-color-y t-color-y ">{{i18n['评价']}}</view>
 							</view>
 						</view>
 						<view class="flex f-j-e f12-size f-w-500 margin-t6">
@@ -50,7 +53,6 @@
 							<view @click.stop="showWuliu(child)" v-if="state[child.order.status].value == 'dsh'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-3">{{i18n['查看物流']}}</view>
 							<view @click.stop="showPay(index)" v-if="state[child.order.status].value == 'dzf'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size bg-color-linear-y t-color-w">{{i18n['立即支付']}}</view>
 							<view v-if="state[child.order.status].value == 'dsh'" @click.stop="sureOrder(parent,index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size bg-color-linear-y t-color-w">{{i18n['确认收货']}}</view>
-							<view v-if="state[child.order.status].value == 'ywc'"  class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-y t-color-y ">{{i18n['评价']}}</view>
 						</view>
 					</view>
 						
@@ -101,6 +103,11 @@
 			$.setTitle(self.i18n['我的订单']);
 		},
 		methods: {
+			goComment(info) {
+				info.status = info.commentStatus;
+				uni.setStorageSync('comment',info);
+				self.go('/pages/user/comment');
+			},
 			showPay(index) {
 				this.payIndex = index;
 				this.$refs.payitem.open();

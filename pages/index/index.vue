@@ -31,7 +31,7 @@
 							</swiper-item>
 						</swiper>
 						<view v-if="item.children && item.children.length > 0" class="bg-color-w b-radius-10 flex f-w margin-t12 wrap-sub-cate">
-							<view @click="go('/pages/search/list?cateTid='+child.id)" v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t8">
+							<view @click="go('/pages/search/list?cateTid='+child.id+'&cateName='+child.name)" v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t8">
 								<view v-if="child.img" class="flex w-50 h-50 bg-img  b-radius-5" :style="child.img | bgimg(300)+''"></view>
 								<view v-else class="flex w-50 h-50 bg-img  b-radius-5 f-a-c f-j-c shops-icon shops-icon-cate f44-size"></view>
 								<view class="f12-size t-color-6 margin-t4">{{child.name}}</view>
@@ -48,12 +48,13 @@
 						<goodsShopList class="margin-t12" v-if="active == parent" showType="2"  :catePid="item.id" :isSpread="active == 0 ? true : false"></goodsShopList>
 						<!-- <goodslist v-if="item.list" class="margin-t12" :list="item.list" ></goodslist> -->
 						<!-- <view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view> -->
+						<view v-if="!isLogin" class="padding-20"></view>
 					</view>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
 		
-		<tab-bar ref="tabbar" :active="0" :isShow="false"></tab-bar>
+		<tab-bar ref="tabbar" :showLogin="true" :active="0" :isShow="false"></tab-bar>
 	</view>
 </template>
 <style scoped>
@@ -71,6 +72,7 @@
 			return {
 				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
 				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
+				isLogin: uni.getStorageSync('token') ? true : false,
 				active: 0,
 				navs: [],
 				pageSize: 20,

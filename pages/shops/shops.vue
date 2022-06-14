@@ -93,7 +93,7 @@
 		<view class="flex bg-color-f7" v-if="tabStatus == 3" style="position: relative;height: 100vh;" :style="{ 'padding-top': top +46+ 'px' }">
 			<block v-if="shop.cateStyle == 1">
 			<scroll-view  scroll-y="true" class="flex f-c f-s-0 w100 bg-color-fb padding-12"  :style="{'height': height+'px'}">
-				<view  @click="go('/pages/search/list?shopId='+id+'&catePid='+item.id)" v-for="(item,index) in cateList" :style="item.img | bgimg(700)+''" :class="item.img ? '':'bg-color'" class="f-a-e f-j-c flex b-radius-10 padding-12 h-160 bg-img  margin-b10">
+				<view  @click="go('/pages/search/list?shopId='+id+'&catePid='+item.id+'&cateName='+item.name)" v-for="(item,index) in cateList" :style="item.img | bgimg(700)+''" :class="item.img ? '':'bg-color'" class="f-a-e f-j-c flex b-radius-10 padding-12 h-160 bg-img  margin-b10">
 					<view class="flex f-a-c f-j-c w-200 h-20 f-w-b f12-size b-radius-2" style="    background-color: hsla(0,0%,100%,.6);">{{item.name}}</view>
 				</view>
 				<view  :style="{ 'padding-top': !isIphonex ? '50px' : '84px'}"></view>
@@ -102,7 +102,7 @@
 			<block v-if="shop.cateStyle == 2">
 			<scroll-view  scroll-y="true" class="w100 bg-color-fb padding-12"  :style="{'height': height+'px'}">
 				<view class="grid grid-c-3">
-					<view @click="go('/pages/search/list?shopId='+id+'&catePid='+item.id)" v-for="(item,index) in cateList" class="flex f-c f-a-c f-j-c">
+					<view @click="go('/pages/search/list?shopId='+id+'&catePid='+item.id+'&cateName='+item.name)" v-for="(item,index) in cateList" class="flex f-c f-a-c f-j-c">
 						<view :style="item.img | bgimg(300)+''" class="flex w-80 h-80 bg-img"></view>
 						<text class="f12-size margin-t4">{{item.name}}</text>
 					</view>
@@ -117,7 +117,7 @@
 			</scroll-view>
 			<scroll-view  v-if="cateList.length > 0 && cateList[cateActive] && cateList[cateActive]['children']" scroll-y="true" class="flex f-c f-s-0 flex-1 padding-10  "  :style="{'height': height+'px'}">
 				<view v-for="item in cateList[cateActive]['children']" class="bg-color-w b-radius-10  wrap-sub-cate padding-10">
-					<view @click="go('/pages/search/list?shopId='+id+'&cateTid='+item.id)" class="flex f-a-c f-j-s">
+					<view @click="go('/pages/search/list?shopId='+id+'&cateTid='+item.id+'&cateName='+item.name)" class="flex f-a-c f-j-s">
 						<text class="t-color-5 f12-size">{{item.name}}</text>
 						<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>
 					</view>

@@ -1,0 +1,49 @@
+page {
+	background-color: #fff;
+}
+.wrap-role {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	bottom: 0;
+	z-index: 111;
+	color: #c4a365;
+}
+
+.wrap-img {
+	position: relative;
+}
+
+.wrap-img image {
+	width: 230px;
+}
+
+.tip::before,
+.tip::after {
+	content: '';
+	width: 20px;
+	height: 2px;
+	background-color: #c4a365;
+	opacity: .5;
+	margin: 0 10px;
+	position: relative;
+	top: 1px;
+}
+.role-item {
+	width: 50px;
+	height: 15px;
+	background-color: #e9e9e9;
+}
+.wrap-pro view:first-child {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+.wrap-pro view:last-child {
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	height: 18px;
+}
+.wrap-pro view.on {
+	background-image: linear-gradient(#debc7d,#debc7d),linear-gradient(#ffd401,#ffd401);
+}

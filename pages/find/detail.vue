@@ -8,17 +8,17 @@
 				</view>
 				<view class="flex f-a-c f-j-c f-s-0 ">
 					<view  v-if="!isSelf"  @click="likeUser(index)" :class="item.collectWalkMember ? 't-color-y b-color-y' : 'bg-color-f7'" class="flex f-a-c f-j-c b-radius-5  padding-lr10 h-30">
-						<text :class="item.collectWalkMember ? 'van-icon-success':'van-icon-cross'" class="flex f-a-c f-j-c van-icon  margin-r4 f13-size"></text>
+						<text :class="item.collectWalkMember ? 'van-icon-success':'van-icon-plus'" class="flex f-a-c f-j-c van-icon  margin-r4 f13-size"></text>
 						<text class="f12-size">{{!item.collectWalkMember ? i18n['关注'] : i18n['已关注']}}</text>
 					</view>
-					<view  v-else  @click="del(index)" class="flex f-a-c f-j-c b-radius-5 bg-color-f7 padding-lr10 h-30">
+					<!-- <view  v-else  @click="del(index)" class="flex f-a-c f-j-c b-radius-5 bg-color-f7 padding-lr10 h-30">
 						<text  class="flex f-a-c f-j-c van-icon van-icon-cross margin-r4 f13-size"></text>
 						<text class="f12-size">{{i18n['删除']}}</text>
-					</view>
+					</view> -->
 				</view>
 			</view>
 			<swiper class="wrap-img" indicator-color="#fff" indicator-active-color="#FD6C01" :indicator-dots="true" :autoplay="false" :interval="3000" :duration="1000">
-				<swiper-item @click="previewImg(img,getImgs(item.walkTrends.images))" v-for="img in getImgs(item.walkTrends.images)" class="padding-lr6">
+				<swiper-item @click="previewImg(img,getImgs(item.walkTrends.images))" v-for="img in getImgs(item.walkTrends.images)" class="padding-lr6 box-b">
 					<view class="swiper-item bg-img b-radius-10" :style="img | bgimg(700)+''"></view>
 				</swiper-item>
 			</swiper>
@@ -30,15 +30,15 @@
 				</view>
 			</view>
 			<view @click="showMore(index)" class="padding-lr12 margin-t12">
-				<view :class="item.show ? '' : 'line2'" class="  f12-size">{{item.walkTrends.content}}</view>
-				<view  :class="item.show ? 'van-icon-arrow-up' : 'van-icon-arrow-down'" class="flex f-a-c f-j-c van-icon  t-color-9 margin-t8"></view>
+				<view :ref="'text'+index" :class="item.show ? '' : 'line2'" class="  f12-size">{{item.walkTrends.content}}</view>
+				<view v-if="isLine(item.walkTrends.content,'text'+index,2,13)" :class="item.show ? 'van-icon-arrow-up' : 'van-icon-arrow-down'" class="flex f-a-c f-j-c van-icon  t-color-9 margin-t8"></view>
 			</view>
 			<view class="flex h-50 f-j-s padding-lr12">
 				<view class="flex f-a-c f-j-c van-icon van-icon-share-o f20-size"></view>
 				<view class="flex">
-					<view class="flex f-a-c f-j-c van-icon van-icon-like-o f20-size margin-r4 t-color-6"></view>
-					<text class="f11-size flex f-a-c margin-r16">{{item.walkTrends.viewNum}}</text>
-					<view @click="like(index)" :class="item.collectTrends ? 'van-icon-star t-color-y' : 'van-icon-star-o t-color-6'" class="flex f-a-c f-j-c van-icon  f20-size margin-r4 "></view>
+					<!-- <view class="flex f-a-c f-j-c van-icon van-icon-like-o f20-size margin-r4 t-color-6"></view>
+					<text class="f11-size flex f-a-c margin-r16">{{item.walkTrends.viewNum}}</text> -->
+					<view @click="like(index)" :class="item.collectTrends ? 'van-icon-like t-color-y' : 'van-icon-like-o t-color-6'" class="flex f-a-c f-j-c van-icon  f20-size margin-r4 "></view>
 					<text @click="like(index)" :class="item.collectTrends ? 't-color-y' : ''" class="f11-size flex f-a-c margin-r16">{{item.walkTrends.collectionNum}}</text>
 					<view @click="openComment(index)" class="flex f-a-c f-j-c van-icon van-icon-chat-o f20-size margin-r4 t-color-6"></view>
 					<text class="f11-size flex f-a-c ">{{item.walkTrends.commentNum}}</text>
@@ -97,6 +97,20 @@
 			this.init();
 		},
 		methods: {
+			isLine(text,textId,line=2,size=13) {
+				this.$nextTick(function(){
+					if(!this.$refs[textId]){return}
+					let dom = this.$refs[textId][0].$el;
+					let width = dom.clientWidth;
+					let len = width*line/size;
+					if(text.length >= len) {
+						return true
+					}else{
+						return false
+					}
+				})
+				
+			},
 			del(index) {
 				$.showModal({
 					content: '是否确认删除',

@@ -124,6 +124,7 @@
 							let obj = ele.walkTrends;
 							obj.collectTrends = ele.collectTrends;
 							obj.collectWalkMember = ele.collectWalkMember;
+							obj.index = index;
 							if(obj.videoUrl && obj.videoUrl != '') {
 								obj['mainImg'] = obj.videoUrl+'?vframe/jpg/offset/0/w/300';
 							}else if(String(obj.images).indexOf('|') >= 0) {
@@ -134,11 +135,13 @@
 							self.list.push(obj);
 						})
 						self.totalPage = res.data.totalPage;
+						uni.stopPullDownRefresh();
 					}
 				})
 			},
 			init() {
 				this.page = 1;
+				this.list = [];
 				this.getList();
 			},
 		},
@@ -151,7 +154,9 @@
 		mounted() {},
 		destroyed() {},
 		components: {issueBtn,findList},
-		onPullDownRefresh() {},
+		onPullDownRefresh() {
+			this.init();
+		},
 		onReachBottom() {
 			if(this.page < this.totalPage) {
 				this.page += 1;

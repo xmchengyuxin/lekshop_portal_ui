@@ -63,10 +63,8 @@
 						<text class="">{{item.remark}}</text>
 					</view>
 					<view class="flex f-a-c f-j-e">
-						<block v-if='order.refundExpiredTime <= now'>
-						<view v-if="state[item.refundStatus].value == 'wtk'"  @click="refund(item)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-e t-color-8 ">{{i18n['退款']}}</view>
-						<view v-else  @click="go('/pages/user/refunddetail?detailId='+item.id)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-e t-color-8 ">{{i18n['退款详情']}}</view>
-						</block>
+						<view v-if="state[item.refundStatus].value == 'wtk' && (orderState[order.status]['value'] == 'dfh' || orderState[order.status]['value'] == 'dsh' || (orderState[order.status]['value'] == 'ywc'&&order.refundExpiredTime >= now))"  @click="refund(item)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-e t-color-8 ">{{i18n['退款']}}</view>
+						<view v-if="state[item.refundStatus].value != 'wtk'"  @click="go('/pages/user/refunddetail?detailId='+item.id)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-e t-color-8 ">{{i18n['退款详情']}}</view>
 					</view>
 				</view>
 				<view class="flex f-j-s padding-tb6 f12-size">

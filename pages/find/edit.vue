@@ -8,7 +8,7 @@
 			<view class="padding-15 flex f-j-s b-bottom">
 				<view class="f15-size">{{i18n['昵称']}}</view>
 				<view class="flex flex-1">
-					<input v-model="name" maxlength="4" type="text" class="w100 h100 f-w-500 right" value="" :placeholder="i18n['请输入']" />
+					<input v-model="name"  type="text" class="w100 h100 f-w-500 right" value="" :placeholder="i18n['请输入']" />
 				</view>
 			</view>
 			<view class="padding-15 flex f-j-s b-bottom">
@@ -26,12 +26,12 @@
 			</view>
 			<view class="padding-15 flex f-a-c f-j-s b-bottom">
 				<view class="f15-size">{{i18n['背景图片']}}</view>
-				<view @click="updateImgBg" class="w-60 h-60  bg-img" :style="bg | bgimg(300)+''"></view>
+				<view @click="updateImgBg" :class="bg != '' ? '' : 'van-icon-plus'" class="w-60 h-60  bg-img flex f-a-c f-j-c van-icon  f24-size t-color-9 b-color-e" :style="bg | bgimg(300)+''"></view>
 			</view>
 			<view class="padding-15 ">
 				<view class="f15-size">{{i18n['个性签名']}}</view>
 				<view class="flex flex-1 h-40">
-					<input v-model="sign" type="text" class="w100 h100 f-w-500" value="" :placeholder="i18n['请输入']" />
+					<textarea auto-height="true" v-model="sign" type="text" class="w100 h-100 f15-size" value="" :placeholder="i18n['请输入']" />
 				</view>
 			</view>
 			<view class="padding-10"></view>

@@ -1,5 +1,10 @@
 <template>
 	<view class="contain safe-area">
+		<view v-if="id != ''" class="padding-12">
+			<text v-if="info.status == 0" class="t-color-y margin-r6">审核中</text>
+			<text v-if="info.status == 2" class="t-color-y margin-r6">发布失败</text>
+			<text class="f12-size">{{info.reason}}</text>
+		</view>
 		<view class="padding-lr12">
 			<block v-if="type != 1">
 			<view class="flex f-a-c padding-tb12">
@@ -18,7 +23,7 @@
 				<text class="flex f-a-c f-j-c van-icon van-icon-editor t-color-0 f18-size margin-r4"></text>
 				<text class="f15-size t-color-3">{{i18n['种草内容']}}</text>
 			</view>
-			<textarea v-model="content" class="bg-color-e h-140 box-c w100 b-radius-5 f12-size padding-10" value="" :placeholder="i18n['种草内容']" />
+			<textarea v-model="content" class="bg-color-e h-140 box-b  w100 b-radius-5 f12-size padding-10" value="" :placeholder="i18n['种草内容']" />
 			</block>
 			<block v-if="type == 1">
 				<view class="flex f-a-c padding-tb12">
@@ -33,7 +38,7 @@
 					<text class="flex f-a-c f-j-c van-icon van-icon-editor t-color-0 f18-size margin-r4"></text>
 					<text class="f15-size t-color-3">{{i18n['视频内容']}}</text>
 				</view>
-				<textarea v-model="content" class="bg-color-e h-140 w100 b-radius-5 f12-size padding-10" value="" :placeholder="i18n['视频内容']" />
+				<textarea v-model="content" class="bg-color-e box-b h-140 w100 b-radius-5 f12-size padding-10" value="" :placeholder="i18n['视频内容']" />
 			</block>
 			<view @click="$refs.goodslist.open()" class="flex f-a-c f-j-s padding-tb12">
 				<view class="flex f-a-c">
@@ -119,11 +124,14 @@
 				video: '',
 				name: '',
 				list: [],
+				id: '',
+				info: '',
 			};
 		},
 		onLoad: function(options) {
 			self = this;
 			self.type = options.type ? options.type : '3';//1短视频>>2宝贝上新>>3种草>>4买家秀
+			self.id = options.id ? options.id : '';//1短视频>>2宝贝上新>>3种草>>4买家秀
 			this.init();
 		},
 		methods: {
@@ -137,7 +145,7 @@
 			addImg() {
 				if(self.imgs.length >= 9){return}
 				$.uploadimg({
-					count: 9-self.imgs.length,
+					length: 9-self.imgs.length,
 					success(res) {
 						self.imgs.push(res.imgUrl);
 					}
@@ -161,8 +169,20 @@
 					method: 'GET',
 					success(res) {
 						self.list = res.data ? res.data : [];
+						if(self.id != '') {
+							self.setInfo();
+						}
 					}
 				})
+			},
+			setInfo() {
+				let info = uni.getStorageSync('findDetail') ? uni.getStorageSync('findDetail') : '';
+				if(info == ''){return;}
+				console.log(info);
+				this.imgs = info.images.split('|');
+				this.videoUrl = info.videoUrl ? info.videoUrl : '';
+				this.content = info.content ? info.content : '';
+				this.info = info;
 			},
 			issue() {
 				let goodsArr = [];
@@ -183,6 +203,7 @@
 				$.ajax({
 					url: API.issueApi,
 					data: {
+						id: self.id,
 						type: self.type,
 						images: self.imgs.join('|'),
 						videoUrl: self.video,
@@ -192,19 +213,7 @@
 					method: 'POST',
 					success(res) {
 						$.$toast(self.i18n['操作成功']);
-						setTimeout(() => {
-							let pages = getCurrentPages(); // 当前页面
-							let beforePage = pages[pages.length - 2]; // 前一个页面
-							wx.navigateBack({
-								delta: 1,
-								success: function() {
-									if (beforePage.$vm.init) {
-										beforePage.$vm.init(); // 执行前一个页面的changeBanner方法
-									}
-								}
-							});
-						},2000)
-						
+						$.go('/pages/find/user',2,2000);
 					}
 				})
 			},

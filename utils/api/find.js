@@ -13,4 +13,7 @@ export default {
 	'findUserListApi': 'member/trends/getList',//我的动态列表
 	'delFindApi': 'member/trends/delete',//删除动态
 	'shopFindListApi': 'common/shop/getTrendsList',//店铺动态
+	'updateHeadImgApi': 'member/walkMember/updateHeadImg',
+	'likeUserListApi': 'common/walkMember/getCollectionList',
+	'likeFansListApi': 'common/walkMember/getFansList',//创作人的粉丝列表
 }

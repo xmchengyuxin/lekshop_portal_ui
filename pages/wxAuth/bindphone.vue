@@ -1,41 +1,89 @@
 <template>
 	<view class="contain login">
-			<view class="user-img b-radius" :style="logo | bgimg(200)+''"></view>
-			<view class="wrap-info flex f-c f-j-c bg-color-w b-radius-5" style="height: auto;">
-				<!-- #ifdef MP-WEIXIN -->
-				<view class="wrap-input flex f-a-c padding-lr12">
-					<button class="flex f-a-c f-j-s t-color-8" @getphonenumber="getPhoneNumber" open-type="getPhoneNumber" v-if="showPhone">请输入手机号</button>
-					<input v-if="!showPhone" v-model="username"  type="number" maxlength="11" placeholder="请输入手机号"  class="flex flex-1"></input>
-				</view>
-				<!-- #endif -->
-				<!-- #ifndef MP-WEIXIN -->
-				<view class="wrap-input flex f-a-c code-icon padding-lr12" style="position: relative;">
-					<input  v-model="username" type="number" maxlength="11" placeholder="请输入手机号"  class="flex flex-1 w100"></input>
-				</view> 
-				<!-- #endif -->
-				
-				<view class="wrap-input flex f-a-c code-icon padding-lr12" style="position: relative;">
-					<input  v-model="password" type="password" placeholder="请输入密码"  class="flex flex-1 w100"></input>
-				</view> 
-				<view class="wrap-input flex f-a-c code-icon padding-lr12" style="position: relative;">
-					<input  v-model="confirmPassword" type="password" placeholder="请确认密码"  class="flex flex-1 w100"></input>
-				</view>
-				<!-- #ifndef MP-WEIXIN -->
-				<view class="wrap-input flex f-a-c code-icon padding-lr12" style="position: relative;">
-					<input v-model="sms" type="number" placeholder="请输入验证码"  class="flex flex-1" style="width: 60%;"></input>
-					<span :class="smsTxt == '获取验证码' ? '' : 'on'" class="code-btn flex f-a-c f-j-c"  @click="getCode">{{smsTxt}}</span>
-				</view> 
-				<!-- #endif -->
-			</view>
-			<view class="btn flex f-a-c f-j-c bg-color-linear-g t-color-w f16-size b-radius-30"  @click="loginBtn">确定</view>
-		
+			<swiper class="wrap-swiper" :disable-touch="true" :current="active" @change="changeSwiper" :indicator-dots="false" :autoplay="false" :interval="1000" :duration="500">
+				<swiper-item catchtouchmove='onTouchMove' class="padding-lr30 box-b">
+					<view class="padding-6"></view>
+					<view @click="goBack()" class="flex f-j-e margin-b16 t-color-y">{{i18n['跳过']}}</view>
+					<view class="flex f-a-c f-j-c f16-size">{{i18n['绑定安全手机']}}</view>
+					<view class="f13-size t-color-9 margin-t20">{{i18n['您当前没有绑定手机号码，当忘记密码时，无法登录账号或申诉找回。请先绑定手机号。']}}</view>
+					
+					<view class="flex h-50 b-radius-30 bg-color-f1 margin-t20">
+						<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">+86</view>
+						<view class="flex flex-1 padding-lr12">
+							<button v-if="showPhone" class="flex f-a-c f16-size f-j-s t-color-8" @getphonenumber="getPhoneNumber" open-type="getPhoneNumber">{{i18n['请输入手机号']}}</button>
+							<input v-else class="f16-size" v-model="username" type="number" maxlength="11" :placeholder="i18n['请输入手机号']">
+						</view>
+					</view>
+					<view class="h-40 margin-t30 flex f-a-c f-j-c bg-color-linear-y t-color-w f16-size b-radius-30"  @click="next()">{{i18n['下一步']}}</view>
+				</swiper-item>
+				<swiper-item catchtouchmove='onTouchMove' class="padding-lr30 box-b">
+					<view class="padding-6"></view>
+					<view @click="goBack()" class="flex f-j-e margin-b16 t-color-y">{{i18n['跳过']}}</view>
+					<view class="flex f-a-c f-j-c f16-size">{{i18n['绑定安全手机']}}</view>
+					<view class="f13-size f-w t-color-9 margin-t20">
+						{{i18n['我们向您的手机1发送了一条验证短信'] | i18n('+86 '+username)}}
+					</view>
+					<view class="flex h-50 b-radius-30 bg-color-f1 margin-t20 over-h">
+						<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">
+							<image class="w-20" src="../../static/images/login_code.png" mode="widthFix"></image>
+						</view>
+						<view class="flex flex-1 padding-lr12">
+							<input class="f16-size" v-model="code" type="number"  :placeholder="i18n['请输入图形验证码']">
+						</view>
+						<view class="flex f-a-c f-s-0">
+							<img-code ref="imgCode" @imgSuc="getImgCode" class="flex  h-30"></img-code>
+						</view>
+					</view>
+					<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
+						<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">
+							<image class="w-20" src="../../static/images/login_code.png" mode="widthFix"></image>
+						</view>
+						<view class="flex flex-1 padding-lr12">
+							<input class="f16-size" v-model="sms" type="tel"  :placeholder="i18n['请输入手机验证码']">
+						</view>
+						<view class="padding-6">
+							<phone-code ref="phonecode" :codeImg="codeImg" :code="code" :phone="username"  :sendType="2"  ></phone-code>
+						</view>
+					</view>
+					<view class="h-40 margin-t30 flex f-a-c f-j-c bg-color-linear-y t-color-w f16-size b-radius-30"  @click="bindPhone()">{{i18n['下一步']}}</view>
+					<view class="h-40 margin-t12 flex f-a-c f-j-c b-color-y t-color-y f16-size b-radius-30"  @click="active=0">{{i18n['返回']}}</view>
+				</swiper-item>
+				<swiper-item catchtouchmove='onTouchMove' class="padding-lr30 box-b">
+					<view class="padding-6"></view>
+					<view @click="goBack()" class="flex f-j-e margin-b16 t-color-y">{{i18n['跳过']}}</view>
+					<view class="flex f-a-c f-j-c f16-size">{{i18n['设置登录密码']}}</view>
+					<view class="padding-6"></view>
+					<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
+						<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">
+							<image class="w-20" src="../../static/images/login_passport.png" mode="widthFix"></image>
+						</view>
+						<view class="flex flex-1 padding-lr12">
+							<input class="f16-size" v-model="password" type="password"  :placeholder="i18n['请输入登录密码']">
+						</view>
+					</view>
+					<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
+						<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">
+							<image class="w-20" src="../../static/images/login_passport.png" mode="widthFix"></image>
+						</view>
+						<view class="flex flex-1 padding-lr12">
+							<input class="f16-size" v-model="confirmPassword" type="password"  :placeholder="i18n['请输入确认密码']">
+						</view>
+					</view>
+					
+					<view class="h-40 margin-t30 flex f-a-c f-j-c bg-color-linear-y t-color-w f16-size b-radius-30"  @click="setPassword">{{i18n['保存']}}</view>
+					<view v-if="showPhone" class="h-40 margin-t12 flex f-a-c f-j-c b-color-y t-color-y f16-size b-radius-30"  @click="active=0">{{i18n['返回']}}</view>
+					<view v-else class="h-40 margin-t12 flex f-a-c f-j-c b-color-y t-color-y f16-size b-radius-30"  @click="active=1">{{i18n['返回']}}</view>
+				</swiper-item>
+			</swiper>		
 	</view>
 </template>
 <style scoped>
-
+@import url('../../static/css/page/white.css');
+	@import url('../../static/css/passport/login.css');
 </style>
 <script>
-	import wPicker from "@/components/w-picker/w-picker.vue";
+	import imgCode from '../common/imgcode.vue';
+	import phoneCode from '../common/phonecode.vue';
 	const $ = require('@/utils/api.js');
 	const api = require('@/utils/validate.js');
 	let codeTimeOut;
@@ -44,27 +92,34 @@
 			return {
 				username: '',
 				sms: '',
-				smsTxt: '获取验证码',
+				code: '',
+				codeImg: '',
 				type: '1',
-				show: false,
-				begin: '',
 				isFlag: false,
-				showPhone: true,
+				showPhone: false,
 				user: '',
 				confirmPassword: '',
 				password: '',
 				logo: '',
+				active: 0,
+				url: '',
 			};
 		},
-		onLoad: function() {
+		onLoad: function(options) {
+			this.url = options.url ? options.url : '';
 			this.user = uni.getStorageSync('userInfo') ? uni.getStorageSync('userInfo') : '';
-			if(getApp().globalData.isWeiXin) {
-				this.showPhone = false;
-			}
 			this.init();
-			this.logo = uni.getStorageSync('config') ? uni.getStorageSync('config').logo : '';
 		},
 		methods: {
+			onTouchMove() {
+				return false;
+			},
+			getImgCode(res) {
+				this.codeImg = res;
+			},
+			changeSwiper(e) {
+				this.active = e.detail.current;
+			},
 			getPhoneNumber(e) {
 				const self = this;
 				$.ajax({
@@ -84,18 +139,24 @@
 				})
 			
 			},
-			onCancel() {},
-			onConfirm(e) {
-				console.log(e);
-				this.begin = e.result;
+			next() {
+				if(this.active == 0) {
+					if(this.username == ''){
+						$.$toast(this.i18n('请输入手机号码'));return;
+					}
+					if(this.showPhone){
+						this.sms = '102938';
+						this.bindPhone();
+					}else{
+						this.active = 1;
+					}
+					return;
+				}
+				if(this.active == 1) {
+					this.active = 2;
+				}
 			},
-			showTime() {
-				this.show = true;
-			},
-			cancel() {
-				this.show = false;
-			},
-			loginBtn() {
+			bindPhone() {
 				const self = this;
 				let check = api.validate([
 					{
@@ -104,117 +165,87 @@
 						rules: 'phone'
 					},
 					{
-						value: this.password,
-						text: '请输入登录密码',
+						value: this.sms,
+						text: this.i18n('请输入验证码'),
 						rules: ''
 					},
-					{
-						value: this.confirmPassword,
-						text: '请确认登录密码',
-						rules: ''
-					},
-					// {
-					// 	value: this.data.begin,
-					// 	text: '请选择您的生日',
-					// 	rules: ''
-					// },
 				]);
 				if (!check) {
 					return
 				};
-				// #ifndef MP-WEIXIN
-				if(self.sms == '') {
-					$.$toast('请输入验证码');return
-				}
-				// #endif
 				$.ajax({
-					url: 'bindPhone',
+					url: 'member/updatePhone',
 					data: {
 						phone: this.username,
-						// birthday: this.data.begin + ' 00:00:00',
 						code: this.sms,
-						password: self.password,
-						confirmPassword: self.confirmPassword
 					},
 					method: 'POST',
 					success(res) {
-						$.$toast('绑定成功');
-						wx.setStorageSync('token', res.data.tokenHead + ' ' + res.data.token);
-					
-						let pages = getCurrentPages(); // 当前页面
-						let beforePage = pages[pages.length - 2]; // 前一个页面
-						let len = 1;
-					
-						//避免多个请求都调用授权导致有多个授权页面
-						uni.navigateBack({
-							delta: len,
-							success: function() {
-								// #ifndef MP-WEIXIN
-								if (beforePage.$vm.onLoad) {
-									beforePage.$vm.onLoad(); // 执行前一个页面的changeBanner方法
-								}
-								// #endif
-								
-								// #ifdef MP-WEIXIN
-								if (beforePage.onLoad) {
-									beforePage.onLoad(); // 执行前一个页面的changeBanner方法
-								}
-								// #endif
-							}
-						});
+						this.active = 2;
 					}
 				})
 			
 			},
-			getCode() {
-			
+			setPassword() {
 				const self = this;
-				if (this.username == '' || this.username.length != 11) {
-					$.$toast('请输入正确手机号');
-					return;
-				}
-				if (this.smsTxt != '获取验证码') {
-					return;
-				}
-				clearInterval(codeTimeOut);
-				let postData = {
-					phone: this.username,
-					sendType: 2
-				};
-				let time = 60;
-				codeTimeOut = setInterval(function() {
-					time--;
-					let text = '重新发送(' + time + 's)';
-					self.smsTxt = text;
-					if (time <= 0) {
-						clearInterval(codeTimeOut);
-						self.smsTxt = '获取验证码';
-					}
-				}, 1000);
-			
-				$.ajax({
-					url: 'common/sendCode',
-					data: postData,
-					method: 'post',
-					success(res) {
-			
+				let check = api.validate([
+					{
+						value: this.password,
+						text:self.i18n['请输入登录密码'],
+						rules: ''
 					},
-					complete(res) {
+					{
+						value: this.confirmPassword,
+						text:self.i18n['请输入确认密码'],
+						rules: ''
+					},
+				]);
+				if (!check) {
+					return
+				};
+				$.ajax({
+					url: 'member/setPassword',
+					data: {
+						password: this.password,
+						comfirmPassword: this.confirmPassword,
+					},
+					method: 'POST',
+					success(res) {
+						wx.setStorageSync('token', res.data.tokenHead + ' ' + res.data.token);
+						if(res.data.member) {
+							uni.setStorageSync('userInfo', res.data.member);
+						}
+						setTimeout(() => {
+							self.goBack();
+						},2000)
+						$.$toast(self.i18n('操作成功'));
 					}
 				})
-			
 			},
-			init() {},
-
-
+			goBack() {
+				const self = this;
+				if(self.url != '') {
+					self.go(self.url, 2);
+				}else {
+					self.go('/pages/index/index', 3);
+				}
+			},
+			init() {
+				// #ifdef MP-WEIXIN
+				this.showPhone = true;
+				// #endif
+			},
+		},
+		computed: {
+			i18n() {
+				return this.$t('login')
+			},
 		},
 		created() {
 		},
 		mounted() {},
 		destroyed() {},
-		components: {
-			wPicker
-		},
+		components: {phoneCode,imgCode},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {
@@ -222,35 +253,13 @@
 	}
 </script>
 <style scoped>
-	.login {
-		padding: 50px 15px 30px;
-	}
-	.wrap-info {
-		padding: 0 15px;
-	}
-	.wrap-input {
-		height: 50px;
-		border-bottom: 1px solid #F4F4F4;
-	}
-	.wrap-input button {
-		margin: 0;
-	}
-	.btn {
-		height: 44px;
-		margin-top: 50px;
-	}
-	.user-img {
-		width: 70px;
-		height: 70px;
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: cover;
-		background-color: #D2D2D2;
-		margin: 0 auto 45px;
+	.wrap-swiper {
+		height: 100%;
 	}
 	button {
 		width: 100%;
 		height: 100%;
+		margin: 0;
 	}
 	button::after {
 		border: none;

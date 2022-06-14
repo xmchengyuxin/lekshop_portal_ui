@@ -7,7 +7,7 @@
 			{{i18n['购物车']}}
 			<text v-if="len > 0" class="f10-size t-color-9 margin-l6">({{i18n['共1件宝贝'] | i18n(len)}})</text>
 			</view>
-			<view v-if="list.length > 0" @click="showDel=!showDel" class="flex f-s-0 f-a-c padding-lr10" :class="showDel ? 't-color-y' : ''">{{showDel ? i18n['完成'] : i18n['管理']}}</view>
+			<view v-if="list != ''" @click="showDel=!showDel" class="flex f-s-0 f-a-c padding-lr10" :class="showDel ? 't-color-y' : ''">{{showDel ? i18n['完成'] : i18n['管理']}}</view>
 			<xcx-header></xcx-header>
 		</view>
 		<view :style="{'padding-top': top+44+'px'}"></view>
@@ -44,9 +44,9 @@
 					</view>
 				</view>
 			</view>
-			<no-data v-if="list.length <= 0" text="cart"></no-data>
+			<no-data v-if="list == ''" text="cart"></no-data>
 		</view>
-		<view v-if="list.length > 0" class="fixed-top wrap-btn  h-50 bg-color-f7 flex f-j-s" :style="{'bottom': !isIphonex ? '50px' : '84px'}">
+		<view v-if="list != ''" class="fixed-top wrap-btn  h-50 bg-color-f7 flex f-j-s" :style="{'bottom': !isIphonex ? '50px' : '84px'}">
 			<view @click="chooseAll" class="flex padding-lr10 f-a-c">
 				<text :class="isAll ? 'van-icon-checked t-color-y' : 'van-icon-circle t-color-9'" class="flex f-a-c van-icon  f18-size margin-r4"></text>
 				<text class="f13-size">{{i18n['全选']}}</text>

@@ -1,6 +1,10 @@
 <template>
 	<view >
 		<view class="warp-tabbar bg-color-w flex" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
+			<view v-if="showLogin && !isLogin" class="wrap-login flex f-a-c f-j-s h-44 padding-lr15">
+				<text class="t-color-w">要是你不登录，我就赖这不走啦！</text>
+				<text @click="go('/pages/passport/login')" class="flex f-a-c  f-j-c b-radius-5 t-color-w h-32 bg-color-linear-y padding-lr20">立即登录</text>
+			</view>
 			<view @click="goTab(item.pagePath)" v-for="(item,index) in list" class="flex flex-1 f-c f-a-c f-j-c p-r">
 				<text v-if="index == 1 && len > 0"
 					class="flex f-a-c f-j-c box-b f11-size t-color-w bg-color-r wrap-len b-radius padding-lr2 h-16"
@@ -10,9 +14,18 @@
 			</view>
 		</view>
 		<view v-if="isShow" :style="{'padding-bottom': isIphonex ? '84px' : '50px'}"></view>
+		<view v-if="isShow && showLogin" style="padding-bottom: 54px;"></view>
 	</view>
 </template>
 <style scoped>
+	.wrap-login {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		transform: translateY(-100%);
+		background-color: rgba(0,0,0,0.6);
+	}
 	.warp-tabbar {
 		position: fixed;
 		bottom: 0;
@@ -39,6 +52,7 @@
 		props: {
 			 active: { type: Number, default: 0 },
 			isShow: { type: Boolean, default: true },
+			showLogin: { type: Boolean, default: false },
 		},
 		data() {
 			return {
@@ -76,7 +90,8 @@
 					},
 					
 				],
-				len: 0
+				len: 0,
+				isLogin: uni.getStorageSync('token') ? true : false,
 			};
 		},
 		onLoad: function() {

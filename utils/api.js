@@ -706,6 +706,12 @@ function timeChange(source, inFormat, outFormat) {
 				':' +
 				checkTime(source.getMinutes());
 			break;
+		case 'm月d日':
+			return checkTime(source.getMonth() + 1) +
+				'月' +
+				checkTime(source.getDate()) +
+				'日';
+			break;	
 		case 'm-d':
 			return checkTime(source.getMonth() + 1) +
 				'-' +

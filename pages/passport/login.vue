@@ -18,7 +18,7 @@
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
 					<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">+86</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="phone" type="number" maxlength="11" :placeholder="i18n['请输入登录账号']">
+						<input class="f16-size" v-model="phone" type="number" maxlength="11" :placeholder="i18n['请输入登录账号']">
 					</view>
 				</view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
@@ -26,7 +26,7 @@
 						<image class="w-20" src="../../static/images/login_passport.png" mode="widthFix"></image>
 					</view>
 					<view class="flex flex-1 padding-lr12">
-						<input v-model="password" type="password" :placeholder="i18n['请输入登录密码']">
+						<input class="f16-size" v-model="password" type="password" :placeholder="i18n['请输入登录密码']">
 					</view>
 				</view>
 				<!-- <view class="flex h-50 b-radius-30 bg-color-f1 margin-t8 over-h">
@@ -60,9 +60,11 @@
 				</view>
 			</view>
 		</view>
+		<xieyi ref='xieyi' @agree="agree"></xieyi>
 	</view>
 </template>
 <script>
+	import xieyi from '../common/xieyi.vue';
 	import imgCode from '../common/imgcode.vue';
 	const $ = require('../../utils/api.js');
 	let nums = 0;
@@ -179,12 +181,12 @@
 					}
 				});
 			},
+			agree() {
+				this.isAgree = true;
+			},
 			login() {
 				const self = this;
-				if (!self.isAgree) {
-					$.$toast(self.i18n['请阅读并同意用户协议']);
-					return;
-				}
+				
 				if (this.phone == '') {
 					this.$toast(self.i18n['请输入登录账号']);
 					return;
@@ -197,6 +199,11 @@
 				// 	this.$toast(self.i18n['请输入图形验证码']);
 				// 	return;
 				// }
+				if (!self.isAgree) {
+					// $.$toast(self.i18n['请阅读并同意用户协议']);
+					self.$refs.xieyi.open();
+					return;
+				}
 				$.ajax({
 					url: 'common/login',
 					data: {
@@ -261,7 +268,8 @@
 		mounted() {},
 		destroyed() {},
 		components: {
-			imgCode
+			imgCode,
+			xieyi
 		},
 		onPullDownRefresh() {},
 		onReachBottom() {}

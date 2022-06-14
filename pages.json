@@ -42,6 +42,13 @@
 			} 
 		},
 		{
+			"path": "pages/user/credit",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "签到"
+			} 
+		},
+		{
 			"path": "pages/user/commentlist",
 			"style": {
 				"navigationBarTitleText": "我的评价"
@@ -84,6 +91,18 @@
 			} 
 		},
 		{
+			"path": "pages/find/likeusers",
+			"style": {
+				"navigationBarTitleText": "关注列表"
+			} 
+		},
+		{
+			"path": "pages/find/likefans",
+			"style": {
+				"navigationBarTitleText": "粉丝列表"
+			} 
+		},
+		{
 			"path": "pages/find/detail",
 			"style": {
 				"navigationBarTitleText": "为你精选"
@@ -99,6 +118,7 @@
 		{
 			"path": "pages/find/index",
 			"style": {
+				"enablePullDownRefresh": true,
 				"navigationStyle": "custom"
 			} 
 		},
@@ -350,6 +370,7 @@
 		{
 			"path": "pages/user/history",
 			"style": {
+				"navigationStyle": "custom",
 				"navigationBarTitleText": "我的足迹",
 				"navigationBarBackgroundColor":"#F7F7F7"
 			} 
@@ -430,19 +451,19 @@
 					"pagePath": "pages/user/index",
 					"iconPath": "/static/images/tab_index_on.png",
 					"selectedIconPath": "/static/images/tab_index_on.png",
-					"text": "我的"
+					"text": "消息"
 				},
 				{
 					"pagePath": "pages/cart/index",
 					"iconPath": "/static/images/tab_index_on.png",
 					"selectedIconPath": "/static/images/tab_index_on.png",
-					"text": "我的"
+					"text": "逛逛"
 				},
 				{
 					"pagePath": "pages/find/index",
 					"iconPath": "/static/images/tab_index_on.png",
 					"selectedIconPath": "/static/images/tab_index_on.png",
-					"text": "我的"
+					"text": "购物车"
 				},
 				{
 					"pagePath": "pages/chat/index",

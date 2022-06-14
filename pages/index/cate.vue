@@ -18,12 +18,12 @@
 			</scroll-view>
 			<scroll-view v-if="cateList.length > 0" scroll-y="true" class="flex f-c f-s-0 flex-1 padding-10" :style="{'height': height+'px'}">
 				<view v-for="item in cateList[active]['children']" class="bg-color-w b-radius-10  wrap-sub-cate padding-10">
-					<view  @click="go('/pages/search/list?cateTid='+item.id)" class="flex f-a-c f-j-s">
+					<view  @click="go('/pages/search/list?cateTid='+item.id+'&cateName='+item.name)" class="flex f-a-c f-j-s">
 						<text class="t-color-5 f12-size">{{item.name}}</text>
 						<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>
 					</view>
 					<view class="flex f-w">
-						<view @click="go('/pages/search/list?cateId='+child.id)" v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t20">
+						<view @click="go('/pages/search/list?cateId='+child.id+'&cateName='+child.name)" v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t20">
 							<view class="flex w-60 h-60 bg-img  b-radius-5" :style="child.img | bgimg(300)+''"></view>
 							<view class="f12-size t-color-6 margin-t4">{{child.name}}</view>
 						</view>

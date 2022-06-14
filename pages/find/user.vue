@@ -57,11 +57,11 @@
 				</view>
 			</view>
 			<view style="position: relative;z-index: 1;" class="wrap-total flex">
-				<view class="flex flex-1 f-c f-a-c f-j-c">
+				<view @click="go('/pages/find/likeusers?id='+id)" class="flex flex-1 f-c f-a-c f-j-c">
 					<text class="f12-size f-w-500 t-color-w">{{i18n['关注人数']}}</text>
 					<text class="f12-size f-w-500 t-color-w margin-t6">{{info.focusNum}}人</text>
 				</view>
-				<view class="flex flex-1 f-c f-a-c f-j-c">
+				<view @click="go('/pages/find/likefans?id='+id)" class="flex flex-1 f-c f-a-c f-j-c">
 					<text class="f12-size f-w-500 t-color-w">{{i18n['粉丝数量']}}</text>
 					<text class="f12-size f-w-500 t-color-w margin-t6">{{info.fansNum}}</text>
 				</view>

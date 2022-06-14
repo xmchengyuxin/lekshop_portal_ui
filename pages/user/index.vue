@@ -148,7 +148,7 @@
 					</view>
 					<view class="flex f-j-c f12-size t-color-6 margin-t2">{{i18n['收货地址']}}</view>
 				</view>
-				<view class="flex f-s-0 f-c btn-item">
+				<view @click="go('/pages/user/credit')" class="flex f-s-0 f-c btn-item">
 					<view class="flex f-a-c f-j-c h-30">
 						<text class="flex f-a-c f-j-c shops-icon shops-icon-qiandao f24-size"></text>
 					</view>

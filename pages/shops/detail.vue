@@ -158,7 +158,7 @@
 				<view @click="go('/pages/shops/detailcomment?id='+id)" class="flex f-a-c f-j-s">
 					<view class="f-w-b">{{i18n['宝贝评价']}}({{goods.commentNum}})</view>
 					<view class="flex f-a-c">
-						<text class="f10-size t-color-y margin-r4">{{i18n['查看全部']}}</text>
+						<text class="f12-size t-color-y margin-r4">{{i18n['查看全部']}}</text>
 						<text class="flex f-a-c van-icon van-icon-arrow f10-size t-color-y"></text>
 					</view>
 				</view>
@@ -166,7 +166,7 @@
 				<view  class="flex margin-t12">
 					<view class="flex w-30 h-30 b-radius bg-img margin-r12" :style="item.comment.memberHeadImg | bgimg(300)+''"></view>
 					<view class="flex f-c f-j-s">
-						<text class="f10-size">{{item.comment.memberName}}</text>
+						<text class="f12-size">{{item.comment.memberName}}</text>
 						<text class="f10-size t-color-9">{{item.comment.addTime | time3}}</text>
 					</view>
 				</view>
@@ -174,7 +174,7 @@
 					{{i18n['已购商品']}}：{{item.comment.goodsParamName}}
 				</view>	
 				<view class=" margin-t10">{{item.comment.content}}</view>
-				<view v-if="item.comment.img != ''" :class="getImgs(item.comment.img).length >= 3 ? 'grid-c-3' : 'grid-c-2'" class="grid  grid-g10 margin-t10">
+				<view v-if="item.comment.img != ''"  class="grid grid-c-3 grid-g10 margin-t10">
 					<view @click="previewImg(img)" v-for="(img,index) in getImgs(item.comment.img)" class="b-radius-5 bg-img" :style="img | bgimg(300)+''" style="padding: 50%;"></view>
 				</view>
 				<block v-if="item.leftCommentList" v-for="child in item.leftCommentList">
@@ -185,6 +185,9 @@
 						<text class="t-color-y ">{{child.addTime | time1}}{{i18n['追评']}}：</text>
 						{{child.content}}
 					</view>	
+					<view v-if="child.img && child.img != ''"  class="grid grid-c-3 grid-g10 margin-t10">
+						<view @click="previewImg(img)" v-for="(img,index) in getImgs(child.img)" class="b-radius-5 bg-img" :style="img | bgimg(300)+''" style="padding: 50%;"></view>
+					</view>
 				</block>
 				</block>
 			</view>
@@ -218,7 +221,7 @@
 		<view v-if="isIphonex" class="padding-15"></view>
 		<view  :style="{'padding-bottom': isIphonex ? '84px' : '50px'}"></view>
 		<view class="fixed-top bottom-btn bg-color-w flex  f-j-s padding-lr12 h-50 box-c" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
-			<view class="flex w-120 f-s-0 f-j-s margin-r20">
+			<view class="flex w-120 f-s-0 f-j-s margin-r20" style="padding-left: 16px;">
 				<view @click="go('/pages/shops/shops?id='+shop.id)" class="flex  f-c f-a-c f-j-c">
 					<text class="flex f-a-c van-icon van-icon-shop-o f18-size t-color-y"></text>
 					<text class="f12-size t-color-9 margin-t2">{{i18n['店铺']}}</text>
@@ -445,6 +448,7 @@
 		},
 		methods: {
 			getImgs(imgs) {
+				if(!imgs){return;}
 				if(imgs.indexOf('|') > 0) {
 					return imgs.split('|')
 				}else{

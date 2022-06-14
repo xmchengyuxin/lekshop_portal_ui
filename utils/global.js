@@ -94,10 +94,10 @@ export default {
 				data: {},
 				method: 'GET',
 				success(res) {
+					uni.removeStorageSync('userInfo');
+					user = res.data ? res.data : '';
+					uni.setStorageSync('userInfo',user);
 					if(options.success) {
-						uni.removeStorageSync('userInfo');
-						user = res.data ? res.data : '';
-						uni.setStorageSync('userInfo',user);
 						options.success(user);
 					}
 				}
