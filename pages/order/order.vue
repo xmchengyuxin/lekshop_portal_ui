@@ -106,7 +106,7 @@
 			goComment(info) {
 				info.status = info.commentStatus;
 				uni.setStorageSync('comment',info);
-				self.go('/pages/user/comment');
+				self.go('/pages/user/comment?detailId='+info.id);
 			},
 			showPay(index) {
 				this.payIndex = index;

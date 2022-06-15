@@ -63,6 +63,12 @@
 				}else if(moneyType.indexOf(String(info.type)) >= 0) {
 					self.go('/pages/money/index')
 				}
+				if(info.type == 5 || info.type == 4) {//商家驳回了您的退款申请,4商家同意了您的退款申请
+					self.go('/pages/user/refunddetail?id='+obj.refundId);
+				}
+				if(info.type == 10) {//评价提醒
+					self.go('pages/user/commentlist');
+				}
 			},
 			read() {
 				$.ajax({

@@ -4,7 +4,7 @@
 			<view class="bg-color-w b-radius-10 padding-12 margin-b12">
 				<view class="flex f-a-c  f15-size f-w-b margin-b10">{{i18n['退款商品']}}</view>
 				<view class="">
-					<view class="flex">
+					<view @click="go('/pages/shops/detail?id='+goods.goodsId)" class="flex">
 						<view class="flex f-s-0 w-70 h-70 b-radius-5 bg-img  margin-r10" :style="goods.goodsMainImg | bgimg(300)+''"></view>
 						<view class="flex flex-1 f-c margin-r8">
 							<view class="line2 f12-size">{{goods.goodsName}}</view>

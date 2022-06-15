@@ -1,5 +1,6 @@
 export default {
 	pages: [
+		'pages/chat/wuliu',
 		'pages/chat/chat',
 		'pages/chat/wuliu',
 		'pages/user/commentlist',

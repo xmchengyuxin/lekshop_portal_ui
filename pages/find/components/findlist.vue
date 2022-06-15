@@ -13,6 +13,7 @@
 					<view @click.stop="edit(item)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30 margin-r12">编辑</view>
 					<view @click="del(index)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30">删除</view>
 				</view>
+				<view v-if="item.type == 1" class="play-role flex f-a-c f-j-c w-16 h-16 b-radius t-color-w van-icon van-icon-play f11-size"></view>
 				<view class="padding-12 p-r">
 					<view class="line2">
 						<text v-if="item.type == 1" class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-r margin-r4">{{i18n['短视频']}}</text>
@@ -45,6 +46,7 @@
 					<view @click.stop="edit(item)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30 margin-r12">编辑</view>
 					<view @click="del(item.index)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30">删除</view>
 				</view>
+				<view v-if="item.type == 1" class="play-role flex f-a-c f-j-c w-16 h-16 b-radius t-color-w van-icon van-icon-play f11-size"></view>
 				<view class="padding-12 p-r">
 					<view class="line2">
 						<text v-if="item.type == 1" class="b-radius-2 h-16 padding-lr4 f10-size t-color-w bg-color-linear-r margin-r4">{{i18n['短视频']}}</text>
@@ -90,6 +92,16 @@
 		top: 0;
 		left: 0;
 		z-index: 11;
+	}
+	.play-role {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		background-color: rgba(0,0,0,0.3);
+	}
+	.line-h16 {
+		position: relative;
+		top: 1px;
 	}
 </style>
 <script>
@@ -142,6 +154,9 @@
 				default: false
 			},
 			userId: {
+				default: ''
+			},
+			pages: {
 				default: ''
 			}
 		},
@@ -198,7 +213,6 @@
 				})
 			},
 			show(index) {
-				console.log(index,'index');
 				this.showIndex = index;
 				this.showMenu = !this.showMenu;
 			},
@@ -207,7 +221,11 @@
 				if(data.type == 1) {
 					$.go('/pages/find/video?id='+data.id+'&isSelf='+isSelf+'&userId='+this.userId);
 				}else{
-					$.go('/pages/find/detail?id='+data.id+'&isSelf='+isSelf+'&userId='+this.userId);
+					if(this.pages == 'user') {
+						$.go('/pages/user/finddetail?id='+data.id);
+					}else{
+						$.go('/pages/find/detail?id='+data.id+'&isSelf='+isSelf+'&userId='+this.userId);
+					}
 				}
 			},
 			init() {},

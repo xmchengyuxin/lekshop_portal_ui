@@ -113,18 +113,7 @@ function ajax(options) {
 			} else if (response.data.code == 401 && !options.isAuth) {
 				uni.removeStorageSync('token');
 				setTimeout(() => {
-					go('/pages/passport/login');return;
-					// #ifdef MP-WEIXIN
-					go('/pages/wxAuth/index')
-					// #endif
-					// #ifndef MP-WEIXIN
-					// if(getApp().globalData.isWeiXin) {
-					// 	wxAuthH5(getApp().globalData.tuijianren);
-					// }else{
-					// 	go('/pages/passport/login')
-					// }
 					go('/pages/passport/login');
-					// #endif
 				},600)
 				
 			} else if (response.data.code == 300) {

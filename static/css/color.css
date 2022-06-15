@@ -188,6 +188,9 @@
 .f28-size {
 	font-size:56upx!important;
 }
+.f30-size {
+	font-size:60upx!important;
+}
 .f32-size {
 	font-size:64upx!important;
 }
@@ -295,6 +298,9 @@
 }
 .w-20 {
 	width: 20px!important;
+}
+.w-22 {
+	width: 22px!important;
 }
 .w-24 {
 	width: 24px!important;

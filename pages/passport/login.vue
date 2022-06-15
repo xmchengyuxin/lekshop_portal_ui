@@ -1,19 +1,11 @@
 <template>
-	<view class="contain">
+	<view class="contain flex f-c f-j-s">
 		<view class="padding-15">
 			<view class="padding-20"></view>
-			<view class="padding-30"></view>
+			<view class="padding-6"></view>
 			<view class="padding-lr12">
 				<view class="f20-size f-w-b">{{i18n['手机号密码登录']}}</view>
-				<view @click="isAgree = !isAgree" class="flex f-a-c margin-t8">
-					<text :class="isAgree ? 'van-icon-checked t-color-y' : 'van-icon-circle t-color-b'"
-						class="flex f-a-c f-j-c van-icon  f16-size margin-r4"></text>
-					<text class="margin-r4">{{i18n['已阅读并同意']}}</text>
-					<text @click="go('/pages/user/rules?type=1')"
-						class="t-color-blue1 margin-r4">{{i18n['用户协议']}}</text>
-					<text class="margin-r4">{{i18n['和']}}</text>
-					<text @click="go('/pages/user/rules?type=2')" class="t-color-blue1">{{i18n['隐私政策']}}</text>
-				</view>
+				
 				<view class="padding-tb6"></view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
 					<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">+86</view>
@@ -51,16 +43,27 @@
 						<text class="f12-size t-color-y">{{i18n['找回密码']}}</text>
 					</view>
 				</view>
-				<view class="flex f-a-c f-j-c padding-30">
-					<!-- #ifdef MP-WEIXIN -->
-					<button class="" @click="getUserInfo">
-						<image class="w-50" src="../../static/images/wx_icon.png" mode="widthFix"></image>
-					</button>
-					<!-- #endif -->
-				</view>
+				
 			</view>
 		</view>
-		<xieyi ref='xieyi' @agree="agree"></xieyi>
+		<view class="padding-15 safe-area">
+			<view class="flex f-a-c f-j-c ">
+				<!-- #ifdef MP-WEIXIN -->
+				<button class="flex f-a-c bg-color-f7 h-36 b-radius-30 padding-lr15" @click="getUserInfo">
+					<image class="w-20 margin-r4" src="../../static/images/wx_icon.png" mode="widthFix"></image>
+					<text>微信快捷登录</text>
+				</button>
+				<!-- #endif -->
+			</view>
+			<view @click="isAgree = !isAgree" class="flex f-a-c margin-t12">
+				<text :class="isAgree ? 'van-icon-checked t-color-y' : 'van-icon-circle t-color-b'" class="flex f-a-c f-j-c van-icon  f16-size margin-r4"></text>
+				<text class="margin-r4 flex f-s-0">{{i18n['已阅读并同意']}}</text>
+				<text @click="go('/pages/user/rules?type=1')" class="t-color-blue1 margin-r4  flex f-s-0">《{{i18n['用户协议']}}》</text>
+				<text @click="go('/pages/user/rules?type=2')" class="t-color-blue1  flex f-s-0">《{{i18n['隐私政策']}}》</text>
+			</view>
+			<view class="padding-6"></view>
+			<xieyi ref='xieyi' @agree="agree"></xieyi>
+		</view>
 	</view>
 </template>
 <script>

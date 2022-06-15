@@ -18,10 +18,10 @@
 				<view class="flex f-a-c  f15-size f-w-b margin-b10">{{i18n['退货信息']}}</view>
 				<view class="flex h-40">
 					<text class="flex f-a-c f-s-0 f12-size margin-r12">{{i18n['寄件地址']}}</text>
-					<view @click="copy(address)" class="f12-size" style="text-align: right;">
-						<text class=" f12-size">{{address}}</text>
-						<text class=" t-color-9 padding-lr4">|</text>
-						<text class="t-color-y">{{i18n['复制']}}</text>
+					<view @click="copy(address)" class="f13-size flex f-j-e" style="text-align: right;">
+						<text class=" f13-size">{{address}}</text>
+						<text class=" t-color-9 padding-lr4 flex f-s-0">|</text>
+						<text class="t-color-y flex f-s-0">{{i18n['复制']}}</text>
 					</view>
 				</view>
 				<view @click="$refs.wuliu.open()" class="flex h-40">
@@ -50,34 +50,34 @@
 						<view class="flex flex-1 f-c margin-r8">
 							<view class="line2 f12-size">{{info.goodsName}}</view>
 							<view v-if="info.goodsParamName" class="flex f-a-c margin-t6">
-								<view class="flex f-a-c f-j-c padding-lr6 bg-color-f7 f11-size t-color-9 b-radius-2 h-20">{{info.goodsParamName}}</view>
+								<view class="flex f-a-c f-j-c padding-lr6 bg-color-f7 f12-size t-color-9 b-radius-2 h-20">{{info.goodsParamName}}</view>
 							</view>
 						</view>
 					</view>
 					<view class="padding-tb6 flex">
-						<text class="flex f-s-0 f11-size">{{i18n['退款原因']}}</text>
+						<text class="flex f-s-0 f12-size">{{i18n['退款原因']}}</text>
 						<view class="flex flex-1 f-c">
-							<view class="flex  f-j-e f11-size t-color-9">{{info.reason}}</view>
+							<view class="flex  f-j-e f12-size t-color-9">{{info.reason}}</view>
 							<view class="flex f-w f-j-e">
 								<view @click="previewImg(item)" v-for="(item,index) in imgs" :style="item | bgimg(300)+''" class="bg-img flex f-s-0 w-60 h-60 b-radius-5 bg-color-f7 margin-t10 margin-l6"></view>
 							</view>
 						</view>
 					</view>
 					<view class="padding-tb6 flex">
-						<text class="flex f-s-0 f11-size">{{i18n['退款金额']}}</text>
-						<view class="flex flex-1 f-j-e f11-size t-color-9 text-price">{{info.refundAmount}}</view>
+						<text class="flex f-s-0 f12-size">{{i18n['退款金额']}}</text>
+						<view class="flex flex-1 f-j-e f12-size t-color-9 text-price">{{info.refundAmount}}</view>
 					</view>
 					<view v-if="info.deliveryType" class="padding-tb6 flex">
-						<text class="flex f-s-0 f11-size">{{i18n['快递类型']}}</text>
-						<view class="flex flex-1 f-j-e f11-size t-color-9 ">{{typeList[info.deliveryType]['name']}}</view>
+						<text class="flex f-s-0 f12-size">{{i18n['快递类型']}}</text>
+						<view class="flex flex-1 f-j-e f12-size t-color-9 ">{{typeList[info.deliveryType]['name']}}</view>
 					</view>
 					<view v-if="info.deliveryNo" class="padding-tb6 flex">
-						<text class="flex f-s-0 f11-size">{{i18n['快递单号']}}</text>
-						<view class="flex flex-1 f-j-e f11-size t-color-9 ">{{info.deliveryNo}}</view>
+						<text class="flex f-s-0 f12-size">{{i18n['快递单号']}}</text>
+						<view class="flex flex-1 f-j-e f12-size t-color-9 ">{{info.deliveryNo}}</view>
 					</view>
 					<view class="padding-tb6 flex">
-						<text class="flex f-s-0 f11-size">{{i18n['退款编号']}}</text>
-						<view @click="copy(info.refundNo)" class="flex flex-1 f-j-e f11-size t-color-9">
+						<text class="flex f-s-0 f12-size">{{i18n['退款编号']}}</text>
+						<view @click="copy(info.refundNo)" class="flex flex-1 f-j-e f12-size t-color-9">
 							<text>{{info.refundNo}}</text>
 							<text class="padding-lr4">|</text>
 							<text class="t-color-y">{{i18n['复制']}}</text>
@@ -189,15 +189,17 @@
 				$.ajax({
 					url: API.refundDetailApi,
 					data: {
-						refundId: self.id
+						refundId: self.id,
+						detailId: self.detailId
 					},
 					method: 'GET',
 					success(res) {
 						let info = res.data ? res.data : '';
 						if(info == ''){return}
+						self.id = info.refund.id;
 						self.info = info.refund;
 						self.list = info.refundLogList ? info.refundLogList : [];
-						self.imgs = self.info.img.split('|');
+						self.imgs = self.info.img != '' ? self.info.img.split('|') : [];
 						if(self.info.autoAgreeTime) {
 							self.autoCheckTime = Number(self.info.autoAgreeTime - res.now)/1000;
 						}

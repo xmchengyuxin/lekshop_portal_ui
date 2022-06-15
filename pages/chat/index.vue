@@ -1,6 +1,6 @@
 <template>
 	<view class="contain">
-		<view v-if="!isRefresh" :class="isRefresh ? 'fadeOut' : 'fadeIn'" class="animate flex fixed-top h-44 bg-color-f7 box-c" :style="{'padding-top': top + 'px'}">
+		<view v-if="!isRefresh" :class="refreshClass" class="animate flex fixed-top h-44 bg-color-f7 box-c" :style="{'padding-top': top + 'px'}">
 			<view @click="back(1)" v-if="type != ''"
 				class="flex f-s-0 padding-lr10 f-a-c f-j-c van-icon van-icon-arrow-left f20-size"></view>
 			<view v-else class="flex f-s-0 padding-lr10 f-a-c f-j-c van-icon  f20-size"></view>
@@ -109,6 +109,7 @@
 				totalPage: 1,
 				options: [],
 				isRefresh: false,//小程序的下拉刷新子定义标题挡住loading
+				refreshClass: [''],
 			};
 		},
 		onLoad: function() {
@@ -128,12 +129,23 @@
 				}
 			]
 			uni.hideTabBar()
+			this.onMessage();
 		},
 		onShow() {
 			this.init();
 		},
 		methods: {
-			
+			onMessage() {
+				const self = this;
+				uni.$on('onMessage',(res) => {
+					let pages = getCurrentPages(); // 当前页面
+					let beforePage = pages[pages.length - 1]; // 前一个页面 
+					let info = JSON.parse(res.content);
+					if(res.type == 5 && beforePage.route == 'pages/chat/index') {
+						self.init();
+					}
+				})
+			},
 			read() {
 				const self = this;
 				let url = API.readChatApi;
@@ -204,9 +216,12 @@
 						self.totalPage = res.data.totalPage;
 						self.list = list;
 						uni.stopPullDownRefresh();
-						setTimeout(() => {
+						// #ifdef MP-WEIXIN
+						if(self.isRefresh) {
 							self.isRefresh = false;
-						},1000)
+							self.refreshClass = ['fadeIn'];
+						}
+						// #endif
 					}
 				})
 			},
@@ -231,7 +246,10 @@
 		destroyed() {},
 		components: {uniSwipeAction,uniSwipeActionItem},
 		onPullDownRefresh() {
+			// #ifdef MP-WEIXIN
 			this.isRefresh = true;
+			this.refreshClass = ['fadeOut'];
+			// #endif
 			this.init();
 		},
 		onReachBottom() {}

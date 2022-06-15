@@ -34,10 +34,10 @@
 					<view  v-else class="flex flex-1 f12-size">{{i18nState[state[item.status].tip]}}</view>
 				</view>
 				<view class="flex f-a-c f-j-e">
-					<view  v-if="item.refundInd == 2 && state[item.status].value == 'dth'" @click="go('/pages/user/refunddetail?id='+item.id)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-e t-color-8 ">{{i18n['退货']}}</view>
-					<view v-if="state[item.status].value != 'suc' && state[item.status].value != 'close'"  @click="cancel(index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-e t-color-8 ">{{i18n['取消售后']}}</view>
-					<view v-if="state[item.status].value =='reject'"  @click="kefu(index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-e t-color-8 ">{{i18n['客服介入']}}</view>
-					<view  @click="go('/pages/user/refunddetail?id='+item.id)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f11-size b-color-e t-color-8 ">{{i18n['查看详情']}}</view>
+					<view  v-if="item.refundInd == 2 && state[item.status].value == 'dth'" @click="go('/pages/user/refunddetail?id='+item.id)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-e t-color-8 ">{{i18n['退货']}}</view>
+					<view v-if="state[item.status].value != 'suc' && state[item.status].value != 'close'"  @click="cancel(index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-e t-color-8 ">{{i18n['取消售后']}}</view>
+					<view v-if="state[item.status].value =='reject'"  @click="kefu(index)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-e t-color-8 ">{{i18n['客服介入']}}</view>
+					<view  @click="go('/pages/user/refunddetail?id='+item.id)" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-e t-color-8 ">{{i18n['查看详情']}}</view>
 				</view>
 			</view>
 		</view>
@@ -65,13 +65,15 @@
 		},
 		onLoad: function() {
 			self = this;
-			this.init();
 			$.setTitle(self.i18n['退款/售后']);
+		},
+		onShow() {
+			this.init();
 		},
 		methods: {
 			kefu(index) {
 				$.showModal({
-					content: '是否确认申请客服介入',
+					content: '是否确认申请客服介入', 
 					success() {
 						$.ajax({
 							url: API.kefuRefundApi,
@@ -81,6 +83,7 @@
 							method: 'POST',
 							success(res) {
 								self.$toast(self.i18n['操作成功']);
+								self.list[index]['status'] = 4;
 							}
 						})
 					}
@@ -98,6 +101,7 @@
 							method: 'POST',
 							success(res) {
 								self.$toast(self.i18n['操作成功']);
+								self.list[index]['status'] = 6;
 							}
 						})
 					}
@@ -126,6 +130,7 @@
 				})
 			},
 			init() {
+				this.page = 1;
 				this.getList();
 			},
 		},

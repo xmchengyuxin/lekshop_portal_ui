@@ -70,14 +70,7 @@ export default {
 					uni.setStorageSync('bartop', nav_top);
 					uni.setStorageSync('isIos', false);
 				}
-				// #ifndef APP-PLUS
-				// let safeArea = ['iPhone X','iPhone XR','iPhone XS','iPhone XS Max','iPhone 11'];
-				let safeArea = ['iPhone 8','iPhone 8Pro','iPhone 7','iPhone 7Pro','iPhone 6','iPhone 6Pro','iPhone 5','iPhone SE'];
-				// #endif
-				// #ifdef APP-PLUS
-				// let safeArea = ['iPhoneX','iPhoneXR','iPhoneXS','iPhoneXSMax','iPhone11','iPhone11Pro','iPhone11Pro max'];
 				let safeArea = ['iPhone8','iPhone8Pro','iPhone7','iPhone7Pro','iPhone6','iPhone6Pro','iPhone5','iPhoneSE'];
-				// #endif
 				if(res.platform == 'ios') {
 					// #ifndef H5
 					uni.setStorageSync('isIphonex', true);
@@ -316,6 +309,7 @@ export default {
 @import './static/css/icon.css';
 @import './static/css/color.css';
 @import './static/css/common.css';
+@import './static/css/animate.css';
 /* 解决头条小程序组件内引入字体不生效的问题 */
 /* #ifdef MP-TOUTIAO */
 @font-face {

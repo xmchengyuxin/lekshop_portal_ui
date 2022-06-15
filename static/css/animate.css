@@ -10,7 +10,7 @@
 
 
 .animate {
-	animation: zoomIn 0.5s ease-in both;
+	animation: animate1 0.5s ease-in both;
 }
 @keyframes bounce {
   from,

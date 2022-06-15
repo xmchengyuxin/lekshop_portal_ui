@@ -33,18 +33,10 @@ export default {
 		AUDIO.src = 'https://qiniu.chengyuwb.com/ding.mp3';
 		AUDIO.play();
 	},
-	onMessage: function(options) {
+	onMessage: function(info) {
 		let self = this;
-		//监听websocket接收消息事件（接收来自服务器的实时消息）
-		self.ws.onMessage((res) => {
-			let info = JSON.parse(res.data);
-			console.log("App.vue收到服务器内容", info);
-			if (info.cmd == 5 && options && options.onMessage) { //正常聊天信息
-				self.playAudio();
-				options.onMessage(JSON.parse(info.data));
-			}
-		});
-	
+		self.playAudio();
+		uni.$emit('onMessage',info);
 	},
 	close: function() {
 		if (this.ws.close) {
@@ -108,7 +100,15 @@ export default {
 				}, self.delay);
 			}
 		});
-		self.onMessage();
+		//监听websocket接收消息事件（接收来自服务器的实时消息）
+		self.ws.onMessage((res) => {
+			let info = JSON.parse(res.data);
+			console.log("App.vue收到服务器内容");
+			// console.log("App.vue收到服务器内容", info);
+			if (info.cmd == 5) { //正常聊天信息
+				self.onMessage(JSON.parse(info.data));
+			}
+		});
 		
 	},
 	keepAlive() {

@@ -304,6 +304,12 @@
 			} 
 		},
 		{
+			"path": "pages/user/finddetail",
+			"style": {
+				"navigationBarTitleText": "动态详情"
+			} 
+		},
+		{
 			"path": "pages/user/address",
 			"style": {
 				"navigationBarTitleText": "收货地址"
@@ -396,8 +402,7 @@
 		{
 			"path": "pages/passport/password",
 			"style": {
-				"navigationBarTitleText": "修改登陆密码",
-				"navigationBarBackgroundColor": "#FFFFFF"
+				"navigationStyle": "custom"
 			} 
 		},
 		{
@@ -443,32 +448,32 @@
 		"list": [
 			{
 					"pagePath": "pages/index/index",
-					"iconPath": "/static/images/tab_index_on.png",
+					"iconPath": "/static/images/tab_index.png",
 					"selectedIconPath": "/static/images/tab_index_on.png",
 					"text": "首页"
 				},
 				{
 					"pagePath": "pages/user/index",
-					"iconPath": "/static/images/tab_index_on.png",
-					"selectedIconPath": "/static/images/tab_index_on.png",
+					"iconPath": "/static/images/tab_cate.png",
+					"selectedIconPath": "/static/images/tab_cate_on.png",
 					"text": "消息"
 				},
 				{
 					"pagePath": "pages/cart/index",
-					"iconPath": "/static/images/tab_index_on.png",
-					"selectedIconPath": "/static/images/tab_index_on.png",
+					"iconPath": "/static/images/tab_find_on.png",
+					"selectedIconPath": "/static/images/tab_find_on.png",
 					"text": "逛逛"
 				},
 				{
 					"pagePath": "pages/find/index",
-					"iconPath": "/static/images/tab_index_on.png",
-					"selectedIconPath": "/static/images/tab_index_on.png",
+					"iconPath": "/static/images/tab_cart_on.png",
+					"selectedIconPath": "/static/images/tab_cart_on.png",
 					"text": "购物车"
 				},
 				{
 					"pagePath": "pages/chat/index",
-					"iconPath": "/static/images/tab_index_on.png",
-					"selectedIconPath": "/static/images/tab_index_on.png",
+					"iconPath": "/static/images/tab_user_on.png",
+					"selectedIconPath": "/static/images/tab_user_on.png",
 					"text": "我的"
 				}
 		]

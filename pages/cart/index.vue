@@ -1,6 +1,6 @@
 <template>
 	<view class="contain">
-		<view class="flex fixed-top h-44 bg-color-f7"  :style="{'padding-top': top + 'px'}">
+		<view v-if="!isRefresh" :class="refreshClass" class="animate flex fixed-top h-44 bg-color-f7"  :style="{'padding-top': top + 'px'}">
 			<view @click="back(1)" v-if="type != ''" class="flex f-s-0 padding-lr10 f-a-c f-j-c van-icon van-icon-arrow-left f20-size"></view>
 			<view v-else class="flex f-s-0 padding-lr10 f-a-c f-j-c van-icon  f20-size"></view>
 			<view class="flex flex-1 f-a-c f-j-c f16-size">
@@ -16,7 +16,7 @@
 				<view class="flex f-j-s h-40">
 					<view class="flex flex-1">
 						<view  @click="chooseShops(key)" :class="shops.indexOf(key) >= 0 ? 'van-icon-checked t-color-y' : 'van-icon-circle t-color-9'" class="padding-lr10 flex f-a-c f-j-c van-icon  f20-size "></view>
-						<view class=" flex f-a-c">
+						<view @click="go('/pages/shops/shops?id='+value[0]['shopId'])" class=" flex f-a-c">
 							<text class="flex f-a-c f-j-c van-icon van-icon-shop-collect-o f18-size margin-r4"></text>
 							<text class="t-color-0">{{value[0]['shopName']}}</text>
 						</view>
@@ -25,9 +25,9 @@
 				</view>
 				<view v-for="(item,index) in value" class="flex padding-tb6">
 					<view  @click="chooseGoods(key,index,item)" :class="item.isChoose ? 'van-icon-checked t-color-y' : 'van-icon-circle t-color-9'" class="padding-lr10 flex f-s-0 f-a-c f-j-c van-icon  f20-size "></view>
-					<view class="w-90 h-90 b-radius-5 bg-img flex f-s-0" :style="item.goodsMainImg | bgimg(300)+''"></view>
+					<view @click="go('/pages/shops/detail?id='+item.goodsId)" class="w-90 h-90 b-radius-5 bg-img flex f-s-0" :style="item.goodsMainImg | bgimg(300)+''"></view>
 					<view class="padding-lr10 flex flex-1 f-c">
-						<view class="flex flex-1 f-c">
+						<view @click="go('/pages/shops/detail?id='+item.goodsId)" class="flex flex-1 f-c">
 							<view class="line2 t-color-6">{{item.goodsName}}</view>
 							<view class="flex margin-t4">
 								<view class="flex f-a-c f-j-c b-radius-2 bg-color-f7 t-color-9 f10-size h-18 padding-lr6">{{i18n['规格']}}：{{item.goodsParamName}}</view>
@@ -91,6 +91,8 @@
 				totalPrice: 0,
 				type: '',
 				len: 0,
+				refreshClass: [],
+				isRefresh: false,
 			};
 		},
 		onLoad: function(options) {
@@ -274,6 +276,10 @@
 						self.list = res.data ? res.data : '';
 						self.getGoodsLen();
 						uni.stopPullDownRefresh();
+						if(self.isRefresh) {
+							self.isRefresh = false;
+							self.refreshClass = ['fadeIn'];
+						}
 					}
 				})
 			},
@@ -305,6 +311,8 @@
 		destroyed() {},
 		components: {},
 		onPullDownRefresh() {
+			this.isRefresh = true;
+			this.refreshClass = ['fadeOut'];
 			this.init();
 		},
 		onReachBottom() {

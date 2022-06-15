@@ -117,11 +117,13 @@
 				value: '',
 				imgs: [],
 				isAdd: '',
+				detailId: '',
 			};
 		},
 		onLoad: function(options) {
 			self = this;
 			this.isAdd = options.add ? options.add : '';
+			this.detailId = options.detailId ? options.detailId : '';
 			this.init();
 		},
 		methods: {
@@ -190,7 +192,8 @@
 						deliveryStarNum: self.deliveryStarNum,
 						shopStarNum: self.shopStarNum,
 						logisticStarNum: self.logisticStarNum,
-						id: self.info.id,
+						id: self.detailId != '' ? '' : self.info.id,
+						detailId: self.detailId,
 					},
 					method: 'POST',
 					success(res) {

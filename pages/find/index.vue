@@ -1,13 +1,13 @@
 <template>
 	<view class="contain ">
-		<view class="fixed-top h-46 flex bg-color-r box-c" :style="{ 'padding-top': top + 'px' }">
+		<view  v-if="!isRefresh" :class="refreshClass" class="animate fixed-top h-46 flex bg-color-r box-c" :style="{ 'padding-top': top + 'px' }">
 			<view @click="$refs.showIssue.open()" class="flex f-a-c f-s-0 padding-lr10 van-icon van-icon-photograph t-color-w f20-size"></view>
 			<view class="flex flex-1 t-color-w">
 					<view :class="active == 0 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">{{i18n['发现']}}</view>
 					<view @click="go('/pages/find/video')" :class="active == 1 ? 'f-w-b f18-size' : 'f16-size'" class="flex f-a-c f-j-c w-50">{{i18n['视频']}}</view>
 			</view>
 			<view class="flex f-s-0">
-				<text  class="flex f-s-0 f-a-c padding-lr6 t-color-w van-icon van-icon-search f20-size"></text>
+				<!-- <text  class="flex f-s-0 f-a-c padding-lr6 t-color-w van-icon van-icon-search f20-size"></text> -->
 				<text @click="go('/pages/find/user')" class="flex f-s-0 f-a-c padding-lr10 van-icon van-icon-contact t-color-w f20-size"></text>
 			</view>
 			<xcx-header></xcx-header>
@@ -93,6 +93,8 @@
 				page: 1,
 				pageSize: 20,
 				totalPage: 1,
+				isRefresh: false,
+				refreshClass: [''],
 			};
 		},
 		onLoad: function() {
@@ -136,6 +138,13 @@
 						})
 						self.totalPage = res.data.totalPage;
 						uni.stopPullDownRefresh();
+						// #ifdef MP-WEIXIN
+						if(self.isRefresh) {
+							self.isRefresh = false;
+							self.refreshClass = ['fadeIn'];
+						}
+						// #endif
+						
 					}
 				})
 			},
@@ -155,6 +164,10 @@
 		destroyed() {},
 		components: {issueBtn,findList},
 		onPullDownRefresh() {
+			// #ifdef MP-WEIXIN
+			this.isRefresh = true;
+			this.refreshClass = ['fadeOut'];
+			// #endif
 			this.init();
 		},
 		onReachBottom() {

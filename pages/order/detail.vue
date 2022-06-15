@@ -45,7 +45,7 @@
 					</view>
 				</view>
 				<view class="margin-b10" v-for="(item,index) in goodsList">
-					<view class="flex">
+					<view @click="go('/pages/shops/detail?id='+item.goodsId)" class="flex">
 						<view class="flex f-s-0 w-70 h-70 b-radius-5 bg-img  margin-r10" :style="item.goodsMainImg | bgimg(300)+''"></view>
 						<view class="flex flex-1 f-c margin-r8">
 							<view class="line2 f12-size">{{item.goodsName}}</view>
@@ -152,8 +152,10 @@
 		onLoad: function(options) {
 			self = this;
 			this.id = options.id ? options.id : '';
-			this.init();
 			$.setTitle(self.i18n['订单详情']);
+		},
+		onShow() {
+			this.init();
 		},
 		methods: {
 			refund(data) {

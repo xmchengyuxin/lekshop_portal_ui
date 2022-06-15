@@ -178,11 +178,11 @@
 			setInfo() {
 				let info = uni.getStorageSync('findDetail') ? uni.getStorageSync('findDetail') : '';
 				if(info == ''){return;}
-				console.log(info);
 				this.imgs = info.images.split('|');
 				this.videoUrl = info.videoUrl ? info.videoUrl : '';
 				this.content = info.content ? info.content : '';
 				this.info = info;
+				uni.removeStorageSync('findDetail');
 			},
 			issue() {
 				let goodsArr = [];

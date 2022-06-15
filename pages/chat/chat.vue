@@ -370,8 +370,11 @@
 		},
 		onShow(){
 		},
-		onHide() {
+		destroyed() {
 			this.read();
+			uni.$off('onMessage');
+		},
+		onHide:function(){
 		},
 		methods:{
 			isAi() {
@@ -464,15 +467,15 @@
 			},
 			onMessage() {
 				const self = this;
-				self.socket.onMessage({
-					onMessage(res){
-						// console.log(res);
-						let info = JSON.parse(res.content);
-						if(res.type == 5 && info.targetId == self.id) {
-							self.msgList.push(info);
-							uni.vibrateLong();
-							self.updateMsg();
-						}
+				uni.$on('onMessage',(res) => {
+					let pages = getCurrentPages(); // 当前页面
+					let beforePage = pages[pages.length - 1]; // 前一个页面 
+					let info = JSON.parse(res.content);
+					if(res.type == 5 && info.targetId == self.id && beforePage.route == 'pages/chat/chat') {
+						self.msgList.push(info);
+						uni.vibrateLong();
+						self.updateMsg();
+						self.read();
 					}
 				})
 			},

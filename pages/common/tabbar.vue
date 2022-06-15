@@ -9,8 +9,8 @@
 				<text v-if="index == 1 && len > 0"
 					class="flex f-a-c f-j-c box-b f11-size t-color-w bg-color-r wrap-len b-radius padding-lr2 h-16"
 					style="min-width: 16px;">{{len}}</text>
-				<image class="w-24" :src="index == active ? item.selectedIconPath : item.iconPath" mode="widthFix"></image>
-				<text class="f11-size margin-t2" :class="index == active ? 't-color-0' : 't-color-9'">{{item.text}}</text>
+				<image class="w-22 margin-t2" :src="index == active ? item.selectedIconPath : item.iconPath" mode="widthFix"></image>
+				<text class="f11-size margin-t4" :class="index == active ? 't-color-0' : 't-color-9'">{{item.text}}</text>
 			</view>
 		</view>
 		<view v-if="isShow" :style="{'padding-bottom': isIphonex ? '84px' : '50px'}"></view>

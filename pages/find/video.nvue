@@ -62,30 +62,30 @@
 					<!-- <image v-if="list.state=='pause'" class="playState" src="@/static/img/index/play.png"></image> -->
 					<view v-if="list.state=='pause'"  class="flex f-a-c f-j-c van-icon van-icon-play playState  t-color-w" style="font-size: 70px;"></view>
 				</view>
-				<view class="userInfo">
+				<view class="userInfo f-a-c">
 					<!-- 1.头像 -->
 					<image @click="go('/pages/find/user?id='+list.walkMemberId)" class="userAvatar" :src="list.walkMemberHeadImg" mode="aspectFill"></image>
 					<!-- 2.点赞 -->
 					<view @click="like(index);" style="opacity: 0.9; margin-top: 17px;">
-						<view v-if="list.collectTrends" class="flex f-a-c f-j-c van-icon van-icon-like t-color-r f32-size" style="width: 40px; height: 40px; position: absolute; right: 6px;"></view>
-						<view v-if="!list.collectTrends" class="flex f-a-c f-j-c van-icon van-icon-like-o t-color-w f32-size" style="width: 40px; height: 40px; position: absolute; right: 6px;"></view>
-						<text class="f12-size f-w-500" style="color: #FFFFFF; text-align: center; margin-top: 40px;" :class="{'likeNumActive':list.like}">{{list.collectionNum}}</text>
+						<view v-if="list.collectTrends" class="flex f-a-c f-j-c van-icon van-icon-like t-color-r f32-size" style="width: 40px; height: 40px; "></view>
+						<view v-if="!list.collectTrends" class="flex f-a-c f-j-c van-icon van-icon-like t-color-w f32-size" style="width: 40px; height: 40px; "></view>
+						<text class="f13-size f-w-500" style="color: #FFFFFF; text-align: center; margin-top: 2px;" :class="{'likeNumActive':list.like}">{{list.collectionNum}}</text>
 					</view>
 					<!-- 3.评论 -->
 					<view class="comment" @click="toComment(index)" style="opacity: 0.9; margin-top: 17px;">
-						<view class="flex f-a-c f-j-c van-icon van-icon-chat-o f32-size t-color-w" style="width: 35px; height: 35px; position: absolute; right: 7px;"></view>
-						<text style="color: #FFFFFF; margin-top: 5px; font-size: 14px; font-weight: bold; text-align: center; margin-top: 40px;">{{list.commentNum}}</text>
+						<view class="flex f-a-c f-j-c van-icon van-icon-chat f30-size t-color-w" style="width: 35px; height: 35px; "></view>
+						<text style="color: #FFFFFF; margin-top: 5px; font-size: 14px;  text-align: center; margin-top: 2px;">{{list.commentNum}}</text>
 					</view>
 					<!-- 4.分享 -->
 					<view @click="shareVideo" style="opacity: 0.9; margin-top: 17px;">
-						<view class="flex f-a-c f-j-c van-icon van-icon-share f32-size t-color-w" style="width: 40px; height: 40px; position: absolute; right: 5px;"></view>
-						<text class="f-w-500 f12-size" style="color: #FFFFFF;  text-align: center;  margin-top: 40px;">{{i18n['分享']}}</text>
+						<view class="flex f-a-c f-j-c van-icon van-icon-share f32-size t-color-w" style="width: 40px; height: 40px;"></view>
+						<text class="f-w-500 f12-size" style="color: #FFFFFF;  text-align: center;  margin-top: 2px;">{{i18n['分享']}}</text>
 					</view>
 				</view>
 				<!-- 最底下的文字部分 -->
 				<view class="content">
-					<text class="userName" :style="'width: '+ (windowWidth - 90) +'px;'">{{list.walkMemberName}}</text><!-- i={{i}} -->
-					<text class="words" :style="'width: '+ (windowWidth - 90) +'px;'">{{list.content}}</text><!-- k={{k}} -->
+					<text class="userName f16-size f-w-500" :style="'width: '+ (windowWidth - 90) +'px;'">{{list.walkMemberName}}</text><!-- i={{i}} -->
+					<text class="words f15-size" :style="'width: '+ (windowWidth - 90) +'px;'">{{list.content}}</text><!-- k={{k}} -->
 					
 					<view @click="showGoods(allList[index]['trendsGoodsList'])" v-if="allList[index] && allList[index]['trendsGoodsList'].length > 0" class=" b-bottom flex f-a-c f-r f-j-s">
 						<text class="flex f-a-c f11-size t-color-w" style="opacity: 0.5;">{{i18n['查看Ta提到的宝贝']}}</text>
@@ -500,14 +500,13 @@
 	}
 	.userAvatar{
 		border-radius: 500%;
-		margin-bottom: 15px;
 		border-style: solid;
 		border-width: 2px;
 		border-color: #ffffff;
 	}
 	.userAvatar{
-		width : 100rpx;
-		height: 100rpx;
+		width : 38px;
+		height: 38px;
 	}
 	.likeIco,.shareIco,.commentIco{
 		width : 60rpx;

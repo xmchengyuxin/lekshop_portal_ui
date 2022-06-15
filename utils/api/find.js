@@ -16,4 +16,5 @@ export default {
 	'updateHeadImgApi': 'member/walkMember/updateHeadImg',
 	'likeUserListApi': 'common/walkMember/getCollectionList',
 	'likeFansListApi': 'common/walkMember/getFansList',//创作人的粉丝列表
+	'findDetail': 'member/trends/getDetail',//动态详情
 }
