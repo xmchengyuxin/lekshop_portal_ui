@@ -1,7 +1,9 @@
 <template>
 	<view class="contain flex f-c f-j-s">
 		<view class="padding-15">
-			
+			<!-- #ifndef H5 -->
+			<view :style="{'padding-top': top+30+'px'}"></view>
+			<!-- #endif -->
 			<view class="padding-20"></view>
 			<view class="padding-6"></view>
 			<view class="padding-lr12">
@@ -77,8 +79,9 @@
 				</view>
 			</view>
 		</view>
-		<view class="padding-15 safe-area">
+		<view class="padding-15 safe-area" :style="isIphonex ? 'padding-bottom:34px;' : ''">
 			<view @click="isAgree = !isAgree" class="flex f-a-c margin-t12">
+				<view class="padding-6"></view>
 				<text :class="isAgree ? 'van-icon-checked t-color-y' : 'van-icon-circle t-color-b'" class="flex f-a-c f-j-c van-icon  f16-size margin-r4"></text>
 				<text class="margin-r4 flex f-s-0">{{i18n['已阅读并同意']}}</text>
 				<text @click="go('/pages/user/rules?type=1')" class="t-color-blue1 margin-r4  flex f-s-0">《{{i18n['用户协议']}}》</text>
@@ -98,6 +101,8 @@
 	export default {
 		data() {
 			return {
+				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
+				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
 				name: '',
 				phone: '',
 				sms: '',

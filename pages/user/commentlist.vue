@@ -21,7 +21,7 @@
 					<view class="flex flex-1 f-c margin-r8">
 						<view class="line1 f12-size">{{item.goodsName}}</view>
 						<view class="flex f-a-c margin-t6">
-							<view class="flex f-a-c f-j-c padding-lr6 bg-color-f7 f11-size t-color-9 b-radius-2 h-20">{{item.goodsParamName}}</view>
+							<view class="flex f-j-c padding-lr6 bg-color-f7 f11-size t-color-9 b-radius-2 h-20 line-h20 max-w120 line1">{{item.goodsParamName}}</view>
 						</view>
 						<view class="flex f-j-e">
 							<view v-if="item.status == 0" @click="comment(item)"  class="flex f-a-c f-j-c f-s-0 w-80 h-28  margin-l12 b-radius-30 f11-size b-color-y t-color-y ">{{i18n['评价']}}</view>

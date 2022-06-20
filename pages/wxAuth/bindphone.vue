@@ -10,7 +10,7 @@
 					<view class="flex h-50 b-radius-30 bg-color-f1 margin-t20">
 						<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">+86</view>
 						<view class="flex flex-1 padding-lr12">
-							<button v-if="showPhone" class="flex f-a-c f16-size f-j-s t-color-8" @getphonenumber="getPhoneNumber" open-type="getPhoneNumber">{{i18n['请输入手机号']}}</button>
+							<button v-if="showPhone" class="flex f-a-c f16-size f-j-s t-color-8" @getphonenumber="getPhoneNumber" open-type="getPhoneNumber">{{username == '' ? i18n['请输入手机号'] : username}}</button>
 							<input v-else class="f16-size" v-model="username" type="number" maxlength="11" :placeholder="i18n['请输入手机号']">
 						</view>
 					</view>
@@ -132,7 +132,6 @@
 					method: 'GET',
 					success(res) {
 						self.username = res.data;
-						self.showPhone = false;
 						
 						// self.loginBtn();
 					}
@@ -166,7 +165,7 @@
 					},
 					{
 						value: this.sms,
-						text: this.i18n('请输入验证码'),
+						text: this.i18n['请输入验证码'],
 						rules: ''
 					},
 				]);
@@ -181,7 +180,7 @@
 					},
 					method: 'POST',
 					success(res) {
-						this.active = 2;
+						self.active = 2;
 					}
 				})
 			

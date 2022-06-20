@@ -1,11 +1,13 @@
 <template>
 	<view class="contain">
 		<view  :style="{'padding-top': top+'px!important'}" class="flex wrap-header b-none h-44 box-c   t-color-0">
-			<view @click="back()" class="flex f-a-c margin-r20 van-icon van-icon-arrow-left t-color-0 f20-size padding-lr12"></view>
+			<view @click="back()" class="flex f-a-c  van-icon van-icon-arrow-left t-color-0 f20-size padding-lr12"></view>
 			<view class="flex flex-1 f-a-c f-j-c f20-size">{{i18n['我的积分']}}</view>
-			<view @click="sign" class="w-60 flex f-a-c f-j-c">{{i18n['签到']}}</view>
+			<!-- #ifndef MP-WEIXIN -->
+			<view class="flex f-s-0 w-44"></view>
+			<!-- #endif -->
+			<xcx-header></xcx-header>
 		</view>
-		<view class="padding-30"></view>
 		<view class="padding-30 flex f-a-c f-j-c">
 			<view @click="go('/pages/user/signlog')" class="wrap-img">
 				<view class="wrap-role flex f-c f-a-c f-j-c">
@@ -36,6 +38,9 @@
 			<view class="flex flex-1 f-j-c">1000</view>
 			<view class="flex flex-1 f-j-c">1500</view>
 		</view>
+		<view class="padding-lr30 margin-t16">
+			<view @click="sign" class=" bg-color-linear-y t-color-w flex f-a-c f-j-c h-40 b-radius-30">{{i18n['签到']}}</view>
+		</view>
 		</view>
 		<view class="margin-t16" style="background-color: #f4f4f4;height: 15px;"></view>
 		<view class="  padding-10">
@@ -45,6 +50,7 @@
 </template>
 <style scoped>
 @import url('../../static/css/user/credit.css');
+@import url('../../static/css/page/white.css');
 </style>
 <script>
 	const $ = require('../../utils/api.js');

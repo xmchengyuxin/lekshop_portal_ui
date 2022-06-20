@@ -100,6 +100,34 @@
 						<text class="f12-size margin-t2">{{i18n['退货/售后']}}</text>
 					</view>
 				</view>
+				
+				<view v-if="orderList.length > 0" class="padding-15">
+					<swiper class="h-50" circular :vertical="true" :indicator-dots="false" :autoplay="true" :interval="5000" >
+						<swiper-item v-for="(item,index) in orderList">
+							<view @click="go('/pages/order/detail?id='+item.orderId)"  class="flex b-radius-5 bg-color-f7 over-h">
+								<view class="flex f-s-0 w-50 h-50 b-radius-5 bg-img  margin-r10" :style="item.goodsMainImg | bgimg(300)+''"></view>
+								<block v-if="item.status  == 0">
+								<view class="flex f-c f-j-c flex-1">
+									<text class="f13-size">{{i18n['待支付']}}</text>
+									<!-- <uni-countdown class="margin-t6" v-if="orderState[order.status]['value'] == 'dzf' && cancelTime > 0"  color="#9B9B9B" splitorColor="#9B9B9B" :font-size="11" :second="cancelTime" /> -->
+								</view>
+								<view class="flex f-a-c padding-lr12">
+									<view class="flex f-a-c f-j-c bg-color-linear-y w-60 h-30 b-radius-30 t-color-w f12-size">去支付</view>
+								</view>
+								</block>
+								<block v-else>
+								<view class="flex f-c f-j-c flex-1">
+									<text class="f13-size p-r" style="top: 4px;">{{i18n['待评价']}}</text>
+									<uni-countdown  class=""   color="#9B9B9B" splitorColor="#9B9B9B" backgroundColor="#f7f7f7" :font-size="11" :second="item.commentExpiredTime-Number(now)" />
+								</view>
+								<view class="flex f-a-c padding-lr12">
+									<view class="flex f-a-c f-j-c f-s-0 padding-lr10 h-24  b-radius-30 f11-size b-color-y t-color-y ">{{i18n['去评价']}}</view>
+								</view>
+								</block>
+							</view>			
+						</swiper-item>
+					</swiper>
+				</view>
 			</view>
 			<!-- <view class="bg-color-w b-radius-5  flex margin-t12 wrap-nav">
 				<view @click="go('/pages/coupon/list')" class="flex flex-1 f-s-0 f-c f-a-c f-j-c">
@@ -218,7 +246,9 @@
 				user: '',
 				account: '',
 				order: '',
-				defaultImg: ''
+				defaultImg: '',
+				orderList: [],
+				now: 0,
 			};
 		},
 		onLoad: function() {
@@ -231,6 +261,18 @@
 			this.init();
 		},
 		methods: {
+			centerOrderList() {
+				const self = this;
+				$.ajax({
+					url: API.centerOrderList,
+					data: {},
+					method: 'GET',
+					success(res) {
+						self.orderList = res.data ? res.data : [];
+						self.now = res.now;
+					}
+				})
+			},
 			updateImg() {
 				$.uploadimg({
 					url: API.updateHeadImgApi,
@@ -290,6 +332,7 @@
 				this.getUserInfo();
 				this.getAccount();
 				this.getOrderNum();
+				this.centerOrderList();
 				this.$nextTick(() => {
 					this.$refs.tabbar.getChatLen();
 				})

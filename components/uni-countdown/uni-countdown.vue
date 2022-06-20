@@ -190,7 +190,7 @@
 		/* #endif */
 		justify-content: center;
 		align-items: center;
-		width: 52rpx;
+		min-width: 52rpx;
 		height: 48rpx;
 		line-height: 48rpx;
 		margin: 5rpx;

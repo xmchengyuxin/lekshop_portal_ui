@@ -32,7 +32,7 @@
 							<view class="flex flex-1 f-c margin-r8">
 								<view class="line2 f12-size">{{goods.goodsName}}</view>
 								<view class="flex flex-1 w100 f-a-c f-j-s margin-t6">
-									<view class="flex f-a-c f-j-c f-s-0 padding-lr6 bg-color-f7 f11-size t-color-9 b-radius-2 h-20">{{goods.goodsParamName}}</view>
+									<view class=" flex  f-j-c f-s-0 padding-lr6 bg-color-f7 f11-size t-color-9 b-radius-2 h-20 line-h20 max-w120 line1">{{goods.goodsParamName}}</view>
 								</view>
 							</view>
 							<view class="flex f-s-0 f-c f-j-s">

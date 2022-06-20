@@ -39,11 +39,15 @@
 			</view>
 			
 			<view class="bg-color-w b-radius-5 padding-12 margin-b12">
+				<block v-if="group.groupNum-group.haveGroupNum > 0  && group.status == 1">
 				<view class="flex f-j-c f15-size f-w-500">{{i18n['邀请1位好友,可拼团成功'] | i18n(group.groupNum-group.haveGroupNum)}}</view>
 				<view class="padding-10 flex f-j-c">
 					<text class="f11-size t-color-9 flex f-a-c">{{i18n['倒计时']}}</text>
 					<uni-countdown class="time" color="#FFFFFF" :showDay="false" background-color="#000" border-color="#00B26A"  :second="second"></uni-countdown>
 				</view>
+				</block>
+				<text v-else-if="group.status == 3" class="f-w-b t-color-3 margin-r4 ">{{i18n['拼团失败']}}</text>
+				<view v-else class="flex f-j-c f15-size f-w-500">{{i18n['拼团成功']}}</view>
 				<view class="flex f-w f-j-c padding-lr15 ">
 					<block  v-for="(item,index) in group.groupNum">
 						<view v-if="groupJoinList[index]" :style="groupJoinList[index]['memberHeadImg'] | bgimg(300)+''" class="flex f-s-0 w-30 h-30 b-radius bg-img margin-t6 margin-r12"></view>
@@ -100,7 +104,9 @@
 						self.groupJoinList = info.groupMemberList ? info.groupMemberList : [];
 						self.order = info.order ? info.order : '';
 						self.group = info.orderGroup ? info.orderGroup : '';
-						self.second = (info.orderGroup.endTime - res.now)/1000;
+						if(self.group != '' && self.group.endTime) {
+							self.second = (info.orderGroup.endTime - res.now)/1000;
+						}
 						self.url = '/pages/shops/detail?id='+self.group.goodsId+'&joinId='+self.group.id;
 					}
 				})

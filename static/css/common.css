@@ -90,6 +90,9 @@ image {
 .grid-g10 {
 	gap: 10px;
 }
+.grid-g20 {
+	gap: 20px;
+}
 .flex {
 	display: -webkit-box!important;
 	display: -webkit-flex!important;;

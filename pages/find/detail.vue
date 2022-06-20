@@ -39,9 +39,9 @@
 					<!-- <view class="flex f-a-c f-j-c van-icon van-icon-like-o f20-size margin-r4 t-color-6"></view>
 					<text class="f11-size flex f-a-c margin-r16">{{item.walkTrends.viewNum}}</text> -->
 					<view @click="like(index)" :class="item.collectTrends ? 'van-icon-like t-color-y' : 'van-icon-like-o t-color-6'" class="flex f-a-c f-j-c van-icon  f20-size margin-r4 "></view>
-					<text @click="like(index)" :class="item.collectTrends ? 't-color-y' : ''" class="f11-size flex f-a-c margin-r16">{{item.walkTrends.collectionNum}}</text>
+					<text @click="like(index)" :class="item.collectTrends ? 't-color-y' : ''" class="f16-size flex f-a-c margin-r16 p-r" style="top: 1px;">{{item.walkTrends.collectionNum}}</text>
 					<view @click="openComment(index)" class="flex f-a-c f-j-c van-icon van-icon-chat-o f20-size margin-r4 t-color-6"></view>
-					<text class="f11-size flex f-a-c ">{{item.walkTrends.commentNum}}</text>
+					<text class="f16-size flex f-a-c p-r" style="top: 1px;">{{item.walkTrends.commentNum}}</text>
 				</view>
 			</view>
 		</block>

@@ -23,7 +23,7 @@
 				<text class="f15-size">{{i18n['账号与安全']}}</text>
 				<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>
 			</view>
-			<view @click="go('/pages/setting/language')" class="  flex f-j-s f-a-c h-50 ">
+			<view v-if="isShow" @click="go('/pages/setting/language')" class="  flex f-j-s f-a-c h-50 ">
 				<text class="f15-size">{{i18n['设置语言']}}</text>
 				<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>
 			</view>
@@ -58,10 +58,15 @@
 		data() {
 			return {
 				user: '',
+				isShow: false,
 			};
 		},
 		onLoad: function() {
 			self = this;
+			let config = uni.getStorageSync('config') ? uni.getStorageSync('config') : '';
+			if(config != '' && config.language == 'all') {
+				self.isShow = true;
+			}
 		},
 		onShow() {
 			this.init();

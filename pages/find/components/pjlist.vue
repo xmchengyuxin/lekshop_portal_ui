@@ -1,6 +1,6 @@
 <template>
 	<view class="">
-		<uni-popup ref="pjcontent" type="bottom">
+		<uni-popup ref="pjcontent" type="bottom" style="z-index: 999999!important;">
 			<view class="wrap-popup-radius bg-color-w safe-area">
 				<view class="flex f-r f-a-c f-j-c padding-12 f15-size f-w-b b-bottom">{{i18n['评论']}}({{total}})</view>
 				<scroll-view class="" scroll-y="true" style="height: 60vh;">
@@ -17,7 +17,7 @@
 								</view>
 								<view @click="likeComment(index,'-1')" class="flex f-c f-a-c f-s-0" style="padding-left: 10px;">
 									<view :class="item.walkTrendsComment.likeStatus == 1 ? 'van-icon-like t-color-y' : 'van-icon-like-o'" class="flex f-s-0 f-a-c f-j-c  van-icon "></view>
-									<text :class="item.walkTrendsComment.likeStatus == 1 ? 't-color-y' : 't-color-9'" class="f11-size margin-t4 ">{{item.walkTrendsComment.likeNum}}</text>
+									<text :class="item.walkTrendsComment.likeStatus == 1 ? 't-color-y' : 't-color-9'" class="f15-size margin-t4 ">{{item.walkTrendsComment.likeNum}}</text>
 								</view>
 							</view>
 							
@@ -32,7 +32,7 @@
 								</view>
 								<view @click="likeComment(index,idx)" class="flex f-c f-a-c" style="padding-left: 10px;">
 									<view :class="child.likeStatus == 1 ? 'van-icon-like t-color-y' : 'van-icon-like-o'" class="flex f-s-0 f-a-c f-j-c  van-icon "></view>
-									<text :class="child.likeStatus == 1 ? 't-color-y' : 't-color-9'" class="f11-size margin-t4 ">{{child.likeNum}}</text>
+									<text :class="child.likeStatus == 1 ? 't-color-y' : 't-color-9'" class="f15-size margin-t4 p-r" style="top: 1px;">{{child.likeNum}}</text>
 								</view>
 							</view>
 						</view>
@@ -44,11 +44,11 @@
 				</scroll-view>
 				<view class="h-50"></view>
 				<view :style="{'padding-bottom': isIphonex ?'34px!important':''}" class="flex f-a-c f-r h-50 box-c padding-lr20 wrap-pj-input">
-					<view :style="user.headImg | bgimg(300)+''" class="flex f-s-0 w-24 h-24 b-radius bg-img  margin-r12"></view>
+					<view :style="user.headImg | bgimg(300)+''" class="flex f-s-0 w-30 h-30 b-radius bg-img  margin-r12"></view>
 					<view class="flex flex-1 h-36 b-radius-30 bg-color-f7 padding-lr12">
 						<input @confirm="issue()" @blur="blur" cursor-spacing="10" :focus="focus" v-model="value" class="input f13-size h100" :placeholder="comment != '' ? '@'+comment['viewMemberName'] : i18n['展开说说吧']" type="text"  />
 					</view>
-					<view @click="issue" style="padding-left: 10px;" class=" t-color-y f12-size f-w-500">{{i18n['评论']}}</view>
+					<view @click="issue" style="padding-left: 10px;" class=" t-color-y f15-size f-w-500">{{i18n['评论']}}</view>
 				</view>
 			</view>
 		</uni-popup>

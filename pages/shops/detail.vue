@@ -221,7 +221,8 @@
 		<view v-if="isIphonex" class="padding-15"></view>
 		<view  :style="{'padding-bottom': isIphonex ? '84px' : '50px'}"></view>
 		<view class="fixed-top bottom-btn bg-color-w flex  f-j-s padding-lr12 h-50 box-c" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
-			<view class="flex w-120 f-s-0 f-j-s margin-r20" style="padding-left: 16px;">
+			<view class="flex  f-s-0 f-j-s margin-r20 box-b" style="padding-left: 6px;">
+				<view class="grid grid-c-3 grid-g20">
 				<view @click="go('/pages/shops/shops?id='+shop.id)" class="flex  f-c f-a-c f-j-c">
 					<text class="flex f-a-c van-icon van-icon-shop-o f18-size t-color-y"></text>
 					<text class="f12-size t-color-9 margin-t2">{{i18n['店铺']}}</text>
@@ -234,36 +235,37 @@
 					<text :class="isLike ? 't-color-r van-icon-star' : 'van-icon-star-o '" class="flex f-a-c van-icon f18-size "></text>
 					<text class="f12-size t-color-9 margin-t2">{{i18n['收藏']}}</text>
 				</view>
-			</view>
-			<view class="flex f-a-c ">
-				<view  v-if="isMS()" class="flex b-radius-30 h-40 over-h w-200 f-j-e">
-					<view v-if="getMStype('in')" @click="$refs.sku.open()" class="flex f-a-c f-j-c b-radius-30 bg-color-p t-color-w f12-size w-100">{{i18n['马上抢']}}</view>
-					<view v-else  class="flex f-a-c f-j-c b-radius-30 bg-color-e t-color-9 f12-size w-100">{{i18n['马上抢']}}</view>
 				</view>
-				<view  v-else-if="isPT()" class="flex b-radius-30 h-40 over-h w-200 f-j-e">
+			</view>
+			<view class="flex f-a-c flex-1">
+				<view  v-if="isMS()" class="flex flex-1 b-radius-30 h-40 over-h  f-j-e">
+					<view v-if="getMStype('in')" @click="$refs.sku.open()" class="flex flex-1 f-a-c f-j-c b-radius-30 bg-color-p t-color-w f12-size ">{{i18n['马上抢']}}</view>
+					<view v-else  class="flex  flex-1 f-a-c f-j-c b-radius-30 bg-color-e t-color-9 f12-size ">{{i18n['马上抢']}}</view>
+				</view>
+				<view  v-else-if="isPT()" class="flex flex-1 b-radius-30 h-40 over-h  f-j-e">
 					<!-- 单独购买分享状态不显示 -->
 					<block v-if="isShareGroup">
-						<view  @click="$refs.sku.open()" class="flex f-a-c f-j-c f-c bg-color-p b-radius-30 t-color-w f12-size w-100">
+						<view  @click="$refs.sku.open()" class="flex f-a-c flex-1 f-j-c f-c bg-color-p b-radius-30 t-color-w f12-size ">
 							<text v-if="isPT(2)" class="f12-size">{{i18n['阶梯拼团']}}</text>
 							<text v-else class="f12-size">{{i18n['1人成团'] | i18n(goods.groupNum)}}</text>
 							<text class="text-price f11-size">{{goods.price | price}}</text>
 						</view>
 					</block>
 					<block v-else>
-						<view @click="$refs.sku.open()" class="flex f-a-c f-j-c bg-color-linear-y t-color-w f12-size w-100 f-c">
+						<view @click="$refs.sku.open()" class="flex flex-1 f-a-c f-j-c bg-color-linear-y t-color-w f12-size  f-c">
 							<text class="f12-size">{{i18n['单独购买']}}</text>
 							<text class="text-price f11-size">{{oriPrice() | price}}</text>
 						</view>
-						<view  @click="$refs.sku.open()" class="flex f-a-c f-j-c f-c bg-color-p t-color-w f12-size w-100">
+						<view  @click="$refs.sku.open()" class="flex flex-1 f-a-c f-j-c f-c bg-color-p t-color-w f12-size ">
 							<text v-if="isPT(2)" class="f12-size">{{i18n['阶梯拼团']}}</text>
 							<text v-else class="f12-size">{{i18n['1人成团'] | i18n(goods.groupNum)}}</text>
 							<text class="text-price f11-size">{{goods.price | price}}</text>
 						</view>
 					</block>
 				</view>
-				<view  v-else class="flex b-radius-30 h-40 over-h">
-					<view @click="$refs.sku.open()" class="flex f-a-c f-j-c bg-color-linear-y t-color-w f12-size w-100">{{i18n['加入购物车']}}</view>
-					<view  @click="$refs.sku.open()" class="flex f-a-c f-j-c bg-color-p t-color-w f12-size w-100">{{i18n['立即购买']}}</view>
+				<view  v-else class="flex flex-1 b-radius-30 h-40 over-h">
+					<view @click="$refs.sku.open()" class="flex f-a-c f-j-c flex-1 bg-color-linear-y t-color-w f12-size ">{{i18n['加入购物车']}}</view>
+					<view  @click="$refs.sku.open()" class="flex f-a-c f-j-c flex-1 bg-color-p t-color-w f12-size ">{{i18n['立即购买']}}</view>
 				</view>
 			</view>
 		</view>

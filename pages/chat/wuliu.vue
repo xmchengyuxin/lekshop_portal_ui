@@ -55,7 +55,7 @@
 		},
 		methods: {
 			detail(info) {
-				let orderType = ['1','2','3'];//1, "订单已发货"2, "订单物流状态,3, "订单已完成
+				let orderType = ['1','2','3','11','12'];//1, "订单已发货"2, "订单物流状态,3, "订单已完成,11拼团失败,12拼团成功
 				let moneyType = ['6','7','8'];//6充值成功,7提现成功,8提现失败
 				let obj = info.turnParams ? JSON.parse(info.turnParams) : '';
 				if(orderType.indexOf(String(info.type)) >= 0) {
@@ -67,7 +67,7 @@
 					self.go('/pages/user/refunddetail?id='+obj.refundId);
 				}
 				if(info.type == 10) {//评价提醒
-					self.go('pages/user/commentlist');
+					self.go('/pages/user/commentlist');
 				}
 			},
 			read() {

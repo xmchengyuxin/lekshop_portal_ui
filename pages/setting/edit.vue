@@ -5,12 +5,12 @@
 				<view class=" f15-size">{{i18n['头像']}}</view>
 				<view @click="updateImg" class="w-60 h-60 b-radius bg-img" :style="headImg | bgimg(300)+''"></view>
 			</view>
-			<view class="padding-15 flex f-j-s b-bottom">
+			<!-- <view class="padding-15 flex f-j-s b-bottom">
 				<view class=" f15-size">{{i18n['手机号']}}</view>
 				<view class="flex flex-1">
 					<input v-model="phone" type="number" disabled="true" class="w100 h100  right f15-size" value="" :placeholder="i18n['请输入']" />
 				</view>
-			</view>
+			</view> -->
 			<view class="padding-15 flex f-j-s b-bottom">
 				<view class=" f15-size">{{i18n['昵称']}}</view>
 				<view class="flex flex-1">

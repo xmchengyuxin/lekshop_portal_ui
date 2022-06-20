@@ -548,3 +548,12 @@
 .line-h16 {
 	line-height: 16px;
 }
+.line-h20 {
+	line-height: 20px;
+}
+.max-w80 {
+	max-width: 80px;
+}
+.max-w120 {
+	max-width: 120px;
+}

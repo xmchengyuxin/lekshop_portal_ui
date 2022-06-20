@@ -36,7 +36,7 @@
 		</block>
 		<block v-if="active == 1">
 			<view class="padding-6">
-				<find-list :list="findList" :offset='1.2' pages="user"></find-list>
+				<find-list ref="findlist" :list="findList" @del="delFind" :offset='1.2' pages="user"></find-list>
 				<no-data :list="findList"></no-data>
 			</view>
 		</block>
@@ -71,6 +71,10 @@
 			$.setTitle(self.i18nModel['我的收藏'])
 		},
 		methods: {
+			delFind(index) {
+				this.findList.splice(index,1);
+				this.$refs.findlist.refresh();
+			},
 			changeTab(index) {
 				this.active = index;
 			},

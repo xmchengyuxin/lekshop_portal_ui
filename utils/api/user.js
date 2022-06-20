@@ -32,4 +32,5 @@ export default {
 	'delHistory': 'member/viewGoods/delete',//删除足迹
 	'clearHistory': 'member/viewGoods/clear',//清空足迹
 	'likeFindList': 'member/trends/getMyCollectionList',//我关注的动态列表
+	'centerOrderList': 'member/order/getRolliingList',//个人中心订单
 }

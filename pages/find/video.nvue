@@ -83,8 +83,8 @@
 					</view>
 				</view>
 				<!-- 最底下的文字部分 -->
-				<view class="content">
-					<text class="userName f16-size f-w-500" :style="'width: '+ (windowWidth - 90) +'px;'">{{list.walkMemberName}}</text><!-- i={{i}} -->
+				<view class="content" :style="isIphonex ? 'bottom:50px' : ''">
+					<text class="userName f18-size f-w-500" :style="'width: '+ (windowWidth - 90) +'px;'">@{{list.walkMemberName}}</text><!-- i={{i}} -->
 					<text class="words f15-size" :style="'width: '+ (windowWidth - 90) +'px;'">{{list.content}}</text><!-- k={{k}} -->
 					
 					<view @click="showGoods(allList[index]['trendsGoodsList'])" v-if="allList[index] && allList[index]['trendsGoodsList'].length > 0" class=" b-bottom flex f-a-c f-r f-j-s">
@@ -496,7 +496,7 @@
 		bottom:110px;
 		right: 10px;
 		flex-direction: column;
-		z-index: 1;
+		z-index: 100;
 	}
 	.userAvatar{
 		border-radius: 500%;
@@ -528,13 +528,12 @@
 	  position: absolute;
 	  bottom: 30px;
 	  /* justify-content: center; */
-	  padding: 15rpx;
+	  padding: 30upx;
 	  flex-direction: column;
 	  justify-content: flex-start;
 	  color: #ffffff;
 	}
 	.userName {
-	  font-size: 30rpx;
 	  color: #ffffff;
 	  margin-top: 80upx;
 	}

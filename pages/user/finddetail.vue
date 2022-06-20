@@ -43,7 +43,8 @@
 				</view>
 			</view> -->
 		</block>
-		<view  class="flex f-a-c f-r h-50 box-c padding-lr20 wrap-pj-input safe-area">
+		<view class="padding-30"></view>
+		<view  class="flex f-a-c f-r h-50 box-c padding-lr20 wrap-pj-input safe-area" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
 			<view @click="openComment(0)" class="flex flex-1 h-36 b-radius-30 bg-color-f7 padding-lr12 margin-r20">
 				<text class="flex f-a-c f-j-c van-icon van-icon-edit t-color-9 margin-r6"></text>
 				<text class="flex f-a-c f12-size t-color-9">{{i18n['说点什么']}}</text>
@@ -94,6 +95,8 @@
 	export default {
 		data() {
 			return {
+				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
+				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
 				goodsList: [],
 				list: [],
 				page: 1,

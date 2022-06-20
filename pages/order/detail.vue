@@ -3,9 +3,16 @@
 		<view class="padding-12">
 			<view v-if="order != ''" class="bg-color-w padding-12 b-radius-5 margin-b12">
 				<view class="f-w-b f15-size" :style="{'color': orderState[order.status]['color']}">{{orderState[order.status]['text']}}</view>
-				<view class="margin-t6 flex f-a-c">
-					<uni-countdown v-if="orderState[order.status]['value'] == 'dsh' && autoGetGoods > 0"  color="#9B9B9B" splitorColor="#9B9B9B" :font-size="11" :second="autoGetGoods" />
-					<uni-countdown v-if="orderState[order.status]['value'] == 'dzf' && cancelTime > 0"  color="#9B9B9B" splitorColor="#9B9B9B" :font-size="11" :second="cancelTime" />
+				<view class=" flex f-a-c">
+					<uni-countdown class="margin-t6" v-if="orderState[order.status]['value'] == 'dsh' && autoGetGoods > 0"  color="#9B9B9B" splitorColor="#9B9B9B" :font-size="11" :second="autoGetGoods" />
+					<uni-countdown class="margin-t6" v-if="orderState[order.status]['value'] == 'dzf' && cancelTime > 0"  color="#9B9B9B" splitorColor="#9B9B9B" :font-size="11" :second="cancelTime" />
+				</view>
+				<view class="flex f-j-e f-w ">
+					<view v-if="orderState[order.status].value == 'dfh'" @click.stop="changeAddress()" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-3 ">{{i18n['修改地址']}}</view>
+					<view v-if="orderState[order.status].value == 'dzf'" @click.stop="cancelOrder()" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-3 ">{{i18n['取消订单']}}</view>
+					<view @click.stop="showWuliu()" v-if="orderState[order.status].value == 'dsh'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size b-color-3">{{i18n['查看物流']}}</view>
+					<view @click.stop="showPay()" v-if="orderState[order.status].value == 'dzf'" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size bg-color-linear-y t-color-w">{{i18n['立即支付']}}</view>
+					<view v-if="orderState[order.status].value == 'dsh'" @click.stop="sureOrder()" class="flex f-a-c f-j-c f-s-0 w-80 h-30 margin-t12 margin-l12 b-radius-30 f12-size bg-color-linear-y t-color-w">{{i18n['确认收货']}}</view>
 				</view>
 			</view>
 			
@@ -25,7 +32,10 @@
 			<!-- 拼团 -->
 			<view v-if="order.type == 3" class="bg-color-w b-radius-5 padding-12 margin-b12">
 				<view @click="go('/pages/order/group?id='+id)" class="flex  f-j-s">
-					<text class="f-w-b t-color-3 margin-r4 ">{{i18n['差1人成团'] | i18n(1)}}</text>
+					<!-- 1进行中 2成功 3失败 -->
+					<text v-if="group.groupNum-group.haveGroupNum > 0 && group.status == 1" class="f-w-b t-color-3 margin-r4 ">{{i18n['差1人成团'] | i18n(group.groupNum-group.haveGroupNum)}}</text>
+					<text v-else-if="group.status == 3" class="f-w-b t-color-3 margin-r4 ">{{i18n['拼团失败']}}</text>
+					<text v-else class="f-w-b t-color-3 margin-r4 ">{{i18n['拼团成功']}}</text>
 					<view class="flex f-a-c">
 						<text class="t-color-y f12-size margin-r2">{{i18n['拼团详情']}}</text>
 						<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f13-size margin-t2"></text>
@@ -50,7 +60,7 @@
 						<view class="flex flex-1 f-c margin-r8">
 							<view class="line2 f12-size">{{item.goodsName}}</view>
 							<view v-if="item.goodsParamName" class="flex f-a-c margin-t6">
-								<view class="flex f-a-c f-j-c padding-lr6 bg-color-f7 f11-size t-color-9 b-radius-2 h-20">{{item.goodsParamName}}</view>
+								<view class="flex  f-j-c padding-lr6 bg-color-f7 f11-size t-color-9 b-radius-2  h-20 line-h20 max-w120 line1">{{item.goodsParamName}}</view>
 							</view>
 						</view>
 						<view class="flex f-s-0 f-c">
@@ -78,7 +88,7 @@
 				</view>
 				<view class="flex f-j-s padding-tb6 f12-size">
 					<text>{{i18n['优惠']}}</text>
-					<text class="text-price">24.00</text>
+					<text class="text-price">{{order.couponAmount}}</text>
 				</view>
 				<view class="flex f-j-e f12-size t-color-y f-w-500 margin-t6">
 					<text>{{i18n['实付款']}}：</text>
@@ -122,14 +132,17 @@
 					<text class="f12-size f-w-500">{{i18n['联系卖家']}}</text>
 				</view>
 			</view>	
-			
 		</view>
+		<logistics ref="wuliuinfo"></logistics>
+		<pay-item ref="payitem" @pay='pay' pageType="2"></pay-item>
 	</view>
 </template>
 <style scoped>
 @import url('../../static/css/iconcolor.css');
 </style>
 <script>
+	import payItem from '../common/payitem';
+	import logistics from '@/pages/common/logistics.vue';
 	const state = require('../../utils/api/state.js').default;
 	const API = require('../../utils/api/order.js').default;
 	const $ = require('../../utils/api.js');
@@ -147,6 +160,7 @@
 				now: 0,
 				autoGetGoods: 0,
 				cancelTime: 0,
+				group: ''
 			};
 		},
 		onLoad: function(options) {
@@ -158,6 +172,84 @@
 			this.init();
 		},
 		methods: {
+			showPay(index) {
+				this.payIndex = index;
+				this.$refs.payitem.open();
+			},
+			pay(type) {
+				$.ajax({
+					url: API.payOrderApi,
+					data: {
+						payOrderNo: self.order.payOrderNo,
+						payMethod: type
+					},
+					method: 'POST',
+					success(res) {
+						if (type != 'balance') {
+							// #ifndef H5
+							$.wxPay({
+								payType: type.toLocaleLowerCase(),
+								data: res.data.message,
+								success(res) {
+									self.order['status'] = 1;
+								}
+							})
+							// #endif
+							// #ifdef H5
+							$.wxPayH5({
+								data: res.data.message,
+								success(res) {
+									self.order['status'] = 1;
+								}
+							})
+							// #endif
+						}
+						if (type == 'balance') {
+							self.order['status'] = 1;
+						}
+					}
+				})
+			},
+			showWuliu() {
+				this.$refs.wuliuinfo.show(this.order.id);
+			},
+			sureOrder() {
+				$.ajax({
+					url: API.sureOrderApi,
+					data: {
+						orderId: self.order.id
+					},
+					method: 'POST',
+					success(res) {
+						$.$toast(self.i18n['操作成功']);
+						self.order.status = 3;
+					}
+				})
+			},
+			cancelOrder() {
+				$.showModal({
+					content: '是否确认删除',
+					success() {
+						let info = self.order;
+						$.ajax({
+							url: API.cancelOrderApi,
+							data: {
+								orderId: info.id
+							},
+							method: 'POST',
+							success(res) {
+								$.$toast(self.i18n['操作成功']);
+								self.order.status = 4;
+							}
+						})
+					},
+				},this)
+				
+			},
+			changeAddress() {
+				let info = self.order;
+				self.go('/pages/user/address?id='+info.id+'&type=change');
+			},
 			refund(data) {
 				//与评价共用一个缓存
 				uni.setStorageSync('comment',data);
@@ -176,6 +268,7 @@
 						self.goodsList = info.orderDetailList ? info.orderDetailList : [];
 						self.groupJoinList = info.groupMemberList ? info.groupMemberList : [];
 						self.order = info.order ? info.order : '';
+						self.group = info.orderGroup ? info.orderGroup : '';
 						self.shopMemberId = info.shopMemberId ? info.shopMemberId : '';
 						self.now = res.now;
 						if(self.order.finishExpiredTime) {//自动确认收货时间
@@ -200,7 +293,7 @@
 		},
 		mounted() {},
 		destroyed() {},
-		components: {},
+		components: {logistics,payItem},
 		onPullDownRefresh() {
 		},
 		onReachBottom() {

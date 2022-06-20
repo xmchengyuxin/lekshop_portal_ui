@@ -1,9 +1,13 @@
 <template>
 	<view class="contain flex f-c f-j-s">
 			<view class="padding-15">
-				<view class=" flex fixed-top h-44 "  :style="{'padding-top': top + 'px'}">
+				<view class=" flex fixed-top h-44 box-c"  :style="{'padding-top': top + 'px'}">
 					<view @click="back(1)"  class="flex f-s-0 padding-lr10 f-a-c f-j-c van-icon van-icon-arrow-left f20-size"></view>
 				</view>
+				<!-- #ifndef H5 -->
+				<view :style="{'padding-top': top+30+'px'}"></view>
+				<!-- #endif -->
+				
 			<view class="padding-20"></view>
 			<view class="padding-6"></view>
 			<view class="padding-lr12">
@@ -31,15 +35,15 @@
 						<input class="f16-size" v-model="comfirmPassword" type="password" :placeholder="i18n['请输入确认新密码']">
 					</view>
 				</view>
-				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
+				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8 over-h">
 					<view class="flex  f-a-c f-j-c f-s-0 icon-item f-w-b">
 						<image class="w-20" src="../../static/images/login_code.png" mode="widthFix"></image>
 					</view>
 					<view class="flex flex-1 padding-lr12">
 						<input class="f16-size" v-model="code" type="tel" :placeholder="i18n['请输入验证码']">
 					</view>
-					<view class="padding-6">
-						<img-code class="h-30" @imgSuc="getImgCode"  ></img-code>
+					<view class="flex f-a-c f-s-0">
+						<img-code ref="imgCode" @imgSuc="getImgCode" class="flex  h-30"></img-code>
 					</view>
 				</view>
 				<view class="flex h-50 b-radius-30 bg-color-f1 margin-t8">
@@ -62,8 +66,9 @@
 				</view>
 			</view>
 		</view>
-		<view class="padding-15 safe-area">
+		<view class="padding-15 safe-area" :style="isIphonex ? 'padding-bottom:34px;' : ''">
 			<view @click="isAgree = !isAgree" class="flex f-a-c margin-t12">
+				<view class="padding-6"></view>
 				<text :class="isAgree ? 'van-icon-checked t-color-y' : 'van-icon-circle t-color-b'" class="flex f-a-c f-j-c van-icon  f16-size margin-r4"></text>
 				<text class="margin-r4 flex f-s-0">{{i18n['已阅读并同意']}}</text>
 				<text @click="go('/pages/user/rules?type=1')" class="t-color-blue1 margin-r4  flex f-s-0">《{{i18n['用户协议']}}》</text>
@@ -83,6 +88,8 @@
 	export default {
 		data() {
 			return {
+				top: uni.getStorageSync('bartop') ? uni.getStorageSync('bartop') : 0,
+				isIphonex: uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
 				phone: '',
 				password: '',
 				comfirmPassword: '',
