@@ -6,7 +6,7 @@
 					<text class="f15-size f-w-500 t-color-y margin-r4">{{item.name}}</text>
 					<view class="flex f-a-c h-16 padding-lr5 bg-color-linear-y b-radius-30 t-color-w f10-size">
 						<text style="padding: 3px;" class="b-radius bg-color-y1 margin-r4"></text>
-						新品尝鲜
+						{{i18n['新品尝鲜']}}
 					</view>
 				</view>
 				<!-- <view class="t-color-8 f12-size">30天包退 365天包换</view> -->
@@ -74,6 +74,11 @@
 				})
 			},
 			init() {},
+		},
+		computed: {
+			i18n() {
+				return this.$t('index')
+			},
 		},
 		mounted() {},
 		destroyed() {},

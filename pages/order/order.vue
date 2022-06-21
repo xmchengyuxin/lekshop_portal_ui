@@ -23,8 +23,8 @@
 								<text v-if="child.order.type == 2" class="f10-size bg-color-linear-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['秒杀']}}</text>
 								<text v-if="child.order.type == 3" class="f10-size bg-color-linear-y t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['拼团']}}</text>
 							</view>
-							<text :style="{'color': state[child.order.status].color}" class="t-color-y f-w-500 f12-size">{{i18n[state[child.order.status].text]}}</text>
-							<!-- <text v-else  class="t-color-9 f-w-500 f12-size">{{i18n[refundState[child.order.refundStatus].text]}}</text> -->
+							<text v-if="child.order.type == 3 && child.orderGroup && child.orderGroup.status == 1"  class="t-color-9 f-w-500 f12-size">{{i18n['差1人成团'] | i18n(child.orderGroup.groupNum-child.orderGroup.haveGroupNum)}}</text>
+							<text v-else :style="{'color': state[child.order.status].color}" class="t-color-y f-w-500 f12-size">{{i18n[state[child.order.status].text]}}</text>
 						</view>
 						
 						<view v-for="(goods,idx) in child.orderDetailList" class="flex margin-b10">
@@ -61,6 +61,7 @@
 		</swiper>	
 		<logistics ref="wuliuinfo"></logistics>
 		<pay-item ref="payitem" @pay='pay' pageType="2"></pay-item>
+		<notice ></notice>
 	</view>
 </template>
 <style scoped>

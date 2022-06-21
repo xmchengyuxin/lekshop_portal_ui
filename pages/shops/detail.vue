@@ -390,6 +390,7 @@
 		</uni-popup>
 		<menu-btn ref="menuBtn"></menu-btn>
 		<group-list :goodsId="id" @joinGroup="joinGroup" ref="wrapgroup"></group-list>
+		<notice ></notice>
 	</view>
 </template>
 <style scoped>

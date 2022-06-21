@@ -55,7 +55,7 @@
 					</block>
 				</view>
 				<view class="padding-6"></view>
-				<view @click="$refs.posterc.open()" class="flex f-a-c f-j-c margin-12 bg-color-linear-y t-color-w h-40 b-radius-30">{{i18n['邀请好友拼团']}}</view>
+				<view v-if="group.status == 1" @click="$refs.posterc.open()" class="flex f-a-c f-j-c margin-12 bg-color-linear-y t-color-w h-40 b-radius-30">{{i18n['邀请好友拼团']}}</view>
 			</view>	
 		</view>
 		<poster ref="posterc" :url="url"></poster>

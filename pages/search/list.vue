@@ -7,7 +7,7 @@
 					<view @click="go('/pages/search/index')" class="flex flex-1 f-a-c b-radius-30 h-36 bg-color-w padding-lr10">
 						<view  class="flex f-a-c van-icon van-icon-search f16-size margin-r8"></view>
 						<view v-if="title != '' || cateName != ''" @click.stop="clear" class="flex f-a-c b-radius-30 h-28 padding-lr15 bg-color-f7">
-							<text v-if="cateName != ''" class="f12-size margin-r4">类目:</text>
+							<text v-if="cateName != ''" class="f12-size margin-r4">{{i18n['类目']}}:</text>
 							<text class="f12-size margin-r4">{{title != '' ? title : cateName}}</text>
 							<text class="flex f-a-c f-j-c van-icon van-icon-cross"></text>
 						</view>

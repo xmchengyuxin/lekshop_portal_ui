@@ -6,12 +6,12 @@
 			<!--  #ifdef  MP-WEIXIN -->
 			<!-- 微信小程序自定义内容 -->
 			<view v-for="(item, index) of list" :key="index" slot="slot{{index}}">
-				<text v-if="item.status == 0 && isSelf" class="flex f-a-c f-j-c padding-lr6 h-18 b-radius-5 t-color-w f11-size find-status bg-color-linear-y">审核中</text>
-				<text v-if="item.status == 2 && isSelf" class="flex f-a-c f-j-c padding-lr6 h-18 b-radius-5 t-color-w f11-size find-status bg-color-linear-r">发布失败</text>
+				<text v-if="item.status == 0 && isSelf" class="flex f-a-c f-j-c padding-lr6 h-18 b-radius-5 t-color-w f11-size find-status bg-color-linear-y">{{i18n['审核中']}}</text>
+				<text v-if="item.status == 2 && isSelf" class="flex f-a-c f-j-c padding-lr6 h-18 b-radius-5 t-color-w f11-size find-status bg-color-linear-r">{{i18n['发布失败']}}</text>
 				<text v-if="isSelf || pages == 'user'"  @click.stop="show(index)" class="flex f-a-c f-j-c van-icon van-icon-weapp-nav find-menu-btn f15-size t-color-w"></text>
 				<view @click.stop="show(index)" v-if="showMenu && index == showIndex" class="flex  f-a-c f-j-c wrap-layout">
-					<view v-if="pages != 'user'&& item.status != 1" @click.stop="edit(item)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30 margin-r12">编辑</view>
-					<view @click="del(index)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30">删除</view>
+					<view v-if="pages != 'user'&& item.status != 1" @click.stop="edit(item)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30 margin-r12">{{i18n['编辑']}}</view>
+					<view @click="del(index)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30">{{i18n['删除']}}</view>
 				</view>
 				<view v-if="item.type == 1" class="play-role flex f-a-c f-j-c w-20 h-20 b-radius t-color-w van-icon van-icon-play f13-size"></view>
 				<view class="padding-12 p-r">
@@ -39,12 +39,12 @@
 			<!-- app、h5 自定义内容 -->
 			
 			<template v-slot:default="item">
-				<text v-if="item.status == 0 && isSelf" class="flex f-a-c f-j-c padding-lr6 h-18 b-radius-5 t-color-w f11-size find-status bg-color-linear-y">审核中</text>
-				<text v-if="item.status == 2 && isSelf" class="flex f-a-c f-j-c padding-lr6 h-18 b-radius-5 t-color-w f11-size find-status bg-color-linear-r">发布失败</text>
+				<text v-if="item.status == 0 && isSelf" class="flex f-a-c f-j-c padding-lr6 h-18 b-radius-5 t-color-w f11-size find-status bg-color-linear-y">{{i18n['审核中']}}</text>
+				<text v-if="item.status == 2 && isSelf" class="flex f-a-c f-j-c padding-lr6 h-18 b-radius-5 t-color-w f11-size find-status bg-color-linear-r">{{i18n['发布失败']}}</text>
 				<text v-if="isSelf || pages == 'user'"  @click.stop="show(item.index)" class="flex f-a-c f-j-c van-icon van-icon-weapp-nav find-menu-btn f15-size t-color-w"></text>
 				<view @click.stop="show(item.index)" v-if="showMenu && item.index == showIndex" class="flex  f-a-c f-j-c wrap-layout">
-					<view v-if="pages != 'user' && item.status != 1" @click.stop="edit(item)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30 margin-r12">编辑</view>
-					<view @click="del(item.index)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30">删除</view>
+					<view v-if="pages != 'user' && item.status != 1" @click.stop="edit(item)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30 margin-r12">{{i18n['编辑']}}</view>
+					<view @click="del(item.index)" class="flex f-a-c f-j-c w-50 h-50 t-color-w f12-size b-radius-30">{{i18n['删除']}}</view>
 				</view>
 				<view v-if="item.type == 1" class="play-role flex f-a-c f-j-c w-20 h-20 b-radius t-color-w van-icon van-icon-play f13-size"></view>
 				<view class="padding-12 p-r">

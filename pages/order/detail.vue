@@ -135,6 +135,7 @@
 		</view>
 		<logistics ref="wuliuinfo"></logistics>
 		<pay-item ref="payitem" @pay='pay' pageType="2"></pay-item>
+		<notice ></notice>
 	</view>
 </template>
 <style scoped>

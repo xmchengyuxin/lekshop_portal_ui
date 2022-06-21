@@ -2,8 +2,8 @@
 	<view >
 		<view class="warp-tabbar bg-color-w flex" :style="{'padding-bottom': isIphonex ? '34px' : ''}">
 			<view v-if="showLogin && !isLogin" class="wrap-login flex f-a-c f-j-s h-44 padding-lr15">
-				<text class="t-color-w">要是你不登录，我就赖这不走啦！</text>
-				<text @click="go('/pages/passport/login')" class="flex f-a-c  f-j-c b-radius-5 t-color-w h-32 bg-color-linear-y padding-lr20">立即登录</text>
+				<text class="t-color-w">{{i18n['要是你不登录，我就赖这不走啦']}}</text>
+				<text @click="go('/pages/passport/login')" class="flex f-a-c  f-j-c b-radius-5 t-color-w h-32 bg-color-linear-y padding-lr20">{{i18n['立即登录']}}</text>
 			</view>
 			<view @click="goTab(item.pagePath)" v-for="(item,index) in list" class="flex flex-1 f-c f-a-c f-j-c p-r">
 				<text v-if="index == 1 && len > 0"
@@ -113,6 +113,9 @@
 						self.len = res.data ? res.data : 0;
 					}
 				})
+				this.list.forEach((ele,index) => {
+					ele['text'] = self.i18n[ele.text];
+				})
 			},
 			goTab(url) {
 				uni.switchTab({
@@ -122,6 +125,11 @@
 			init() {},
 
 
+		},
+		computed: {
+			i18n() {
+				return this.$t('tabbar')
+			},
 		},
 		created() {
 		},

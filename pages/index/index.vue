@@ -5,7 +5,7 @@
 				<view class="flex f-a-c f-j-c van-icon van-icon-scan t-color-w f22-size margin-r10"></view>
 				<view  @click="go('/pages/search/index')" class="flex flex-1 f-a-c bg-color-w b-radius-30 h-34 padding-lr12 margin-r10" >
 					<view class="flex f-a-c van-icon van-icon-search t-color-9 f20-size margin-r8"></view>
-					<view class="flex f-a-c t-color-6">搜索商品</view>
+					<view class="flex f-a-c t-color-6">{{i18n['搜索商品']}}</view>
 				</view>
 				<view @click="go('/pages/coupon/getlist')" class="flex f-a-c f-j-c van-icon van-icon-coupon-o t-color-w f22-size margin-r10"></view>
 				<view @click="go('/pages/index/cate')" class="flex f-a-c f-j-c van-icon van-icon-cate t-color-w f22-size"></view>
@@ -43,7 +43,7 @@
 						
 						<view class="flex f-a-c f-j-c f-w-b t-color-8 padding-tb6 wrap-tuijian-title margin-t12">
 							<image class="w-20 margin-r8" src="../../static/images/zan-on.png" mode="widthFix"></image>
-							<text>好物推荐</text>
+							<text>{{i18n['好物推荐']}}</text>
 						</view>
 						<goodsShopList class="margin-t12" v-if="active == parent" showType="2"  :catePid="item.id" :isSpread="active == 0 ? true : false"></goodsShopList>
 						<!-- <goodslist v-if="item.list" class="margin-t12" :list="item.list" ></goodslist> -->
@@ -53,7 +53,7 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
-		
+		<notice></notice>
 		<tab-bar ref="tabbar" :showLogin="true" :active="0" :isShow="false"></tab-bar>
 	</view>
 </template>
@@ -123,7 +123,7 @@
 					success(res) {
 						res.data.unshift({
 							id: '',
-							name: '推荐'
+							name: self.i18n['推荐']
 						})
 						self.navs = res.data;
 					}
@@ -147,6 +147,11 @@
 						self.banner = res.data ? res.data : [];
 					}
 				})
+			},
+		},
+		computed: {
+			i18n() {
+				return this.$t('index')
 			},
 		},
 		created() {

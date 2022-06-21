@@ -69,6 +69,7 @@
 		</view>
 		<view class="padding-30"></view>
 		<view class="padding-30"></view>
+		<notice></notice>
 		<tab-bar ref="tabbar" :active="3"></tab-bar>
 	</view>
 </template>

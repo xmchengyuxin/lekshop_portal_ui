@@ -35,7 +35,7 @@
 		<block v-if="pageType != 1">
 			<uni-popup ref="wrappay" type="bottom">
 				<div class="wrap-popup-radius bg-color-w">
-					<view class="flex f-a-c f-j-c padding-10 f16-size f-w-500">请选择</view>
+					<view class="flex f-a-c f-j-c padding-10 f16-size f-w-500">{{i18n['请选择']}}</view>
 					<view class="padding-15"></view>	
 					<view v-if="isBalance" @click="pay('balance')" class="flex h-50 padding-lr20">
 						<view class="flex f-a-c f-s-0 w-44 shops-icon shops-icon-qianbao f28-size"></view>

@@ -72,6 +72,7 @@
 		</view>
 		<tab-bar ref="tabbar" :active="2"></tab-bar>
 		<issue-btn ref="showIssue"></issue-btn>
+		<notice ></notice>
 	</view>
 </template>
 <style scoped>

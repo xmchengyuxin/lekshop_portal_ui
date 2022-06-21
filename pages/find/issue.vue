@@ -1,8 +1,8 @@
 <template>
 	<view class="contain safe-area">
 		<view v-if="id != ''" class="padding-12">
-			<text v-if="info.status == 0" class="t-color-y margin-r6">审核中</text>
-			<text v-if="info.status == 2" class="t-color-y margin-r6">发布失败</text>
+			<text v-if="info.status == 0" class="t-color-y margin-r6">{{i18n['审核中']}}</text>
+			<text v-if="info.status == 2" class="t-color-y margin-r6">{{i18n['发布失败']}}</text>
 			<text class="f12-size">{{info.reason}}</text>
 		</view>
 		<view class="padding-lr12">

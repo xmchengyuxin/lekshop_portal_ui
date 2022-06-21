@@ -1,5 +1,5 @@
 <template>
-	<view class="contain flex f-c " :class="isXcx ? 'f-j-c' : 'f-j-s'">
+	<view class="contain flex f-c f-j-s" >
 		<view v-if="!isXcx" class="padding-15">
 			<!-- #ifndef H5 -->
 			<view :style="{'padding-top': top+30+'px'}"></view>
@@ -49,12 +49,12 @@
 				
 			</view>
 		</view>
-		<view class="padding-15 safe-area box-c" :style="isIphonex ? 'padding-bottom:34px;' : ''">
+		<view v-if="!isXcx" class="padding-15 safe-area box-c" :style="isIphonex ? 'padding-bottom:34px;' : ''">
 			<view class="flex f-a-c f-j-c ">
 				<!-- #ifdef MP-WEIXIN -->
 				<button class="flex f-a-c bg-color-f7 h-36 b-radius-30 padding-lr15" @click="getUserInfo">
 					<image class="w-20 margin-r4" src="../../static/images/wx_icon.png" mode="widthFix"></image>
-					<text>微信快捷登录</text>
+					<text>{{i18n['微信快捷登录']}}</text>
 				</button>
 				<!-- #endif -->
 			</view>
@@ -68,6 +68,20 @@
 			<view class="padding-6"></view>
 			<xieyi ref='xieyi' @agree="agree"></xieyi>
 		</view>
+		<block v-if="isXcx">
+			<view class="padding-lr12">
+				<view class="padding-20"></view>
+				<view style="padding-top: 20vh;"></view>
+				<view class="f30-size f-w-b flex f-a-c f-j-c">{{i18n['登录之后更精彩']}}</view>
+			</view>
+			<view class="flex f-a-c f-j-c ">
+				<button  style="width: 68%;border-radius: 100px;" class="flex f-a-c f-j-c  bg-color-f7 h-60  padding-lr15" @click="getUserInfo">
+					<image class="w-30 margin-r4" src="../../static/images/wx_icon.png" mode="widthFix"></image>
+					<text class="f18-size">{{i18n['微信快捷登录']}}</text>
+				</button>
+			</view>
+			<view></view>
+		</block>
 	</view>
 </template>
 <script>
@@ -91,6 +105,7 @@
 		onLoad: function(options) {
 			this.url = options.url ? options.url : '';
 			this.init();
+			this.isXcx = true;
 			// #ifdef MP-WEIXIN
 			this.getToken();
 			this.isXcx = true;

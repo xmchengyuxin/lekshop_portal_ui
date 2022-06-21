@@ -225,6 +225,7 @@
 			<view class="padding-6"></view>
 			<goodslist  :list="list"></goodslist>
 		</view>
+		<notice></notice>
 		<tab-bar ref="tabbar" :active="4"></tab-bar>
 	</view>
 </template>
