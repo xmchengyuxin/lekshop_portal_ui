@@ -1,4 +1,5 @@
 import LangCn from './zh_CN.js'
+import LangTw from './zh_TW.js'
 import LangEn from './en_US.js'
 import Vue from 'vue'
 import VueI18n from './vue-i18n'
@@ -20,7 +21,7 @@ if (!system_info) {
         messages: {  
                 'zh_CN': LangCn,
 				'en_US': LangEn,
-				'zh_TW': LangEn,
+				'zh_TW': LangTw,
             }
     })
     export default i18n

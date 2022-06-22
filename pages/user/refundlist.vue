@@ -29,7 +29,7 @@
 					</view>
 				</view>
 				<view class="flex bg-color-f7 b-radius-5 padding-tb12 margin-t12">
-					<view class="flex f-s-0 f-j-e f12-size f-w-b w-80 margin-r10">{{state[item.status].text}}</view>
+					<view class="flex f-s-0 f-j-e f12-size f-w-b w-80 margin-r10">{{i18nState[state[item.status].text]}}</view>
 					<view  v-if="state[item.status].value == 'suc'" class="flex flex-1 f12-size">{{i18nState[state[item.status].tip] | i18n(item.refundAmount)}}</view>
 					<view  v-else class="flex flex-1 f12-size">{{i18nState[state[item.status].tip]}}</view>
 				</view>

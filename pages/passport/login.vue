@@ -105,7 +105,6 @@
 		onLoad: function(options) {
 			this.url = options.url ? options.url : '';
 			this.init();
-			this.isXcx = true;
 			// #ifdef MP-WEIXIN
 			this.getToken();
 			this.isXcx = true;

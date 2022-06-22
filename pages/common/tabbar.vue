@@ -10,7 +10,7 @@
 					class="flex f-a-c f-j-c box-b f11-size t-color-w bg-color-r wrap-len b-radius padding-lr2 h-16"
 					style="min-width: 16px;">{{len}}</text>
 				<image class="w-22 margin-t2" :src="index == active ? item.selectedIconPath : item.iconPath" mode="widthFix"></image>
-				<text class="f11-size margin-t4" :class="index == active ? 't-color-0' : 't-color-9'">{{item.text}}</text>
+				<text class="f11-size margin-t4" :class="index == active ? 't-color-0' : 't-color-9'">{{i18n[item.text]}}</text>
 			</view>
 		</view>
 		<view v-if="isShow" :style="{'padding-bottom': isIphonex ? '84px' : '50px'}"></view>
@@ -48,6 +48,7 @@
 <script>
 	const API = require('../../utils/api/user.js').default;
 	const $ = require('../../utils/api.js');
+	let count = 0;
 	export default {
 		props: {
 			 active: { type: Number, default: 0 },
@@ -57,7 +58,42 @@
 		data() {
 			return {
 				"isIphonex": uni.getStorageSync('isIphonex') ? uni.getStorageSync('isIphonex') : false,
-				"list": [
+				"list": [],
+				len: 0,
+				isLogin: uni.getStorageSync('token') ? true : false,
+			};
+		},
+		onLoad: function() {
+			uni.hideTabBar();
+			this.init();
+		},
+		onShow() {
+			// this.getChatLen();
+		},
+		methods: {
+			getChatLen() {
+				const self= this;
+				$.ajax({
+					url: API.chatNumApi,
+					data: {},
+					isAuth: true,
+					method: 'GET',
+					success(res) {
+						self.len = res.data ? res.data : 0;
+					}
+				})
+				// this.list.forEach((ele,index) => {
+				// 	ele['text'] = self.i18n[ele.text];
+				// })
+			},
+			goTab(url) {
+				uni.switchTab({
+					url: url
+				})
+			},
+			init() {
+				const self = this;
+				let arr = [
 					{
 						"pagePath": "/pages/index/index",
 						"iconPath": "../../static/images/tab_index.png",
@@ -88,41 +124,26 @@
 						"selectedIconPath": "../../static/images/tab_user_on.png",
 						"text": "我的"
 					},
-					
-				],
-				len: 0,
-				isLogin: uni.getStorageSync('token') ? true : false,
-			};
-		},
-		onLoad: function() {
-			uni.hideTabBar();
-			this.init();
-		},
-		onShow() {
-			// this.getChatLen();
-		},
-		methods: {
-			getChatLen() {
-				const self= this;
-				$.ajax({
-					url: API.chatNumApi,
-					data: {},
-					isAuth: true,
-					method: 'GET',
-					success(res) {
-						self.len = res.data ? res.data : 0;
+				];
+				let config = uni.getStorageSync('config') ? uni.getStorageSync('config') : '';
+				self.list = [];
+				arr.forEach((ele,index) => {
+					if(config == '' || config.guangguang_status == 0) {
+						if(ele.pagePath == '/pages/find/index') {
+							self.list.push(ele);
+						}
+					}else{
+						self.list.push(ele);
 					}
-				})
-				this.list.forEach((ele,index) => {
-					ele['text'] = self.i18n[ele.text];
-				})
+				});
+				if(config == '') {
+					if(count >= 5){return}
+					count+=1;
+					setTimeout(() => {
+						self.init();
+					},400);
+				}
 			},
-			goTab(url) {
-				uni.switchTab({
-					url: url
-				})
-			},
-			init() {},
 
 
 		},
@@ -132,6 +153,7 @@
 			},
 		},
 		created() {
+			this.init();
 		},
 		mounted() {},
 		destroyed() {},
