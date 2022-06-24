@@ -5,7 +5,27 @@ const $ = require('./api.js');
 const QQMapWX = require('./qqmap-wx-jssdk.min.js');
 let qqmapsdk;
 // import store from '../store/index.js'; //引入store
+let styleNums = 0;
 export default {
+	getStyle(type) {
+		let info = uni.getStorageSync('styleConfig') ? uni.getStorageSync('styleConfig') : '';
+		if(info == '') {
+			if(styleNums >= 5){return;}
+			styleNums+=1;
+			setTimeout(() => {
+				this.getStyle();
+			},200);
+			return this.getStyle1(type);
+		}else{
+			return info[type];
+		}
+	},
+	getStyle1(type) {
+		setTimeout(() => {
+			let info = uni.getStorageSync('styleConfig') ? uni.getStorageSync('styleConfig') : '';
+			return info[type];
+		},1000);
+	},
 	changeLang(code) {
 		let locale = code;
 		var self = this;
@@ -341,6 +361,59 @@ export default {
 			icon: icon ? icon : 'none',
 			duration: time ? time : 2000
 		})
+	},
+	cGo(info) {
+		if(!info || !info.url){return;}
+		let url = info.url;
+		if(url.___type == "category") {//分类
+			let cate = '';
+			if(url.level == 1) {cate='catePid='}
+			if(url.level == 2) {cate='cateTid='}
+			if(url.level == 3) {cate='cateId='}
+			$.go('/pages/search/list?'+cate+url.id+'&cateName='+url.name)
+		}
+		if(url.___type == "pages") {//文章
+			$.go('/pages/user/helpdetail?id='+url.id)
+		}
+		if(url.___type == "goods") {//商品
+			$.go('/pages/shops/detail?id='+url.id)
+		}
+		if(url.___type == "other") {//外部链接
+			if(url.___ptype) {
+				if(url.___ptype == 'coupon') {
+					$.go('/pages/coupon/getlist')
+				}
+				if(url.___ptype == 'group') {
+					$.go('/pages/search/list?type=3')
+				}
+				if(url.___ptype == 'home') {
+					$.go('/pages/index/index')
+				}
+				if(url.___ptype == 'cart') {
+					$.go('/pages/cart/index')
+				}
+				if(url.___ptype == 'collection') {
+					$.go('/pages/user/like')
+				}
+				if(url.___ptype == 'order') {
+					$.go('/pages/order/order')
+				}
+				if(url.___ptype == 'user') {
+					$.go('/pages/user/index')
+				}
+				if(url.___ptype == 'seckill') {
+					$.go('/pages/search/list?type=2')
+				}
+				if(url.___ptype == 'sign') {
+					$.go('/pages/user/credit')
+				}
+			}else{
+				$.go('/pages/user/webview?src='+url.url)
+			}
+		}
+		if(url.___type == "shops") {//店铺链接
+			$.go('/pages/shops/shops?id='+url.id)
+		}
 	},
 	go(url, type = 1, time) {
 		$.go(url, type, time);

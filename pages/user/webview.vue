@@ -22,8 +22,7 @@
 		},
 		onLoad: function(options) {
 			const self = this;
-			this.src = uni.getStorageSync('kefuUrl') ? uni.getStorageSync('kefuUrl') : '';
-			console.log(this.src)
+			this.src = options.src ? options.src : '';
 		},
 		methods: {
 			init() {

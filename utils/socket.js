@@ -24,7 +24,7 @@ export default {
 				if (fc) {
 					fc(res);
 				}
-				console.log(res, 'send')
+				// console.log(res, 'send')
 			}
 		})
 	},
@@ -35,7 +35,7 @@ export default {
 	},
 	onMessage: function(info) {
 		let self = this;
-		self.playAudio();
+		// self.playAudio();
 		uni.$emit('onMessage',info);
 	},
 	close: function() {

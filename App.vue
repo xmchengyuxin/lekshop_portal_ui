@@ -168,6 +168,20 @@ export default {
 		        return false;
 		    }
 		},
+		getStyleConfig() {
+			const self = this;
+			$.ajax({
+				url: 'common/globalStyle/get',
+				data: {},
+				method: 'GET',
+				success(res) {
+					let info = res.data;
+					setTimeout(() => {
+						uni.setStorageSync('styleConfig', res.data);
+					},1000)
+				}
+			});
+		},
 		getConfig() {
 			const self = this;
 			$.ajax({
@@ -297,6 +311,7 @@ export default {
 	},
 	onShow: function() {
 		this.getConfig();
+		this.getStyleConfig();
 	},
 	onHide: function() {
 		console.log('App Hide');

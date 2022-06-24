@@ -16,7 +16,7 @@
 				<view @click="sortType == 1 ? sortType=2 : sortType=1" class="flex f-a-c padding-lr10 van-icon van-icon-apps-o f20-size"></view>
 			</view>
 		</view>
-		<scroll-view class="padding-lr6" @scrolltolower="loadMore" scroll-y="true" style="height: 100%;">
+		<scroll-view class="padding-lr6" @scrolltolower="loadMore" scroll-y="true" style="height: 100vh;">
 			<view  :style="{ 'padding-top': top +46+40+ 'px' }"></view>
 			<goodslist class="margin-t12" :offset="1.2" :sortType="sortType" :list="list"></goodslist>
 			<no-data v-if="list.length <= 0"></no-data>

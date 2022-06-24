@@ -1,6 +1,7 @@
 <template>
-	<view>
-		<custom-waterfalls-flow :value="list" @wapperClick="clickGood" @imageClick="clickGood" v-if="sortType == 1"  :columnSpace="offset":imageKey="imageSrcKey"
+	<view class="">
+		<no-data :list="goodsList"></no-data>
+		<custom-waterfalls-flow ref="stylegoods"  @wapperClick="clickGood" @imageClick="clickGood"  :value="goodsList" :columnSpace="offset":imageKey="imageSrcKey"
 			:column="cols"  >
 			<!--  #ifdef  MP-WEIXIN -->
 			<!-- 微信小程序自定义内容 -->
@@ -11,21 +12,17 @@
 						<text v-if="item.type == 3" class="f10-size bg-color-linear-y t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['拼团']}}</text>
 						<text>{{item.title}}</text>
 					</view>
-					<!-- <view class="flex  f-w margin-t4">
-						<view class="flex f-a-c f10-size padding-lr5 h-16 b-color-r t-color-r b-radius-2 margin-r8">
-							官方放心购</view>
-					</view> -->
 					<view class="flex f-a-c f-j-s margin-t4">
 						<view class="text-price f16-size f-w-b t-color-p">{{item.price | price}}</view>
-						<view class="t-color-8 f12-size flex f-a-c">
+						<!-- <view class="t-color-8 f12-size flex f-a-c">
 							<text class="margin-r4"> {{item.commentNum}}</text>
 							<text>{{i18n['评价']}}</text>
-						</view>
+						</view> -->
 				 </view>
 				</view>
 			</view>
 			<!--  #endif -->
-
+		
 			<!-- #ifndef  MP-WEIXIN -->
 			<!-- app、h5 自定义内容 -->
 			<template v-slot:default="item">
@@ -35,50 +32,24 @@
 						<text v-if="item.type == 3" class="f10-size bg-color-linear-y t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['拼团']}}</text>
 						<text>{{item.title}}</text>
 					</view>
-					<!-- <view class="flex  f-w margin-t4">
-						<view class="flex f-a-c f10-size padding-lr5 h-16 b-color-r t-color-r b-radius-2 margin-r8">
-							官方放心购</view>
-					</view> -->
 					<view class="flex f-a-c f-j-s margin-t4">
 						<view class="text-price f16-size f-w-b t-color-p">{{item.price | price}}</view>
-						<view class="t-color-8 f12-size flex f-a-c">
+						<!-- <view class="t-color-8 f12-size flex f-a-c">
 							<text class="margin-r4"> {{item.commentNum}}</text>
 							<text>{{i18n['评价']}}</text>
-						</view>
+						</view> -->
 				 </view>
 				</view>
 			</template>
 			<!-- #endif -->
 		</custom-waterfalls-flow>
-		<view @click="clickGood(item)" v-if="sortType == 2" v-for="(item, index) of list" :key="index" class="b-radius-5 bg-color-w flex margin-t10">
-			<view class="flex  f-s-0 w-120 h-120 bg-img b-radius-5" :style="item[imageSrcKey] | bgimg(400)+''"></view>
-			<view class="flex flex-1 f-c f-j-s padding-10">
-				<view class="flex flex-1 f-c">
-					<view class="line2">
-						<text v-if="item.type == 2" class="f10-size bg-color-linear-r t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['秒杀']}}</text>
-						<text v-if="item.type == 3" class="f10-size bg-color-linear-y t-color-w b-radius-2 h-16 padding-lr5 margin-r6">{{i18n['拼团']}}</text>
-						<text class="">{{item.title}}</text>
-					</view>
-					<!-- <view class="flex  f-w margin-t4">
-						<view class="flex f-a-c f10-size padding-lr5 h-16 b-color-r t-color-r b-radius-2 margin-r8">官方放心购
-						</view>
-					</view> -->
-				</view>
-				<view class="flex f-a-c f-j-s margin-t4">
-					<view class="text-price f16-size f-w-b t-color-p">{{item.price | price}}</view>
-					<view class="t-color-8 f12-size flex f-a-c">
-						<text class="margin-r4"> {{item.commentNum}}</text>
-						<text>{{i18n['评价']}}</text>
-					</view>
-				</view>
-			</view>
-		</view>
 	</view>
 </template>
 <style scoped>
+/* @import url('../../static/css/index/index.css'); */
 </style>
 <script>
-	const $ = require('../../utils/api.js');
+	const $ = require('../../../utils/api.js');
 	export default {
 		props: {
 			list: {
@@ -89,10 +60,6 @@
 			offset: {
 				type: Number,
 				default: 1.2
-			},
-			sortType: {
-				type: Number,
-				default: 1
 			},
 			// 列表渲染的 key 的键名，值必须唯一，默认为 id
 			idKey: {
@@ -113,30 +80,46 @@
 			imageStyle: {
 				type: Object
 			},
-
 			// 是否是单独的渲染图片的样子，只控制图片圆角而已
 			single: {
 				type: Boolean,
 				default: false
 			},
-
-			// #ifndef MP-WEIXIN
-			listStyle: {
-				type: Object
+			cateIndex: {
+				default: 0
 			},
-			// #endif
 		},
 		data() {
-			return {};
+			return {
+				goodsList: [],
+			};
 		},
 		onLoad: function() {
-			this.init();
+		},
+		watch: {
+			cateIndex(newValue) {
+				if(this.list.length <= 0){return;}
+				this.goodsList = [];
+				this.list.forEach((ele,index) => {
+					if(ele.___index == newValue) {
+						this.goodsList.push(ele);
+					}
+				})
+				this.$refs.stylegoods.refresh();
+			}
 		},
 		methods: {
 			clickGood(data) {
 				$.go('/pages/shops/detail?id='+data.id);
 			},
-			init() {},
+			init() {
+				this.goodsList = [];
+				this.list.forEach((ele,index) => {
+					if(ele.___index == this.cateIndex) {
+						this.goodsList.push(ele);
+					}
+				})
+			},
 		},
 		computed: {
 			i18n() {
@@ -144,6 +127,7 @@
 			},
 		},
 		created() {
+			this.init();
 		},
 		mounted() {},
 		destroyed() {},

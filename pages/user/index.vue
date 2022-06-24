@@ -1,6 +1,6 @@
 <template>
 	<view class="contain">
-		<view class="wrap-header" :style="{ 'padding-top': top + 'px' }">
+		<view class="wrap-header" :style="{ 'padding-top': top + 'px','background-image': 'url('+getStyle('user_center_nav_background')+')' }">
 			<view class="flex f-j-e h-44 padding-lr5">
 				<!-- <view class="flex f-a-c f-j-c van-icon van-icon-qr f20-size t-color-3 padding-lr5"><text
 						class="f12-size">{{i18n['会员码']}}</text></view> -->

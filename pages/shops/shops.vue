@@ -122,7 +122,7 @@
 						<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f16-size"></text>
 					</view>
 					<view v-if="shop.cateStyle == 4" class="flex f-w">
-						<view @click="go('/pages/search?list?shopId='+id+'&cateTid='+item.pid+'&cateId='+item.id)" v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t20">
+						<view @click="go('/pages/search/list?shopId='+id+'&cateTid='+child.pid+'&cateId='+child.id+'&cateName='+child.name)" v-for="(child,idx) in item.children" class="flex f-s-0 sub-item f-c f-a-c f-j-c margin-t20">
 							<view class="flex w-60 h-60 bg-img  b-radius-5" :style="child.img | bgimg(300)+''"></view>
 							<view class="f12-size t-color-6 margin-t4">{{child.name}}</view>
 						</view>

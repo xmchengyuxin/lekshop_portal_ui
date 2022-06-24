@@ -293,7 +293,7 @@
 		{
 			"path": "pages/user/webview",
 			"style": {
-				"navigationBarTitleText": "在线客服"
+				"navigationBarTitleText": ""
 			}
 		},
 		{

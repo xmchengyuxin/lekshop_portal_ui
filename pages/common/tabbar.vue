@@ -129,7 +129,7 @@
 				self.list = [];
 				arr.forEach((ele,index) => {
 					if(config == '' || config.guangguang_status == 0) {
-						if(ele.pagePath == '/pages/find/index') {
+						if(ele.pagePath != '/pages/find/index') {
 							self.list.push(ele);
 						}
 					}else{
