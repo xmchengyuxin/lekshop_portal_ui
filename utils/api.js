@@ -496,28 +496,6 @@ function debounce(fn, interval) {
 		fn.call(context, args);
 	}, gapTime);
 }
-
-
-//获取当前位置
-function getLocation(options) {
-	uni.getLocation({
-		type: 'gcj02',
-		success(res) {
-			if (options.success) {
-				options.success(res);
-			}
-		},
-		fail(res) {
-			$toast(res);
-			if (options.error) {
-				options.error(res);
-			}
-		},
-		complete(res) {
-		}
-	})
-}
-
 function shareWX(options) {
 	uni.share({
 		provider: 'weixin',
@@ -952,7 +930,6 @@ module.exports = {
 	qqMapTransBMap,
 	throttle,
 	debounce,
-	getLocation,
 	back,
 	shareWX,
 	saveImg,

@@ -2,8 +2,6 @@
 const API = require('./utils/api/user.js').default;
 const app = require('./utils/app.js').default;
 const $ = require('./utils/api.js');
-const QQMapWX = require('./utils/qqmap-wx-jssdk.min.js');
-let qqmapsdk;
 // #ifdef H5
 var wx = require('./utils/jweixin-module.js');
 	// #endif 
@@ -121,7 +119,6 @@ export default {
 							],
 							openTagList: ['wx-open-launch-weapp']
 						});
-						self.getLocation();
 						// self.share();
 					}
 				}
@@ -201,85 +198,6 @@ export default {
 					}
 				}
 			});
-		},
-		getLocation() {
-			const self = this;
-			$.getLocation({
-				success(res) {
-					self.addReverse(res.latitude, res.longitude);
-				},
-				error(res) {
-					if (res.errMsg == 'getLocation:fail auth deny' || res.errMsg == 'getLocation:fail authorize no response') {
-						//未开启定位授权
-					}
-				},
-				complete(res) {
-					if (res.errMsg.indexOf('getLocation:fail') >= 0) {
-						let location = {
-							nation_code: '156',
-							adcode: '350211',
-							city_code: '156350200',
-							name: '中国,福建省,厦门市,集美区',
-							location: { lat: 24.57591, lng: 118.09728 },
-							nation: '中国',
-							province: '福建省',
-							city: '厦门市',
-							district: '集美区',
-							address: '福建省厦门市集美区岑东路168-2号',
-							title: '厦门市集美区人民政府(岑西路东)'
-						};
-						uni.setStorageSync('location', location);
-					}
-				}
-			});
-		},
-		//地址逆解析
-		addReverse: function(lat, long) {
-			const self = this;
-			// #ifdef H5
-			$.ajax({
-				url: 'common/map/geocoder',
-				method: 'GET',
-				data: {
-					key: self.globalData.mapKey,
-					location: lat + ',' + long
-				},
-				success(res1) {
-					let res = res1.data;
-					if (res.result && res.result.ad_info) {
-						res.result.ad_info.location.lat = res.result.location.lat;
-						res.result.ad_info.location.lng = res.result.location.lng;
-						res.result.ad_info.address = res.result.address;
-						res.result.ad_info.title = res.result.formatted_addresses.recommend;
-						let location = res.result.ad_info;
-						uni.setStorageSync('location', location);
-					}
-				}
-			});
-			// #endif
-			// #ifndef H5
-			qqmapsdk = new QQMapWX({
-				key: this.globalData.mapKey
-			});
-			qqmapsdk.reverseGeocoder({
-				location: {
-					latitude: lat,
-					longitude: long
-				},
-				success: function(res) {
-					if (res.result && res.result.ad_info) {
-						res.result.ad_info.location.lat = res.result.location.lat;
-						res.result.ad_info.location.lng = res.result.location.lng;
-						res.result.ad_info.address = res.result.address;
-						res.result.ad_info.title = res.result.formatted_addresses.recommend;
-						let location = res.result.ad_info;
-						uni.setStorageSync('location', location);
-					}
-				},
-				fail: function(res) {},
-				complete: function(res) {}
-			});
-			// #endif
 		},
 		getUser() {
 			const self = this;

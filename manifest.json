@@ -39,8 +39,6 @@
         },
         /* 模块配置 */
         "modules" : {
-            "Geolocation" : {},
-            "Maps" : {},
             "Payment" : {}
         },
         /* 应用发布信息 */
@@ -101,7 +99,7 @@
                     },
                     "weixin" : {
                         "__platform__" : [ "ios", "android" ],
-                        "appid" : "wx54e9f639fe47bd2d",
+                        "appid" : "wx63ad93abf82f90ea",
                         "UniversalLinks" : "https://h5.wode24h.com/app/"
                     }
                 }
@@ -152,11 +150,7 @@
             "es6" : true
         },
         "usingComponents" : true,
-        "permission" : {
-            "scope.userLocation" : {
-                "desc" : "根据定位获取附近信息"
-            }
-        }
+        "permission" : {}
     },
     "mp-alipay" : {
         "usingComponents" : true

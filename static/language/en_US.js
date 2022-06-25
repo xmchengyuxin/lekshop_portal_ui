@@ -125,6 +125,7 @@ export default {
 		'我们向您的手机1发送了一条验证短信':'We have sent a verification SMS to your mobile phone /1/',
 		'微信快捷登录': 'wechat Quick Login',
 		'登录之后更精彩': 'More exciting after Login',
+		'暂不登录': "Don't log in",
 	},
 	validate: {
 		'获取验证码': 'Obtain code',

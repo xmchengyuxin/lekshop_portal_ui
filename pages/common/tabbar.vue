@@ -51,7 +51,6 @@
 	let count = 0;
 	export default {
 		props: {
-			 active: { type: Number, default: 0 },
 			isShow: { type: Boolean, default: true },
 			showLogin: { type: Boolean, default: false },
 		},
@@ -61,6 +60,7 @@
 				"list": [],
 				len: 0,
 				isLogin: uni.getStorageSync('token') ? true : false,
+				active: 0,
 			};
 		},
 		onLoad: function() {
@@ -126,6 +126,7 @@
 					},
 				];
 				let config = uni.getStorageSync('config') ? uni.getStorageSync('config') : '';
+				
 				self.list = [];
 				arr.forEach((ele,index) => {
 					if(config == '' || config.guangguang_status == 0) {
@@ -136,6 +137,7 @@
 						self.list.push(ele);
 					}
 				});
+				this.getActive();
 				if(config == '') {
 					if(count >= 5){return}
 					count+=1;
@@ -143,6 +145,15 @@
 						self.init();
 					},400);
 				}
+			},
+			getActive() {
+				let pages = getCurrentPages(); // 当前页面
+				let beforePage = pages[pages.length - 1]; // 前一个页面
+				this.list.forEach((ele,index) => {
+					if(ele.pagePath == '/'+beforePage.route) {
+						this.active = index;
+					}
+				})
 			},
 
 

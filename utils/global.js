@@ -7,25 +7,35 @@ let qqmapsdk;
 // import store from '../store/index.js'; //引入store
 let styleNums = 0;
 export default {
-	getStyle(type) {
-		let info = uni.getStorageSync('styleConfig') ? uni.getStorageSync('styleConfig') : '';
-		if(info == '') {
-			if(styleNums >= 5){return;}
-			styleNums+=1;
-			setTimeout(() => {
-				this.getStyle();
-			},200);
-			return this.getStyle1(type);
-		}else{
-			return info[type];
+	async getStyle(options) {
+		let info = await getInfo();
+		return info;
+		function getInfo () {
+			return new Promise(resolve => {
+				let info1 = uni.getStorageSync('styleConfig') ? uni.getStorageSync('styleConfig') : '';
+				if(info1 == '') {
+					let getStyleInter = setInterval(() => {
+						if(styleNums >= 5){
+							clearInterval(getStyleInter);
+							return;
+						}
+						styleNums+=1;
+						info1 = uni.getStorageSync('styleConfig') ? uni.getStorageSync('styleConfig') : '';
+						if(info1 != '') {
+							styleNums = 0;
+							clearInterval(getStyleInter);
+							resolve(info1);
+						}
+					},500);
+					
+				}else{
+					styleNums = 0;
+					resolve(info1);
+				}
+			})
 		}
 	},
-	getStyle1(type) {
-		setTimeout(() => {
-			let info = uni.getStorageSync('styleConfig') ? uni.getStorageSync('styleConfig') : '';
-			return info[type];
-		},1000);
-	},
+	
 	changeLang(code) {
 		let locale = code;
 		var self = this;

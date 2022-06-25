@@ -1,20 +1,20 @@
 <template>
 	<view class="contain">
-		<view v-if="isStyle('search')"  class="fixed-top  padding-lr12" :style="{ 'padding-top': top + 'px','background-color': getStyle('index_nav_color') }">
+		<view v-if="isStyle('search')"  class="fixed-top  padding-lr12" :style="{ 'padding-top': top + 'px','background-color': style['index_nav_color'] }">
 			<view class="flex f-a-c h-44">
-				<view v-if="getStyle('index_show_hide_scan') == '1'" :style="{'color': getStyle('index_nav_font_color')}" class="flex f-a-c f-j-c van-icon van-icon-scan  f22-size margin-r10"></view>
+				<view v-if="style['index_show_hide_scan'] == '1'" :style="{'color': style['index_nav_font_color']}" class="flex f-a-c f-j-c van-icon van-icon-scan  f22-size margin-r10"></view>
 				<view  @click="go('/pages/search/index')" class="flex flex-1 f-a-c bg-color-w b-radius-30 h-34 padding-lr12 margin-r10" >
 					<view class="flex f-a-c van-icon van-icon-search t-color-9 f20-size margin-r8"></view>
 					<view class="flex f-a-c t-color-6">{{i18n['搜索商品']}}</view>
 				</view>
-				<view v-if="getStyle('index_show_hide_coupon') == '1'" @click="go('/pages/coupon/getlist')" :style="{'color': getStyle('index_nav_font_color')}" class="flex f-a-c f-j-c van-icon van-icon-coupon-o  f22-size margin-r10"></view>
-				<view v-if="getStyle('index_show_hide_cate') == '1'" @click="go('/pages/index/cate')" :style="{'color': getStyle('index_nav_font_color')}" class="flex f-a-c f-j-c van-icon van-icon-cate  f22-size"></view>
+				<view v-if="style['index_show_hide_coupon'] == '1'" @click="go('/pages/coupon/getlist')" :style="{'color': style['index_nav_font_color']}" class="flex f-a-c f-j-c van-icon van-icon-coupon-o  f22-size margin-r10"></view>
+				<view v-if="style['index_show_hide_cate'] == '1'" @click="go('/pages/index/cate')" :style="{'color': style['index_nav_font_color']}" class="flex f-a-c f-j-c van-icon van-icon-cate  f22-size"></view>
 				<xcx-header></xcx-header>
 			</view>
-			<view v-if="getStyle('index_show_hide_category') == '1'" class="h-30">
+			<view v-if="style['index_show_hide_category'] == '1'" class="h-30">
 				<scroll-view scroll-x="true" :scroll-into-view="'navs'+active" class="h100" >
 					<view class="flex f-n h100">
-						<view @click="active=index" v-for="(item,index) in navs" :id="'navs'+index" :class="active == index ? 'navs-on' : ''" :style="{'color': getStyle('index_nav_font_color')}" class="flex f-s-0  f-a-c h100 margin-r20   f-w-500">{{item.name}}</view>
+						<view @click="active=index" v-for="(item,index) in navs" :id="'navs'+index" :class="active == index ? 'navs-on' : ''" :style="{'color': style['index_nav_font_color']}" class="flex f-s-0  f-a-c h100 margin-r20   f-w-500">{{item.name}}</view>
 					</view>
 				</scroll-view>
 			</view>
@@ -23,10 +23,10 @@
 		<swiper class="wrap-swiper" :current="active" @change="changeSwiper" :indicator-dots="false" :autoplay="false" :interval="1000" :duration="500">
 			<swiper-item v-for="(item,parent) in navs">
 				<scroll-view @scrolltolower="loadList" scroll-y="true" style="height: 100%;">
-					<view class="swiper-item padding-12" :style="getStyle('index_background') | bgimg(700)+''">
+					<view class="swiper-item padding-12" :style="style['index_background'] | bgimg(700)+''">
 						<block v-if="isStyle('search')">
-							<view  v-if="getStyle('index_show_hide_category') == '1'" :style="{ 'padding-top': top +74+ 'px' }"></view>
-							<view  v-if="getStyle('index_show_hide_category') != '1'" :style="{ 'padding-top': top +44+ 'px' }"></view>
+							<view  v-if="style['index_show_hide_category'] == '1'" :style="{ 'padding-top': top +74+ 'px' }"></view>
+							<view  v-if="style['index_show_hide_category'] != '1'" :style="{ 'padding-top': top +44+ 'px' }"></view>
 						</block>
 						<view v-if="!isStyle('search')"  :style="{ 'padding-top': top +10+ 'px' }"></view>
 						<block v-if="parent == 0" >
@@ -228,6 +228,7 @@
 				pageSize: 20,
 				banner: [],
 				styleList: [],
+				style: ''
 			};
 		},
 		onLoad: function() {
@@ -279,8 +280,7 @@
 				})
 			},
 			getCate() {
-				console.log(self.getStyle('index_show_hide_category'),'111');
-				if(self.getStyle('index_show_hide_category') != '1') {
+				if(self.style['index_show_hide_category'] != '1') {
 					self.navs = [{
 							id: '',
 							name: self.i18n['推荐']
@@ -334,7 +334,10 @@
 			},
 			init() {
 				this.getIndexStyle();
-				this.getCate();
+				this.getStyle().then((res) => {
+					self.style= res;
+					self.getCate();
+				})
 				// this.getBanner({
 				// 	success(res) {
 				// 		self.banner = res.data ? res.data : [];

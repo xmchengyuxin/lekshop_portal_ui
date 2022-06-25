@@ -74,11 +74,12 @@
 				<view style="padding-top: 20vh;"></view>
 				<view class="f30-size f-w-b flex f-a-c f-j-c">{{i18n['登录之后更精彩']}}</view>
 			</view>
-			<view class="flex f-a-c f-j-c ">
+			<view class="flex f-a-c f-j-c f-c">
 				<button  style="width: 68%;border-radius: 100px;" class="flex f-a-c f-j-c  bg-color-f7 h-60  padding-lr15" @click="getUserInfo">
 					<image class="w-30 margin-r4" src="../../static/images/wx_icon.png" mode="widthFix"></image>
 					<text class="f18-size">{{i18n['微信快捷登录']}}</text>
 				</button>
+				<view @click="back(1)" style="width: 68%;border-radius: 100px;" class="flex f-a-c f-j-c  bg-color-f7 h-60  padding-lr15 margin-t20">{{i18n['暂不登录']}}</view>
 			</view>
 			<view></view>
 		</block>
