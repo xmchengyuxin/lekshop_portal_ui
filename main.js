@@ -38,7 +38,6 @@ Vue.prototype.goService = global.goService;
 Vue.prototype.loginOut = global.loginOut;
 Vue.prototype.changeLang = global.changeLang;
 Vue.prototype.getStyle = global.getStyle;
-Vue.prototype.getStyle1 = global.getStyle1;
 Vue.component('tabBar',tabbar);
 Vue.component('noData',nodata);
 Vue.component('upDate',update);

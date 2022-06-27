@@ -1,7 +1,11 @@
 <template>
 	<view>
 		<view class="fixed-top h-46 flex f-r bg-color-t box-c"  :style="{ 'padding-top': top + 'px' }">
-			<view @click="back(1)" class="flex f-a-c f-r f-s-0 padding-lr10 van-icon van-icon-arrow-left t-color-w f20-size"></view>
+			<view @click="back(1)" class="flex f-a-c f-r f-s-0 padding-lr10 van-icon van-icon-arrow-left t-color-w f20-size">
+				<!-- #ifdef APP-PLUS -->
+				<text class="van-icon van-icon-arrow-left t-color-w f20-size">&#xe696;</text>
+				<!-- #endif -->
+			</view>
 			<xcx-header></xcx-header>
 		</view>
 		<!-- 注意：这是 H5、微信小程序界面，请勿和 new_index.nvue、index.nvue 混用
@@ -60,25 +64,45 @@
 				<!-- 播放状态：pause 的时候就会暂停 -->
 				<view class="videoHover" @click="tapVideoHover(list.state,$event)" @touchstart="touchstartHover" :style="'width: '+ windowWidth +'px; height: '+ windowHeight +'px;'">
 					<!-- <image v-if="list.state=='pause'" class="playState" src="@/static/img/index/play.png"></image> -->
-					<view v-if="list.state=='pause'"  class="flex f-a-c f-j-c van-icon van-icon-play playState  t-color-w" style="font-size: 70px;"></view>
+					<text v-if="list.state=='pause'"  class="flex f-a-c f-j-c van-icon van-icon-play playState  t-color-w" style="font-size: 70px;">
+						<!-- #ifdef APP-PLUS -->
+						&#xe737;
+						<!-- #endif -->
+					</text>
 				</view>
 				<view class="userInfo f-a-c">
 					<!-- 1.头像 -->
 					<image @click="go('/pages/find/user?id='+list.walkMemberId)" class="userAvatar" :src="list.walkMemberHeadImg" mode="aspectFill"></image>
 					<!-- 2.点赞 -->
 					<view @click="like(index);" style="opacity: 0.9; margin-top: 17px;">
-						<view v-if="list.collectTrends" class="flex f-a-c f-j-c van-icon van-icon-like t-color-r f32-size" style="width: 40px; height: 40px; "></view>
-						<view v-if="!list.collectTrends" class="flex f-a-c f-j-c van-icon van-icon-like t-color-w f32-size" style="width: 40px; height: 40px; "></view>
+						<text v-if="list.collectTrends" class="flex f-a-c f-j-c van-icon van-icon-like t-color-r f32-size" style="width: 40px; height: 40px; ">
+							<!-- #ifdef APP-PLUS -->
+							&#xe715;
+							<!-- #endif -->
+						</text>
+						<text v-if="!list.collectTrends" class="flex f-a-c f-j-c van-icon van-icon-like t-color-w f32-size" style="width: 40px; height: 40px; ">
+							<!-- #ifdef APP-PLUS -->
+							&#xe715;
+							<!-- #endif -->
+						</text>
 						<text class="f13-size f-w-500" style="color: #FFFFFF; text-align: center; margin-top: 2px;" :class="{'likeNumActive':list.like}">{{list.collectionNum}}</text>
 					</view>
 					<!-- 3.评论 -->
 					<view class="comment" @click="toComment(index)" style="opacity: 0.9; margin-top: 17px;">
-						<view class="flex f-a-c f-j-c van-icon van-icon-chat f30-size t-color-w" style="width: 35px; height: 35px; "></view>
+						<text class="flex  f-a-c f-j-c van-icon van-icon-chat f28-size t-color-w" style="width: 35px; height: 35px; ">
+							<!-- #ifdef APP-PLUS -->
+							&#xe6cc;
+							<!-- #endif -->
+						</text>
 						<text style="color: #FFFFFF; margin-top: 5px; font-size: 14px;  text-align: center; margin-top: 2px;">{{list.commentNum}}</text>
 					</view>
-					<!-- 4.分享 -->
+					<!-- 4.分享 --> 
 					<view @click="shareVideo" style="opacity: 0.9; margin-top: 17px;">
-						<view class="flex f-a-c f-j-c van-icon van-icon-share f32-size t-color-w" style="width: 40px; height: 40px;"></view>
+						<text class="flex f-a-c f-j-c van-icon van-icon-share f32-size t-color-w" style="width: 40px; height: 40px;">
+							<!-- #ifdef APP-PLUS -->
+							&#xe739;
+							<!-- #endif -->
+						</text>
 						<text class="f-w-500 f12-size" style="color: #FFFFFF;  text-align: center;  margin-top: 2px;">{{i18n['分享']}}</text>
 					</view>
 				</view>
@@ -90,7 +114,7 @@
 					<view @click="showGoods(allList[index]['trendsGoodsList'])" v-if="allList[index] && allList[index]['trendsGoodsList'].length > 0" class=" b-bottom flex f-a-c f-r f-j-s">
 						<text class="flex f-a-c f11-size t-color-w" style="opacity: 0.5;">{{i18n['查看Ta提到的宝贝']}}</text>
 						<view class="flex f-a-c f-r padding-tb6">
-							<view class="w-30 h-30 b-radius-2 bg-img  b-radius-2 margin-r4" :style="allList[index]['trendsGoodsList'][0]['goodsMainImg'] | bgimg(300)+''"></view>
+							<image class="w-30 h-30 b-radius-2 bg-img  b-radius-2 margin-r4" :src="allList[index]['trendsGoodsList'][0]['goodsMainImg'] | img(300)+''" mode="aspectFill"></image>
 							<view class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f15-size"></view>
 						</view>
 					</view>
@@ -106,25 +130,38 @@
 		</view>
 		<uni-popup ref="goods" type="bottom">
 			<view class="wrap-popup-radius bg-color-w padding-lr12">
-				<view class="flex f-r f-a-c f-j-c b-bottom f15-size f-w-b padding-tb12">{{i18n['Ta提到的商品']}}</view>
+				<text class="flex f-r f-a-c f-j-c b-bottom f15-size f-w-b padding-tb12">{{i18n['Ta提到的商品']}}</text>
 				<view @click="go('/pages/shops/detail?id='+item.goodsId)" v-for="(item,index) in goodsList" class="padding-tb10 flex f-r">
-					<view class="flex f-s-0 w-80 h-80 b-radius-5 bg-img margin-r12" :style="item.goodsMainImg | bgimg(300)+''"></view>
+					<image  class="flex f-s-0 w-80 h-80 b-radius-5 bg-color bg-img margin-r12" :src="item.goodsMainImg | img(300)+''" mode="aspectFill"></image>
+					<!-- <view class="flex f-s-0 w-80 h-80 b-radius-5 bg-color bg-img margin-r12" :style="item.goodsMainImg | bgimg(300)+''"></view> -->
 					<view class="flex flex-1 f-c f-j-s">
-						<view class="f12-size line2 f-w">{{item.goodsName}}</view>
-						<view class="text-price t-color-y flex f-r">{{item.price}}</view>
+						<text class="f12-size line2 f-w">{{item.goodsName}}</text>
+						<text class="text-price t-color-y flex f-r">¥{{item.price}}</text>
 					</view>
 				</view>
-				<view class="padding-30"></view>
+				<view class="padding-30"></view> 
 			</view>
 		</uni-popup>
-		<comment-list ref="comment" @pjlisy="changeComment" :findId="commentId"></comment-list>
+		<uni-popup ref="comment1" type="bottom">
+			<comment-list ref="comment" @pjlisy="changeComment" :findId="commentId"></comment-list>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
+	import global from '@/utils/global.js';
+	import i18n from '@/static/language/index.js' 
 	import commentList from './components/pjlist.vue';
 	const API = require('../../utils/api/find.js').default;
 	const $ = require('../../utils/api.js');
+	// #ifdef APP-PLUS
+	var domModule = weex.requireModule('dom');
+	domModule.addRule('fontFace', {
+	  'fontFamily': "videoicon",
+	  'src': `url('https://at.alicdn.com/t/font_3349930_vhg7e5bbcqr.ttf?t=1654048995632')`
+	})
+	// #endif
+	
 	export default {
 		data() {
 			return {
@@ -216,6 +253,8 @@
 			this.boxStyle.width = this.windowWidth + 'px'//给宽度加px
 			this.boxStyle.height = this.windowHeight - this.deleteHeight;//有 tabbar的 修改这里可以改变视频高度
 			this.get() //刚进入页面加载数据
+		
+			
 		},
 		onShow(){
 			console.log('回到前台');
@@ -234,6 +273,12 @@
 			
 		},
 		methods: {
+			go(url, type = 1, time) {
+				global.go(url, type, time);
+			},
+			back() {
+				$.back(1);
+			},
 			playEvent() {//避免what没监听到
 				this.$set(this.dataList[this.k],'isplay',false);
 				this.$set(this.dataList[this.k],'playIng',true);
@@ -424,9 +469,14 @@
 				this.dataList[this.k]['commentNum'] += 1;
 			},
 			toComment(index){
+				
 				this.commentId = this.allList[index]['walkTrends']['id'];
-				this.$refs.comment.open();
-				this.$refs.comment.init(this.commentId);
+				this.$refs.comment1.open();
+				this.$nextTick(() =>{
+					// console.log(this.$refs.comment)
+					this.$refs.comment.init(this.commentId);
+				})
+				
 			},
 			like(index) {
 				const self = this;
@@ -452,15 +502,24 @@
 		},
 		computed: {
 			i18n() {
+				// #ifndef APP-PLUS
 				return this.$t('find')
+				// #endif
+				// #ifdef APP-PLUS
+				return i18n.messages[i18n.locale]['find']
+				// #endif
 			},
 		},
 		components:{commentList}
 	}
 </script>
-
+<!-- <style src="@/static/css/color.css" scoped></style> -->
 <style scoped>
-	
+	/* #ifdef APP-PLUS */
+	/* @import url('@/static/css/color.css');
+	@import url('@/static/css/icon.css');
+	@import url('@/static/css/common.css'); */
+	/* #endif */
 	.fixed-top {
 		z-index: 9999;
 	}
@@ -545,4 +604,16 @@
 	.root{
 		background-color: #000000;
 	}
+	
+	/* #ifdef APP-PLUS */
+	
+	.van-icon {/* app字体不加引号 */
+		font-family: videoicon !important;
+	}
+	.text-price::before {
+		content: "¥";
+		font-size: 14px;
+		margin-right: 2px;
+	}
+	/* #endif */
 </style>

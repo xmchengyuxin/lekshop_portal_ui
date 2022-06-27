@@ -1,8 +1,8 @@
 @font-face {
   font-family: "van-icon"; /* Project id 3349930 */
-  src: url('//at.alicdn.com/t/font_3349930_vhg7e5bbcqr.woff2?t=1654048995632') format('woff2'),
-       url('//at.alicdn.com/t/font_3349930_vhg7e5bbcqr.woff?t=1654048995632') format('woff'),
-       url('//at.alicdn.com/t/font_3349930_vhg7e5bbcqr.ttf?t=1654048995632') format('truetype');
+  src: url('https://at.alicdn.com/t/font_3349930_vhg7e5bbcqr.woff2?t=1654048995632') format('woff2'),
+       url('https://at.alicdn.com/t/font_3349930_vhg7e5bbcqr.woff?t=1654048995632') format('woff'),
+       url('https://at.alicdn.com/t/font_3349930_vhg7e5bbcqr.ttf?t=1654048995632') format('truetype');
 }
 
 .van-icon {

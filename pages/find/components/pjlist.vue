@@ -1,6 +1,6 @@
 <template>
 	<view class="">
-		<uni-popup ref="pjcontent" type="bottom" style="z-index: 999999!important;">
+		<!-- <uni-popup ref="pjcontent" type="bottom" style="z-index: 999999!important;"> -->
 			<view class="wrap-popup-radius bg-color-w safe-area">
 				<view class="flex f-r f-a-c f-j-c padding-12 f15-size f-w-b b-bottom">{{i18n['评论']}}({{total}})</view>
 				<scroll-view class="" scroll-y="true" style="height: 60vh;">
@@ -51,7 +51,7 @@
 					<view @click="issue" style="padding-left: 10px;" class=" t-color-y f15-size f-w-500">{{i18n['评论']}}</view>
 				</view>
 			</view>
-		</uni-popup>
+		<!-- </uni-popup> -->
 	</view>
 </template>
 <style scoped>

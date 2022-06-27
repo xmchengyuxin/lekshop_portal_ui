@@ -234,6 +234,7 @@
 		onLoad: function() {
 			self = this;
 			this.init();
+			uni.hideTabBar();
 		},
 		onShow() {
 			this.$nextTick(() => {
