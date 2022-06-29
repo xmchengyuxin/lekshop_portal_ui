@@ -1,70 +1,106 @@
 <template>
 	<view class="">
-		<uni-popup ref="pjcontent" type="bottom" style="z-index: 999999!important;">
-			<view class="wrap-popup-radius bg-color-w safe-area">
-				<view class="flex f-r f-a-c f-j-c padding-12 f15-size f-w-b b-bottom">{{i18n['评论']}}({{total}})</view>
-				<scroll-view class="" scroll-y="true" style="height: 60vh;">
+			<view class="wrap-popup-radius bg-color-w flex f-c safe-area">
+				<view class="flex f-a-c f-j-c b-bottom">
+					<text class="flex f-r f-a-c f-j-c padding-12 f15-size f-w-b ">{{i18n['评论']}}({{total}})</text>
+				</view>
+				<scroll-view class="" scroll-y="true" style="height: 800upx;">
 					<view v-for="(item,index) in list" class="padding-12 flex f-r">
 						<view class="flex f-r f-a-s margin-r12">
-							<view class="flex f-s-0 w-30 h-30 b-radius bg-img " :style="item.walkTrendsComment.viewMemberHeadImg | bgimg(300)+''"></view>
+							<image :src="item.walkTrendsComment.viewMemberHeadImg | img(300)+''" class="flex f-s-0 w-30 h-30 b-radius bg-img" mode="aspectFill"></image>
 						</view>
 						<view class="flex flex-1 f-c">
 							<view class="flex f-r">
 								<view @click="chooseComment(index,'-1')" class="flex f-c flex-1">
-									<view class="t-color-9 f13-size">{{item.walkTrendsComment.viewMemberName}}</view>
-									<view class="f13-size  margin-t4">{{item.walkTrendsComment.content}}</view>
-									<view class="t-color-9 f11-size margin-t4">{{item.walkTrendsComment.addTime | time4}}</view>
+									<text class="t-color-9 f13-size">{{item.walkTrendsComment.viewMemberName}}</text>
+									<text class="f13-size  margin-t4">{{item.walkTrendsComment.content}}</text>
+									<text class="t-color-9 f11-size margin-t4">{{time4(item.walkTrendsComment.addTime)}}</text>
 								</view>
 								<view @click="likeComment(index,'-1')" class="flex f-c f-a-c f-s-0" style="padding-left: 10px;">
-									<view :class="item.walkTrendsComment.likeStatus == 1 ? 'van-icon-like t-color-y' : 'van-icon-like-o'" class="flex f-s-0 f-a-c f-j-c  van-icon "></view>
+									<text :class="item.walkTrendsComment.likeStatus == 1 ? 'van-icon-like t-color-y' : 'van-icon-like-o'" class="flex f-s-0 f-a-c f-j-c  van-icon ">
+										<!-- #ifdef APP-NVUE -->
+										{{item.walkTrendsComment.likeStatus == 1 ? '&#xe715' : '&#xe712'}}
+										<!-- #endif -->
+									</text>
 									<text :class="item.walkTrendsComment.likeStatus == 1 ? 't-color-y' : 't-color-9'" class="f15-size margin-t4 ">{{item.walkTrendsComment.likeNum}}</text>
 								</view>
 							</view>
 							
 							<view v-for="(child,idx) in item.chilidCommentList" class="padding-tb12 flex f-r">
 								<view class="flex f-r f-a-s margin-r12">
-									<view class="flex f-s-0 w-30 h-30 b-radius bg-img " :style="child.viewMemberHeadImg | bgimg(300)+''"></view>
+									<image :src="child.viewMemberHeadImg | img(300)+''" class="flex f-s-0 w-30 h-30 b-radius bg-img" mode="aspectFill"></image>
 								</view>
 								<view  @click="chooseComment(index,idx)" class="flex flex-1 f-c">
-									<view class="t-color-9 f13-size">{{child.viewMemberName}}</view>
-									<view class="f13-size  margin-t4">{{child.content}}</view>
+									<text class="t-color-9 f13-size">{{child.viewMemberName}}</text>
+									<text class="f13-size  margin-t4">{{child.content}}</text>
 									
 								</view>
 								<view @click="likeComment(index,idx)" class="flex f-c f-a-c" style="padding-left: 10px;">
-									<view :class="child.likeStatus == 1 ? 'van-icon-like t-color-y' : 'van-icon-like-o'" class="flex f-s-0 f-a-c f-j-c  van-icon "></view>
+									<text :class="child.likeStatus == 1 ? 'van-icon-like t-color-y' : 'van-icon-like-o'" class="flex f-s-0 f-a-c f-j-c  van-icon ">
+										<!-- #ifdef APP-NVUE -->
+										{{child.likeStatus == 1 ? '&#xe715' : '&#xe712'}}
+										<!-- #endif -->
+									</text>
 									<text :class="child.likeStatus == 1 ? 't-color-y' : 't-color-9'" class="f15-size margin-t4 p-r" style="top: 1px;">{{child.likeNum}}</text>
 								</view>
 							</view>
 						</view>
 						
 					</view>
-					<view v-if="page < totalPage" @click="loadMore()" class="flex f-r f-a-c f-j-c f12-size t-color-9 padding-10">{{i18n['点击查看更多']}}</view>
-					<view v-else class="flex f-r f-a-c f-j-c no-more">{{i18n['到底了']}}</view>
-					<view class="padding-10"></view>
-				</scroll-view>
-				<view class="h-50"></view>
-				<view :style="{'padding-bottom': isIphonex ?'34px!important':''}" class="flex f-a-c f-r h-50 box-c padding-lr20 wrap-pj-input">
-					<view :style="user.headImg | bgimg(300)+''" class="flex f-s-0 w-30 h-30 b-radius bg-img  margin-r12"></view>
-					<view class="flex flex-1 h-36 b-radius-30 bg-color-f7 padding-lr12">
-						<input @confirm="issue()" @blur="blur" cursor-spacing="10" :focus="focus" v-model="value" class="input f13-size h100" :placeholder="comment != '' ? '@'+comment['viewMemberName'] : i18n['展开说说吧']" type="text"  />
+					<view v-if="page < totalPage" @click="loadMore()" class="flex f-r f-a-c f-j-c f12-size t-color-9 padding-10">
+						<text>{{i18n['点击查看更多']}}</text>
 					</view>
-					<view @click="issue" style="padding-left: 10px;" class=" t-color-y f15-size f-w-500">{{i18n['评论']}}</view>
+					<view v-else class="flex f-r f-a-c f-j-c ">
+						<text class="f13-size no-more">{{i18n['到底了']}}</text>
+					</view>
+					<view class="padding-10"></view>
+				</scroll-view>	
+				<!-- #ifndef APP-NVUE -->
+				<view class="h-50"></view>
+				<view  :class="{ 'padding-b34': isIphonex}"></view>
+				<!-- #endif -->
+				
+				<view :class="{ 'padding-b34': isIphonex}" class="flex f-a-c f-r  box-c  wrap-pj-input">
+					<image :src="user.headImg | img(300)+''" class="flex f-s-0 w-30 h-30 b-radius bg-img  margin-r12" mode="aspectFill"></image>
+					<view class="flex flex-1  h-36 b-radius-30 bg-color-f7 padding-lr12 p-r ">
+						<input @confirm="issue()" @blur="blur" cursor-spacing="10" :focus="focus" v-model="value" class="input f13-size h-36" :placeholder="comment != '' ? '@'+comment['viewMemberName'] : i18n['展开说说吧']" type="text"  />
+					</view>
+					<view @click="issue" style="padding-left: 10px;" class=" t-color-y f15-size f-w-500">
+						<text class="t-color-y f15-size f-w-500">{{i18n['评论']}}</text>
+					</view>
 				</view>
 			</view>
-		</uni-popup>
 	</view>
 </template>
 <style scoped>
 	.wrap-pj-input {
+		/* #ifndef APP-NVUE */
 		position: fixed;
+		/* #endif */
 		bottom: 0;
 		left: 0;
 		right: 0;
 		z-index: 11111;
 		border-top: 1px solid #f4f4f4;
+		padding: 8px 20px;
+	}
+	.padding-b34 {
+		padding-bottom: 34px!important;
+	}
+	.input {
+		min-width: 460upx;
 	}
 </style>
 <script>
+	// #ifdef APP-NVUE
+	import i18n from '@/static/language/index.js'
+	var domModule = weex.requireModule('dom');
+	domModule.addRule('fontFace', {
+	  'fontFamily': "videoicon",
+	  'src': `url('https://at.alicdn.com/t/font_3349930_vhg7e5bbcqr.ttf?t=1654048995632')`
+	})
+	// #endif
+	import global from '@/utils/global.js';
 	const API = require('../../../utils/api/find.js').default;
 	const $ = require('../../../utils/api.js');
 	let self;
@@ -92,6 +128,37 @@
 			this.init();
 		},
 		methods: {
+			time4(source) {
+				console.log(source)
+				var checkTime = function(time) {
+					if (time < 10) {
+						time = "0" + time;
+					};
+					return time;
+				};
+				source = new Date(parseInt(source));
+				var nowMonth = checkTime((new Date()).getMonth()+1);
+				var nowday = checkTime((new Date()).getDate());
+				var time;
+				if(nowMonth == checkTime(source.getMonth() + 1) && nowday == checkTime(source.getDate())){
+					//判断同一天
+					time = checkTime(source.getHours()) +
+					':' +
+					checkTime(source.getMinutes());
+				}else{
+					time = checkTime(source.getMonth() + 1) +
+					'-' +
+					checkTime(source.getDate()) +
+					' ' +
+					checkTime(source.getHours()) +
+					':' +
+					checkTime(source.getMinutes());
+				}
+				return time
+			},
+			getUser(options) {
+				global.getUser(options)
+			},
 			loadMore() {
 				if(this.page < this.totalPage) {
 					this.page += 1;
@@ -221,7 +288,12 @@
 		},
 		computed: {
 			i18n() {
+				// #ifdef APP-NVUE
+				return i18n.messages[i18n.locale]['commentList']
+				// #endif
+				// #ifndef APP-NVUE
 				return this.$t('commentList')
+				// #endif
 			},
 		},
 		mounted() {},

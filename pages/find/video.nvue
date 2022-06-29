@@ -58,7 +58,7 @@
 					v-if="!list.playIng"
 					:src="list.videoUrl+'?vframe/jpg/offset/0/w/'+windowWidth*2"
 					:style="'width: '+ windowWidth +'px; height: '+ windowHeight +'px; position: absolute;'"
-					mode="aspectFit"
+					mode="aspectFill"
 					></image>
 				</view>
 				<!-- 播放状态：pause 的时候就会暂停 -->
@@ -70,17 +70,30 @@
 						<!-- #endif -->
 					</text>
 				</view>
+				<!-- 最底下的文字部分 -->
+				<view class="content1 " :style="isIphonex ? 'bottom:50px' : ''">
+					<text class="userName f18-size f-w-500" :style="'width: '+ (windowWidth - 90) +'px;'">@{{list.walkMemberName}}</text><!-- i={{i}} -->
+					<text class="words f15-size" :style="'width: '+ (windowWidth - 90) +'px;'">{{list.content}}</text><!-- k={{k}} -->
+					
+					<view @click="showGoods(allList[index]['trendsGoodsList'])" v-if="allList[index] && allList[index]['trendsGoodsList'].length > 0" class=" b-bottom flex f-a-c f-r f-j-s">
+						<text class="flex f-a-c f11-size t-color-w" style="opacity: 0.5;">{{i18n['查看Ta提到的宝贝']}}</text>
+						<view class="flex f-a-c f-r padding-tb6">
+							<image class="w-30 h-30 b-radius-2 bg-img  b-radius-2 margin-r4" :src="allList[index]['trendsGoodsList'][0]['goodsMainImg'] | img(300)+''" mode="aspectFill"></image>
+							<view class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f15-size"></view>
+						</view>
+					</view>
+				</view>
 				<view class="userInfo f-a-c">
 					<!-- 1.头像 -->
 					<image @click="go('/pages/find/user?id='+list.walkMemberId)" class="userAvatar" :src="list.walkMemberHeadImg" mode="aspectFill"></image>
 					<!-- 2.点赞 -->
 					<view @click="like(index);" style="opacity: 0.9; margin-top: 17px;">
-						<text v-if="list.collectTrends" class="flex f-a-c f-j-c van-icon van-icon-like t-color-r f32-size" style="width: 40px; height: 40px; ">
+						<text v-if="list.collectTrends" class="flex f-a-c f-j-c van-icon van-icon-like  t-color-r f32-size" style="width: 40px; height: 40px; ">
 							<!-- #ifdef APP-PLUS -->
 							&#xe715;
 							<!-- #endif -->
 						</text>
-						<text v-if="!list.collectTrends" class="flex f-a-c f-j-c van-icon van-icon-like t-color-w f32-size" style="width: 40px; height: 40px; ">
+						<text v-if="!list.collectTrends" class="flex f-a-c f-j-c  van-icon van-icon-like t-color-w f32-size" style="width: 40px; height: 40px; ">
 							<!-- #ifdef APP-PLUS -->
 							&#xe715;
 							<!-- #endif -->
@@ -91,7 +104,7 @@
 					<view class="comment" @click="toComment(index)" style="opacity: 0.9; margin-top: 17px;">
 						<text class="flex  f-a-c f-j-c van-icon van-icon-chat f28-size t-color-w" style="width: 35px; height: 35px; ">
 							<!-- #ifdef APP-PLUS -->
-							&#xe6cc;
+							&#xe6bf;
 							<!-- #endif -->
 						</text>
 						<text style="color: #FFFFFF; margin-top: 5px; font-size: 14px;  text-align: center; margin-top: 2px;">{{list.commentNum}}</text>
@@ -106,19 +119,7 @@
 						<text class="f-w-500 f12-size" style="color: #FFFFFF;  text-align: center;  margin-top: 2px;">{{i18n['分享']}}</text>
 					</view>
 				</view>
-				<!-- 最底下的文字部分 -->
-				<view class="content" :style="isIphonex ? 'bottom:50px' : ''">
-					<text class="userName f18-size f-w-500" :style="'width: '+ (windowWidth - 90) +'px;'">@{{list.walkMemberName}}</text><!-- i={{i}} -->
-					<text class="words f15-size" :style="'width: '+ (windowWidth - 90) +'px;'">{{list.content}}</text><!-- k={{k}} -->
-					
-					<view @click="showGoods(allList[index]['trendsGoodsList'])" v-if="allList[index] && allList[index]['trendsGoodsList'].length > 0" class=" b-bottom flex f-a-c f-r f-j-s">
-						<text class="flex f-a-c f11-size t-color-w" style="opacity: 0.5;">{{i18n['查看Ta提到的宝贝']}}</text>
-						<view class="flex f-a-c f-r padding-tb6">
-							<image class="w-30 h-30 b-radius-2 bg-img  b-radius-2 margin-r4" :src="allList[index]['trendsGoodsList'][0]['goodsMainImg'] | img(300)+''" mode="aspectFill"></image>
-							<view class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-9 f15-size"></view>
-						</view>
-					</view>
-				</view>
+				
 			</swiper-item>
 		</swiper>
 		<view v-if="dataList.length <= 0" class="wrap-layout flex f-c f-a-c f-j-c">
@@ -130,9 +131,11 @@
 		</view>
 		<uni-popup ref="goods" type="bottom">
 			<view class="wrap-popup-radius bg-color-w padding-lr12">
-				<text class="flex f-r f-a-c f-j-c b-bottom f15-size f-w-b padding-tb12">{{i18n['Ta提到的商品']}}</text>
+				<view class="flex f-a-c f-j-c b-bottom">
+					<text class="flex  f-a-c f-j-c  f15-size f-w-b padding-tb12">{{i18n['Ta提到的商品']}}</text>
+				</view>
 				<view @click="go('/pages/shops/detail?id='+item.goodsId)" v-for="(item,index) in goodsList" class="padding-tb10 flex f-r">
-					<image  class="flex f-s-0 w-80 h-80 b-radius-5 bg-color bg-img margin-r12" :src="item.goodsMainImg | img(300)+''" mode="aspectFill"></image>
+					<image  class="flex f-s-0 w-80 h-80 b-radius-5  bg-img margin-r12" :src="item.goodsMainImg | img(300)+''" mode="aspectFill"></image>
 					<!-- <view class="flex f-s-0 w-80 h-80 b-radius-5 bg-color bg-img margin-r12" :style="item.goodsMainImg | bgimg(300)+''"></view> -->
 					<view class="flex flex-1 f-c f-j-s">
 						<text class="f12-size line2 f-w">{{item.goodsName}}</text>
@@ -142,16 +145,27 @@
 				<view class="padding-30"></view> 
 			</view>
 		</uni-popup>
+		<!-- #ifndef APP-NVUE -->
+		<comment-list ref="comment" @pjlisy="changeComment" :findId="commentId"></comment-list>
+		<!-- #endif -->
+		<!-- #ifdef APP-NVUE -->
 		<uni-popup ref="comment1" type="bottom">
 			<comment-list ref="comment" @pjlisy="changeComment" :findId="commentId"></comment-list>
 		</uni-popup>
+		<!-- #endif -->
+		
 	</view>
 </template>
 
 <script>
 	import global from '@/utils/global.js';
 	import i18n from '@/static/language/index.js' 
+	// #ifdef APP-NVUE
+	import commentList from './components/pjlistapp.vue';
+	// #endif
+	// #ifndef APP-NVUE
 	import commentList from './components/pjlist.vue';
+	// #endif
 	const API = require('../../utils/api/find.js').default;
 	const $ = require('../../utils/api.js');
 	// #ifdef APP-PLUS
@@ -201,7 +215,6 @@
 		},
 		watch:{
 			k(k,old_k){
-				console.log(k,old_k,'k')
 				this.dataList[old_k].state = 'stop'//如果是被滑走的视频，就停止播放
 				this.dataList[old_k].playIng = false//如果视频暂停，就加载封面
 				this.dataList[old_k].isplay = true
@@ -210,12 +223,10 @@
 				this.oldVideo = setTimeout(()=>{
 					uni.createVideoContext('video'+this.dataList[old_k]._id,this).seek(0)
 					uni.createVideoContext('video'+this.dataList[old_k]._id,this).pause()
-					console.log('预留第' + (old_k + 1) + '个视频：' + 'video'+this.dataList[old_k]._id)
 				},500)
 				// 2.0版本已经去掉了下面这一句，视频不用暂停，只需要把声音禁止就行
 				//uni.createVideoContext('video'+this.dataList[old_k]._id + '' + old_k,this).stop()//如果视频暂停，那么旧视频停止，这里的'video'+this.dataList[old_k]._id + '' + old_k，后面加 old_k 是为了每一个视频的 id 值不同，这样就可以大程度的避免串音问题
 				uni.createVideoContext('video'+this.dataList[k]._id,this).play();
-				console.log('已经暂停 --> 第' + (old_k + 1) + '个视频～')//提示
 				clearTimeout(this.voice)
 				this.voice = setTimeout(()=>{
 					this.dataList[k].isplay = false
@@ -235,7 +246,6 @@
 				this.timeout = setTimeout(()=>{
 					uni.createVideoContext('video'+this.dataList[p]._id,this).seek(0)
 					uni.createVideoContext('video'+this.dataList[p]._id,this).pause()
-					console.log('预加载第' + (p + 1) + '个视频：' + 'video'+this.dataList[p]._id)
 				},1500)
 				//【2.0版本更新内容】- end
 			}
@@ -257,7 +267,7 @@
 			
 		},
 		onShow(){
-			console.log('回到前台');
+			//console.log('回到前台');
 			if(this.dataList.length !== 0){
 				this.dataList[this.k].state = 'play';
 				uni.createVideoContext('video'+this.dataList[this.k]._id,this).play()
@@ -267,7 +277,7 @@
 			if(this.dataList.length<=0){return;}
 			this.dataList[this.k]['state'] = 'pause';//界面隐藏也要停止播放视频
 			uni.createVideoContext('video'+this.dataList[this.k]._id,this).pause();//暂停以后继续播放
-			console.log('到后台');
+			//console.log('到后台');
 		},
 		onUnload() {
 			
@@ -312,7 +322,7 @@
 				this.dataList[this.k].isShowProgressBarTime = false
 				this.ProgressBarOpacity = 0.5
 				this.dotWidth = 0
-				console.log('state--',state);
+				//console.log('state--',state);
 				// 1.启用双击点赞 --- start
 				this.touchNum++;
 				setTimeout(()=>{
@@ -452,7 +462,7 @@
 							setTimeout(()=>{
 								uni.createVideoContext('video'+self.dataList[p]._id,self).seek(0)
 								uni.createVideoContext('video'+self.dataList[p]._id,self).pause()
-								console.log('预加载第' + (p + 1) + '个视频：' + 'video'+self.dataList[p]._id)
+								//console.log('预加载第' + (p + 1) + '个视频：' + 'video'+self.dataList[p]._id)
 							},2000)
 						},50)
 						
@@ -469,13 +479,18 @@
 				this.dataList[this.k]['commentNum'] += 1;
 			},
 			toComment(index){
-				
 				this.commentId = this.allList[index]['walkTrends']['id'];
+				// #ifndef APP-NVUE
+				this.$refs.comment.open();
+				this.$refs.comment.init(this.commentId);
+				// #endif
+				// #ifdef APP-NVUE
 				this.$refs.comment1.open();
 				this.$nextTick(() =>{
-					// console.log(this.$refs.comment)
 					this.$refs.comment.init(this.commentId);
 				})
+				// #endif
+				
 				
 			},
 			like(index) {
@@ -581,7 +596,7 @@
 	.likeNumActive{
 		color: red;
 	}
-	.content{
+	.content1{
 	  width: 720rpx;
 	  z-index: 99;
 	  position: absolute;
@@ -609,6 +624,8 @@
 	
 	.van-icon {/* app字体不加引号 */
 		font-family: videoicon !important;
+		text-align: center;
+		line-height: 40px;
 	}
 	.text-price::before {
 		content: "¥";
