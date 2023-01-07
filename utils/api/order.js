@@ -17,4 +17,7 @@ export default {
 	'kefuRefundApi': 'member/refund/applyCustomerServiceIn',//申请客服介入
 	'tuihuoApi': 'member/refund/salesReturnByMember',//退货
 	'wuliuApi' : 'member/order/getFreightList',//物流详情
+	'getRoleOrderInfoApi': 'member/point/order/place',//确认订单查询
+	'addRoleOrderApi': 'member/point/order/add',//添加积分商品订单
+	'payRoleOrderApi': 'member/point/order/pay',//支付订单
 }

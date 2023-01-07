@@ -116,6 +116,9 @@
 		},
 		onLoad: function(options) {
 			this.invite = options.invite ? options.invite : '';
+			if(this.invite == '') {
+				this.invite = getApp().globalData.tuijianren;
+			}
 			this.init();
 		},
 		methods: {

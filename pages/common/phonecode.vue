@@ -56,6 +56,7 @@
 					this.$toast(self.i18n['请输入正确手机号']);
 					return;
 				}
+				console.log(this.smsTxt,self.i18n['获取验证码'])
 				if (this.smsTxt != self.i18n['获取验证码']) {
 					return;
 				}
@@ -99,6 +100,8 @@
 			},
 		},
 		created() {
+			self = this;
+			this.init();
 		},
 		mounted() {},
 		destroyed() {},

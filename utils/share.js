@@ -18,9 +18,14 @@ export default{
 		let title = config != '' && config.share_invite_title != '#' ? config.share_invite_title : this.share.title;
 		let desc = config != '' && config.share_invite_content != '#' ? config.share_invite_content : this.share.desc;
 		let img = config != '' && config.share_invite_img != 'NVL' ? config.share_invite_img : this.share.imageUrl;
+		let path = this.share.path;
+		let user = uni.getStorageSync('userInfo') ? uni.getStorageSync('userInfo') : '';
+		if(user != '') {
+			path = path +'?invite='+user.inviteCode;
+		}
         return {
             title: title,
-            path:this.share.path,
+            path:path,
             imageUrl:img,
             desc:desc,
             content:this.share.content,

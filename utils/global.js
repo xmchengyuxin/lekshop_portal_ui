@@ -373,6 +373,7 @@ export default {
 		})
 	},
 	cGo(info) {
+		console.log(info);
 		if(!info || !info.url){return;}
 		let url = info.url;
 		if(url.___type == "category") {//分类
@@ -418,7 +419,11 @@ export default {
 					$.go('/pages/user/credit')
 				}
 			}else{
-				$.go('/pages/user/webview?src='+url.url)
+				if(url.url) {
+					$.go('/pages/user/webview?src='+url.url)
+				}else{
+					$.go('/pages/search/roleList')
+				}
 			}
 		}
 		if(url.___type == "shops") {//店铺链接

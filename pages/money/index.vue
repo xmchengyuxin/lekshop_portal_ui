@@ -28,6 +28,10 @@
 					<text class="f15-size">{{i18n['提现明细']}}</text>
 					<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-b"></text>
 				</view>
+				<view @click="go('/pages/invite/index')" class="bg-color-w flex f-a-c f-j-s h-50 padding-lr12 ">
+					<text class="f15-size">我的推广</text>
+					<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-b"></text>
+				</view>
 			</view>
 			
 		</view>

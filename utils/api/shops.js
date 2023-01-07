@@ -25,4 +25,6 @@ export default {
 	'searchTJApi': 'common/search/getList',//系统参数列表
 	'likeListApi': 'common/goods/getLikeList',//猜你喜欢的商品
 	'groupListApi': 'common/goods/getGroupList',//商品拼团列表
+	'searchRoleGoodsApi': 'common/point/goods/search',//搜索积分商城商品(查询商品列表大部分用此接口)
+	'roleGoodsDetailApi': 'common/point/goods/get',//积分商品详情
 }

@@ -65,6 +65,19 @@ export default {
 				}
 			})
 		},
+		showRole(id) {//积分商城的物流
+			const self = this;
+			$.ajax({
+				url: 'member/point/order/getFreightList',
+				data: {orderId: id},
+				method: 'GET',
+				success(res) {
+					self.$refs.wuliu.open();
+					self.info = res.data.orderFreight ?  res.data.orderFreight: '';
+					self.list = res.data.freightDetailList ? res.data.freightDetailList : [];
+				}
+			})
+		},
 		init() {
 		}
 	},

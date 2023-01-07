@@ -558,6 +558,7 @@ export default {
 		'收藏': 'To collect',
 		'加入购物车': 'Add to cart',
 		'立即购买': 'Buy now',
+		'立即兑换': '立即兑换',
 		'购买数量': 'Purchase Quantity',
 		'库存': 'Stock',
 		'产品参数': 'Product Parameters',

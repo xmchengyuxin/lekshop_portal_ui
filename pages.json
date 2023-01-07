@@ -13,6 +13,12 @@
 			} 
 		},
 		{
+			"path": "pages/index/cateRole",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
+		{
 			"path": "pages/chat/index",
 			"style": {
 				"navigationStyle": "custom",
@@ -142,6 +148,12 @@
 			} 
 		},
 		{
+			"path": "pages/search/roleList",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
+		{
 			"path": "pages/search/index",
 			"style": {
 				"navigationStyle": "custom"
@@ -149,6 +161,12 @@
 		},
 		{
 			"path": "pages/shops/detail",
+			"style": {
+				"navigationStyle": "custom"
+			} 
+		},
+		{
+			"path": "pages/shops/roleDetail",
 			"style": {
 				"navigationStyle": "custom"
 			} 
@@ -259,6 +277,12 @@
 			} 
 		},
 		{
+			"path": "pages/order/sureRole",
+			"style": {
+				"navigationBarTitleText": "确认订单"
+			} 
+		},
+		{
 			"path": "pages/order/group",
 			"style": {
 				"navigationBarTitleText": "拼团详情"
@@ -268,6 +292,18 @@
 			"path": "pages/order/order",
 			"style": {
 				"navigationBarTitleText": "我的订单"
+			} 
+		},
+		{
+			"path": "pages/order/orderRole",
+			"style": {
+				"navigationBarTitleText": "我的订单"
+			} 
+		},
+		{
+			"path": "pages/order/detailRole",
+			"style": {
+				"navigationBarTitleText": "订单详情"
 			} 
 		},
 		{
@@ -288,6 +324,32 @@
 				"navigationBarTitleText": "收银台",
 				"navigationBarBackgroundColor": "#FFFFFF"
 				
+			} 
+		},
+		{
+			"path": "pages/order/rolePay",
+			"style": {
+				"navigationBarTitleText": "收银台",
+				"navigationBarBackgroundColor": "#FFFFFF"
+				
+			} 
+		},
+		{
+			"path": "pages/invite/index",
+			"style": {
+				"navigationBarTitleText": "我的推广"
+			} 
+		},
+		{
+			"path": "pages/invite/list",
+			"style": {
+				"navigationBarTitleText": "推广列表"
+			} 
+		},
+		{
+			"path": "pages/invite/detail",
+			"style": {
+				"navigationBarTitleText": "推广列表"
 			} 
 		},
 		{

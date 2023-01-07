@@ -12,6 +12,10 @@
 					<text class="f15-size ">{{i18n['积分明细']}}</text>
 					<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-b"></text>
 				</view>
+				<view @click="go('/pages/order/orderRole')" class=" flex f-a-c f-j-s  h-50  padding-lr12 ">
+					<text class="f15-size ">{{i18nUser['我的订单']}}</text>
+					<text class="flex f-a-c f-j-c van-icon van-icon-arrow t-color-b"></text>
+				</view>
 			</view>
 			
 		</view>
@@ -55,6 +59,9 @@
 		computed: {
 			i18n() {
 				return this.$t('role')
+			},
+			i18nUser() {
+				return this.$t('user')
 			},
 		},
 		created() {
