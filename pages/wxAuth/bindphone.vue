@@ -181,6 +181,11 @@
 					method: 'POST',
 					success(res) {
 						self.active = 2;
+						if(res.data && res.data.token) {
+							uni.setStorageSync('token', res.data.tokenHead + ' ' + res.data.token);
+							uni.setStorageSync('userInfo', res.data.member);
+						}
+						
 					}
 				})
 			
