@@ -9,7 +9,7 @@
 			<view @click="go('/pages/invite/detail?id='+item.memberId)" v-for="item in list" class="flex f-j-s b-bottom padding-tb10">
 				<view class="flex">
 					<view class="flex f-a-c f-j-c margin-r12">
-						<view :style="item.headImg | bgimg('200')" class="bg-img w-60 h-60 b-radius "></view>
+						<view :style="item.headImg | bgimg('200')+''" class="bg-img w-60 h-60 b-radius "></view>
 					</view>
 					<view class="flex f-c">
 						<view class="flex f-a-c t-color f-w-b">{{item.memberName | hideCenterText}}</view>

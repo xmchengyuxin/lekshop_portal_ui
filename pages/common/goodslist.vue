@@ -15,12 +15,17 @@
 						<view class="flex f-a-c f10-size padding-lr5 h-16 b-color-r t-color-r b-radius-2 margin-r8">
 							官方放心购</view>
 					</view> -->
-					<view class="flex f-a-c f-j-s margin-t4">
+					<view v-if="!isRoleGoods" class="flex f-a-c f-j-s margin-t4">
 						<view class="text-price f16-size f-w-b t-color-p">{{item.price | price}}</view>
 						<view class="t-color-8 f12-size flex f-a-c">
 							<text class="margin-r4"> {{item.commentNum}}</text>
 							<text>{{i18n['评价']}}</text>
 						</view>
+				 </view>
+				 <view v-else class="flex f-a-c  margin-t4">
+				 	<view class="text-price-role f16-size f-w-b t-color-p">{{item.point}}</view>
+				 	<view v-if="item.price > 0" class=" f16-size f-w-b t-color-p padding-lr2">+</view>
+				 	<view v-if="item.price > 0" class="text-price f16-size f-w-b t-color-p">{{item.price | price}}</view>
 				 </view>
 				</view>
 			</view>
