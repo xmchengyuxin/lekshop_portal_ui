@@ -2,10 +2,11 @@
   font-family: "shops-icon"; /* Project id 3352422 */
   /* Color fonts */
   src: 
-       url('//at.alicdn.com/t/font_3352422_akh6g4mud1.woff2?t=1654047796524') format('woff2'),
-       url('//at.alicdn.com/t/font_3352422_akh6g4mud1.woff?t=1654047796524') format('woff'),
-       url('//at.alicdn.com/t/font_3352422_akh6g4mud1.ttf?t=1654047796524') format('truetype');
+       url('https://at.alicdn.com/t/font_3352422_akh6g4mud1.woff2?t=1654047796524') format('woff2'),
+       url('https://at.alicdn.com/t/font_3352422_akh6g4mud1.woff?t=1654047796524') format('woff'),
+       url('https://at.alicdn.com/t/font_3352422_akh6g4mud1.ttf?t=1654047796524') format('truetype');
 }
+
 
 .shops-icon {
   font-family: "shops-icon" !important;

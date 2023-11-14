@@ -63,6 +63,7 @@ export default {
 		self.uid = 'member-' + userInfo.id;
 		clearTimeout(errTimer);
 		this.close();
+		self.isAuth = false;
 		self.ws = uni.connectSocket({
 			url: url, //仅为示例，并非真实接口地址。
 			complete: (res) => {

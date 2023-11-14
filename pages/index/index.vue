@@ -31,7 +31,6 @@
 						<view v-if="!isStyle('search')"  :style="{ 'padding-top': top +10+ 'px' }"></view>
 						<block v-if="parent == 0" >
 							<block  v-for="(style,styleIndex) in styleList">
-							
 							<swiper v-if="style.moduleKey == 'carousel'"  class="wrap-banner margin-b12  b-radius-5" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
 								<swiper-item v-for="img in style.moduleData.list">
 									<view @click="cGo(img)" class="bg-img h100 b-radius-5 " :style="img.img | bgimg(700)+''"></view>
@@ -148,6 +147,9 @@
 								</view>
 							</view>
 							<!-- 商品分类 -->
+							<!-- #ifdef APP-PLUS -->
+							<view v-if="style.moduleKey == 'goods'"></view>
+							<!-- #endif -->
 							<view v-if="style.moduleKey == 'goods'" v-for="(list,index) in style.moduleData.list" class="margin-b4">
 								<view class="grid grid-c-4 h-40 margin-b10">
 									<view @click="chooseStyleCate(styleIndex,index,idx)" v-for="(title,idx) in list['titleWay']" class="flex f-s-0 f-c f-a-c f-j-c h100 ">

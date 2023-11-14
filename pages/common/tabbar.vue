@@ -69,6 +69,7 @@
 		},
 		onShow() {
 			// this.getChatLen();
+			uni.hideTabBar();
 		},
 		methods: {
 			getChatLen() {
