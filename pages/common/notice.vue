@@ -21,6 +21,7 @@
 				</view>
 			</view>
 		</view>
+		<one></one>
 	</view>
 </template>
 <style scoped>

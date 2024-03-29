@@ -10,6 +10,7 @@ import xcxheader from './pages/common/xcxheader.vue';
 import notice from './pages/common/notice.vue';
 import menu from './pages/common/menu.vue';
 import poster from './pages/common/poster.vue';
+import one from './pages/common/one.vue';
 Vue.config.productionTip = false
 import i18n from './static/language/index.js' 
 Vue.prototype._i18n = i18n;
@@ -46,6 +47,7 @@ Vue.component('xcxHeader',xcxheader);
 Vue.component('menuBtn',menu);
 Vue.component('poster',poster);
 Vue.component('notice',notice);
+Vue.component('one',one);
 //过滤器统一处理加载
 Object.keys(filters).forEach(key => {
 	Vue.filter(key, filters[key])

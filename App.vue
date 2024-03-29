@@ -8,7 +8,7 @@ var wx = require('./utils/jweixin-module.js');
 // const VConsole = require('./utils/vconsole.js');
 //import './utils/vconsole.js';
 // const JMessage = require('./utils/jmessage-wxapplet-sdk-1.4.2.min.js');
-let appRole = 'daxiang';
+let appRole = 'jiafangchang';
 export default {
 	globalData: {
 		appRole: appRole,

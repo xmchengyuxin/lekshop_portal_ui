@@ -10,4 +10,11 @@ export default {
 		version: '10000',
 		// wx63ad93abf82f90ea
 	},
+	'jiafangchang': {
+		name: '商城',
+		api: 'https://portalapi.jiafangchang.com/',
+		hot: 'https://h5.jiafangchang.com/hotpush_user.wgt',
+		socket: 'wss://socket.jiafangchang.com/ws',
+		version: '10000',
+	},
 }
